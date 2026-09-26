@@ -1,0 +1,28 @@
+# strict.yaml with the benchmark holdout on: every arm is also refitted without each of the
+# 13 benchmark groups (config/benchmark_groups.yaml) and scored on the three
+# benchmark-transfer tasks (cross_benchmark, ranking, pairwise) on the held-out group.
+name: strict_transfer
+data:
+  slice: data/paper_ckpt/slice.npz
+  answers: data/paper_ckpt/answers.npz
+  view: core
+  raw_dir: data/raw
+protocol:
+  fold_scheme: grouped_all
+  k_folds: 5
+  seeds: [0, 1, 2]
+train:
+  dim: 32
+  interview_k: 400
+  interview_selector: fisher
+  arms: [pca_bits32, pls_svd_bitsqtext32, text_mean768, pls_svd_fusion32, pls_svd_tri32,
+         pca_bits32__interview, pls_svd_bitsqtext32__interview, text_mean768__itext,
+         pls_svd_fusion32__itext, pls_svd_tri32__itext, null_random32, null_random768]
+floor:
+  arms: [null_random32, null_random768]
+  draws: 10
+eval:
+  battery: config/battery.yaml
+  transfer: true
+  tasks: [cross_benchmark, ranking, pairwise]
+out: results/strict_transfer

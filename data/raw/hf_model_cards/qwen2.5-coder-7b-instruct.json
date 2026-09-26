@@ -1,0 +1,509 @@
+{
+  "architecture": {
+    "architectures": [
+      "Qwen2ForCausalLM"
+    ],
+    "hidden_size": 3584,
+    "intermediate_size": 18944,
+    "max_position_embeddings": 32768,
+    "model_type": "qwen2",
+    "n_parameters": 7615616512,
+    "num_attention_heads": 28,
+    "num_hidden_layers": 28,
+    "num_key_value_heads": 4,
+    "parameter_dtypes": {
+      "BF16": 7615616512
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 152064
+  },
+  "card_chars": 6389,
+  "card_text": "---\nlicense: apache-2.0\nlicense_link: https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct/blob/main/LICENSE\nlanguage:\n- en\nbase_model:\n- Qwen/Qwen2.5-Coder-7B\npipeline_tag: text-generation\nlibrary_name: transformers\ntags:\n- code\n- codeqwen\n- chat\n- qwen\n- qwen-coder\n---\n\n\n# Qwen2.5-Coder-7B-Instruct\n<a href=\"https://chat.qwenlm.ai/\" target=\"_blank\" style=\"margin: 2px;\">\n    <img alt=\"Chat\" src=\"https://img.shields.io/badge/%F0%9F%92%9C%EF%B8%8F%20Qwen%20Chat%20-536af5\" style=\"display: inline-block; vertical-align: middle;\"/>\n</a>\n\n## Introduction\n\nQwen2.5-Coder is the latest series of Code-Specific Qwen large language models (formerly known as CodeQwen). As of now, Qwen2.5-Coder has covered six mainstream model sizes, 0.5, 1.5, 3, 7, 14, 32 billion parameters, to meet the needs of different developers. Qwen2.5-Coder brings the following improvements upon CodeQwen1.5:\n\n- Significantly improvements in **code generation**, **code reasoning** and **code fixing**. Base on the strong Qwen2.5, we scale up the training tokens into 5.5 trillion including source code, text-code grounding, Synthetic data, etc. Qwen2.5-Coder-32B has become the current state-of-the-art open-source codeLLM, with its coding abilities matching those of GPT-4o.\n- A more comprehensive foundation for real-world applications such as **Code Agents**. Not only enhancing coding capabilities but also maintaining its strengths in mathematics and general competencies.\n- **Long-context Support** up to 128K tokens.\n\n**This repo contains the instruction-tuned 7B Qwen2.5-Coder model**, which has the following features:\n- Type: Causal Language Models\n- Training Stage: Pretraining & Post-training\n- Architecture: transformers with RoPE, SwiGLU, RMSNorm, and Attention QKV bias\n- Number of Parameters: 7.61B\n- Number of Paramaters (Non-Embedding): 6.53B\n- Number of Layers: 28\n- Number of Attention Heads (GQA): 28 for Q and 4 for KV\n- Context Length: Full 131,072 tokens\n  - Please refer to [this section](#processing-long-texts) for detailed instructions on how to deploy Qwen2.5 for handling long texts.\n  \nFor more details, please refer to our [blog](https://qwenlm.github.io/blog/qwen2.5-coder-family/), [GitHub](https://github.com/QwenLM/Qwen2.5-Coder), [Documentation](https://qwen.readthedocs.io/en/latest/), [Arxiv](https://arxiv.org/abs/2409.12186).\n\n## Requirements\n\nThe code of Qwen2.5-Coder has been in the latest Hugging face `transformers` and we advise you to use the latest version of `transformers`.\n\nWith `transformers<4.37.0`, you will encounter the following error:\n```\nKeyError: 'qwen2'\n```\n\n## Quickstart\n\nHere provides a code snippet with `apply_chat_template` to show you how to load the tokenizer and model and how to generate contents.\n\n```python\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\nmodel_name = \"Qwen/Qwen2.5-Coder-7B-Instruct\"\n\nmodel = AutoModelForCausalLM.from_pretrained(\n    model_name,\n    torch_dtype=\"auto\",\n    device_map=\"auto\"\n)\ntokenizer = AutoTokenizer.from_pretrained(model_name)\n\nprompt = \"write a quick sort algorithm.\"\nmessages = [\n    {\"role\": \"system\", \"content\": \"You are Qwen, created by Alibaba Cloud. You are a helpful assistant.\"},\n    {\"role\": \"user\", \"content\": prompt}\n]\ntext = tokenizer.apply_chat_template(\n    messages,\n    tokenize=False,\n    add_generation_prompt=True\n)\nmodel_inputs = tokenizer([text], return_tensors=\"pt\").to(model.device)\n\ngenerated_ids = model.generate(\n    **model_inputs,\n    max_new_tokens=512\n)\ngenerated_ids = [\n    output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)\n]\n\nresponse = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]\n```\n\n### Processing Long Texts\n\nThe current `config.json` is set for context length up to 32,768 tokens.\nTo handle extensive inputs exceeding 32,768 tokens, we utilize [YaRN](https://arxiv.org/abs/2309.00071), a technique for enhancing model length extrapolation, ensuring optimal performance on lengthy texts.\n\nFor supported frameworks, you could add the following to `config.json` to enable YaRN:\n```json\n{\n  ...,\n  \"rope_scaling\": {\n    \"factor\": 4.0,\n    \"original_max_position_embeddings\": 32768,\n    \"type\": \"yarn\"\n  }\n}\n```\n\nFor deployment, we recommend using vLLM. \nPlease refer to our [Documentation](https://qwen.readthedocs.io/en/latest/deployment/vllm.html) for usage if you are not familar with vLLM.\nPresently, vLLM only supports static YARN, which means the scaling factor remains constant regardless of input length, **potentially impacting performance on shorter texts**. \nWe advise adding the `rope_scaling` configuration only when processing long contexts is required.\n\n## Evaluation & Performance\n\nDetailed evaluation results are reported in this [\ud83d\udcd1 blog](https://qwenlm.github.io/blog/qwen2.5-coder-family/).\n\nFor requirements on GPU memory and the respective throughput, see results [here](https://qwen.readthedocs.io/en/latest/benchmark/speed_benchmark.html).\n\n## Citation\n\nIf you find our work helpful, feel free to give us a cite.\n\n```\n@article{hui2024qwen2,\n      title={Qwen2. 5-Coder Technical Report},\n      author={Hui, Binyuan and Yang, Jian and Cui, Zeyu and Yang, Jiaxi and Liu, Dayiheng and Zhang, Lei and Liu, Tianyu and Zhang, Jiajun and Yu, Bowen and Dang, Kai and others},\n      journal={arXiv preprint arXiv:2409.12186},\n      year={2024}\n}\n@article{qwen2,\n      title={Qwen2 Technical Report}, \n      author={An Yang and Baosong Yang and Binyuan Hui and Bo Zheng and Bowen Yu and Chang Zhou and Chengpeng Li and Chengyuan Li and Dayiheng Liu and Fei Huang and Guanting Dong and Haoran Wei and Huan Lin and Jialong Tang and Jialin Wang and Jian Yang and Jianhong Tu and Jianwei Zhang and Jianxin Ma and Jin Xu and Jingren Zhou and Jinze Bai and Jinzheng He and Junyang Lin and Kai Dang and Keming Lu and Keqin Chen and Kexin Yang and Mei Li and Mingfeng Xue and Na Ni and Pei Zhang and Peng Wang and Ru Peng and Rui Men and Ruize Gao and Runji Lin and Shijie Wang and Shuai Bai and Sinan Tan and Tianhang Zhu and Tianhao Li and Tianyu Liu and Wenbin Ge and Xiaodong Deng and Xiaohuan Zhou and Xingzhang Ren and Xinyu Zhang and Xipin Wei and Xuancheng Ren and Yang Fan and Yang Yao and Yichang Zhang and Yu Wan and Yunfei Chu and Yuqiong Liu and Zeyu Cui and Zhenru Zhang and Zhihao Fan},\n      journal={arXiv preprint arXiv:2407.10671},\n      year={2024}\n}\n```\n",
+  "fetched_at": "2026-09-19T15:02:48.859273+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "Qwen/Qwen2.5-Coder-7B"
+    ],
+    "card_base_models": [
+      "Qwen/Qwen2.5-Coder-7B"
+    ],
+    "merge_tags": [],
+    "n_base_models": 1,
+    "relations": {
+      "": [
+        "Qwen/Qwen2.5-Coder-7B"
+      ],
+      "finetune": [
+        "Qwen/Qwen2.5-Coder-7B"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "Qwen",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "qwen2",
+      "text-generation",
+      "code",
+      "codeqwen",
+      "chat",
+      "qwen",
+      "qwen-coder",
+      "conversational",
+      "en",
+      "arxiv:2409.12186",
+      "arxiv:2309.00071",
+      "arxiv:2407.10671",
+      "base_model:Qwen/Qwen2.5-Coder-7B",
+      "base_model:finetune:Qwen/Qwen2.5-Coder-7B",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:sagemaker",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "qwen2.5-coder-7b-instruct",
+  "ok": true,
+  "popularity": {
+    "downloads": 2629675,
+    "downloadsAllTime": 23431323,
+    "likes": 801,
+    "trendingScore": 3
+  },
+  "repo_id": "Qwen/Qwen2.5-Coder-7B-Instruct",
+  "resolved_via": "search",
+  "search_candidates": [
+    [
+      "Qwen/Qwen2.5-Coder-7B-Instruct-GGUF",
+      273995
+    ],
+    [
+      "mlx-community/Qwen2.5-Coder-7B-Instruct-4bit",
+      258432
+    ],
+    [
+      "Qwen/Qwen2.5-Coder-7B-Instruct",
+      2629675
+    ],
+    [
+      "unsloth/Qwen2.5-Coder-7B-Instruct-128K-GGUF",
+      11543
+    ],
+    [
+      "bartowski/Qwen2.5.1-Coder-7B-Instruct-GGUF",
+      8245
+    ],
+    [
+      "bartowski/Qwen2.5-Coder-7B-Instruct-abliterated-GGUF",
+      39526
+    ],
+    [
+      "BlossomsAI/Qwen2.5-Coder-7B-Instruct-Uncensored-GGUF",
+      10281
+    ],
+    [
+      "criscar22/Qwen2.5-Coder-7B-Instruct-abliterated",
+      526
+    ],
+    [
+      "lmstudio-community/Qwen2.5-Coder-7B-Instruct-GGUF",
+      37548
+    ],
+    [
+      "bartowski/Qwen2.5-Coder-7B-Instruct-GGUF",
+      55830
+    ],
+    [
+      "mlc-ai/Qwen2.5-Coder-7B-Instruct-q4f16_1-MLC",
+      729
+    ],
+    [
+      "mlc-ai/Qwen2.5-Coder-7B-Instruct-q0f16-MLC",
+      2
+    ],
+    [
+      "mlc-ai/Qwen2.5-Coder-7B-Instruct-q4f32_1-MLC",
+      91
+    ],
+    [
+      "mlx-community/Qwen2.5-Coder-7B-Instruct-bf16",
+      265
+    ],
+    [
+      "mlx-community/Qwen2.5-Coder-7B-Instruct-8bit",
+      559
+    ],
+    [
+      "smcleod/Qwen2.5-Coder-7B-Instruct-Q8_0-GGUF",
+      472
+    ],
+    [
+      "DevQuasar-3/Qwen2.5-Coder-7B-Instruct-GGUF",
+      343
+    ],
+    [
+      "QuantFactory/Qwen2.5-Coder-7B-Instruct-GGUF",
+      1995
+    ],
+    [
+      "CISCai/Qwen2.5-Coder-7B-Instruct-SOTA-GGUF",
+      761
+    ],
+    [
+      "neopolita/qwen2.5-coder-7b-instruct-gguf",
+      161
+    ],
+    [
+      "ClaudioItaly/Qwen2.5-Coder-7B-Instruct-Q5_K_M-GGUF",
+      810
+    ],
+    [
+      "RichardErkhov/Qwen_-_Qwen2.5-Coder-7B-Instruct-gguf",
+      1648
+    ],
+    [
+      "legraphista/Qwen2.5-Coder-7B-Instruct-IMat-GGUF",
+      2074
+    ],
+    [
+      "second-state/Qwen2.5-Coder-7B-Instruct-GGUF",
+      991
+    ],
+    [
+      "gaianet/Qwen2.5-Coder-7B-Instruct-GGUF",
+      553
+    ],
+    [
+      "Qwen/Qwen2.5-Coder-7B-Instruct-GPTQ-Int4",
+      541330
+    ],
+    [
+      "Qwen/Qwen2.5-Coder-7B-Instruct-GPTQ-Int8",
+      1062
+    ],
+    [
+      "Qwen/Qwen2.5-Coder-7B-Instruct-AWQ",
+      927614
+    ],
+    [
+      "Orion-zhen/Qwen2.5-Coder-7B-Instruct-AWQ",
+      615070
+    ],
+    [
+      "DrNicefellow/Qwen2.5-Coder-7B-Instruct-4.0bpw-exl2",
+      13
+    ],
+    [
+      "DrNicefellow/Qwen2.5-Coder-7B-Instruct-8.0bpw-h8-exl2",
+      8
+    ],
+    [
+      "DrNicefellow/Qwen2.5-Coder-7B-Instruct-7.0bpw-exl2",
+      8
+    ],
+    [
+      "DrNicefellow/Qwen2.5-Coder-7B-Instruct-6.0bpw-exl2",
+      13
+    ],
+    [
+      "DrNicefellow/Qwen2.5-Coder-7B-Instruct-5.5bpw-exl2",
+      13
+    ],
+    [
+      "DrNicefellow/Qwen2.5-Coder-7B-Instruct-4.5bpw-exl2",
+      12
+    ],
+    [
+      "DrNicefellow/Qwen2.5-Coder-7B-Instruct-5.0bpw-exl2",
+      8
+    ],
+    [
+      "DrNicefellow/Qwen2.5-Coder-7B-Instruct-2.0bpw-exl2",
+      9
+    ],
+    [
+      "DrNicefellow/Qwen2.5-Coder-7B-Instruct-1.0bpw-exl2",
+      8
+    ],
+    [
+      "dbands/Qwen2.5-7B-Instruct-pyomo-pysim-coder",
+      14
+    ],
+    [
+      "dbands/Qwen2.5-7B-Instruct-pyomo-pysim-coder-gguf",
+      172
+    ],
+    [
+      "taoki/Qwen2.5-Coder-7B-Instruct_lora_jmultiwoz-dolly-amenokaku-alpaca_jp_python",
+      24
+    ],
+    [
+      "mukel/Qwen2.5-Coder-7B-Instruct-GGUF",
+      94
+    ],
+    [
+      "unsloth/Qwen2.5-Coder-7B-Instruct-bnb-4bit",
+      74496
+    ],
+    [
+      "unsloth/Qwen2.5-Coder-7B-Instruct",
+      207626
+    ],
+    [
+      "pL-Community/Qwen2.5-Coder-7B-Instruct-FP8-Dynamic",
+      223
+    ],
+    [
+      "Echo9Zulu/Qwen2.5-Coder-7B-Instruct-fp16-ov",
+      8
+    ],
+    [
+      "BenevolenceMessiah/Qwen2.5-Coder-7B-Chat-Instruct-TIES",
+      23
+    ],
+    [
+      "mradermacher/Qwen2.5-Coder-7B-Chat-Instruct-TIES-GGUF",
+      1371
+    ],
+    [
+      "mradermacher/Qwen2.5-Coder-7B-Chat-Instruct-TIES-i1-GGUF",
+      734
+    ],
+    [
+      "bartowski/Qwen2.5-Coder-7B-Instruct-exl2",
+      32
+    ],
+    [
+      "taobao-mnn/Qwen2.5-Coder-7B-Instruct-MNN",
+      170
+    ],
+    [
+      "duyntnet/Qwen2.5-Coder-7B-Instruct-imatrix-GGUF",
+      1249
+    ],
+    [
+      "pipilok/Qwen2.5-Coder-7B-Instruct-Q4_0_4_8-GGUF",
+      95
+    ],
+    [
+      "Kondara/Qwen2.5-Coder-7B-Instruct-Q4_K_M-GGUF",
+      1910
+    ],
+    [
+      "Alexis-Az/Qwen-2.5-Coder-7B-4bit-CSharp-Alpaca-Instruct",
+      208
+    ],
+    [
+      "Etherll/Qwen2.5-Coder-7B-Instruct-Ties",
+      28
+    ],
+    [
+      "rombodawg/Qwen2.5-Coder-7B-Instruct-Ties-Q8_0-GGUF",
+      41
+    ],
+    [
+      "Alignment-Lab-AI/Qwen2.5-Coder-7B-Instruct-132k",
+      28
+    ],
+    [
+      "jacobcarajo/Qwen2.5-Coder-7B-Instruct-Q5_K_M-GGUF",
+      54
+    ],
+    [
+      "evgmaslov/Qwen2.5-Coder-7B-Instruct-cars",
+      0
+    ],
+    [
+      "mradermacher/Qwen2.5-Coder-7B-Instruct-abliterated-GGUF",
+      3356
+    ],
+    [
+      "mradermacher/Qwen2.5-Coder-7B-Instruct-abliterated-i1-GGUF",
+      4337
+    ],
+    [
+      "ibrahimkettaneh/Qwen2.5-Coder-7B-Instruct-abliterated-AWQ",
+      15
+    ],
+    [
+      "llmware/qwen2.5-coder-7b-instruct-ov",
+      21
+    ],
+    [
+      "RichardErkhov/unsloth_-_Qwen2.5-Coder-7B-Instruct-gguf",
+      842
+    ],
+    [
+      "thidayatpiliang/Qwen2.5-Coder-7B-Instruct-Q4_K_M-GGUF",
+      110
+    ],
+    [
+      "deepakkrishbala/Qwen2.5-Coder-7B-Instruct_finetuned",
+      0
+    ],
+    [
+      "BenevolenceMessiah/Qwen2.5-Coder-7B-3x-Instruct-TIES-v1.0",
+      21
+    ],
+    [
+      "sheldonrobinson/Qwen2.5-Coder-7B-Instruct-Q8_0-GGUF",
+      48
+    ],
+    [
+      "BenevolenceMessiah/Qwen2.5-Coder-7B-3x-Instruct-TIES-v1.1",
+      17
+    ],
+    [
+      "BenevolenceMessiah/Qwen2.5-Coder-7B-3x-Instruct-TIES-v1.1-Q8_0-GGUF",
+      43
+    ],
+    [
+      "mradermacher/Qwen2.5-Coder-7B-3x-Instruct-TIES-v1.1-GGUF",
+      187
+    ],
+    [
+      "mradermacher/Qwen2.5-Coder-7B-3x-Instruct-TIES-v1.1-i1-GGUF",
+      911
+    ],
+    [
+      "mradermacher/Qwen2.5-Coder-7B-3x-Instruct-TIES-v1.0-GGUF",
+      262
+    ],
+    [
+      "mradermacher/Qwen2.5-Coder-7B-3x-Instruct-TIES-v1.0-i1-GGUF",
+      425
+    ],
+    [
+      "QuantFactory/Qwen2.5-Coder-7B-3x-Instruct-TIES-v1.0-GGUF",
+      567
+    ],
+    [
+      "pacohub/Qwen2.5-Coder-7B-Instruct-ti-lora",
+      0
+    ],
+    [
+      "pacohub/Qwen2.5-Coder-7B-Instruct-ti-gguf",
+      106
+    ],
+    [
+      "RichardErkhov/Etherll_-_Qwen2.5-Coder-7B-Instruct-Ties-gguf",
+      525
+    ],
+    [
+      "dat-lequoc/fast-apply_lora-4b-v0.v16-Qwen2.5-Coder-7B-Instruct",
+      0
+    ],
+    [
+      "RichardErkhov/huihui-ai_-_Qwen2.5-Coder-7B-Instruct-abliterated-gguf",
+      1125
+    ],
+    [
+      "GGorman/Qwen2.5-Coder-7B-Instruct-Q8-mlx",
+      43
+    ],
+    [
+      "pjbang/Qwen2.5-Coder-7B-Instruct-cypher",
+      0
+    ],
+    [
+      "Neolson1026/Qwen2.5-Coder-7B-Instruct-Q5_K_M",
+      50
+    ],
+    [
+      "MaziyarPanahi/Qwen2.5-Coder-7B-3x-Instruct-TIES-v1.1-GGUF",
+      186
+    ],
+    [
+      "MaziyarPanahi/Qwen2.5-Coder-7B-Instruct-abliterated-GGUF",
+      405
+    ],
+    [
+      "deepakkrishbala/Qwen2.5-Coder-7B-Instruct_finetuned_full_model",
+      12
+    ],
+    [
+      "mingineer/Qwen2.5-Coder-7B-Instruct-Q4-mlx",
+      62
+    ],
+    [
+      "MaziyarPanahi/Qwen2.5-Coder-7B-Instruct-GGUF",
+      293
+    ],
+    [
+      "sheldonrobinson/Qwen2.5-Coder-7B-Instruct-Q4_K_M-GGUF",
+      71
+    ],
+    [
+      "cmarkea/Qwen2.5-Coder-7B-Instruct-4bit",
+      47
+    ],
+    [
+      "c01zaut/Qwen2.5-Coder-7B-Instruct-rk3588-1.1.2",
+      25
+    ],
+    [
+      "mlx-community/Qwen2.5.1-Coder-7B-Instruct-4bit",
+      560
+    ],
+    [
+      "mlx-community/Qwen2.5.1-Coder-7B-Instruct-8bit",
+      206
+    ],
+    [
+      "AIFunOver/Qwen2.5-Coder-7B-Instruct-openvino-8bit",
+      15
+    ],
+    [
+      "AIFunOver/Qwen2.5-Coder-7B-Instruct-openvino-fp16",
+      13
+    ],
+    [
+      "AIFunOver/Qwen2.5-Coder-7B-Instruct-openvino-4bit",
+      17
+    ],
+    [
+      "theo77186/Qwen2.5-Coder-7B-Instruct-20241106",
+      31
+    ],
+    [
+      "async0x42/Qwen2.5.1-Coder-7B-Instruct-exl2_5.0bpw",
+      11
+    ],
+    [
+      "BenevolenceMessiah/Qwen2.5-Coder-7B-Chat-Instruct-TIES-v1.2",
+      24
+    ]
+  ],
+  "timestamps": {
+    "createdAt": "2024-09-17T13:38:49.000Z",
+    "lastModified": "2025-01-12T02:03:41.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

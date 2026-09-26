@@ -1,0 +1,87 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": 7241732096,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "F16": 7241732096
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 4157,
+  "card_text": "---\nlanguage:\n- en\nlicense: cc-by-nc-4.0\nlibrary_name: transformers\ntags:\n- text-generation-inference\ndatasets:\n- argilla/OpenHermesPreferences\npipeline_tag: text2text-generation\nmodel-index:\n- name: ogno-monarch-jaskier-merge-7b-OH-PREF-DPO\n  results:\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: AI2 Reasoning Challenge (25-Shot)\n      type: ai2_arc\n      config: ARC-Challenge\n      split: test\n      args:\n        num_few_shot: 25\n    metrics:\n    - type: acc_norm\n      value: 73.12\n      name: normalized accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=eren23/ogno-monarch-jaskier-merge-7b-OH-PREF-DPO\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: HellaSwag (10-Shot)\n      type: hellaswag\n      split: validation\n      args:\n        num_few_shot: 10\n    metrics:\n    - type: acc_norm\n      value: 89.09\n      name: normalized accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=eren23/ogno-monarch-jaskier-merge-7b-OH-PREF-DPO\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: MMLU (5-Shot)\n      type: cais/mmlu\n      config: all\n      split: test\n      args:\n        num_few_shot: 5\n    metrics:\n    - type: acc\n      value: 64.8\n      name: accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=eren23/ogno-monarch-jaskier-merge-7b-OH-PREF-DPO\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: TruthfulQA (0-shot)\n      type: truthful_qa\n      config: multiple_choice\n      split: validation\n      args:\n        num_few_shot: 0\n    metrics:\n    - type: mc2\n      value: 77.45\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=eren23/ogno-monarch-jaskier-merge-7b-OH-PREF-DPO\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: Winogrande (5-shot)\n      type: winogrande\n      config: winogrande_xl\n      split: validation\n      args:\n        num_few_shot: 5\n    metrics:\n    - type: acc\n      value: 84.77\n      name: accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=eren23/ogno-monarch-jaskier-merge-7b-OH-PREF-DPO\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: GSM8k (5-shot)\n      type: gsm8k\n      config: main\n      split: test\n      args:\n        num_few_shot: 5\n    metrics:\n    - type: acc\n      value: 69.45\n      name: accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=eren23/ogno-monarch-jaskier-merge-7b-OH-PREF-DPO\n      name: Open LLM Leaderboard\n---\n\n# Model Card for Model ID\n\n# disclaimer \n\njust experimented with the model I had https://huggingface.co/eren23/ogno-monarch-jaskier-merge-7b here with the new preferences dataset of argillia here: https://huggingface.co/datasets/argilla/OpenHermesPreferences \n\nI didn't test the model and the perf wasn't that good when training so use/test it with caution\n\n# disclaimer 2\n\nIt turns out the model performs well in benchmarks :D\n\n#\n\nGGUF: https://huggingface.co/eren23/ogno-monarch-jaskier-merge-7b-OH-PREF-DPO-GGUF\n# [Open LLM Leaderboard Evaluation Results](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard)\nDetailed results can be found [here](https://huggingface.co/datasets/open-llm-leaderboard/details_eren23__ogno-monarch-jaskier-merge-7b-OH-PREF-DPO)\n\n|             Metric              |Value|\n|---------------------------------|----:|\n|Avg.                             |76.45|\n|AI2 Reasoning Challenge (25-Shot)|73.12|\n|HellaSwag (10-Shot)              |89.09|\n|MMLU (5-Shot)                    |64.80|\n|TruthfulQA (0-shot)              |77.45|\n|Winogrande (5-shot)              |84.77|\n|GSM8k (5-shot)                   |69.45|\n\n",
+  "fetched_at": "2026-09-19T15:01:09.538207+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "eren23",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "mistral",
+      "text-generation",
+      "text-generation-inference",
+      "text2text-generation",
+      "en",
+      "dataset:argilla/OpenHermesPreferences",
+      "license:cc-by-nc-4.0",
+      "model-index",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "eren23__ogno-monarch-jaskier-merge-7b-OH-PREF-DPO",
+  "ok": true,
+  "popularity": {
+    "downloads": 83,
+    "downloadsAllTime": 12121,
+    "likes": 5,
+    "trendingScore": 0
+  },
+  "repo_id": "eren23/ogno-monarch-jaskier-merge-7b-OH-PREF-DPO",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2024-02-27T02:15:25.000Z",
+    "lastModified": "2024-03-05T15:45:46.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

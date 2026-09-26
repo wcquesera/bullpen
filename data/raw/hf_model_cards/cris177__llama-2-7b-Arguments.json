@@ -1,0 +1,87 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 11008,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": 6738417664,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 32,
+    "parameter_dtypes": {
+      "F16": 6738415616,
+      "F32": 2048
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 4131,
+  "card_text": "---\nlicense: apache-2.0\ndatasets:\n- cris177/Arguments\nlanguage:\n- en\n---\nThis model aims to detect and analyze casual arguments.\n\nModel template:\n```\n<s>[INST] {prompt}\n [/INST]\n```\n\nExample:\n```\n`<`s`>`[INST] Analize the following argument, identifying premises, conclusion, type of argument, and argument validity: \nIf officer smith found a broken window at the crime scene then the arson occurred on elm street, and officer smith found a broken window at the crime scene, hence the arson occurred on elm street.\n [/INST] Premise 1: If officer smith found a broken window at the crime scene then the arson occurred on elm street Premise 2: Officer smith found a broken window at the crime scene Conclusion: The arson occurred on Elm Street Type of argument: modus ponen Validity: True `<`/s`>`\n```\n\nIt was trained on my dataset cris177/Arguments (https://huggingface.co/datasets/cris177/Arguments)\n\n\n# Fine-Tuning a Large Language Model to Learn Arguments\n\nFine-tuning a large language model (LLM) to understand and generate logical arguments is a complex task. This article outlines the steps taken to fine-tune the LLaMA2-7B model, which included generating a dataset of arguments and evaluating the model's performance using a variety of benchmarks. Below are the detailed steps involved in this process.\n\n## Step 1: Generate a List of Statements with Each Respective Negation\n\nThe first step in creating a dataset for argument training involved generating a list of statements and their respective negations. This was accomplished using existing large language models (LLMs). By prompting the LLMs to produce a diverse set of statements and their negations, a foundational dataset was created. For instance:\n\n- Statement: \"The sky is blue.\"\n  - Negation: \"The sky is not blue.\"\n  \n- Statement: \"Cats are mammals.\"\n  - Negation: \"Cats are not mammals.\"\n\n## Step 2: Generate Modus Ponens and Modus Tollens Arguments\n\nUsing combinations of the generated statements, we created lists of modus ponens and modus tollens arguments. \n\n- **Modus Ponens**:\n  - If P, then Q.\n  - P.\n  - Therefore, Q.\n  \n  Example:\n  - If it rains, the ground will be wet.\n  - It is raining.\n  - Therefore, the ground is wet.\n\n- **Modus Tollens**:\n  - If P, then Q.\n  - Not Q.\n  - Therefore, not P.\n  \n  Example:\n  - If it rains, the ground will be wet.\n  - The ground is not wet.\n  - Therefore, it is not raining.\n\n## Step 3: Generate Dataset of Arguments with Labels\n\nNext, we created a comprehensive dataset of arguments, labeling each with its premises, conclusion, argument type (modus ponens or modus tollens), and validity. This structured dataset provided a rich resource for fine-tuning the LLaMA2-7B model. An example of a labeled data point is:\n\n- Premises: \"If it rains, the ground will be wet.\", \"It is raining.\"\n- Conclusion: \"The ground is wet.\"\n- Argument Type: Modus Ponens\n- Validity: Valid\n\n## Step 4: Fine-Tune LLaMA2-7B on the Dataset\n\nWith the dataset prepared, the next step was to fine-tune the LLaMA2-7B model. The fine-tuning process involved training the model on the dataset, adjusting its parameters to improve its understanding and generation of logical arguments. This process included multiple training epochs and evaluations to ensure the model was learning effectively.\n\n## Step 5: Evaluating through Open-LLM-Leaderboard\n\nFinally, the fine-tuned model was evaluated using the Open-LLM-Leaderboard, which benchmarks LLMs through various tests:\n\n- **AI2 Reasoning Challenge (25-shot)**: A set of grade-school science questions.\n- **HellaSwag (10-shot)**: A test of commonsense inference, challenging for state-of-the-art models.\n- **MMLU (5-shot)**: Measures multitask accuracy across 57 tasks, including mathematics, history, computer science, and law.\n- **TruthfulQA (0-shot)**: Evaluates the model's tendency to reproduce common falsehoods found online. Although termed 0-shot, it includes six Q/A pairs for context.\n- **Winogrande (5-shot)**: A difficult benchmark for commonsense reasoning.\n- **GSM8k (5-shot)**: Tests the model's ability to solve multi-step mathematical word problems.\n\n### Evaluation Results\n\nTBD",
+  "fetched_at": "2026-09-22T06:45:48.074108+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "cris177",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "en",
+      "dataset:cris177/Arguments",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "cris177__llama-2-7b-Arguments",
+  "ok": true,
+  "popularity": {
+    "downloads": 25,
+    "downloadsAllTime": 451,
+    "likes": 4,
+    "trendingScore": 0
+  },
+  "repo_id": "cris177/llama-2-7b-Arguments",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-10-04T11:39:14.000Z",
+    "lastModified": "2024-06-14T09:50:13.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

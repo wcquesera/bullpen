@@ -1,0 +1,109 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 131072,
+    "model_type": "llama",
+    "n_parameters": 8030261248,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "BF16": 8030261248
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 128256
+  },
+  "card_chars": 1127,
+  "card_text": "---\nbase_model:\n- jaspionjader/fr-17-8b\n- FuseAI/FuseChat-Llama-3.1-8B-Instruct\nlibrary_name: transformers\ntags:\n- mergekit\n- merge\n\n---\n# merge\n\nThis is a merge of pre-trained language models created using [mergekit](https://github.com/cg123/mergekit).\n\n## Merge Details\n### Merge Method\n\nThis model was merged using the SLERP merge method.\n\n### Models Merged\n\nThe following models were included in the merge:\n* [jaspionjader/fr-17-8b](https://huggingface.co/jaspionjader/fr-17-8b)\n* [FuseAI/FuseChat-Llama-3.1-8B-Instruct](https://huggingface.co/FuseAI/FuseChat-Llama-3.1-8B-Instruct)\n\n### Configuration\n\nThe following YAML configuration was used to produce this model:\n\n```yaml\nslices:\n- sources:\n  - model: jaspionjader/fr-17-8b\n    layer_range:\n    - 0\n    - 32\n  - model: FuseAI/FuseChat-Llama-3.1-8B-Instruct\n    layer_range:\n    - 0\n    - 32\nmerge_method: slerp\nbase_model: jaspionjader/fr-17-8b\nparameters:\n  t:\n  - filter: self_attn\n    value:\n    - 0.12\n    - 0.13\n    - 0.11\n    - 0.14\n    - 0.13\n  - filter: mlp\n    value:\n    - 0.13\n    - 0.12\n    - 0.14\n    - 0.11\n    - 0.12\n  - value: 0.93\ndtype: bfloat16\n```\n",
+  "fetched_at": "2026-09-19T15:01:10.904785+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "jaspionjader/fr-17-8b",
+      "FuseAI/FuseChat-Llama-3.1-8B-Instruct"
+    ],
+    "card_base_models": [
+      "jaspionjader/fr-17-8b",
+      "FuseAI/FuseChat-Llama-3.1-8B-Instruct"
+    ],
+    "merge_tags": [
+      "mergekit",
+      "merge",
+      "base_model:merge:FuseAI/FuseChat-Llama-3.1-8B-Instruct",
+      "base_model:merge:jaspionjader/fr-17-8b"
+    ],
+    "n_base_models": 2,
+    "relations": {
+      "": [
+        "FuseAI/FuseChat-Llama-3.1-8B-Instruct",
+        "jaspionjader/fr-17-8b"
+      ],
+      "merge": [
+        "FuseAI/FuseChat-Llama-3.1-8B-Instruct",
+        "jaspionjader/fr-17-8b"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "jaspionjader",
+    "gated": false,
+    "library_name": "transformers",
+    "license": null,
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "mergekit",
+      "merge",
+      "conversational",
+      "base_model:FuseAI/FuseChat-Llama-3.1-8B-Instruct",
+      "base_model:merge:FuseAI/FuseChat-Llama-3.1-8B-Instruct",
+      "base_model:jaspionjader/fr-17-8b",
+      "base_model:merge:jaspionjader/fr-17-8b",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "fr-18-8b",
+  "ok": true,
+  "popularity": {
+    "downloads": 16,
+    "downloadsAllTime": 57,
+    "likes": 0,
+    "trendingScore": 0
+  },
+  "repo_id": "jaspionjader/fr-18-8b",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2025-01-05T10:01:30.000Z",
+    "lastModified": "2025-01-05T10:06:33.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": true,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

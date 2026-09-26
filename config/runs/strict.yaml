@@ -1,0 +1,45 @@
+# The paper's main protocol (Table 3 and every headline number).
+#
+#   uv run python train.py --config config/runs/strict.yaml
+#   uv run python eval.py  --config config/runs/strict.yaml
+#
+# 5 publisher-grouped folds over models x 3 seeds (a seed redraws the folds and the encoder
+# init), d = 32, the K* = 400-question Fisher interview for the -budget twins, and the
+# width-matched Gaussian floor averaged over 10 draws per width.
+name: strict
+data:
+  slice: data/paper_ckpt/slice.npz        # the paper's cut: 260 models
+  answers: data/paper_ckpt/answers.npz    # the core view reads answers.core.npz beside it
+  view: core                              # every model x the 1,181 core questions
+  raw_dir: data/raw                       # model metadata and label tables
+protocol:
+  fold_scheme: grouped_all                # publisher-grouped model folds
+  k_folds: 5
+  seeds: [0, 1, 2]
+train:
+  dim: 32
+  interview_k: 400                        # K*
+  interview_selector: fisher
+  arms:
+    # the five main-text encoders ...
+    - pca_bits32                          # PCA32-bits
+    - pls_svd_bitsqtext32                 # BULLPEN-bits+q
+    - text_mean768                        # BULLPEN-ans (d = 768)
+    - pls_svd_fusion32                    # BULLPEN-bits+ans
+    - pls_svd_tri32                       # BULLPEN-fused
+    # ... and their -budget twins, placed from the K-question interview only
+    - pca_bits32__interview
+    - pls_svd_bitsqtext32__interview
+    - text_mean768__itext
+    - pls_svd_fusion32__itext
+    - pls_svd_tri32__itext
+    # the run's own single floor draw at each width (the multi-draw floor is below)
+    - null_random32
+    - null_random768
+floor:
+  arms: [null_random32, null_random768]
+  draws: 10
+eval:
+  battery: config/battery.yaml
+  transfer: false                         # true adds the 13 leave-one-benchmark-group-out refits
+out: results/strict

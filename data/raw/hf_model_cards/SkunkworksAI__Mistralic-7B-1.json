@@ -1,0 +1,75 @@
+{
+  "architecture": {
+    "architectures": null,
+    "hidden_size": null,
+    "intermediate_size": null,
+    "max_position_embeddings": null,
+    "model_type": null,
+    "n_parameters": null,
+    "num_attention_heads": null,
+    "num_hidden_layers": null,
+    "num_key_value_heads": null,
+    "parameter_dtypes": {},
+    "torch_dtype": null,
+    "vocab_size": null
+  },
+  "card_chars": 1749,
+  "card_text": "<p><h1> \ud83e\uddbe Mistralic-7B-1 \ud83e\uddbe </h1></p>\n\nSpecial thanks to Together Compute for sponsoring Skunkworks with compute!\n\n**INFERENCE**\n\n```\nimport torch\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\ntorch.set_default_device('cuda')\nsystem_prompt = \"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.\\n\\n\"\nsystem_no_input_prompt = \"Below is an instruction that describes a task. Write a response that appropriately completes the request.\\n\\n\"\n\ndef generate_prompt(instruction, input=None):\n    if input:\n      prompt = f\"### System:\\n{system_prompt}\\n\\n\"\n    else:\n      prompt = f\"### System:\\n{system_no_input_prompt}\\n\\n\"\n\n\n    prompt += f\"### Instruction:\\n{instruction}\\n\\n\"\n    \n    \n    if input:\n        prompt += f\"### Input:\\n{input}\\n\\n\"\n    return prompt + \"\"\"### Response:\\n\"\"\"\n\n\ndevice = \"cuda\" \n\nmodel = AutoModelForCausalLM.from_pretrained(\"SkunkworksAI/Mistralic-7B-1\")\ntokenizer = AutoTokenizer.from_pretrained(\"SkunkworksAI/Mistralic-7B-1\")\n\n\nwhile True:\n    instruction = input(\"Enter Instruction: \")\n    instruction = generate_prompt(instruction)\n    inputs = tokenizer(instruction, return_tensors=\"pt\", return_attention_mask=False)\n\n    outputs = model.generate(**inputs, max_length=1000, do_sample=True, temperature=0.01, use_cache=True, eos_token_id=tokenizer.eos_token_id)\n    text = tokenizer.batch_decode(outputs)[0]\n    print(text)\n```\n\n**EVALUATION**\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/64b7e345f92b20f7a38bf47a/ycpNhdGZHGbai_wslT2Bg.png)\n\nAverage: 0.72157 \n\nFor comparison:\n\n  mistralai/Mistral-7B-v0.1 scores 0.7116\n  \n  mistralai/Mistral-7B-Instruct-v0.1 scores 0.6794\n\n",
+  "fetched_at": "2026-09-22T06:44:37.077428+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "SkunkworksAI",
+    "gated": false,
+    "library_name": "transformers",
+    "license": null,
+    "pipeline_tag": null,
+    "tags": [
+      "transformers",
+      "pytorch",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "SkunkworksAI__Mistralic-7B-1",
+  "ok": true,
+  "popularity": {
+    "downloads": 62,
+    "downloadsAllTime": 36279,
+    "likes": 26,
+    "trendingScore": 0
+  },
+  "repo_id": "SkunkworksAI/Mistralic-7B-1",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-29T23:45:09.000Z",
+    "lastModified": "2023-10-03T22:04:49.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

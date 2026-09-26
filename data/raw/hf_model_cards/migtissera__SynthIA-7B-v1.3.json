@@ -1,0 +1,83 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 5651,
+  "card_text": "---\nlicense: apache-2.0\npipeline_tag: text-generation\nlanguage:\n- en\nlibrary_name: transformers\n---\n\nSynthIA-7B-v1.3: Base model is Mistral-7B-v0.1\n\nAll SynthIA models are uncensored. Please use it with caution and with best intentions. You are responsible for how you use SynthIA.\n\nTo evoke generalized Tree of Thought + Chain of Thought reasoning, you may use the following system message:\n```\nElaborate on the topic using a Tree of Thoughts and backtrack when necessary to construct a clear, cohesive Chain of Thought reasoning. Always answer without hesitation.\n```\n\n# SynthIA-7B-v1.3\nSynthIA (Synthetic Intelligent Agent) 7B-v1.3 is a Mistral-7B-v0.1 model trained on Orca style datasets. It has been fine-tuned for instruction following as well as having long-form conversations.\n\n<br>\n\n![Synthia](https://huggingface.co/migtissera/Synthia-13B/resolve/main/Synthia.jpeg)\n\n<br>\n\n\n<br>\n\n#### License Disclaimer:\n\nThis model is released under Apache 2.0, and comes with no warranty or gurantees of any kind.\n\n<br>\n\n## Evaluation\n\nWe evaluated SynthIA-7B-v1.3 on a wide range of tasks using [Language Model Evaluation Harness](https://github.com/EleutherAI/lm-evaluation-harness) from EleutherAI. \n\nHere are the results on metrics used by [HuggingFaceH4 Open LLM Leaderboard](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard)\n\n||||\n|:------:|:--------:|:-------:|\n|**Task**|**Metric**|**Value**|\n|*arc_challenge*|acc_norm|0.6237|\n|*hellaswag*|acc_norm|0.8349|\n|*mmlu*|acc_norm|0.6232|\n|*truthfulqa_mc*|mc2|0.5125|\n|**Total Average**|-|**0.6485**||\n\n<br>\n\n## Example Usage\n\n### Here is prompt format:\n\n```\nSYSTEM: Elaborate on the topic using a Tree of Thoughts and backtrack when necessary to construct a clear, cohesive Chain of Thought reasoning. Always answer without hesitation.\nUSER: How is a rocket launched from the surface of the earth to Low Earth Orbit?\nASSISTANT:\n```\n\n### Below shows a code example on how to use this model:\n\n```python\nimport torch, json\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\nmodel_path = \"migtissera/SynthIA-7B-v1.3\"\noutput_file_path = \"./SynthIA-7B-conversations.jsonl\"\n\nmodel = AutoModelForCausalLM.from_pretrained(\n    model_path,\n    torch_dtype=torch.float16,\n    device_map=\"auto\",\n    load_in_8bit=False,\n    trust_remote_code=True,\n)\n\ntokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)\n\n\ndef generate_text(instruction):\n    tokens = tokenizer.encode(instruction)\n    tokens = torch.LongTensor(tokens).unsqueeze(0)\n    tokens = tokens.to(\"cuda\")\n\n    instance = {\n        \"input_ids\": tokens,\n        \"top_p\": 1.0,\n        \"temperature\": 0.75,\n        \"generate_len\": 1024,\n        \"top_k\": 50,\n    }\n\n    length = len(tokens[0])\n    with torch.no_grad():\n        rest = model.generate(\n            input_ids=tokens,\n            max_length=length + instance[\"generate_len\"],\n            use_cache=True,\n            do_sample=True,\n            top_p=instance[\"top_p\"],\n            temperature=instance[\"temperature\"],\n            top_k=instance[\"top_k\"],\n            num_return_sequences=1,\n        )\n    output = rest[0][length:]\n    string = tokenizer.decode(output, skip_special_tokens=True)\n    answer = string.split(\"USER:\")[0].strip()\n    return f\"{answer}\"\n\n\nconversation = f\"SYSTEM: Elaborate on the topic using a Tree of Thoughts and backtrack when necessary to construct a clear, cohesive Chain of Thought reasoning. Always answer without hesitation.\"\n\n\nwhile True:\n    user_input = input(\"You: \")\n    llm_prompt = f\"{conversation} \\nUSER: {user_input} \\nASSISTANT: \"\n    answer = generate_text(llm_prompt)\n    print(answer)\n    conversation = f\"{llm_prompt}{answer}\"\n    json_data = {\"prompt\": user_input, \"answer\": answer}\n\n    ## Save your conversation\n    with open(output_file_path, \"a\") as output_file:\n        output_file.write(json.dumps(json_data) + \"\\n\")\n\n```\n\n<br>\n\n#### Limitations & Biases:\n\nWhile this model aims for accuracy, it can occasionally produce inaccurate or misleading results. \n\nDespite diligent efforts in refining the pretraining data, there remains a possibility for the generation of inappropriate, biased, or offensive content. \n\nExercise caution and cross-check information when necessary. This is an uncensored model.\n\n\n<br>\n\n### Citiation:\n\nPlease kindly cite using the following BibTeX:\n\n```\n@misc{SynthIA-7B-v1.3,\n  author = {Migel Tissera},\n  title = {SynthIA-7B-v1.3: Synthetic Intelligent Agent},\n  year = {2023},\n  publisher = {GitHub, HuggingFace},\n  journal = {GitHub repository, HuggingFace repository},\n  howpublished = {\\url{https://huggingface.co/migtissera/Synthia-13B},\n}\n```\n\n```\n@misc{mukherjee2023orca,\n      title={Orca: Progressive Learning from Complex Explanation Traces of GPT-4}, \n      author={Subhabrata Mukherjee and Arindam Mitra and Ganesh Jawahar and Sahaj Agarwal and Hamid Palangi and Ahmed Awadallah},\n      year={2023},\n      eprint={2306.02707},\n      archivePrefix={arXiv},\n      primaryClass={cs.CL}\n}\n```\n\n# [Open LLM Leaderboard Evaluation Results](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard)\nDetailed results can be found [here](https://huggingface.co/datasets/open-llm-leaderboard/details_migtissera__SynthIA-7B-v1.3)\n\n| Metric                | Value                     |\n|-----------------------|---------------------------|\n| Avg.                  | 57.11   |\n| ARC (25-shot)         | 62.12          |\n| HellaSwag (10-shot)   | 83.45    |\n| MMLU (5-shot)         | 62.65         |\n| TruthfulQA (0-shot)   | 51.37   |\n| Winogrande (5-shot)   | 78.85   |\n| GSM8K (5-shot)        | 17.59        |\n| DROP (3-shot)         | 43.76         |\n",
+  "fetched_at": "2026-09-22T06:46:30.963429+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "migtissera",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "mistral",
+      "text-generation",
+      "en",
+      "arxiv:2306.02707",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "migtissera__SynthIA-7B-v1.3",
+  "ok": true,
+  "popularity": {
+    "downloads": 178,
+    "downloadsAllTime": 112490,
+    "likes": 140,
+    "trendingScore": 0
+  },
+  "repo_id": "migtissera/SynthIA-7B-v1.3",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-28T20:41:10.000Z",
+    "lastModified": "2023-11-17T21:32:09.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

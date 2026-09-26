@@ -1,0 +1,39 @@
+# The sample pipeline on the real core subset, rebuilt from the shipped responses: the 260
+# models' recorded answers to the 1,181 core questions are regraded (collect.py), cut
+# (process.py build), embedded offline (process.py embed --encoder hashing:32, or --encoder hf
+# for the paper's BGE encoder), then trained and scored here. See README, "Sample pipeline".
+#
+#   uv run python collect.py --probe data/core/probe.jsonl --models-file data/core/models.txt \
+#       --recorded data/core/responses --raw results/sample/raw
+#   uv run python process.py build --probe data/core/probe.jsonl --raw results/sample/raw \
+#       --meta data/raw --labels data/paper_ckpt/labels --out results/sample/cut
+#   uv run python process.py embed --probe data/core/probe.jsonl --raw results/sample/raw \
+#       --out results/sample/cut --encoder hashing:32
+#   uv run python train.py --config config/runs/sample.yaml
+#   uv run python eval.py  --config config/runs/sample.yaml --no-bootstrap
+#
+# The protocol is strict.yaml at reduced cost: 3 publisher-grouped folds x 1 seed, the five
+# main-text encoders and their -budget twins at K = 400, a 3-draw floor and the quick battery.
+# The paper's numbers come from strict.yaml on data/paper_ckpt, not from this rebuild.
+name: sample
+data:
+  slice: results/sample/cut/slice.npz
+  answers: results/sample/cut/answers.npz
+  raw_dir: data/raw                       # model metadata and label tables
+protocol:
+  fold_scheme: grouped_all
+  k_folds: 3
+  seeds: [0]
+train:
+  dim: 32
+  interview_k: 400
+  interview_selector: fisher
+  arms: [pca_bits32, pls_svd_bitsqtext32, text_mean768, pls_svd_fusion32, pls_svd_tri32,
+         pca_bits32__interview, pls_svd_bitsqtext32__interview, text_mean768__itext,
+         pls_svd_fusion32__itext, pls_svd_tri32__itext, null_random32]
+floor:
+  arms: [null_random32]
+  draws: 3
+eval:
+  battery: config/battery_quick.yaml
+out: results/sample

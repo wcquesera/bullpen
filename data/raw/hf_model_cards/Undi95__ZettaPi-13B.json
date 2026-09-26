@@ -1,0 +1,81 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 778,
+  "card_text": "---\nlicense: cc-by-nc-4.0\n---\n\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/63ab1241ad514ca8d1430003/XfXK31Q5Vyr47U3WNAQD7.png)\n\nJust messing around with OpenOrcaxOpenChat\n\n<!-- description start -->\n## Description\n\nThis repo contains contain fp16 files of ZettaPi-13B.\n<!-- description end -->\n<!-- description start -->\n## Models and LoRA used\n\n\n- Open-Orca/OpenOrcaxOpenChat-Preview2-13B\n- The-Face-Of-Goonery/Huginn-13b-FP16\n- CalderaAI/13B-Legerdemain-L2\n- PygmalionAI/pygmalion-2-13b\n- Undi95/MMSoul-13b-lora\n<!-- description end -->\n<!-- prompt-template start -->\n## Prompt template: Alpaca\n\n```\nBelow is an instruction that describes a task. Write a response that appropriately completes the request.\n\n### Instruction:\n{prompt}\n\n### Response:\n\n```",
+  "fetched_at": "2026-09-22T06:45:16.356584+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "Undi95",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "license:cc-by-nc-4.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "Undi95__ZettaPi-13B",
+  "ok": true,
+  "popularity": {
+    "downloads": 17,
+    "downloadsAllTime": 316,
+    "likes": 1,
+    "trendingScore": 0
+  },
+  "repo_id": "Undi95/ZettaPi-13B",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-21T21:44:50.000Z",
+    "lastModified": "2023-09-22T13:50:44.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

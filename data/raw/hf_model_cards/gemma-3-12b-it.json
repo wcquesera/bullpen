@@ -1,0 +1,527 @@
+{
+  "architecture": {
+    "architectures": [
+      "Gemma3ForConditionalGeneration"
+    ],
+    "hidden_size": null,
+    "intermediate_size": null,
+    "max_position_embeddings": null,
+    "model_type": "gemma3",
+    "n_parameters": 12187325040,
+    "num_attention_heads": null,
+    "num_hidden_layers": null,
+    "num_key_value_heads": null,
+    "parameter_dtypes": {
+      "BF16": 12187325040
+    },
+    "torch_dtype": null,
+    "vocab_size": null
+  },
+  "card_chars": 0,
+  "card_text": null,
+  "fetched_at": "2026-09-19T15:02:22.338972+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 401,
+    "readme": 401
+  },
+  "lineage": {
+    "base_model": [
+      "google/gemma-3-12b-pt"
+    ],
+    "card_base_models": [
+      "google/gemma-3-12b-pt"
+    ],
+    "merge_tags": [],
+    "n_base_models": 1,
+    "relations": {
+      "": [
+        "google/gemma-3-12b-pt"
+      ],
+      "finetune": [
+        "google/gemma-3-12b-pt"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "google",
+    "gated": "manual",
+    "library_name": "transformers",
+    "license": "gemma",
+    "pipeline_tag": "image-text-to-text",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "gemma3",
+      "image-text-to-text",
+      "conversational",
+      "arxiv:1905.07830",
+      "arxiv:1905.10044",
+      "arxiv:1911.11641",
+      "arxiv:1904.09728",
+      "arxiv:1705.03551",
+      "arxiv:1911.01547",
+      "arxiv:1907.10641",
+      "arxiv:1903.00161",
+      "arxiv:2009.03300",
+      "arxiv:2304.06364",
+      "arxiv:2103.03874",
+      "arxiv:2110.14168",
+      "arxiv:2311.12022",
+      "arxiv:2108.07732",
+      "arxiv:2107.03374",
+      "arxiv:2210.03057",
+      "arxiv:2106.03193",
+      "arxiv:1910.11856",
+      "arxiv:2502.12404",
+      "arxiv:2502.21228",
+      "arxiv:2404.16816",
+      "arxiv:2104.12756",
+      "arxiv:2311.16502",
+      "arxiv:2203.10244",
+      "arxiv:2404.12390",
+      "arxiv:1810.12440",
+      "arxiv:1908.02660",
+      "arxiv:2312.11805",
+      "base_model:google/gemma-3-12b-pt",
+      "base_model:finetune:google/gemma-3-12b-pt",
+      "license:gemma",
+      "eval-results",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "gemma-3-12b-it",
+  "ok": true,
+  "popularity": {
+    "downloads": 609903,
+    "downloadsAllTime": 22836201,
+    "likes": 836,
+    "trendingScore": 10
+  },
+  "repo_id": "google/gemma-3-12b-it",
+  "resolved_via": "search",
+  "search_candidates": [
+    [
+      "google/gemma-3-12b-it",
+      609903
+    ],
+    [
+      "mradermacher/gemma-4-12B-it-qat-q4_0-unquantized-uncensored-heretic-v3-i1-GGUF",
+      3781
+    ],
+    [
+      "unsloth/gemma-3-12b-it-GGUF",
+      59949
+    ],
+    [
+      "google/gemma-3-12b-it-qat-q4_0-unquantized",
+      39944
+    ],
+    [
+      "grimjim/gemma-3-12b-it-norm-preserved-biprojected-abliterated",
+      176
+    ],
+    [
+      "mradermacher/gemma-3-12b-it-norm-preserved-biprojected-abliterated-i1-GGUF",
+      1889
+    ],
+    [
+      "OpenVINO/gemma-3-12b-it-int4-ov",
+      133
+    ],
+    [
+      "llmfan46/Gemma-3-12B-IT-Ultra-Uncensored-Heretic-ComfyUI",
+      0
+    ],
+    [
+      "Stick9190/gemma-3-12b-it-int8-convrot",
+      0
+    ],
+    [
+      "ggml-org/gemma-3-12b-it-GGUF",
+      78893
+    ],
+    [
+      "unsloth/gemma-3-12b-it",
+      18134
+    ],
+    [
+      "mlx-community/gemma-3-12b-it-4bit",
+      318651
+    ],
+    [
+      "mlx-community/gemma-3-12b-it-6bit",
+      36
+    ],
+    [
+      "mlx-community/gemma-3-12b-it-8bit",
+      155
+    ],
+    [
+      "mlx-community/gemma-3-12b-it-bf16",
+      13354
+    ],
+    [
+      "gghfez/google_gemma-3-12b-it-GGUF",
+      84
+    ],
+    [
+      "second-state/gemma-3-12b-it-GGUF",
+      1235
+    ],
+    [
+      "gaianet/gemma-3-12b-it-GGUF",
+      465
+    ],
+    [
+      "unsloth/gemma-3-12b-it-bnb-4bit",
+      5025
+    ],
+    [
+      "chatpdflocal/gemma-3-12b-it-gguf",
+      313
+    ],
+    [
+      "google/gemma-3-12b-it-qat-q4_0-gguf",
+      839
+    ],
+    [
+      "bartowski/google_gemma-3-12b-it-GGUF",
+      30029
+    ],
+    [
+      "lmstudio-community/gemma-3-12b-it-GGUF",
+      24242
+    ],
+    [
+      "MaziyarPanahi/gemma-3-12b-it-GGUF",
+      153307
+    ],
+    [
+      "DevQuasar-10/google.gemma-3-12b-it-GGUF",
+      603
+    ],
+    [
+      "duyntnet/gemma-3-12b-it-imatrix-GGUF",
+      1134
+    ],
+    [
+      "NikolayKozloff/gemma-3-12b-it-Q6_K-GGUF",
+      59
+    ],
+    [
+      "NikolayKozloff/gemma-3-12b-it-Q8_0-GGUF",
+      80
+    ],
+    [
+      "NikolayKozloff/gemma-3-12b-it-Q5_K_M-GGUF",
+      93
+    ],
+    [
+      "NikolayKozloff/gemma-3-12b-it-Q5_K_S-GGUF",
+      55
+    ],
+    [
+      "Mungert/gemma-3-12b-it-gguf",
+      1830
+    ],
+    [
+      "nocturne23/gemma-3-12b-it-Q4_K_M-GGUF",
+      1309
+    ],
+    [
+      "Kondara/gemma-3-12b-it-Q4_K_M-GGUF",
+      59
+    ],
+    [
+      "fernandoruiz/gemma-3-12b-it-Q4_0-GGUF",
+      75
+    ],
+    [
+      "leon-se/gemma-3-12b-it-FP8-Dynamic",
+      808
+    ],
+    [
+      "unsloth/gemma-3-12b-it-unsloth-bnb-4bit",
+      4747
+    ],
+    [
+      "TouchNight/gemma-3-12b-it-Q4_K_M-GGUF",
+      45
+    ],
+    [
+      "end000/gemma-3-12b-it-Q4_K_M-GGUF",
+      47
+    ],
+    [
+      "tensorblock/gemma-3-12b-it-GGUF",
+      766
+    ],
+    [
+      "qgallouedec/gemma-3-12b-it-codeforces-SFT-eager-no-packing",
+      9
+    ],
+    [
+      "qgallouedec/gemma-3-12b-it-codeforces-SFT",
+      61
+    ],
+    [
+      "coolsoon/gemma-3-12b-it-Q4_K_M-GGUF",
+      24
+    ],
+    [
+      "Aldaris/gemma-3-12b-it-Q4_K_M-GGUF",
+      74
+    ],
+    [
+      "Luisz21/gemma-3-12b-it-sft-wisdom-1303-Q4_K_M-GGUF",
+      31
+    ],
+    [
+      "qgallouedec/gemma-3-12b-it-codeforces-SFT-eager-packing",
+      6
+    ],
+    [
+      "BasedAGI/Gemma-3-12B-IT-Codeforces-SFT-i1-GGUF",
+      2241
+    ],
+    [
+      "OPEA/gemma-3-12b-it-int4-AutoRound",
+      228
+    ],
+    [
+      "OpenPipe/gemma-3-12b-it-text-only",
+      34
+    ],
+    [
+      "nispa/gemma-3-12b-it-Q5_K_M-GGUF",
+      29
+    ],
+    [
+      "DavidAU/Gemma-3-12b-it-MAX-HORROR-Imatrix-GGUF",
+      1067
+    ],
+    [
+      "turboderp/gemma-3-12b-it-exl2",
+      3
+    ],
+    [
+      "OPEA/gemma-3-12b-it-AutoRound-gguf-q4-0",
+      31
+    ],
+    [
+      "GralchemOz/gemma-3-12b-it-exl2-4_25bpw-h6",
+      8
+    ],
+    [
+      "mradermacher/gemma-3-12b-it-GGUF",
+      342
+    ],
+    [
+      "mradermacher/gemma-3-12b-it-i1-GGUF",
+      2560
+    ],
+    [
+      "ijohn07/gemma-3-12b-it-codeforces-SFT-Q4_K_M-GGUF",
+      14
+    ],
+    [
+      "ijohn07/gemma-3-12b-it-codeforces-SFT-Q6_K-GGUF",
+      14
+    ],
+    [
+      "ijohn07/gemma-3-12b-it-codeforces-SFT-Q8_0-GGUF",
+      27
+    ],
+    [
+      "mlabonne/gemma-3-12b-it-abliterated",
+      2625
+    ],
+    [
+      "mlc-ai/gemma-3-12b-it-q4bf16_0-MLC",
+      13
+    ],
+    [
+      "mlc-ai/gemma-3-12b-it-q4bf16_1-MLC",
+      1
+    ],
+    [
+      "mlc-ai/gemma-3-12b-it-q0bf16-MLC",
+      1
+    ],
+    [
+      "GordonChang/gemma3-12b-it-finetuned-v1",
+      0
+    ],
+    [
+      "mlx-community/gemma-3-text-12b-it-4bit",
+      244
+    ],
+    [
+      "abhishekchohan/gemma-3-12b-it-quantized-W4A16",
+      3528
+    ],
+    [
+      "mlabonne/gemma-3-12b-it-abliterated-GGUF",
+      2262
+    ],
+    [
+      "bartowski/mlabonne_gemma-3-12b-it-abliterated-GGUF",
+      4966
+    ],
+    [
+      "iamdone/gemma-3-12b-it-Q4_K_M-GGUF",
+      20
+    ],
+    [
+      "gaunernst/gemma-3-12b-it-int4-awq",
+      211690
+    ],
+    [
+      "lucyknada/mlabonne_gemma-3-12b-it-abliterated-exl2",
+      2
+    ],
+    [
+      "Aldaris/gemma-3-12b-it-Q4_0-GGUF",
+      39
+    ],
+    [
+      "ariG23498/gemma-3-12b-it-codeforces-SFT-eager-no-packing",
+      2
+    ],
+    [
+      "mobiuslabsgmbh/gemma-3-12b-it_4bitgs64_bfp16_hqq_hf",
+      19
+    ],
+    [
+      "MISHANM/google-gemma-3-12b-it-fp8",
+      19
+    ],
+    [
+      "mradermacher/gemma-3-12b-it-codeforces-SFT-GGUF",
+      350
+    ],
+    [
+      "mradermacher/gemma-3-12b-it-codeforces-SFT-i1-GGUF",
+      1211
+    ],
+    [
+      "HackerCIS/Pong_BrainAI_Gemma3-12b-it-v1",
+      0
+    ],
+    [
+      "hildaray/gemma-3-12b-it-mlx-3Bit",
+      27
+    ],
+    [
+      "yeop0000/gemma-3-12b-it-Q4_K_M-GGUF",
+      29
+    ],
+    [
+      "przemekmroczek/gemma-3-12b-it-mlx-4Bit",
+      30
+    ],
+    [
+      "kinwo/gemma-3-12b-it-unsloth-bnb-4bit-finetune-bf16",
+      14
+    ],
+    [
+      "kertiz666/gemma-3-12b-it-Q6_K-GGUF",
+      11
+    ],
+    [
+      "kertiz666/gemma-3-12b-it-Q5_K_M-GGUF",
+      16
+    ],
+    [
+      "kertiz666/gemma-3-12b-it-Q8_0-GGUF",
+      15
+    ],
+    [
+      "kertiz666/gemma-3-12b-it-Q4_K_M-GGUF",
+      11
+    ],
+    [
+      "Lowkey-Loki/gemma-3-12b-it-textonly-mlx-6bit",
+      25
+    ],
+    [
+      "Lowkey-Loki/gemma-3-12b-it-textonly-mlx-4bit",
+      19
+    ],
+    [
+      "huihui-ai/gemma-3-12b-it-abliterated",
+      146
+    ],
+    [
+      "mlc-ai/gemma-3-12b-it-q4f32_1-MLC",
+      2
+    ],
+    [
+      "mlc-ai/gemma-3-12b-it-q4f16_1-MLC",
+      6
+    ],
+    [
+      "bobwu/gemma-3-12b-it-abliterated-mlx-4Bit",
+      67
+    ],
+    [
+      "wqerrewetw/gemma-3-12b-it-abliterated-Q4_K_M-GGUF",
+      51
+    ],
+    [
+      "leolu-1015/gemma-3-12b-it-Q2_K-GGUF",
+      45
+    ],
+    [
+      "mssongit/gemma3-it-12b-it-v1",
+      7
+    ],
+    [
+      "Otakadelic/gemma-3-12b-it-abliterated-Q8_0-GGUF",
+      39
+    ],
+    [
+      "Otakadelic/gemma-3-12b-it-abliterated-Q4_K_M-GGUF",
+      136
+    ],
+    [
+      "Otakadelic/gemma-3-12b-it-abliterated-Q6_K-GGUF",
+      64
+    ],
+    [
+      "circulus/gemma-3-12b-it-gptq",
+      420
+    ],
+    [
+      "mlc-ai/gemma-3-12b-it-q0f32-MLC",
+      2
+    ],
+    [
+      "mssongit/gemma3-it-12b-it-v2",
+      7
+    ]
+  ],
+  "timestamps": {
+    "createdAt": "2025-03-01T19:11:34.000Z",
+    "lastModified": "2025-03-21T20:28:56.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

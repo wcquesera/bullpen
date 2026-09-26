@@ -1,0 +1,408 @@
+{
+  "architecture": {
+    "architectures": [
+      "GraniteForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 12800,
+    "max_position_embeddings": 131072,
+    "model_type": "granite",
+    "n_parameters": 8170848256,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "BF16": 8170848256
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 49155
+  },
+  "card_chars": 20450,
+  "card_text": "---\npipeline_tag: text-generation\ninference: false\nlicense: apache-2.0\nlibrary_name: transformers\ntags:\n- language\n- granite-3.1\nbase_model:\n- ibm-granite/granite-3.1-8b-base\nnew_version: ibm-granite/granite-3.3-8b-instruct\n---\n\n# Granite-3.1-8B-Instruct\n\n**Model Summary:**\nGranite-3.1-8B-Instruct is a 8B parameter long-context instruct model finetuned from Granite-3.1-8B-Base using a combination of open source instruction datasets with permissive license and internally collected synthetic datasets tailored for solving long context problems. This model is developed using a diverse set of techniques with a structured chat format, including supervised finetuning, model alignment using reinforcement learning, and model merging.\n\n- **Developers:** Granite Team, IBM\n- **GitHub Repository:** [ibm-granite/granite-3.1-language-models](https://github.com/ibm-granite/granite-3.1-language-models)\n- **Website**: [Granite Docs](https://www.ibm.com/granite/docs/)\n- **Paper:** [Granite 3.1 Language Models (coming soon)](https://huggingface.co/collections/ibm-granite/granite-31-language-models-6751dbbf2f3389bec5c6f02d) \n- **Release Date**: December 18th, 2024\n- **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)\n\n**Supported Languages:** \nEnglish, German, Spanish, French, Japanese, Portuguese, Arabic, Czech, Italian, Korean, Dutch, and Chinese. Users may finetune Granite 3.1 models for languages beyond these 12 languages.\n\n**Intended Use:** \nThe model is designed to respond to general instructions and can be used to build AI assistants for multiple domains, including business applications.\n\n*Capabilities*\n* Summarization\n* Text classification\n* Text extraction\n* Question-answering\n* Retrieval Augmented Generation (RAG)\n* Code related tasks\n* Function-calling tasks\n* Multilingual dialog use cases\n* Long-context tasks including long document/meeting summarization, long document QA, etc.\n\n**Generation:** \nThis is a simple example of how to use Granite-3.1-8B-Instruct model.\n\nInstall the following libraries:\n\n```shell\npip install torch torchvision torchaudio\npip install accelerate\npip install transformers\n```\nThen, copy the snippet from the section that is relevant for your use case.\n\n```python\nimport torch\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\ndevice = \"auto\"\nmodel_path = \"ibm-granite/granite-3.1-8b-instruct\"\ntokenizer = AutoTokenizer.from_pretrained(model_path)\n# drop device_map if running on CPU\nmodel = AutoModelForCausalLM.from_pretrained(model_path, device_map=device)\nmodel.eval()\n# change input text as desired\nchat = [\n    { \"role\": \"user\", \"content\": \"Please list one IBM Research laboratory located in the United States. You should only output its name and location.\" },\n]\nchat = tokenizer.apply_chat_template(chat, tokenize=False, add_generation_prompt=True)\n# tokenize the text\ninput_tokens = tokenizer(chat, return_tensors=\"pt\").to(device)\n# generate output tokens\noutput = model.generate(**input_tokens, \n                        max_new_tokens=100)\n# decode output tokens into text\noutput = tokenizer.batch_decode(output)\n# print output\nprint(output)\n```\n**Evaluation Results:**\n<table>\n  <caption><b>HuggingFace Open LLM Leaderboard V1</b></caption>\n<thead>\n  <tr>\n    <th style=\"text-align:left; background-color: #001d6c; color: white;\">Models</th>\n    <th style=\"text-align:center; background-color: #001d6c; color: white;\">ARC-Challenge</th>\n    <th style=\"text-align:center; background-color: #001d6c; color: white;\">Hellaswag</th>\n    <th style=\"text-align:center; background-color: #001d6c; color: white;\">MMLU</th>\n    <th style=\"text-align:center; background-color: #001d6c; color: white;\">TruthfulQA</th>\n    <th style=\"text-align:center; background-color: #001d6c; color: white;\">Winogrande</th>\n    <th style=\"text-align:center; background-color: #001d6c; color: white;\">GSM8K</th>\n    <th style=\"text-align:center; background-color: #001d6c; color: white;\">Avg</th>\n  </tr></thead>\n  <tbody>\n  <tr>\n    <td style=\"text-align:left; background-color: #DAE8FF; color: black;\">Granite-3.1-8B-Instruct</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">62.62</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">84.48</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">65.34</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">66.23</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">75.37</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">73.84</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">71.31</td>\n  </tr>\n  <tr>\n    <td style=\"text-align:left; background-color: #FFFFFF; color: #2D2D2D;\">Granite-3.1-2B-Instruct</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">54.61</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">75.14</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">55.31</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">59.42</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">67.48</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">52.76</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">60.79</td>\n  </tr>\n  <tr>\n    <td style=\"text-align:left; background-color: #FFFFFF; color: #2D2D2D;\">Granite-3.1-3B-A800M-Instruct</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">50.42</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">73.01</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">52.19</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">49.71</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">64.87</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">48.97</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">56.53</td>\n  </tr>\n  <tr>\n    <td style=\"text-align:left; background-color: #FFFFFF; color: #2D2D2D;\">Granite-3.1-1B-A400M-Instruct</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">42.66</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">65.97</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">26.13</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">46.77</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">62.35</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">33.88</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">46.29</td>\n  </tr>\n</tbody></table>\n\n<table>\n  <caption><b>HuggingFace Open LLM Leaderboard V2</b></caption>\n<thead>\n  <tr>\n    <th style=\"text-align:left; background-color: #001d6c; color: white;\">Models</th>\n    <th style=\"text-align:center; background-color: #001d6c; color: white;\">IFEval</th>\n    <th style=\"text-align:center; background-color: #001d6c; color: white;\">BBH</th>\n    <th style=\"text-align:center; background-color: #001d6c; color: white;\">MATH Lvl 5</th>\n    <th style=\"text-align:center; background-color: #001d6c; color: white;\">GPQA</th>\n    <th style=\"text-align:center; background-color: #001d6c; color: white;\">MUSR</th>\n    <th style=\"text-align:center; background-color: #001d6c; color: white;\">MMLU-Pro</th>\n    <th style=\"text-align:center; background-color: #001d6c; color: white;\">Avg</th>\n  </tr></thead>\n  <tbody>\n  <tr>\n    <td style=\"text-align:left; background-color: #DAE8FF; color: black;\">Granite-3.1-8B-Instruct</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">72.08</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">34.09</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">21.68</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">8.28</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">19.01</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">28.19</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">30.55</td>\n  </tr>\n  <tr>\n    <td style=\"text-align:left; background-color: #FFFFFF; color: #2D2D2D;\">Granite-3.1-2B-Instruct</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">62.86</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">21.82</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">11.33</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">5.26</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">4.87</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">20.21</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">21.06</td>\n  </tr>\n  <tr>\n    <td style=\"text-align:left; background-color: #FFFFFF; color: #2D2D2D;\">Granite-3.1-3B-A800M-Instruct</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">55.16</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">16.69</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">10.35</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">5.15</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">2.51</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">12.75</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">17.1</td>\n  </tr>\n  <tr>\n    <td style=\"text-align:left; background-color: #FFFFFF; color: #2D2D2D;\">Granite-3.1-1B-A400M-Instruct</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">46.86</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">6.18</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">4.08</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">0</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">0.78</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">2.41</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: #2D2D2D;\">10.05</td>\n  </tr>\n</tbody></table>\n\n**Model Architecture:**\nGranite-3.1-8B-Instruct is based on a decoder-only dense transformer architecture. Core components of this architecture are: GQA and RoPE, MLP with SwiGLU, RMSNorm, and shared input/output embeddings.\n\n<table>\n<thead>\n  <tr>\n    <th style=\"text-align:left; background-color: #001d6c; color: white;\">Model</th>\n    <th style=\"text-align:center; background-color: #001d6c; color: white;\">2B Dense</th>\n    <th style=\"text-align:center; background-color: #001d6c; color: white;\">8B Dense</th>\n    <th style=\"text-align:center; background-color: #001d6c; color: white;\">1B MoE</th>\n    <th style=\"text-align:center; background-color: #001d6c; color: white;\">3B MoE</th>\n  </tr></thead>\n<tbody>\n  <tr>\n    <td style=\"text-align:left; background-color: #FFFFFF; color: black;\">Embedding size</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">2048</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">4096</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">1024</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">1536</td>\n  </tr>\n  <tr>\n    <td style=\"text-align:left; background-color: #FFFFFF; color: black;\">Number of layers</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">40</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">40</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">24</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">32</td>\n  </tr>\n  <tr>\n    <td style=\"text-align:left; background-color: #FFFFFF; color: black;\">Attention head size</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">64</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">128</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">64</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">64</td>\n  </tr>\n  <tr>\n    <td style=\"text-align:left; background-color: #FFFFFF; color: black;\">Number of attention heads</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">32</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">32</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">16</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">24</td>\n  </tr>\n  <tr>\n    <td style=\"text-align:left; background-color: #FFFFFF; color: black;\">Number of KV heads</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">8</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">8</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">8</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">8</td>\n  </tr>\n  <tr>\n    <td style=\"text-align:left; background-color: #FFFFFF; color: black;\">MLP hidden size</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">8192</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">12800</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">512</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">512</td>\n  </tr>\n  <tr>\n    <td style=\"text-align:left; background-color: #FFFFFF; color: black;\">MLP activation</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">SwiGLU</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">SwiGLU</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">SwiGLU</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">SwiGLU</td>\n  </tr>\n  <tr>\n    <td style=\"text-align:left; background-color: #FFFFFF; color: black;\">Number of experts</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">\u2014</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">\u2014</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">32</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">40</td>\n  </tr>\n  <tr>\n    <td style=\"text-align:left; background-color: #FFFFFF; color: black;\">MoE TopK</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">\u2014</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">\u2014</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">8</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">8</td>\n  </tr>\n  <tr>\n    <td style=\"text-align:left; background-color: #FFFFFF; color: black;\">Initialization std</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">0.1</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">0.1</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">0.1</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">0.1</td>\n  </tr>\n  <tr>\n    <td style=\"text-align:left; background-color: #FFFFFF; color: black;\">Sequence length</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">128K</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">128K</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">128K</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">128K</td>\n  </tr>\n  <tr>\n    <td style=\"text-align:left; background-color: #FFFFFF; color: black;\">Position embedding</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">RoPE</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">RoPE</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">RoPE</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">RoPE</td>\n  </tr>\n  <tr>\n    <td style=\"text-align:left; background-color: #FFFFFF; color: black;\"># Parameters</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">2.5B</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">8.1B</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">1.3B</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">3.3B</td>\n  </tr>\n  <tr>\n    <td style=\"text-align:left; background-color: #FFFFFF; color: black;\"># Active parameters</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">2.5B</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">8.1B</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">400M</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">800M</td>\n  </tr>\n  <tr>\n    <td style=\"text-align:left; background-color: #FFFFFF; color: black;\"># Training tokens</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">12T</td>\n    <td style=\"text-align:center; background-color: #DAE8FF; color: black;\">12T</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">10T</td>\n    <td style=\"text-align:center; background-color: #FFFFFF; color: black;\">10T</td>\n  </tr>\n</tbody></table>\n\n**Training Data:** \nOverall, our SFT data is largely comprised of three key sources: (1) publicly available datasets with permissive license, (2) internal synthetic data targeting specific capabilities including long-context tasks, and (3) very small amounts of human-curated data. A detailed attribution of datasets can be found in the [Granite 3.0 Technical Report](https://github.com/ibm-granite/granite-3.0-language-models/blob/main/paper.pdf), [Granite 3.1 Technical Report (coming soon)](https://huggingface.co/collections/ibm-granite/granite-31-language-models-6751dbbf2f3389bec5c6f02d), and [Accompanying Author List](https://github.com/ibm-granite/granite-3.0-language-models/blob/main/author-ack.pdf).\n\n**Infrastructure:**\nWe train Granite 3.1 Language Models using IBM's super computing cluster, Blue Vela, which is outfitted with NVIDIA H100 GPUs. This cluster provides a scalable and efficient infrastructure for training our models over thousands of GPUs.\n\n**Ethical Considerations and Limitations:** \nGranite 3.1 Instruct Models are primarily finetuned using instruction-response pairs mostly in English, but also multilingual data covering eleven languages. Although this model can handle multilingual dialog use cases, its performance might not be similar to English tasks. In such case, introducing a small number of examples (few-shot) can help the model in generating more accurate outputs. While this model has been aligned by keeping safety in consideration, the model may in some cases produce inaccurate, biased, or unsafe responses to user prompts. So we urge the community to use this model with proper safety testing and tuning tailored for their specific tasks.\n\n**Resources**\n- \u2b50\ufe0f Learn about the latest updates with Granite: https://www.ibm.com/granite\n- \ud83d\udcc4 Get started with tutorials, best practices, and prompt engineering advice: https://www.ibm.com/granite/docs/\n- \ud83d\udca1 Learn about the latest Granite learning resources: https://ibm.biz/granite-learning-resources\n\n<!-- ## Citation\n```\n@misc{granite-models,\n  author = {author 1, author2, ...},\n  title = {},\n  journal = {},\n  volume = {},\n  year = {2024},\n  url = {https://arxiv.org/abs/0000.00000},\n}\n``` -->",
+  "fetched_at": "2026-09-19T15:02:03.603725+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "ibm-granite/granite-3.1-8b-base"
+    ],
+    "card_base_models": [
+      "ibm-granite/granite-3.1-8b-base"
+    ],
+    "merge_tags": [],
+    "n_base_models": 1,
+    "relations": {
+      "": [
+        "ibm-granite/granite-3.1-8b-base"
+      ],
+      "finetune": [
+        "ibm-granite/granite-3.1-8b-base"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "ibm-granite",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "granite",
+      "text-generation",
+      "language",
+      "granite-3.1",
+      "conversational",
+      "arxiv:0000.00000",
+      "base_model:ibm-granite/granite-3.1-8b-base",
+      "base_model:finetune:ibm-granite/granite-3.1-8b-base",
+      "license:apache-2.0",
+      "eval-results",
+      "region:us"
+    ]
+  },
+  "model_key": "Granite-3.1-8B-Instruct",
+  "ok": true,
+  "popularity": {
+    "downloads": 41001,
+    "downloadsAllTime": 1719238,
+    "likes": 168,
+    "trendingScore": 0
+  },
+  "repo_id": "ibm-granite/granite-3.1-8b-instruct",
+  "resolved_via": "search",
+  "search_candidates": [
+    [
+      "braindao/iq-code-evmind-v3.1-granite-8b-instruct-expert",
+      18
+    ],
+    [
+      "braindao/iq-code-evmind-v3.1-granite-8b-instruct-average",
+      18
+    ],
+    [
+      "braindao/iq-code-evmind-v3.1-granite-8b-instruct-beginner",
+      15
+    ],
+    [
+      "braindao/iq-code-evmind-v3.1-granite-8b-instruct-all",
+      19
+    ],
+    [
+      "ibm-granite/granite-3.1-8b-instruct",
+      41001
+    ],
+    [
+      "RedHatAI/granite-3.1-8b-instruct-GGUF",
+      13
+    ],
+    [
+      "bartowski/granite-3.1-8b-instruct-GGUF",
+      5093
+    ],
+    [
+      "lmstudio-community/granite-3.1-8b-instruct-GGUF",
+      3757
+    ],
+    [
+      "NikolayKozloff/granite-3.1-8b-instruct-Q8_0-GGUF",
+      21
+    ],
+    [
+      "DevQuasar-5/ibm-granite.granite-3.1-8b-instruct-GGUF",
+      1209
+    ],
+    [
+      "Joseph717171/Granite-3.1-8B-instruct-OQ8_0-F32.EF32.IQ4_K-Q8_0-GGUF",
+      16
+    ],
+    [
+      "ticlazau/granite-3.1-8b-instruct-GGUF",
+      22
+    ],
+    [
+      "QuantFactory/granite-3.1-8b-instruct-GGUF",
+      779
+    ],
+    [
+      "mradermacher/granite-3.1-8b-instruct-GGUF",
+      248
+    ],
+    [
+      "mradermacher/granite-3.1-8b-instruct-i1-GGUF",
+      343
+    ],
+    [
+      "mradermacher/granite-3.1-8b-instruct-abliterated-GGUF",
+      358
+    ],
+    [
+      "mradermacher/granite-3.1-8b-instruct-abliterated-i1-GGUF",
+      120
+    ],
+    [
+      "DevQuasar-5/huihui-ai.granite-3.1-8b-instruct-abliterated-GGUF",
+      128
+    ],
+    [
+      "duyntnet/granite-3.1-8b-instruct-imatrix-GGUF",
+      157
+    ],
+    [
+      "jakiAJK/granite-3.1-8b-instruct_GPTQ-int4",
+      26
+    ],
+    [
+      "jakiAJK/granite-3.1-8b-instruct_AWQ",
+      75
+    ],
+    [
+      "itlwas/granite-3.1-8b-instruct-Q4_K_M-GGUF",
+      18
+    ],
+    [
+      "SandLogicTechnologies/Granite-3.1-8b-instruct-GGUF",
+      23
+    ],
+    [
+      "lm-kit/granite-3.1-8b-instruct-gguf",
+      46
+    ],
+    [
+      "turboderp/granite-3.1-8b-instruct-exl2",
+      0
+    ],
+    [
+      "tensorblock/granite-3.1-8b-instruct-GGUF",
+      158
+    ],
+    [
+      "mindw96/Granite-3.1-8B-instruct-Korean",
+      9
+    ],
+    [
+      "mradermacher/Granite-3.1-8B-instruct-Korean-GGUF",
+      186
+    ],
+    [
+      "mradermacher/Granite-3.1-8B-instruct-Korean-i1-GGUF",
+      191
+    ],
+    [
+      "Alcoft/granite-3.1-8b-instruct-GGUF",
+      149
+    ],
+    [
+      "ZeroWw/granite-3.1-8b-instruct-GGUF",
+      44
+    ],
+    [
+      "RedHatAI/granite-3.1-8b-instruct-FP8-dynamic",
+      630
+    ],
+    [
+      "RedHatAI/granite-3.1-8b-instruct-quantized.w4a16",
+      1461
+    ],
+    [
+      "RedHatAI/granite-3.1-8b-instruct-quantized.w8a8",
+      456
+    ],
+    [
+      "Echo9Zulu/granite-3.1-8b-instruct-int4_asym-ov",
+      6
+    ],
+    [
+      "ZeroWw/granite-3.1-8b-instruct-abliterated-GGUF",
+      43
+    ],
+    [
+      "vikram-fresche/granite-3.1-8b-instruct",
+      14
+    ],
+    [
+      "rios1/granite-3.1-8b-instruct",
+      0
+    ],
+    [
+      "rios1/granite-3.1-8b-instruct-KW2",
+      34
+    ],
+    [
+      "cgus/granite-3.1-8b-instruct-exl2",
+      8
+    ],
+    [
+      "async0x42/granite-3.1-8b-instruct-exl2_4.65bpw",
+      9
+    ],
+    [
+      "nm-testing/granite-3.1-8b-instruct-FP8-Dynamic",
+      7
+    ],
+    [
+      "nm-testing/granite-3.1-8b-instruct-W8A8-Dynamic-Per-Token",
+      4
+    ],
+    [
+      "nm-testing/granite-3.1-8b-instruct-W4A16-G128",
+      13
+    ],
+    [
+      "nm-testing/granite-3.1-8b-instruct2of4-sparse",
+      7
+    ],
+    [
+      "nm-testing/granite-3.1-8b-instruct2of4-W8A8-FP8-Dynamic-Per-Token",
+      15
+    ],
+    [
+      "moshik1/granite-3.1-8b-instruct-ZipNN",
+      7
+    ],
+    [
+      "rios1/granite-3.1-8b-instruct-KW3",
+      4
+    ],
+    [
+      "cgus/granite-3.1-8b-instruct-abliterated-exl2",
+      7
+    ],
+    [
+      "TheMelonGod/granite-3.1-8b-instruct-exl2",
+      7
+    ],
+    [
+      "barbodnaj/granite-3.1-8b-instruct-test-data-analyzer-qlora",
+      0
+    ],
+    [
+      "BernTheCreator/Granite-3.1-8b-Instruct-Abliterated",
+      3
+    ],
+    [
+      "msyukorai/granite-3.1-8b-instruct-Q4_0-GGUF",
+      10
+    ],
+    [
+      "qualcomm/IBM-Granite-v3.1-8B-Instruct",
+      0
+    ],
+    [
+      "Lucy-in-the-Sky/granite-3.1-8b-instruct-Q4_K_M-GGUF",
+      39
+    ],
+    [
+      "Lucy-in-the-Sky/granite-3.1-8b-instruct-Q6_K-GGUF",
+      15
+    ],
+    [
+      "Lucy-in-the-Sky/granite-3.1-8b-instruct-Q8_0-GGUF",
+      8
+    ],
+    [
+      "ObeJ/granite-3.1-8b-instruct-Q8_0-GGUF",
+      25
+    ],
+    [
+      "rios1/PSGER_010325_Knowl_skills_abbrev_granite-3.1-8b-instruct",
+      9
+    ],
+    [
+      "rios1/PSGER_280225_Knowl_skills_granite-3.1-8b-instruct",
+      4
+    ],
+    [
+      "rios1/PSGER_260225_Knowl_granite-3.1-8b-instruct",
+      4
+    ],
+    [
+      "rios1/PSGER_010325_Knowl_skills_abbrev2epochs_granite-3.1-8b-instruct",
+      3
+    ],
+    [
+      "rios1/PSGER_280225_Knowl_skills_granite-3.1-8b-instruct_lora_alpha_multiplied_0.9",
+      4
+    ],
+    [
+      "TobiasGrahl/PSGER-090325-granite-3.1-8b-instruct",
+      4
+    ],
+    [
+      "unsoundpx/granite-3.1-8b-instruct-awq",
+      10
+    ],
+    [
+      "cobrakenji/granite-3.1-8b-instruct-Q4_K_M-GGUF",
+      17
+    ],
+    [
+      "RichardErkhov/ibm-granite_-_granite-3.1-2b-instruct-8bits",
+      4
+    ],
+    [
+      "SimoneManai/granite-3.1-8b-instruct-Empathy",
+      8
+    ],
+    [
+      "RedHatAI/granite-3.1-8b-instruct",
+      131
+    ],
+    [
+      "mrutkows/granite-3.1-8b-instruct-GGUF",
+      148
+    ],
+    [
+      "Mungert/granite-3.1-8b-instruct-GGUF",
+      494
+    ],
+    [
+      "tensorblock/RedHatAI_granite-3.1-8b-instruct-GGUF",
+      50
+    ],
+    [
+      "keisuke-miyako/granite-3.1-8b-instruct-onnx-int4",
+      4
+    ],
+    [
+      "rovnerivan/iq-code-evmind-v3.1-granite-8b-instruct-all-IQ4_XS-GGUF",
+      24
+    ],
+    [
+      "havask/Granite-3.1-8b-instruct-ft",
+      8
+    ],
+    [
+      "drawais/Granite-3.1-8B-Instruct-AWQ-INT4",
+      46
+    ],
+    [
+      "NostraEmpire/mirror-granite-3.1-8b-instruct",
+      298
+    ]
+  ],
+  "timestamps": {
+    "createdAt": "2024-12-06T19:56:54.000Z",
+    "lastModified": "2025-04-16T14:57:57.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

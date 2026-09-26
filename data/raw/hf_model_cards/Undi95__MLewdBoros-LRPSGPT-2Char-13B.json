@@ -1,0 +1,83 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 1319,
+  "card_text": "---\nlicense: cc-by-nc-4.0\ntags:\n- not-for-all-audiences\n- nsfw\n---\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/63ab1241ad514ca8d1430003/DKLTsIPoJSfs8okxVCLiw.png)\n\nThis model is based on MLewdBoros merged with the ShareGPT-13b-qloras for \"2 character\".\n<!-- description start -->\n## Description\n\nThis repo contains fp16 files of MLewdBoros-LRPSGPT-2Char-13B, and is made to be used with character card containing \"TWO PERSONAS\".\n<!-- description end -->\n<!-- description start -->\n## LoRA used\n\nhttps://huggingface.co/royallab/LimaRP-ShareGPT-13b-qloras/tree/main/prompt-a/twochar\n<!-- description end -->\n<!-- prompt-template start -->\n## Prompt template: Custom\n\n```\nEnter roleplay mode. You are currently %{having a conversation|in conversation|in a roleplay chat} with <SECOND>, whose %{traits are|persona is|characteristics are}:\n<SECOND PERSONA>\n%{You are|Play the role of|Take the role of} <FIRST> with the following %{persona|definitions|character sheet|traits}:\n<FIRST PERSONA>\n%{In addition|Additionally|Also}, %{keep the following scenario in mind|remember this scenario|pay attention to this scenario}:\n<SCENARIO>\n```\nOr try to use Chat without instruction.\n\nMore info: https://huggingface.co/royallab/LimaRP-ShareGPT-13b-qloras/blob/main/prompt-a/README.md\n\nSpecial thanks to Sushi \u2665",
+  "fetched_at": "2026-09-22T06:44:49.351948+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "Undi95",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "not-for-all-audiences",
+      "nsfw",
+      "license:cc-by-nc-4.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "Undi95__MLewdBoros-LRPSGPT-2Char-13B",
+  "ok": true,
+  "popularity": {
+    "downloads": 24,
+    "downloadsAllTime": 920,
+    "likes": 18,
+    "trendingScore": 0.1
+  },
+  "repo_id": "Undi95/MLewdBoros-LRPSGPT-2Char-13B",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-13T15:46:40.000Z",
+    "lastModified": "2023-09-13T17:49:41.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

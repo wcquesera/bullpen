@@ -1,0 +1,29 @@
+# Shared readout constants: the ridge grid of the out-of-fold heads, the bootstrap
+# defaults, the neighbour metrics and the shrinkage grid.
+
+ridge_alphas:
+- 0.01
+- 0.1
+- 1.0
+- 10.0
+- 100.0
+- 1000.0
+n_boot: 10000
+bootstrap_alpha: 0.05
+neighbour_metrics:
+- cosine
+- euclidean
+- euclidean_z
+target_reliability: 0.8
+lambda_grid:
+- 0.0
+- 0.5
+- 1.0
+- 2.0
+- 4.0
+- 8.0
+- 16.0
+- 32.0
+- 64.0
+- 128.0
+- 256.0

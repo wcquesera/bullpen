@@ -1,0 +1,87 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 11008,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": 8829407232,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 48,
+    "num_key_value_heads": 4,
+    "parameter_dtypes": {
+      "BF16": 8829407232
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 64000
+  },
+  "card_chars": 5593,
+  "card_text": "---\nlicense: apache-2.0\n---\n<div align=\"center\">\n\n<picture> \n  <img src=\"https://raw.githubusercontent.com/01-ai/Yi/main/assets/img/Yi_logo_icon_light.svg\" width=\"150px\">\n</picture>\n\n</div>\n\n<p align=\"center\">\n  <a href=\"https://github.com/01-ai\">\ud83d\udc19 GitHub</a> \u2022\n  <a href=\"https://discord.gg/hYUwWddeAu\">\ud83d\udc7e Discord</a> \u2022\n  <a href=\"https://twitter.com/01ai_yi\">\ud83d\udc24 Twitter</a> \u2022\n  <a href=\"https://github.com/01-ai/Yi-1.5/issues/2\">\ud83d\udcac WeChat</a> \n  <br/>\n  <a href=\"https://arxiv.org/abs/2403.04652\">\ud83d\udcdd Paper</a> \u2022\n  <a href=\"https://01-ai.github.io/\">\ud83d\udcaa Tech Blog</a> \u2022\n  <a href=\"https://github.com/01-ai/Yi/tree/main?tab=readme-ov-file#faq\">\ud83d\ude4c FAQ</a> \u2022\n  <a href=\"https://github.com/01-ai/Yi/tree/main?tab=readme-ov-file#learning-hub\">\ud83d\udcd7 Learning Hub</a>\n</p>\n\n# Intro\n\nYi-1.5 is an upgraded version of Yi. It is continuously pre-trained on Yi with a high-quality corpus of 500B tokens and fine-tuned on 3M diverse fine-tuning samples. \n\nCompared with Yi, Yi-1.5 delivers stronger performance in coding, math, reasoning, and instruction-following capability, while still maintaining excellent capabilities in language understanding, commonsense reasoning, and reading comprehension.\n\n<div align=\"center\">\n  \nModel | Context Length | Pre-trained Tokens\n| :------------: | :------------: | :------------: |\n| Yi-1.5 | 4K, 16K, 32K | 3.6T\n\n</div>\n\n# Models\n\n- Chat models\n\n  <div align=\"center\">\n  \n  | Name            | Download                                                                                                                                                            |\n  | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\n  | Yi-1.5-34B-Chat | \u2022 [\ud83e\udd17 Hugging Face](https://huggingface.co/collections/01-ai/yi-15-2024-05-663f3ecab5f815a3eaca7ca8) \u2022 [\ud83e\udd16 ModelScope](https://www.modelscope.cn/organization/01ai) \u2022 [\ud83d\udfe3 wisemodel](https://wisemodel.cn/organization/01.AI)|\n  | Yi-1.5-34B-Chat-16K  | \u2022 [\ud83e\udd17 Hugging Face](https://huggingface.co/collections/01-ai/yi-15-2024-05-663f3ecab5f815a3eaca7ca8) \u2022 [\ud83e\udd16 ModelScope](https://www.modelscope.cn/organization/01ai) \u2022 [\ud83d\udfe3 wisemodel](https://wisemodel.cn/organization/01.AI) |\n  | Yi-1.5-9B-Chat  | \u2022 [\ud83e\udd17 Hugging Face](https://huggingface.co/collections/01-ai/yi-15-2024-05-663f3ecab5f815a3eaca7ca8) \u2022 [\ud83e\udd16 ModelScope](https://www.modelscope.cn/organization/01ai) \u2022 [\ud83d\udfe3 wisemodel](https://wisemodel.cn/organization/01.AI) |\n  | Yi-1.5-9B-Chat-16K  | \u2022 [\ud83e\udd17 Hugging Face](https://huggingface.co/collections/01-ai/yi-15-2024-05-663f3ecab5f815a3eaca7ca8) \u2022 [\ud83e\udd16 ModelScope](https://www.modelscope.cn/organization/01ai) \u2022 [\ud83d\udfe3 wisemodel](https://wisemodel.cn/organization/01.AI) |\n  | Yi-1.5-6B-Chat  | \u2022 [\ud83e\udd17 Hugging Face](https://huggingface.co/collections/01-ai/yi-15-2024-05-663f3ecab5f815a3eaca7ca8) \u2022 [\ud83e\udd16 ModelScope](https://www.modelscope.cn/organization/01ai) \u2022 [\ud83d\udfe3 wisemodel](https://wisemodel.cn/organization/01.AI) |\n  \n  </div>\n\n- Base models\n\n  <div align=\"center\">\n  \n  | Name       | Download                                                                                                                                                            |\n  | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\n  | Yi-1.5-34B | \u2022 [\ud83e\udd17 Hugging Face](https://huggingface.co/collections/01-ai/yi-15-2024-05-663f3ecab5f815a3eaca7ca8) \u2022 [\ud83e\udd16 ModelScope](https://www.modelscope.cn/organization/01ai) \u2022 [\ud83d\udfe3 wisemodel](https://wisemodel.cn/organization/01.AI) |\n  | Yi-1.5-34B-32K | \u2022 [\ud83e\udd17 Hugging Face](https://huggingface.co/collections/01-ai/yi-15-2024-05-663f3ecab5f815a3eaca7ca8) \u2022 [\ud83e\udd16 ModelScope](https://www.modelscope.cn/organization/01ai) \u2022 [\ud83d\udfe3 wisemodel](https://wisemodel.cn/organization/01.AI) |\n  | Yi-1.5-9B | \u2022 [\ud83e\udd17 Hugging Face](https://huggingface.co/collections/01-ai/yi-15-2024-05-663f3ecab5f815a3eaca7ca8) \u2022 [\ud83e\udd16 ModelScope](https://www.modelscope.cn/organization/01ai) \u2022 [\ud83d\udfe3 wisemodel](https://wisemodel.cn/organization/01.AI) |\n  | Yi-1.5-9B-32K  | \u2022 [\ud83e\udd17 Hugging Face](https://huggingface.co/collections/01-ai/yi-15-2024-05-663f3ecab5f815a3eaca7ca8) \u2022 [\ud83e\udd16 ModelScope](https://www.modelscope.cn/organization/01ai) \u2022 [\ud83d\udfe3 wisemodel](https://wisemodel.cn/organization/01.AI) |\n  | Yi-1.5-6B  | \u2022 [\ud83e\udd17 Hugging Face](https://huggingface.co/collections/01-ai/yi-15-2024-05-663f3ecab5f815a3eaca7ca8) \u2022 [\ud83e\udd16 ModelScope](https://www.modelscope.cn/organization/01ai) \u2022 [\ud83d\udfe3 wisemodel](https://wisemodel.cn/organization/01.AI) |\n  \n  </div>\n\n# Benchmarks\n\n- Chat models\n\n  Yi-1.5-34B-Chat is on par with or excels beyond larger models in most benchmarks.\n\n  ![image/png](https://cdn-uploads.huggingface.co/production/uploads/656d9adce8bf55919aca7c3f/KcsJ9Oc1VnEmfCDEJc5cd.png)\n\n  Yi-1.5-9B-Chat is the top performer among similarly sized open-source models.\n\n  ![image/png](https://cdn-uploads.huggingface.co/production/uploads/656d9adce8bf55919aca7c3f/xf6pLg5jqRCwjlh6m3t6_.png)\n\n- Base models\n\n  Yi-1.5-34B is on par with or excels beyond larger models in some benchmarks.\n\n  ![image/png](https://cdn-uploads.huggingface.co/production/uploads/656d9adce8bf55919aca7c3f/BwU7QM-03dZvZzwdIE1xY.png)\n\n  Yi-1.5-9B is the top performer among similarly sized open-source models.\n\n  ![image/png](https://cdn-uploads.huggingface.co/production/uploads/656d9adce8bf55919aca7c3f/y-EYSYPT-3aWLJ0x8R94F.png)\n\n# Quick Start\n\nFor getting up and running with Yi-1.5 models quickly, see [README](https://github.com/01-ai/Yi-1.5).\n\n",
+  "fetched_at": "2026-09-19T15:02:01.843894+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "01-ai",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "conversational",
+      "arxiv:2403.04652",
+      "license:apache-2.0",
+      "eval-results",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "yi-1.5-9b-chat",
+  "ok": true,
+  "popularity": {
+    "downloads": 19449,
+    "downloadsAllTime": 610310,
+    "likes": 149,
+    "trendingScore": 0
+  },
+  "repo_id": "01-ai/Yi-1.5-9B-Chat",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2024-05-10T05:38:24.000Z",
+    "lastModified": "2024-06-26T10:41:03.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

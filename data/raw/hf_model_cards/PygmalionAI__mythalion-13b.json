@@ -1,0 +1,92 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": 13015864320,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {
+      "F16": 13015864320
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 3275,
+  "card_text": "---\nlanguage:\n- en\nthumbnail: null\ntags:\n- text generation\n- instruct\npipeline_tag: text-generation\ninference: false\nlicense: llama2\ndatasets:\n- PygmalionAI/PIPPA\n- Open-Orca/OpenOrca\n- Norquinal/claude_multiround_chat_30k\n- jondurbin/airoboros-gpt4-1.4.1\n- databricks/databricks-dolly-15k\n---\n<h1 style=\"text-align: center\">Mythalion 13B</h1>\n<h2 style=\"text-align: center\">A merge of Pygmalion-2 13B and MythoMax 13B</h2>\n\n## Model Details\n\nThe long-awaited release of our new models based on Llama-2 is finally here. This model was created in\ncollaboration with [Gryphe](https://huggingface.co/Gryphe), a mixture of our [Pygmalion-2 13B](https://huggingface.co/PygmalionAI/pygmalion-2-13b)\nand Gryphe's [Mythomax L2 13B](https://huggingface.co/Gryphe/MythoMax-L2-13b).\n\nFiner details of the merge are available in [our blogpost](https://pygmalionai.github.io/blog/posts/introducing_pygmalion_2/#mythalion-13b).\nAccording to our testers, this model seems to outperform MythoMax in RP/Chat. **Please make sure you follow the recommended\ngeneration settings for SillyTavern [here](https://pygmalionai.github.io/blog/posts/introducing_pygmalion_2/#sillytavern) for\nthe best results!**\n\nThis model is freely available for both commercial and non-commercial use, as per the Llama-2 license.\n\n\n## Prompting\n\nThis model can be prompted using both the Alpaca and [Pygmalion formatting](https://huggingface.co/PygmalionAI/pygmalion-2-13b#prompting).\n\n**Alpaca formatting**:\n```\n### Instruction:\n<prompt>\n\n### Response:\n<leave a newline blank for model to respond>\n```\n\n**Pygmalion/Metharme formatting**:\n```\n<|system|>Enter RP mode. Pretend to be {{char}} whose persona follows:\n{{persona}}\n\nYou shall reply to the user while staying in character, and generate long responses.\n<|user|>Hello!<|model|>{model's response goes here}\n\n```\n\n\nThe model has been trained on prompts using three different roles, which are denoted by the following tokens: `<|system|>`, `<|user|>` and `<|model|>`.\n\nThe `<|system|>` prompt can be used to inject out-of-channel information behind the scenes, while the `<|user|>` prompt should be used to indicate user input.\nThe `<|model|>` token should then be used to indicate that the model should generate a response. These tokens can happen multiple times and be chained up to\nform a conversation history.\n\n## Limitations and biases\n\nThe intended use-case for this model is fictional writing for entertainment purposes. Any other sort of usage is out of scope.\n\nAs such, it was **not** fine-tuned to be safe and harmless: the base model _and_ this fine-tune have been trained on data known to contain profanity and texts that are lewd or otherwise offensive. It may produce socially unacceptable or undesirable text, even if the prompt itself does not include anything explicitly offensive. Outputs might often be factually wrong or misleading.\n\n## Acknowledgements\nWe would like to thank [SpicyChat](https://spicychat.ai/) for sponsoring the training for the [Pygmalion-2 13B](https://huggingface.co/PygmalionAI/pygmalion-2-13b) model.\n\n[<img src=\"https://raw.githubusercontent.com/OpenAccess-AI-Collective/axolotl/main/image/axolotl-badge-web.png\" alt=\"Built with Axolotl\" width=\"200\" height=\"32\"/>](https://github.com/OpenAccess-AI-Collective/axolotl)",
+  "fetched_at": "2026-09-22T06:44:19.579611+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "PygmalionAI",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "llama2",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "text generation",
+      "instruct",
+      "en",
+      "dataset:PygmalionAI/PIPPA",
+      "dataset:Open-Orca/OpenOrca",
+      "dataset:Norquinal/claude_multiround_chat_30k",
+      "dataset:jondurbin/airoboros-gpt4-1.4.1",
+      "dataset:databricks/databricks-dolly-15k",
+      "license:llama2",
+      "text-generation-inference",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "PygmalionAI__mythalion-13b",
+  "ok": true,
+  "popularity": {
+    "downloads": 128,
+    "downloadsAllTime": 118578,
+    "likes": 169,
+    "trendingScore": 0
+  },
+  "repo_id": "PygmalionAI/mythalion-13b",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-05T12:45:18.000Z",
+    "lastModified": "2023-09-15T20:30:08.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": true,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

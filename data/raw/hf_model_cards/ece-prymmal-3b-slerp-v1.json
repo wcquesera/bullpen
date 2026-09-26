@@ -1,0 +1,89 @@
+{
+  "architecture": {
+    "architectures": [
+      "Phi3ForCausalLM"
+    ],
+    "hidden_size": 3072,
+    "intermediate_size": 8192,
+    "max_position_embeddings": 4096,
+    "model_type": "phi3",
+    "n_parameters": 3821079552,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 32,
+    "parameter_dtypes": {
+      "BF16": 3821079552
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 32064
+  },
+  "card_chars": 961,
+  "card_text": "---\nlicense: apache-2.0\ntags:\n- merge\n- mergekit\n- lazymergekit\n- jpacifico/Chocolatine-3B-Instruct-DPO-Revised\n- microsoft/Phi-3.5-mini-instruct\n---\n\n# ECE-PRYMMAL-3B-SLERP-V1\n\nECE-PRYMMAL-3B-SLERP-V1 is a merge of the following models using [mergekit](https://github.com/cg123/mergekit):\n* [jpacifico/Chocolatine-3B-Instruct-DPO-Revised](https://huggingface.co/jpacifico/Chocolatine-3B-Instruct-DPO-Revised)\n* [microsoft/Phi-3.5-mini-instruct](https://huggingface.co/microsoft/Phi-3.5-mini-instruct)\n\n## \ud83e\udde9 Configuration\n\n```yaml\nslices:\n  - sources:\n      - model: jpacifico/Chocolatine-3B-Instruct-DPO-Revised\n        layer_range: [0, 32]\n      - model: microsoft/Phi-3.5-mini-instruct\n        layer_range: [0, 32]\nmerge_method: slerp\nbase_model: jpacifico/Chocolatine-3B-Instruct-DPO-Revised\nparameters:\n  t:\n    - filter: self_attn\n      value: [0, 0.5, 0.3, 0.7, 1]\n    - filter: mlp\n      value: [1, 0.5, 0.7, 0.3, 0]\n    - value: 0.5\ndtype: bfloat16\n```",
+  "fetched_at": "2026-09-19T15:01:08.225449+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [
+      "merge",
+      "mergekit",
+      "lazymergekit"
+    ],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "lesubra",
+    "gated": false,
+    "library_name": null,
+    "license": "apache-2.0",
+    "pipeline_tag": null,
+    "tags": [
+      "safetensors",
+      "phi3",
+      "merge",
+      "mergekit",
+      "lazymergekit",
+      "jpacifico/Chocolatine-3B-Instruct-DPO-Revised",
+      "microsoft/Phi-3.5-mini-instruct",
+      "custom_code",
+      "license:apache-2.0",
+      "region:us"
+    ]
+  },
+  "model_key": "ece-prymmal-3b-slerp-v1",
+  "ok": true,
+  "popularity": {
+    "downloads": 19,
+    "downloadsAllTime": 162,
+    "likes": 0,
+    "trendingScore": 0
+  },
+  "repo_id": "lesubra/ECE-PRYMMAL-3B-SLERP-V1",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2024-10-28T15:55:25.000Z",
+    "lastModified": "2024-10-28T15:57:54.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": true,
+    "gguf": false,
+    "gptq": false,
+    "instruct": true,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

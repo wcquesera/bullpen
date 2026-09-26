@@ -1,0 +1,496 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": 7248023552,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "BF16": 7248023552
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 32768
+  },
+  "card_chars": 7890,
+  "card_text": "---\nlibrary_name: vllm\nlicense: apache-2.0\nbase_model: mistralai/Mistral-7B-v0.3\ninference: false\nextra_gated_description: >-\n  If you want to learn more about how we process your personal data, please read\n  our <a href=\"https://mistral.ai/terms/\">Privacy Policy</a>.\ntags:\n- vllm\n- mistral-common\n---\n\n# Model Card for Mistral-7B-Instruct-v0.3\n\nThe Mistral-7B-Instruct-v0.3 Large Language Model (LLM) is an instruct fine-tuned version of the Mistral-7B-v0.3.\n\nMistral-7B-v0.3 has the following changes compared to [Mistral-7B-v0.2](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2/edit/main/README.md)\n- Extended vocabulary to 32768\n- Supports v3 Tokenizer\n- Supports function calling\n\n## Installation\n\nIt is recommended to use `mistralai/Mistral-7B-Instruct-v0.3` with [mistral-inference](https://github.com/mistralai/mistral-inference). For HF transformers code snippets, please keep scrolling.\n\n```\npip install mistral_inference\n```\n\n## Download\n\n```py\nfrom huggingface_hub import snapshot_download\nfrom pathlib import Path\n\nmistral_models_path = Path.home().joinpath('mistral_models', '7B-Instruct-v0.3')\nmistral_models_path.mkdir(parents=True, exist_ok=True)\n\nsnapshot_download(repo_id=\"mistralai/Mistral-7B-Instruct-v0.3\", allow_patterns=[\"params.json\", \"consolidated.safetensors\", \"tokenizer.model.v3\"], local_dir=mistral_models_path)\n```\n\n### Chat\n\nAfter installing `mistral_inference`, a `mistral-chat` CLI command should be available in your environment. You can chat with the model using\n\n```\nmistral-chat $HOME/mistral_models/7B-Instruct-v0.3 --instruct --max_tokens 256\n```\n\n### Instruct following\n\n```py\nfrom mistral_inference.transformer import Transformer\nfrom mistral_inference.generate import generate\n\nfrom mistral_common.tokens.tokenizers.mistral import MistralTokenizer\nfrom mistral_common.protocol.instruct.messages import UserMessage\nfrom mistral_common.protocol.instruct.request import ChatCompletionRequest\n\n\ntokenizer = MistralTokenizer.from_file(f\"{mistral_models_path}/tokenizer.model.v3\")\nmodel = Transformer.from_folder(mistral_models_path)\n\ncompletion_request = ChatCompletionRequest(messages=[UserMessage(content=\"Explain Machine Learning to me in a nutshell.\")])\n\ntokens = tokenizer.encode_chat_completion(completion_request).tokens\n\nout_tokens, _ = generate([tokens], model, max_tokens=64, temperature=0.0, eos_id=tokenizer.instruct_tokenizer.tokenizer.eos_id)\nresult = tokenizer.instruct_tokenizer.tokenizer.decode(out_tokens[0])\n\nprint(result)\n```\n\n### Function calling\n\n```py\nfrom mistral_common.protocol.instruct.tool_calls import Function, Tool\nfrom mistral_inference.transformer import Transformer\nfrom mistral_inference.generate import generate\n\nfrom mistral_common.tokens.tokenizers.mistral import MistralTokenizer\nfrom mistral_common.protocol.instruct.messages import UserMessage\nfrom mistral_common.protocol.instruct.request import ChatCompletionRequest\n\n\ntokenizer = MistralTokenizer.from_file(f\"{mistral_models_path}/tokenizer.model.v3\")\nmodel = Transformer.from_folder(mistral_models_path)\n\ncompletion_request = ChatCompletionRequest(\n    tools=[\n        Tool(\n            function=Function(\n                name=\"get_current_weather\",\n                description=\"Get the current weather\",\n                parameters={\n                    \"type\": \"object\",\n                    \"properties\": {\n                        \"location\": {\n                            \"type\": \"string\",\n                            \"description\": \"The city and state, e.g. San Francisco, CA\",\n                        },\n                        \"format\": {\n                            \"type\": \"string\",\n                            \"enum\": [\"celsius\", \"fahrenheit\"],\n                            \"description\": \"The temperature unit to use. Infer this from the users location.\",\n                        },\n                    },\n                    \"required\": [\"location\", \"format\"],\n                },\n            )\n        )\n    ],\n    messages=[\n        UserMessage(content=\"What's the weather like today in Paris?\"),\n        ],\n)\n\ntokens = tokenizer.encode_chat_completion(completion_request).tokens\n\nout_tokens, _ = generate([tokens], model, max_tokens=64, temperature=0.0, eos_id=tokenizer.instruct_tokenizer.tokenizer.eos_id)\nresult = tokenizer.instruct_tokenizer.tokenizer.decode(out_tokens[0])\n\nprint(result)\n```\n\n## Generate with `transformers`\n\nIf you want to use Hugging Face `transformers` to generate text, you can do something like this.\n\n```py\nfrom transformers import pipeline\n\nmessages = [\n    {\"role\": \"system\", \"content\": \"You are a pirate chatbot who always responds in pirate speak!\"},\n    {\"role\": \"user\", \"content\": \"Who are you?\"},\n]\nchatbot = pipeline(\"text-generation\", model=\"mistralai/Mistral-7B-Instruct-v0.3\")\nchatbot(messages)\n```\n\n\n## Function calling with `transformers`\n\nTo use this example, you'll need `transformers` version 4.42.0 or higher. Please see the \n[function calling guide](https://huggingface.co/docs/transformers/main/chat_templating#advanced-tool-use--function-calling)\nin the `transformers` docs for more information.\n\n```python\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\nimport torch\n\nmodel_id = \"mistralai/Mistral-7B-Instruct-v0.3\"\ntokenizer = AutoTokenizer.from_pretrained(model_id)\n\ndef get_current_weather(location: str, format: str):\n    \"\"\"\n    Get the current weather\n\n    Args:\n        location: The city and state, e.g. San Francisco, CA\n        format: The temperature unit to use. Infer this from the users location. (choices: [\"celsius\", \"fahrenheit\"])\n    \"\"\"\n    pass\n\nconversation = [{\"role\": \"user\", \"content\": \"What's the weather like in Paris?\"}]\ntools = [get_current_weather]\n\n\n# format and tokenize the tool use prompt \ninputs = tokenizer.apply_chat_template(\n            conversation,\n            tools=tools,\n            add_generation_prompt=True,\n            return_dict=True,\n            return_tensors=\"pt\",\n)\n\nmodel = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.bfloat16, device_map=\"auto\")\n\ninputs.to(model.device)\noutputs = model.generate(**inputs, max_new_tokens=1000)\nprint(tokenizer.decode(outputs[0], skip_special_tokens=True))\n```\n\nNote that, for reasons of space, this example does not show a complete cycle of calling a tool and adding the tool call and tool\nresults to the chat history so that the model can use them in its next generation. For a full tool calling example, please\nsee the [function calling guide](https://huggingface.co/docs/transformers/main/chat_templating#advanced-tool-use--function-calling), \nand note that Mistral **does** use tool call IDs, so these must be included in your tool calls and tool results. They should be\nexactly 9 alphanumeric characters.\n\n\n## Limitations\n\nThe Mistral 7B Instruct model is a quick demonstration that the base model can be easily fine-tuned to achieve compelling performance. \nIt does not have any moderation mechanisms. We're looking forward to engaging with the community on ways to\nmake the model finely respect guardrails, allowing for deployment in environments requiring moderated outputs.\n\n## The Mistral AI Team\n\nAlbert Jiang, Alexandre Sablayrolles, Alexis Tacnet, Antoine Roux, Arthur Mensch, Audrey Herblin-Stoop, Baptiste Bout, Baudouin de Monicault, Blanche Savary, Bam4d, Caroline Feldman, Devendra Singh Chaplot, Diego de las Casas, Eleonore Arcelin, Emma Bou Hanna, Etienne Metzger, Gianna Lengyel, Guillaume Bour, Guillaume Lample, Harizo Rajaona, Jean-Malo Delignon, Jia Li, Justus Murke, Louis Martin, Louis Ternon, Lucile Saulnier, L\u00e9lio Renard Lavaud, Margaret Jennings, Marie Pellat, Marie Torelli, Marie-Anne Lachaux, Nicolas Schuhl, Patrick von Platen, Pierre Stock, Sandeep Subramanian, Sophia Yang, Szymon Antoniak, Teven Le Scao, Thibaut Lavril, Timoth\u00e9e Lacroix, Th\u00e9ophile Gervet, Thomas Wang, Valera Nemychnikova, William El Sayed, William Marshall",
+  "fetched_at": "2026-09-19T15:01:41.422940+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "mistralai/Mistral-7B-v0.3"
+    ],
+    "card_base_models": [
+      "mistralai/Mistral-7B-v0.3"
+    ],
+    "merge_tags": [],
+    "n_base_models": 1,
+    "relations": {
+      "": [
+        "mistralai/Mistral-7B-v0.3"
+      ],
+      "finetune": [
+        "mistralai/Mistral-7B-v0.3"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "mistralai",
+    "gated": false,
+    "library_name": "vllm",
+    "license": "apache-2.0",
+    "pipeline_tag": null,
+    "tags": [
+      "vllm",
+      "safetensors",
+      "mistral",
+      "mistral-common",
+      "base_model:mistralai/Mistral-7B-v0.3",
+      "base_model:finetune:mistralai/Mistral-7B-v0.3",
+      "license:apache-2.0",
+      "deploy:sagemaker",
+      "region:us"
+    ]
+  },
+  "model_key": "mistral-7b-instruct-v0.3",
+  "ok": true,
+  "popularity": {
+    "downloads": 2401697,
+    "downloadsAllTime": 46277994,
+    "likes": 3487,
+    "trendingScore": 60.5
+  },
+  "repo_id": "mistralai/Mistral-7B-Instruct-v0.3",
+  "resolved_via": "search",
+  "search_candidates": [
+    [
+      "mistralai/Mistral-7B-Instruct-v0.3",
+      2401697
+    ],
+    [
+      "OpenVINO/Mistral-7B-Instruct-v0.3-int4-cw-ov",
+      564
+    ],
+    [
+      "kmichiru/Nikaido-7B-mistral-instruct-v0.3-vn_v2",
+      0
+    ],
+    [
+      "JConnor/mistral-7b-instruct-catl-v0.3",
+      5
+    ],
+    [
+      "wkshin89/mistral-7b-instruct-ko-test-v0.3",
+      22
+    ],
+    [
+      "MaziyarPanahi/Synatra-7B-v0.3-RP-Mistral-7B-Instruct-v0.2-slerp",
+      24
+    ],
+    [
+      "MaziyarPanahi/Mistral-7B-KNUT-v0.3-Mistral-7B-Instruct-v0.2-slerp",
+      13
+    ],
+    [
+      "MaziyarPanahi/Synatra-7B-v0.3-dpo-Mistral-7B-Instruct-v0.1",
+      22
+    ],
+    [
+      "MaziyarPanahi/Synatra-7B-v0.3-RP-Mistral-7B-Instruct-v0.1",
+      21
+    ],
+    [
+      "MaziyarPanahi/Mistral-7B-KNUT-v0.3-Mistral-7B-Instruct-v0.1",
+      18
+    ],
+    [
+      "MaziyarPanahi/Synatra-7B-v0.3-RP-Mistral-7B-Instruct-v0.2-slerp-GGUF",
+      229
+    ],
+    [
+      "MaziyarPanahi/Mistral-7B-KNUT-v0.3-Mistral-7B-Instruct-v0.2-slerp-GGUF",
+      429
+    ],
+    [
+      "MaziyarPanahi/Synatra-7B-v0.3-dpo-Mistral-7B-Instruct-v0.1-GGUF",
+      192
+    ],
+    [
+      "MaziyarPanahi/Synatra-7B-v0.3-RP-Mistral-7B-Instruct-v0.1-GGUF",
+      150
+    ],
+    [
+      "MaziyarPanahi/Mistral-7B-KNUT-v0.3-Mistral-7B-Instruct-v0.1-GGUF",
+      410
+    ],
+    [
+      "Moses25/Mistral-7B-Instruct-V0.3",
+      17
+    ],
+    [
+      "David-Xu/Mistral-7B-Instruct-v0.3",
+      7
+    ],
+    [
+      "ssalbab/Mistral-7B-Instruct-v0.2-nsmc-fine-tuning-v0.3",
+      0
+    ],
+    [
+      "ninyx/Mistral-7B-Instruct-v0.2-advisegpt-v0.3",
+      5
+    ],
+    [
+      "MaziyarPanahi/Mistral-7B-Instruct-v0.3",
+      40
+    ],
+    [
+      "MaziyarPanahi/Mistral-7B-Instruct-v0.3-GGUF",
+      163584
+    ],
+    [
+      "mlx-community/Mistral-7B-Instruct-v0.3-8bit",
+      136
+    ],
+    [
+      "mlx-community/Mistral-7B-Instruct-v0.3-4bit",
+      47556
+    ],
+    [
+      "unsloth/mistral-7b-instruct-v0.3",
+      6509
+    ],
+    [
+      "unsloth/mistral-7b-instruct-v0.3-bnb-4bit",
+      26520
+    ],
+    [
+      "hermes42/Mistral-7B-Instruct-v0.3-imatrix-GGUF",
+      943
+    ],
+    [
+      "duyntnet/Mistral-7B-Instruct-v0.3-imatrix-GGUF",
+      1149
+    ],
+    [
+      "bartowski/Mistral-7B-Instruct-v0.3-GGUF",
+      32684
+    ],
+    [
+      "ariG23498/Mistral-7B-Instruct-v0.3",
+      16
+    ],
+    [
+      "NightFuryTimo/Mistral-7B-Instruct-v0.3-GGUF",
+      24
+    ],
+    [
+      "brittlewis12/Mistral-7B-Instruct-v0.3-GGUF",
+      145
+    ],
+    [
+      "lmstudio-community/Mistral-7B-Instruct-v0.3-GGUF",
+      15046
+    ],
+    [
+      "bartowski/Mistral-7B-Instruct-v0.3-exl2",
+      10
+    ],
+    [
+      "thesven/Mistral-7B-Instruct-v0.3-GPTQ",
+      172
+    ],
+    [
+      "PrunaAI/Mistral-7B-Instruct-v0.3-GGUF-smashed",
+      215
+    ],
+    [
+      "FusionQuill/Mistral-7B-Instruct-v0.3-GGUF",
+      8
+    ],
+    [
+      "mukel/Mistral-7B-Instruct-v0.3-GGUF",
+      35
+    ],
+    [
+      "leafspark/Mistral-7B-Instruct-v0.3",
+      20
+    ],
+    [
+      "RedHatAI/Mistral-7B-Instruct-v0.3-GPTQ-4bit",
+      1165
+    ],
+    [
+      "CISCai/Mistral-7B-Instruct-v0.3-SOTA-GGUF",
+      349
+    ],
+    [
+      "DevQuasar/Mistral-7B-Instruct-v0.3-GGUF",
+      126
+    ],
+    [
+      "QuantFactory/Mistral-7B-Instruct-v0.3-GGUF",
+      697
+    ],
+    [
+      "TechxGenus/Mistral-7B-Instruct-v0.3-AWQ",
+      543
+    ],
+    [
+      "TechxGenus/Mistral-7B-Instruct-v0.3-GPTQ",
+      14
+    ],
+    [
+      "chchen/Mistral-7B-Instruct-v0.3-ORPO",
+      12
+    ],
+    [
+      "thesven/Mistral-7B-Instruct-v0.3-GGUF",
+      565
+    ],
+    [
+      "LiteLLMs/Mistral-7B-Instruct-v0.3-GGUF",
+      187
+    ],
+    [
+      "SanctumAI/Mistral-7B-Instruct-v0.3-GGUF",
+      1404
+    ],
+    [
+      "mmnga/Mistral-7B-Instruct-v0.3-gguf",
+      2912
+    ],
+    [
+      "crusoeai/Mistral-7B-Instruct-v0.3-GGUF",
+      70
+    ],
+    [
+      "TitanML/Mistral-7B-Instruct-v0.3-AWQ-4bit",
+      16
+    ],
+    [
+      "grimjim/mistralai-Mistral-7B-Instruct-v0.3",
+      42
+    ],
+    [
+      "grimjim/Mistral-7B-Instruct-demi-merge-v0.3-7B",
+      79
+    ],
+    [
+      "solidrust/Mistral-7B-Instruct-v0.3-AWQ",
+      253262
+    ],
+    [
+      "leptonai/Mistral-7B-Instruct-v0.3-4heads",
+      6
+    ],
+    [
+      "typeof/mistral-7b-instruct-v0.3-exploded",
+      14
+    ],
+    [
+      "neody/Mistral-7B-Instruct-v0.3-tokenizer",
+      0
+    ],
+    [
+      "elliotthwang/KimLan-Mistral-7B-Instruct-v0.3",
+      0
+    ],
+    [
+      "inventbot/Mistral-7B-Instruct-v0.3",
+      16
+    ],
+    [
+      "dfurman/Mistral-7B-Instruct-v0.3-mlx-4bit",
+      25
+    ],
+    [
+      "annamos/Mistral-7B-Instruct-v0.3-pruned-CL",
+      6
+    ],
+    [
+      "mozilla-ai/Mistral-7B-Instruct-v0.3-llamafile",
+      6427
+    ],
+    [
+      "melisa/bi_score_mistralai_Mistral-7B-Instruct-v0.3_cut_22_5",
+      12
+    ],
+    [
+      "melisa/relative_magnitude_mistralai_Mistral-7B-Instruct-v0.3_cut_22_5",
+      16
+    ],
+    [
+      "giannisan/mistral-7b-instruct-v0.3-depth-upscaling-GGUF",
+      18
+    ],
+    [
+      "melisa/angular_distance_last_mistralai_Mistral-7B-Instruct-v0.3_cut_22_5",
+      11
+    ],
+    [
+      "melisa/get_linear_approximation_last_mistralai_Mistral-7B-Instruct-v0.3_cut_0_5",
+      15
+    ],
+    [
+      "melisa/get_euclidian_dist_last_mistralai_Mistral-7B-Instruct-v0.3_cut_0_5",
+      146
+    ],
+    [
+      "moiz1/Mistral-7b-Instruct-v0.3-finetune-translation-10k-system-prompt-style",
+      16
+    ],
+    [
+      "mistral-community/Mistral-7B-Instruct-v0.3",
+      4702
+    ],
+    [
+      "legraphista/Mistral-7B-Instruct-v0.3-IMat-GGUF",
+      714
+    ],
+    [
+      "d1vshar-shortloop/Mistral-7B-Instruct-v0.3-dental",
+      0
+    ],
+    [
+      "ninyx/Mistral-7B-Instruct-v0.3-advisegpt-v0.1",
+      6
+    ],
+    [
+      "camenduru/Mistral-7B-Instruct-v0.3",
+      18
+    ],
+    [
+      "research-dump/Mistral-7B-Instruct-v0.3_mixed_sftt_v2_random_no_instruction",
+      12
+    ],
+    [
+      "HikariLight/Mistral_7B_Instruct_v0.3_ACI_Bench_SFT",
+      0
+    ],
+    [
+      "aless2212/Mistral-7B-Instruct-v0.3-fp16-onnx",
+      10
+    ],
+    [
+      "pankaj0507/Mistral-7B-Instruct-v0.3-finetune",
+      0
+    ],
+    [
+      "ninyx/Mistral-7B-Instruct-v0.3-advisegpt-v0.2",
+      6
+    ],
+    [
+      "HachiML/Mistral-7B-Instruct-v0.3-dpo-lora_lr1e-5_5ep",
+      13
+    ],
+    [
+      "HachiML/Mistral-7B-Instruct-v0.3-dpo-lora_lr1e-5_2ep",
+      8
+    ],
+    [
+      "luvres/Mistral-7B-Instruct-v0.3",
+      13
+    ],
+    [
+      "machinelearnear/mistral-7b-instruct-v0.3-bnb-4bit-milei-gpt",
+      0
+    ],
+    [
+      "numen-tech/Mistral-7B-Instruct-v0.3-w4a16g128asym",
+      0
+    ],
+    [
+      "hfht/tumblr-humor-mistral-7b-instruct-v0.3",
+      6
+    ],
+    [
+      "HachiML/Mistral-7B-Instruct-v0.3-dpo-lora",
+      11
+    ],
+    [
+      "second-state/Mistral-7B-Instruct-v0.3-GGUF",
+      1132
+    ],
+    [
+      "gaianet/Mistral-7B-Instruct-v0.3-GGUF",
+      507
+    ],
+    [
+      "numen-tech/Mistral-7B-Instruct-v0.3-w3a16g40sym",
+      0
+    ],
+    [
+      "research-dump/Mistral-7B-Instruct-v0.3_mixed_sft_lexical_instruction_v1",
+      0
+    ],
+    [
+      "cortecs/Mistral-7B-Instruct-v0.3-GPTQ-8b",
+      12
+    ],
+    [
+      "cortecs/Mistral-7B-Instruct-v0.3-GPTQ-4b",
+      8
+    ],
+    [
+      "chchen/Mistral-7B-Instruct-v0.3-ORPO-SAA",
+      8
+    ],
+    [
+      "neopolita/mistral-7b-instruct-v0.3-gguf",
+      121
+    ],
+    [
+      "research-dump/Mistral-7B-Instruct-v0.3_mixed_sft_random_instruction_v1",
+      0
+    ],
+    [
+      "altomek/Mistral-7B-Instruct-v0.3-8bpw-EXL2",
+      20
+    ],
+    [
+      "mlc-ai/Mistral-7B-Instruct-v0.3-q0f16-MLC",
+      1
+    ],
+    [
+      "mlc-ai/Mistral-7B-Instruct-v0.3-q4f16_1-MLC",
+      3044
+    ],
+    [
+      "mlc-ai/Mistral-7B-Instruct-v0.3-q4f32_1-MLC",
+      81
+    ],
+    [
+      "research-dump/Mistral-7B-Instruct-v0.3_mixed_sft_timeline_forward_no_instruction",
+      0
+    ]
+  ],
+  "timestamps": {
+    "createdAt": "2024-05-22T09:57:04.000Z",
+    "lastModified": "2025-12-03T12:13:48.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

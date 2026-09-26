@@ -1,0 +1,76 @@
+# The benchmark groups of the leave-one-group-out transfer refits (eval.transfer in a run
+# config). EmbedLLM's leave-one-benchmark-out (arXiv 2410.02223, Sec. 5.3) with two
+# changes: GPQA's three variants are one group (they share questions), and MMLU is split
+# into Hendrycks' four categories (MMLU is 79% of the 1,181-question core). Every
+# benchmark of the slice must be in exactly one group (checked on load).
+groups:
+  asdiv: [asdiv]
+  gsm8k: [gsm8k]
+  logiqa: [logiqa]
+  mathqa: [mathqa]
+  medmcqa: [medmcqa]
+  piqa: [piqa]
+  social_iqa: [social_iqa]
+  truthfulqa: [truthfulqa]
+  gpqa: [gpqa_diamond, gpqa_extended, gpqa_main]
+  mmlu_stem:
+  - mmlu_abstract_algebra
+  - mmlu_astronomy
+  - mmlu_college_biology
+  - mmlu_college_chemistry
+  - mmlu_college_computer_science
+  - mmlu_college_mathematics
+  - mmlu_college_physics
+  - mmlu_computer_security
+  - mmlu_conceptual_physics
+  - mmlu_electrical_engineering
+  - mmlu_elementary_mathematics
+  - mmlu_high_school_biology
+  - mmlu_high_school_chemistry
+  - mmlu_high_school_computer_science
+  - mmlu_high_school_mathematics
+  - mmlu_high_school_physics
+  - mmlu_high_school_statistics
+  - mmlu_machine_learning
+  mmlu_humanities:
+  - mmlu_formal_logic
+  - mmlu_high_school_european_history
+  - mmlu_high_school_us_history
+  - mmlu_high_school_world_history
+  - mmlu_international_law
+  - mmlu_jurisprudence
+  - mmlu_logical_fallacies
+  - mmlu_moral_disputes
+  - mmlu_moral_scenarios
+  - mmlu_philosophy
+  - mmlu_prehistory
+  - mmlu_professional_law
+  - mmlu_world_religions
+  mmlu_social:
+  - mmlu_econometrics
+  - mmlu_high_school_geography
+  - mmlu_high_school_government_and_politics
+  - mmlu_high_school_macroeconomics
+  - mmlu_high_school_microeconomics
+  - mmlu_high_school_psychology
+  - mmlu_human_sexuality
+  - mmlu_professional_psychology
+  - mmlu_public_relations
+  - mmlu_security_studies
+  - mmlu_sociology
+  - mmlu_us_foreign_policy
+  mmlu_other:
+  - mmlu_anatomy
+  - mmlu_business_ethics
+  - mmlu_clinical_knowledge
+  - mmlu_college_medicine
+  - mmlu_global_facts
+  - mmlu_human_aging
+  - mmlu_management
+  - mmlu_marketing
+  - mmlu_medical_genetics
+  - mmlu_miscellaneous
+  - mmlu_nutrition
+  - mmlu_professional_accounting
+  - mmlu_professional_medicine
+  - mmlu_virology

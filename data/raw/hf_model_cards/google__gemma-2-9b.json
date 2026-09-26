@@ -1,0 +1,108 @@
+{
+  "architecture": {
+    "architectures": [
+      "Gemma2ForCausalLM"
+    ],
+    "hidden_size": null,
+    "intermediate_size": null,
+    "max_position_embeddings": null,
+    "model_type": "gemma2",
+    "n_parameters": 9241705984,
+    "num_attention_heads": null,
+    "num_hidden_layers": null,
+    "num_key_value_heads": null,
+    "parameter_dtypes": {
+      "F32": 9241705984
+    },
+    "torch_dtype": null,
+    "vocab_size": null
+  },
+  "card_chars": 0,
+  "card_text": null,
+  "fetched_at": "2026-09-22T06:45:53.402494+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 401,
+    "readme": 401
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "google",
+    "gated": "manual",
+    "library_name": "transformers",
+    "license": "gemma",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "gemma2",
+      "text-generation",
+      "arxiv:2009.03300",
+      "arxiv:1905.07830",
+      "arxiv:1911.11641",
+      "arxiv:1904.09728",
+      "arxiv:1905.10044",
+      "arxiv:1907.10641",
+      "arxiv:1811.00937",
+      "arxiv:1809.02789",
+      "arxiv:1911.01547",
+      "arxiv:1705.03551",
+      "arxiv:2107.03374",
+      "arxiv:2108.07732",
+      "arxiv:2110.14168",
+      "arxiv:2009.11462",
+      "arxiv:2101.11718",
+      "arxiv:2110.08193",
+      "arxiv:1804.09301",
+      "arxiv:2109.07958",
+      "arxiv:1804.06876",
+      "arxiv:2103.03874",
+      "arxiv:2304.06364",
+      "arxiv:2206.04615",
+      "arxiv:2203.09509",
+      "license:gemma",
+      "eval-results",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:sagemaker",
+      "region:us"
+    ]
+  },
+  "model_key": "google__gemma-2-9b",
+  "ok": true,
+  "popularity": {
+    "downloads": 41086,
+    "downloadsAllTime": 2125219,
+    "likes": 736,
+    "trendingScore": 2
+  },
+  "repo_id": "google/gemma-2-9b",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2024-06-24T08:10:30.000Z",
+    "lastModified": "2024-08-07T18:26:02.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

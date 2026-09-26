@@ -1,0 +1,90 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32128
+  },
+  "card_chars": 8139,
+  "card_text": "---\ndatasets:\n- LeoLM/OpenSchnabeltier\n- OpenAssistant/OASST-DE\n- FreedomIntelligence/alpaca-gpt4-deutsch\n- FreedomIntelligence/evol-instruct-deutsch\n- LeoLM/German_Poems\n- LeoLM/German_Songs\nlanguage:\n- en\n- de\nlibrary_name: transformers\npipeline_tag: text-generation\nlicense: apache-2.0\n---\n# LAION LeoLM: **L**inguistically **E**nhanced **O**pen **L**anguage **M**odel\nMeet LeoLM, the first open and commercially available German Foundation Language Model built on Llama-2 and Mistral. \nOur models extend Llama-2's capabilities into German through continued pretraining on a large corpus of German-language and mostly locality specific text.\nThanks to a compute grant at HessianAI's new supercomputer **42**, we release three foundation models trained with 8k context length.\n[`LeoLM/leo-mistral-hessianai-7b`](https://huggingface.co/LeoLM/leo-mistral-hessianai-7b) under Apache 2.0 and [`LeoLM/leo-hessianai-7b`](https://huggingface.co/LeoLM/leo-hessianai-7b) and [`LeoLM/leo-hessianai-13b`](https://huggingface.co/LeoLM/leo-hessianai-13b) under the [Llama-2 community license](https://huggingface.co/meta-llama/Llama-2-70b/raw/main/LICENSE.txt) (70b also coming soon! \ud83d\udc40).\nWith this release, we hope to bring a new wave of opportunities to German open-source and commercial LLM research and accelerate adoption.\nRead our [blog post](https://laion.ai/blog/leo-lm/) or our paper (preprint coming soon) for more details!\n\n*A project by Bj\u00f6rn Pl\u00fcster and Christoph Schuhmann in collaboration with LAION and HessianAI.*\n\n## LeoLM Chat\n`LeoLM/leo-mistral-hessianai-7b-chat` is a German chat model built on our foundation model `LeoLM/leo-mistral-hessianai-7b` and finetuned on a selection of German instruction datasets.\nThe model performs exceptionally well on writing, explanation and discussion tasks but struggles somewhat with math and advanced reasoning. See our MT-Bench-DE scores:\n```\n{\n  \"first_turn\": 6.1,\n  \"second_turn\": 4.7,\n  \"categories\": {\n      \"writing\": 6.8,\n      \"roleplay\": 6.35,\n      \"reasoning\": 3.3,\n      \"math\": 2.75,\n      \"coding\": 4.4,\n      \"extraction\": 4.5,\n      \"stem\": 6.85,\n      \"humanities\": 8.25\n  },\n  \"average\": 5.4\n}\n```\n\n## Model Details\n\n- **Finetuned from:** [LeoLM/leo-mistral-hessianai-7b](https://huggingface.co/LeoLM/leo-hessianai-7b)\n- **Model type:** Causal decoder-only transformer language model\n- **Language:** English and German\n- **Demo:** [Web Demo coming soon !]()\n- **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)\n- **Contact:** [LAION Discord](https://discord.com/invite/eq3cAMZtCC) or [Bj\u00f6rn Pl\u00fcster](mailto:bjoern.pl@outlook.de)\n\n\n## Use in \ud83e\udd17Transformers\nFirst install direct dependencies:\n```\npip install transformers torch sentencepiece\n```\nIf you want faster inference using flash-attention2, you need to install these dependencies:\n```bash\npip install packaging ninja\npip install flash-attn\n```\nThen load the model in transformers:\n```python\nfrom transformers import pipeline\nimport torch\n\nsystem_prompt = \"\"\"Dies ist eine Unterhaltung zwischen einem intelligenten, hilfsbereitem KI-Assistenten und einem Nutzer.\nDer Assistent gibt ausf\u00fchrliche, hilfreiche und ehrliche Antworten.\"\"\"\n\nprompt_format = \"<|im_start|>system\\n{system_prompt}<|im_end|>\\n<|im_start|>user\\n{prompt}<|im_end|>\\n<|im_start|>assistant\\n\"\nprompt = \"Erkl\u00e4re mir wie die Fahrradwegesituation in Hamburg ist.\"\n\ngenerator = pipeline(model=\"LeoLM/leo-mistral-hessianai-7b-chat\", device=\"cuda\", torch_dtype=torch.float16, use_flash_attention_2=True) # True for flash-attn2 else False\nprint(generator(prompt_format.format(system_prompt=system_prompt, prompt=prompt), do_sample=True, top_p=0.95, max_length=8192))\n```\n\n\"*Als KI kann ich keine pers\u00f6nlichen Beobachtungen teilen, aber ich kann einige allgemeine Informationen zur Fahrradwegesituation in Hamburg liefern. Im Vergleich zu vielen anderen gro\u00dfen St\u00e4dten hat Hamburg eine hohe Anzahl von Fahrradfahrern und nimmt seine Verantwortung f\u00fcr nachhaltige Verkehrsmittel sehr ernst. Es gibt viele Fahrradwege und separate Fahrspuren, die Radfahrern erm\u00f6glichen, zusammen mit dem Autoverkehr zu fahren. Diese Fahrradspuren sind oft mit Markierungen gekennzeichnet und durch physische Trennungen von anderen Fahrspuren abgegrenzt. Dar\u00fcber hinaus gibt es viele Fahrradstra\u00dfen, auf denen Radfahrer Vorfahrt haben und Autos langsamer fahren m\u00fcssen.*\n\n*In einigen st\u00e4dtischen Gebieten k\u00f6nnen Fahrradwege jedoch eng oder \u00fcberf\u00fcllt sein, besonders w\u00e4hrend der Sto\u00dfzeiten. Es gibt auch viele Kreuzungen, an denen Radfahrer anhalten und auf Gr\u00fcn warten m\u00fcssen, \u00e4hnlich wie Autofahrer. Insgesamt ist die Fahrradinfrastruktur in Hamburg ziemlich gut, aber wie \u00fcberall gibt es immer Raum f\u00fcr Verbesserungen.*\"\n\n## Prompting / Prompt Template\n\nPrompt dialogue template (ChatML format):\n\n```\n\"\"\"\n<|im_start|>system\n{system_message}<|im_end|>\n<|im_start|>user\n{prompt}<|im_end|>\n<|im_start|>assistant\n\"\"\"\n```\n\nThe model input can contain multiple conversation turns between user and assistant, e.g.\n```\n<|im_start|>user\n{prompt 1}<|im_end|>\n<|im_start|>assistant\n{reply 1}<|im_end|>\n<|im_start|>user\n{prompt 2}<|im_end|>\n<|im_start|>assistant\n(...)\n```\n\n## Ethical Considerations and Limitations\n\nLeoLM has been tested in English and German, and has not covered, nor could it cover all scenarios. \nFor these reasons, as with all LLMs, the potential outputs of `LeoLM/leo-mistral-hessianai-7b-chat` cannot be predicted\nin advance, and the model may in some instances produce inaccurate, biased or other objectionable responses\nto user prompts. Therefore, before deploying any applications of `LeoLM/leo-mistral-hessianai-7b-chat`, developers should\nperform safety testing and tuning tailored to their specific applications of the model.\n\nPlease see Meta's [Responsible Use Guide](https://ai.meta.com/llama/responsible-use-guide/).\n\n## Finetuning Details\n\n| Hyperparameter  | Value  |\n|---|---|\n| Num epochs | 4 |\n| Examples per epoch  | 131214  |\n| Global batch size | 256 |\n| Learning rate  |  1e-5 |\n| Warmup steps  |  100 |\n| LR scheduler  |  Cosine |\n| Adam betas  | (0.9, 0.95)  |\n\n\n## Dataset Details\n```\n## Stats for 'Subset of OpenAssistant/OASST-DE' (3534 samples (100.0%))\n-----------------\n  Accepted: 3534/3534 (100.0%)\n  Accepted tokens: 2259302\n  Skipped: 0 (0.0%)\n  Min tokens per sample: 29\n  Max tokens per sample: 2484\n  Avg tokens per sample: 639.3044708545557\n-----------------\n\n## Stats for 'Subset of FreedomIntelligence/evol-instruct-deutsch' (57841 samples (100.0%))\n-----------------\n  Accepted: 57841/57841 (100.0%)\n  Accepted tokens: 42958192\n  Skipped: 0 (0.0%)\n  Min tokens per sample: 33\n  Max tokens per sample: 5507\n  Avg tokens per sample: 742.6944900675991\n-----------------\n\n## Stats for 'Subset of FreedomIntelligence/alpaca-gpt4-deutsch' (48969 samples (100.0%))\n-----------------\n  Accepted: 48969/48969 (100.0%)\n  Accepted tokens: 13372005\n  Skipped: 0 (0.0%)\n  Min tokens per sample: 19\n  Max tokens per sample: 1359\n  Avg tokens per sample: 273.07082031489307\n-----------------\n\n## Stats for 'Subset of LeoLM/OpenSchnabeltier' (21314 samples (100.0%))\n-----------------\n  Accepted: 21314/21314 (100.0%)\n  Accepted tokens: 8134690\n  Skipped: 0 (0.0%)\n  Min tokens per sample: 25\n  Max tokens per sample: 1202\n  Avg tokens per sample: 381.65947264708643\n-----------------\n\n## Stats for 'Subset of LeoLM/German_Poems' (490 samples (100.0%))\n-----------------\n  Accepted: 490/490 (100.0%)\n  Accepted tokens: 618642\n  Skipped: 0 (0.0%)\n  Min tokens per sample: 747\n  Max tokens per sample: 1678\n  Avg tokens per sample: 1262.534693877551\n-----------------\n\n## Stats for 'Subset of LeoLM/German_Songs' (392 samples (100.0%))\n-----------------\n  Accepted: 392/392 (100.0%)\n  Accepted tokens: 187897\n  Skipped: 0 (0.0%)\n  Min tokens per sample: 231\n  Max tokens per sample: 826\n  Avg tokens per sample: 479.3290816326531\n-----------------\n\n## Stats for 'total' (132540 samples (100.0%))\n-----------------\n  Accepted: 132540/132540 (100.0%)\n  Accepted tokens: 67530728\n  Skipped: 0 (0.0%)\n  Min tokens per sample: 19\n  Max tokens per sample: 5507\n  Avg tokens per sample: 509.51205673758864\n-----------------\n```",
+  "fetched_at": "2026-09-22T06:43:58.878328+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "LeoLM",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "mistral",
+      "text-generation",
+      "conversational",
+      "en",
+      "de",
+      "dataset:LeoLM/OpenSchnabeltier",
+      "dataset:OpenAssistant/OASST-DE",
+      "dataset:FreedomIntelligence/alpaca-gpt4-deutsch",
+      "dataset:FreedomIntelligence/evol-instruct-deutsch",
+      "dataset:LeoLM/German_Poems",
+      "dataset:LeoLM/German_Songs",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "LeoLM__leo-mistral-hessianai-7b-chat",
+  "ok": true,
+  "popularity": {
+    "downloads": 188,
+    "downloadsAllTime": 145214,
+    "likes": 32,
+    "trendingScore": 0
+  },
+  "repo_id": "LeoLM/leo-mistral-hessianai-7b-chat",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-10-06T14:10:29.000Z",
+    "lastModified": "2023-11-02T12:07:32.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": true,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

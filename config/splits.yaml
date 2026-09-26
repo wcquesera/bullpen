@@ -1,0 +1,6 @@
+# Seeds of a recomputed model split (holdout fallback) and of the `random` K-fold
+# scheme (bullpen.data.folds). The paper's fold plans are stored beside the slice.
+
+holdout_frac: 0.2
+split_seed: 0
+fold_seed: 0

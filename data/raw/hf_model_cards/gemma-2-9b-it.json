@@ -1,0 +1,523 @@
+{
+  "architecture": {
+    "architectures": [
+      "Gemma2ForCausalLM"
+    ],
+    "hidden_size": null,
+    "intermediate_size": null,
+    "max_position_embeddings": null,
+    "model_type": "gemma2",
+    "n_parameters": 9241705984,
+    "num_attention_heads": null,
+    "num_hidden_layers": null,
+    "num_key_value_heads": null,
+    "parameter_dtypes": {
+      "BF16": 9241705984
+    },
+    "torch_dtype": null,
+    "vocab_size": null
+  },
+  "card_chars": 0,
+  "card_text": null,
+  "fetched_at": "2026-09-19T15:02:20.505082+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 401,
+    "readme": 401
+  },
+  "lineage": {
+    "base_model": [
+      "google/gemma-2-9b"
+    ],
+    "card_base_models": [
+      "google/gemma-2-9b"
+    ],
+    "merge_tags": [],
+    "n_base_models": 1,
+    "relations": {
+      "": [
+        "google/gemma-2-9b"
+      ],
+      "finetune": [
+        "google/gemma-2-9b"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "google",
+    "gated": "manual",
+    "library_name": "transformers",
+    "license": "gemma",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "gemma2",
+      "text-generation",
+      "conversational",
+      "arxiv:2009.03300",
+      "arxiv:1905.07830",
+      "arxiv:1911.11641",
+      "arxiv:1904.09728",
+      "arxiv:1905.10044",
+      "arxiv:1907.10641",
+      "arxiv:1811.00937",
+      "arxiv:1809.02789",
+      "arxiv:1911.01547",
+      "arxiv:1705.03551",
+      "arxiv:2107.03374",
+      "arxiv:2108.07732",
+      "arxiv:2110.14168",
+      "arxiv:2009.11462",
+      "arxiv:2101.11718",
+      "arxiv:2110.08193",
+      "arxiv:1804.09301",
+      "arxiv:2109.07958",
+      "arxiv:1804.06876",
+      "arxiv:2103.03874",
+      "arxiv:2304.06364",
+      "arxiv:2206.04615",
+      "arxiv:2203.09509",
+      "base_model:google/gemma-2-9b",
+      "base_model:finetune:google/gemma-2-9b",
+      "license:gemma",
+      "eval-results",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:sagemaker",
+      "region:us"
+    ]
+  },
+  "model_key": "gemma-2-9b-it",
+  "ok": true,
+  "popularity": {
+    "downloads": 749677,
+    "downloadsAllTime": 11458765,
+    "likes": 932,
+    "trendingScore": 1
+  },
+  "repo_id": "google/gemma-2-9b-it",
+  "resolved_via": "search",
+  "search_candidates": [
+    [
+      "google/gemma-2-9b-it",
+      749677
+    ],
+    [
+      "google/gemma-2-9b-it-pytorch",
+      0
+    ],
+    [
+      "qwp4w3hyb/gemma-2-9b-it-iMat-GGUF",
+      1010
+    ],
+    [
+      "mlx-community/gemma-2-9b-it-4bit",
+      35118
+    ],
+    [
+      "mlx-community/gemma-2-9b-it-8bit",
+      184
+    ],
+    [
+      "bartowski/gemma-2-9b-it-GGUF",
+      33663
+    ],
+    [
+      "SillyTilly/google-gemma-2-9b-it",
+      90
+    ],
+    [
+      "legraphista/gemma-2-9b-it-IMat-GGUF",
+      3236
+    ],
+    [
+      "mlx-community/gemma-2-9b-it-fp16",
+      94
+    ],
+    [
+      "BoscoTheDog/gemma-2-9b-it-IQ2_S_gguf_chunked",
+      62
+    ],
+    [
+      "second-state/gemma-2-9b-it-GGUF",
+      807
+    ],
+    [
+      "gaianet/gemma-2-9b-it-GGUF",
+      501
+    ],
+    [
+      "lmstudio-community/gemma-2-9b-it-GGUF",
+      9273
+    ],
+    [
+      "rainjay/gemma-2-9b-it-4bit",
+      22
+    ],
+    [
+      "leliuga/gemma-2-9b-it-bnb-4bit",
+      15
+    ],
+    [
+      "OllmOne/gemma-2-9b-it-GGUF",
+      0
+    ],
+    [
+      "duyntnet/gemma-2-9b-it-imatrix-GGUF",
+      943
+    ],
+    [
+      "ZeroWw/gemma-2-9b-it-GGUF",
+      46
+    ],
+    [
+      "QuantFactory/gemma-2-9b-it-GGUF",
+      807
+    ],
+    [
+      "BenevolenceMessiah/gemma-2-9b-it-Q8_0-GGUF",
+      86
+    ],
+    [
+      "UCLA-AGI/Gemma-2-9B-It-SPPO-Iter1",
+      488
+    ],
+    [
+      "UCLA-AGI/Gemma-2-9B-It-SPPO-Iter3",
+      554
+    ],
+    [
+      "quixotedav/gemma-2-9b-it-Q4_K_M-GGUF",
+      113
+    ],
+    [
+      "UCLA-AGI/Gemma-2-9B-It-SPPO-Iter2",
+      499
+    ],
+    [
+      "mozilla-ai/gemma-2-9b-it-llamafile",
+      2066
+    ],
+    [
+      "NikolayKozloff/gemma-2-9b-it-Q8_0-GGUF",
+      27
+    ],
+    [
+      "AdamLucek/gemma-2-9b-it-lora-yt-titles",
+      42
+    ],
+    [
+      "Fizzarolli/gemma-2-9b-it-GGUF-softcap",
+      40
+    ],
+    [
+      "hrtdind/Gemma-2-9B-It-SPPO-Iter3-Q5_K_M-GGUF",
+      53
+    ],
+    [
+      "hrtdind/Gemma-2-9B-It-SPPO-Iter3-Q4_K_M-GGUF",
+      56
+    ],
+    [
+      "NikolayKozloff/Gemma-2-9B-It-SPPO-Iter3-Q8_0-GGUF",
+      51
+    ],
+    [
+      "NikolayKozloff/Gemma-2-9B-It-SPPO-Iter3-Q5_K_S-GGUF",
+      48
+    ],
+    [
+      "NikolayKozloff/Gemma-2-9B-It-SPPO-Iter3-Q4_K_S-GGUF",
+      57
+    ],
+    [
+      "NikolayKozloff/Gemma-2-9B-It-SPPO-Iter3-IQ4_XS-GGUF",
+      80
+    ],
+    [
+      "NikolayKozloff/Gemma-2-9B-It-SPPO-Iter3-IQ4_NL-GGUF",
+      46
+    ],
+    [
+      "Dabitron/gemma-2-9b-it-Q5_0-GGUF",
+      24
+    ],
+    [
+      "NikolayKozloff/Gemma-2-9B-It-SPPO-Iter3-Q5_0-GGUF",
+      45
+    ],
+    [
+      "NikolayKozloff/Gemma-2-9B-It-SPPO-Iter3-Q4_0-GGUF",
+      41
+    ],
+    [
+      "Dabitron/gemma-2-9b-it-Q4_K_M-GGUF",
+      40
+    ],
+    [
+      "bartowski/Gemma-2-9B-It-SPPO-Iter3-GGUF",
+      2002
+    ],
+    [
+      "redponike/Gemma-2-9B-It-SPPO-Iter3-GGUF",
+      203
+    ],
+    [
+      "Dabitron/gemma-2-9b-it-Q4_K_S-GGUF",
+      28
+    ],
+    [
+      "artificialvlad/gemma-2-9b-it-Q8_0-GGUF",
+      14
+    ],
+    [
+      "Bessa/Gemma-2-9B-It-SPPO-Iter3-Q4_K_M-GGUF",
+      37
+    ],
+    [
+      "sosoai/Hansoldeco-Gemma-2-9b-it-v0.1",
+      17
+    ],
+    [
+      "skyxiaobaibai/gemma-2-9b-it-Q4_0-GGUF",
+      21
+    ],
+    [
+      "sosoai/Hansoldeco-Gemma-2-9b-it-v0.1-mlx",
+      15
+    ],
+    [
+      "QuantFactory/Gemma-2-9B-It-SPPO-Iter3-GGUF",
+      678
+    ],
+    [
+      "legraphista/Gemma-2-9B-It-SPPO-Iter3-IMat-GGUF",
+      6623
+    ],
+    [
+      "QuantFactory/Hansoldeco-Gemma-2-9b-it-v0.1-GGUF",
+      200
+    ],
+    [
+      "ModelCloud/gemma-2-9b-it-gptq-4bit",
+      269
+    ],
+    [
+      "RuiFPB/gemma-2-9b-it-Q4_K_M-GGUF",
+      22
+    ],
+    [
+      "ZeroWw/Gemma-2-9B-It-SPPO-Iter3-GGUF",
+      237
+    ],
+    [
+      "sosoai/Hansoldeco-Gemma-2-9b-it-v0.1-Q4_K_M-GGUF",
+      18
+    ],
+    [
+      "sosoai/Hansoldeco-Gemma-2-9b-it-v0.1-Q6_K-GGUF",
+      14
+    ],
+    [
+      "sosoai/Hansoldeco-Gemma-2-9b-it-v0.1-Q8_0-GGUF",
+      11
+    ],
+    [
+      "Dabitron/gemma-2-9b-it-Q4_0-GGUF",
+      34
+    ],
+    [
+      "mradermacher/gemma-2-9b-it-GGUF",
+      1384
+    ],
+    [
+      "mradermacher/Hansoldeco-Gemma-2-9b-it-v0.1-GGUF",
+      126
+    ],
+    [
+      "mradermacher/Hansoldeco-Gemma-2-9b-it-v0.1-i1-GGUF",
+      231
+    ],
+    [
+      "mradermacher/gemma-2-9b-it-i1-GGUF",
+      2053
+    ],
+    [
+      "KingsonHO/gemma-2-9b-it-Q4_0-GGUF",
+      17
+    ],
+    [
+      "antoniolopez00/gemma-2-9b-it-quantized",
+      16
+    ],
+    [
+      "chenghenry/gemma-2-9b-it-GGUF",
+      39
+    ],
+    [
+      "nalf3in/Gemma-2-9B-It-SPPO-Iter3-Q4_K_M-GGUF",
+      45
+    ],
+    [
+      "qwp4w3hyb/Gemma-2-9B-It-SPPO-Iter3-iMat-GGUF",
+      187
+    ],
+    [
+      "unsloth/gemma-2-9b-it",
+      10252
+    ],
+    [
+      "unsloth/gemma-2-9b-it-bnb-4bit",
+      8793
+    ],
+    [
+      "cyan2k/Gemma-2-9B-It-SPPO-Iter3-4bit-mlx",
+      86
+    ],
+    [
+      "e2jhiubyiiyvw/gemma-2-9b-it-Q5_K_M-GGUF",
+      31
+    ],
+    [
+      "unkonw/gemma-2-9b-it_exp0",
+      14
+    ],
+    [
+      "marcsun13/gemma-2-9b-it-GPTQ",
+      52
+    ],
+    [
+      "kyungeun/gemma-2-9b-it-mathinstruct-dpo",
+      17
+    ],
+    [
+      "kyungeun/gemma-2-9b-it-mathinstruct",
+      26
+    ],
+    [
+      "ozzyable/log-summerizer-gemma2-9b-it-4bit-v2",
+      6
+    ],
+    [
+      "neopolita/gemma-2-9b-it-gguf",
+      80
+    ],
+    [
+      "chohtet/gemma2_9b_it_lora_ft1_test",
+      0
+    ],
+    [
+      "ArvindSharma18/gemma-2-9b-it-bnb-4bit-book-review",
+      14
+    ],
+    [
+      "turboderp/gemma-2-9b-it-exl2",
+      14
+    ],
+    [
+      "grapevine-AI/gemma-2-9b-it-gguf",
+      87
+    ],
+    [
+      "FlorianJc/google-gemma-2-9b-it-vllm-fp8",
+      23
+    ],
+    [
+      "davidkim205/ko-gemma-2-9b-it",
+      18
+    ],
+    [
+      "valenradovich/gemma-2-9b-it-Q4_0-gguf",
+      18
+    ],
+    [
+      "dahara1/gemma-2-9b-it-gguf-japanese-imatrix",
+      292
+    ],
+    [
+      "tranhoangnguyen03/Gemma-2-9B-It-SPPO-Iter3_Q8",
+      18
+    ],
+    [
+      "prince-canuma/gemma-2-9b-it-4bit-mlx",
+      0
+    ],
+    [
+      "MCZK/Gemma-2-9B-It-SPPO-Iter3-GGUF",
+      1578
+    ],
+    [
+      "valenradovich/gemma-2-9b-it-IQ1_M-gguf",
+      91
+    ],
+    [
+      "typealias/Gemma-2-9B-It-SPPO-Iter3-mlx",
+      0
+    ],
+    [
+      "zhezhe/gemma-2-9b-it-Q4_K_M-GGUF",
+      625
+    ],
+    [
+      "Superoisesuki/gemma-2-9b-it-abliterated",
+      16
+    ],
+    [
+      "RedHatAI/gemma-2-9b-it-FP8",
+      11702
+    ],
+    [
+      "martintomov/gemma-2-9b-it-Q8_0-GGUF",
+      13
+    ],
+    [
+      "AXCXEPT/EZO-Common-9B-gemma-2-it",
+      66
+    ],
+    [
+      "AXCXEPT/EZO-Humanities-9B-gemma-2-it",
+      40
+    ],
+    [
+      "nihaomur/gemma-2-9b-it-AWQ",
+      40
+    ],
+    [
+      "mradermacher/EZO-Common-9B-gemma-2-it-GGUF",
+      408
+    ],
+    [
+      "mradermacher/EZO-Humanities-9B-gemma-2-it-GGUF",
+      1134
+    ],
+    [
+      "mradermacher/EZO-Common-9B-gemma-2-it-i1-GGUF",
+      2018
+    ],
+    [
+      "eganlau/gemma2_9b_it_lora_step10",
+      12
+    ]
+  ],
+  "timestamps": {
+    "createdAt": "2024-06-24T08:05:41.000Z",
+    "lastModified": "2024-08-27T19:41:49.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

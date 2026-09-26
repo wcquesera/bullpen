@@ -1,0 +1,83 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 632,
+  "card_text": "---\nlicense: cc-by-nc-4.0\ntags:\n- not-for-all-audiences\n- nsfw\n---\n\n```\nPsyMedRP-v1-13B-p1:\n[jondurbin/airoboros-l2-13b-3.0](0.85) x [ehartford/Samantha-1.11-13b](0.15)\n\nPsyMedRP-v1-13B-p2:\n[Xwin-LM/Xwin-LM-13B-V0.1](0.85) x [chaoyi-wu/MedLLaMA_13B](0.15)\n\nPsyMedRP-v1-13B-p3:\n[PsyMedRP-v1-13B-p1](0.55) x [PsyMedRP-v1-13B-p2](0.45)\n\nPsyMedRP-v1-13B-p4:\n[The-Face-Of-Goonery/Huginn-13b-FP16 merge with Gryphe gradient with PsyMedRP-v1-13B-p3]\n\nPsyMedRP-v1-13B:\nApply Undi95/LimaRP-v3-120-Days at 0.3 weight to PsyMedRP-v1-13B-p4\n```\n\nIn testing. 20B will follow!\n\nIf you want to support me, you can [here](https://ko-fi.com/undiai).",
+  "fetched_at": "2026-09-22T06:44:58.862820+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "Undi95",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "not-for-all-audiences",
+      "nsfw",
+      "license:cc-by-nc-4.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "Undi95__PsyMedRP-v1-13B",
+  "ok": true,
+  "popularity": {
+    "downloads": 23,
+    "downloadsAllTime": 530,
+    "likes": 12,
+    "trendingScore": 0
+  },
+  "repo_id": "Undi95/PsyMedRP-v1-13B",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-10-05T17:00:00.000Z",
+    "lastModified": "2023-10-14T11:31:41.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

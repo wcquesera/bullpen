@@ -1,0 +1,84 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 330,
+  "card_text": "---\nlicense: apache-2.0\ndatasets:\n- Danielbrdz/Barcenas-lmsys-Dataset\nlanguage:\n- en\n- es\n---\nBarcenas-Mistral-7b is a fine-tuning of teknium/CollectiveCognition-v1-Mistral-7B\n\nIt was trained with Spanish data from lmsys/lmsys-chat-1m\nprovided by Danielbrdz/Barcenas-lmsys-Dataset\n\nMade with \u2764\ufe0f in Guadalupe, Nuevo Leon, Mexico \ud83c\uddf2\ud83c\uddfd",
+  "fetched_at": "2026-09-22T06:43:33.184461+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "Danielbrdz",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "mistral",
+      "text-generation",
+      "en",
+      "es",
+      "dataset:Danielbrdz/Barcenas-lmsys-Dataset",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "Danielbrdz__Barcenas-Mistral-7b",
+  "ok": true,
+  "popularity": {
+    "downloads": 64,
+    "downloadsAllTime": 28077,
+    "likes": 7,
+    "trendingScore": 0
+  },
+  "repo_id": "Danielbrdz/Barcenas-Mistral-7b",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-10-20T19:44:15.000Z",
+    "lastModified": "2023-10-20T22:41:01.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

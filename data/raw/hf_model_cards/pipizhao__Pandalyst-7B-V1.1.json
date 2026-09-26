@@ -1,0 +1,84 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 11008,
+    "max_position_embeddings": 16384,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 32,
+    "parameter_dtypes": {},
+    "torch_dtype": "bfloat16",
+    "vocab_size": 32001
+  },
+  "card_chars": 2739,
+  "card_text": "---\nlicense: llama2\nlibrary_name: transformers\ntags:\n- code\nmodel-index:\n- name: Pandalyst-7B-V1.1\n  results:\n  - task:\n      type: text-generation\n    metrics:\n    - name: acc@1\n      type: acc@1\n      value: 0.0\n      verified: false\nlanguage:\n- en\n---\n\n\n## Pandalyst: A large language model for mastering data analysis using pandas\n\n<p align=\"center\">\n<img src=\"https://raw.githubusercontent.com/pipizhaoa/Pandalyst/master/imgs/pandalyst.png\" width=\"300\"/>\n</p>\n\n<p align=\"center\">\n\ud83d\udc31 <a href=\"https://github.com/pipizhaoa/Pandalyst\" target=\"_blank\">Github Repo</a> <br>\n</p>\n\n**What is Pandalyst**\n- Pandalyst is a general large language model specifically trained to process and analyze data using the pandas library.\n\n**How is Pandalyst**\n- Pandalyst has strong generalization capabilities for data tables in different fields and different data analysis needs.\n\n**Why is Pandalyst**\n- Pandalyst is open source and free to use, and its small parameter size (7B/13B) allows us to easily deploy it on local PC. \n- Pandalyst can handle complex data tables (multiple columns and multiple rows), allowing us to enter enough context to describe our table in detail.\n- Pandalyst has very competitive performance, significantly outperforming models of the same size and even outperforming some of the strongest closed-source models.\n\n\n## News\n- \ud83d\udd25[2023/10/15] Now we can **plot** \ud83d\udcc8! and much more powerful! We released **Pandalyst-7B-V1.2**, which was trained on **CodeLlama-7b-Python** and it surpasses **ChatGPT-3.5 (2023/06/13)**, **Pandalyst-7B-V1.1** and **WizardCoder-Python-13B-V1.0** in our **PandaTest_V1.0**.\n- \ud83e\udd16\ufe0f[2023/09/30] We released **Pandalyst-7B-V1.1** , which was trained on **CodeLlama-7b-Python** and achieves the **76.1 exec@1** in our **PandaTest_V1.0** and surpasses **WizardCoder-Python-13B-V1.0** and **ChatGPT-3.5 (2023/06/13)**.\n\n| Model               | Checkpoint                                                                                 | Support plot | License |\n|---------------------|--------------------------------------------------------------------------------------------|--------------|  ----- | \n| \ud83d\udd25Pandalyst-7B-V1.2 | \ud83e\udd17 <a href=\"https://huggingface.co/pipizhao/Pandalyst-7B-V1.2\" target=\"_blank\">HF Link</a> | \u2705            |  <a href=\"https://ai.meta.com/resources/models-and-libraries/llama-downloads/\" target=\"_blank\">Llama2</a>  |\n| Pandalyst-7B-V1.1   | \ud83e\udd17 <a href=\"https://huggingface.co/pipizhao/Pandalyst-7B-V1.1\" target=\"_blank\">HF Link</a> | \u274c            |  <a href=\"https://ai.meta.com/resources/models-and-libraries/llama-downloads/\" target=\"_blank\">Llama2</a>  |\n\n\n## Usage and Human evaluation\nPlease refer to <a href=\"https://github.com/pipizhaoa/Pandalyst\" target=\"_blank\">Github</a>.",
+  "fetched_at": "2026-09-22T06:46:40.283824+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "pipizhao",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "llama2",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "code",
+      "en",
+      "license:llama2",
+      "model-index",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "pipizhao__Pandalyst-7B-V1.1",
+  "ok": true,
+  "popularity": {
+    "downloads": 91,
+    "downloadsAllTime": 707,
+    "likes": 14,
+    "trendingScore": 0
+  },
+  "repo_id": "pipizhao/Pandalyst-7B-V1.1",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-30T03:09:54.000Z",
+    "lastModified": "2023-10-15T08:05:59.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

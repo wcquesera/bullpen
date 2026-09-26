@@ -1,0 +1,102 @@
+{
+  "architecture": {
+    "architectures": [
+      "Qwen2ForCausalLM"
+    ],
+    "hidden_size": 896,
+    "intermediate_size": 4864,
+    "max_position_embeddings": 32768,
+    "model_type": "qwen2",
+    "n_parameters": 494032768,
+    "num_attention_heads": 14,
+    "num_hidden_layers": 24,
+    "num_key_value_heads": 2,
+    "parameter_dtypes": {
+      "BF16": 494032768
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 151936
+  },
+  "card_chars": 3565,
+  "card_text": "---\nlicense: apache-2.0\nlanguage:\n- en\npipeline_tag: text-generation\ntags:\n- chat\nbase_model: Qwen/Qwen2-0.5B\n---\n\n# Qwen2-0.5B-Instruct\n\n## Introduction\n\nQwen2 is the new series of Qwen large language models. For Qwen2, we release a number of base language models and instruction-tuned language models ranging from 0.5 to 72 billion parameters, including a Mixture-of-Experts model. This repo contains the instruction-tuned 0.5B Qwen2 model.\n\nCompared with the state-of-the-art opensource language models, including the previous released Qwen1.5, Qwen2 has generally surpassed most opensource models and demonstrated competitiveness against proprietary models across a series of benchmarks targeting for language understanding, language generation, multilingual capability, coding, mathematics, reasoning, etc.\n\nFor more details, please refer to our [blog](https://qwenlm.github.io/blog/qwen2/), [GitHub](https://github.com/QwenLM/Qwen2), and [Documentation](https://qwen.readthedocs.io/en/latest/).\n<br>\n\n## Model Details\nQwen2 is a language model series including decoder language models of different model sizes. For each size, we release the base language model and the aligned chat model. It is based on the Transformer architecture with SwiGLU activation, attention QKV bias, group query attention, etc. Additionally, we have an improved tokenizer adaptive to multiple natural languages and codes.\n\n## Training details\nWe pretrained the models with a large amount of data, and we post-trained the models with both supervised finetuning and direct preference optimization.\n\n\n## Requirements\nThe code of Qwen2 has been in the latest Hugging face transformers and we advise you to install `transformers>=4.37.0`, or you might encounter the following error:\n```\nKeyError: 'qwen2'\n```\n\n## Quickstart\n\nHere provides a code snippet with `apply_chat_template` to show you how to load the tokenizer and model and how to generate contents.\n\n```python\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\ndevice = \"cuda\" # the device to load the model onto\n\nmodel = AutoModelForCausalLM.from_pretrained(\n    \"Qwen/Qwen2-0.5B-Instruct\",\n    torch_dtype=\"auto\",\n    device_map=\"auto\"\n)\ntokenizer = AutoTokenizer.from_pretrained(\"Qwen/Qwen2-0.5B-Instruct\")\n\nprompt = \"Give me a short introduction to large language model.\"\nmessages = [\n    {\"role\": \"system\", \"content\": \"You are a helpful assistant.\"},\n    {\"role\": \"user\", \"content\": prompt}\n]\ntext = tokenizer.apply_chat_template(\n    messages,\n    tokenize=False,\n    add_generation_prompt=True\n)\nmodel_inputs = tokenizer([text], return_tensors=\"pt\").to(device)\n\ngenerated_ids = model.generate(\n    model_inputs.input_ids,\n    max_new_tokens=512\n)\ngenerated_ids = [\n    output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)\n]\n\nresponse = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]\n```\n\n## Evaluation\n\nWe briefly compare Qwen2-0.5B-Instruct with Qwen1.5-0.5B-Chat. The results are as follows:\n\n| Datasets | Qwen1.5-0.5B-Chat | **Qwen2-0.5B-Instruct** | Qwen1.5-1.8B-Chat | **Qwen2-1.5B-Instruct** |\n| :--- | :---: | :---: | :---: | :---: |\n| MMLU | 35.0 | **37.9** | 43.7 | **52.4** |\n| HumanEval | 9.1 | **17.1** | 25.0 | **37.8** |\n| GSM8K | 11.3 | **40.1** | 35.3 | **61.6** |\n| C-Eval | 37.2 | **45.2** | 55.3 | **63.8** |\n| IFEval (Prompt Strict-Acc.) | 14.6 | **20.0** | 16.8 | **29.0** |\n\n## Citation\n\nIf you find our work helpful, feel free to give us a cite.\n\n```\n@article{qwen2,\n  title={Qwen2 Technical Report},\n  year={2024}\n}\n```",
+  "fetched_at": "2026-09-22T06:44:30.318492+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "Qwen/Qwen2-0.5B"
+    ],
+    "card_base_models": [
+      "Qwen/Qwen2-0.5B"
+    ],
+    "merge_tags": [],
+    "n_base_models": 1,
+    "relations": {
+      "": [
+        "Qwen/Qwen2-0.5B"
+      ],
+      "finetune": [
+        "Qwen/Qwen2-0.5B"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "Qwen",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "qwen2",
+      "text-generation",
+      "chat",
+      "conversational",
+      "en",
+      "base_model:Qwen/Qwen2-0.5B",
+      "base_model:finetune:Qwen/Qwen2-0.5B",
+      "license:apache-2.0",
+      "eval-results",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:sagemaker",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "Qwen__Qwen2-0.5B-Instruct",
+  "ok": true,
+  "popularity": {
+    "downloads": 300023,
+    "downloadsAllTime": 8647093,
+    "likes": 203,
+    "trendingScore": 0
+  },
+  "repo_id": "Qwen/Qwen2-0.5B-Instruct",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2024-06-03T09:06:06.000Z",
+    "lastModified": "2024-08-21T10:23:36.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

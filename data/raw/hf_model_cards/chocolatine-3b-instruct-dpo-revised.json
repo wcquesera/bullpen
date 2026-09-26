@@ -1,0 +1,90 @@
+{
+  "architecture": {
+    "architectures": [
+      "Phi3ForCausalLM"
+    ],
+    "hidden_size": 3072,
+    "intermediate_size": 8192,
+    "max_position_embeddings": 4096,
+    "model_type": "phi3",
+    "n_parameters": 3821079552,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 32,
+    "parameter_dtypes": {
+      "F16": 3821079552
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32064
+  },
+  "card_chars": 7034,
+  "card_text": "---\nlibrary_name: transformers\nlicense: mit\nlanguage:\n- fr\n- en\ntags:\n- french\n- chocolatine\ndatasets:\n- jpacifico/french-orca-dpo-pairs-revised\npipeline_tag: text-generation\n---\n\n### Chocolatine-3B-Instruct-DPO-Revised  \n\nDPO fine-tuned of [microsoft/Phi-3-mini-4k-instruct](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct) (3.82B params)  \nusing the [jpacifico/french-orca-dpo-pairs-revised](https://huggingface.co/datasets/jpacifico/french-orca-dpo-pairs-revised) rlhf dataset.  \nTraining in French also improves the model in English, surpassing the performances of its base model.  \nWindow context = 4k tokens  \n\nQuantized 4-bit and 8-bit versions are available (see below)  \nA larger version Chocolatine-14B is also available in its latest [version-1.2](https://huggingface.co/jpacifico/Chocolatine-14B-Instruct-DPO-v1.2)\n\n### Benchmarks\n\nChocolatine is the best-performing 3B model on the [OpenLLM Leaderboard](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard) (august 2024)   \n[Update 2024-08-22] Chocolatine-3B also outperforms Microsoft's new model Phi-3.5-mini-instruct on the average benchmarks of the 3B category.  \n\n![image/png](https://github.com/jpacifico/Chocolatine-LLM/blob/main/Assets/openllm_chocolatine_3B_22082024.png?raw=false)  \n\n\n|      Metric       |Value|\n|-------------------|----:|\n|**Avg.**               |**27.63**|\n|IFEval     |56.23|\n|BBH        |37.16|\n|MATH Lvl 5 |14.5|\n|GPQA       |9.62|\n|MuSR       |15.1|\n|MMLU-PRO   |33.21|\n\n\n### MT-Bench-French\n\nChocolatine-3B-Instruct-DPO-Revised is outperforming GPT-3.5-Turbo on [MT-Bench-French](https://huggingface.co/datasets/bofenghuang/mt-bench-french), used with [multilingual-mt-bench](https://github.com/Peter-Devine/multilingual_mt_bench) and GPT-4-Turbo as LLM-judge.   \nNotably, this latest version of the Chocolatine-3B model is approaching the performance of Phi-3-Medium (14B) in French.\n\n```\n########## First turn ##########\n                                                      score\nmodel                                         turn         \ngpt-4o-mini                                   1     9.28750\nChocolatine-14B-Instruct-DPO-v1.2             1     8.61250\nPhi-3-medium-4k-instruct                      1     8.22500\ngpt-3.5-turbo                                 1     8.13750\nChocolatine-3B-Instruct-DPO-Revised           1     7.98750\nDaredevil-8B                                  1     7.88750\nNeuralDaredevil-8B-abliterated                1     7.62500\nPhi-3-mini-4k-instruct                        1     7.21250\nMeta-Llama-3.1-8B-Instruct                    1     7.05000\nvigostral-7b-chat                             1     6.78750\nMistral-7B-Instruct-v0.3                      1     6.75000\ngemma-2-2b-it                                 1     6.45000\nFrench-Alpaca-7B-Instruct_beta                1     5.68750\nvigogne-2-7b-chat                             1     5.66250\n\n########## Second turn ##########\n                                                       score\nmodel                                         turn          \ngpt-4o-mini                                   2     8.912500\nChocolatine-14B-Instruct-DPO-v1.2             2     8.337500\nChocolatine-3B-Instruct-DPO-Revised           2     7.937500\nPhi-3-medium-4k-instruct                      2     7.750000\ngpt-3.5-turbo                                 2     7.679167\nNeuralDaredevil-8B-abliterated                2     7.125000\nDaredevil-8B                                  2     7.087500\nMeta-Llama-3.1-8B-Instruct                    2     6.787500\nMistral-7B-Instruct-v0.3                      2     6.500000\nPhi-3-mini-4k-instruct                        2     6.487500\nvigostral-7b-chat                             2     6.162500\ngemma-2-2b-it                                 2     6.100000\nFrench-Alpaca-7B-Instruct_beta                2     5.487395\nvigogne-2-7b-chat                             2     2.775000\n\n########## Average ##########\n                                                  score\nmodel                                                  \ngpt-4o-mini                                    9.100000\nChocolatine-14B-Instruct-DPO-v1.2              8.475000\nPhi-3-medium-4k-instruct                       7.987500\nChocolatine-3B-Instruct-DPO-Revised            7.962500\ngpt-3.5-turbo                                  7.908333\nDaredevil-8B                                   7.487500\nNeuralDaredevil-8B-abliterated                 7.375000\nMeta-Llama-3.1-8B-Instruct                     6.918750\nPhi-3-mini-4k-instruct                         6.850000\nMistral-7B-Instruct-v0.3                       6.625000\nvigostral-7b-chat                              6.475000\ngemma-2-2b-it                                  6.275000\nFrench-Alpaca-7B-Instruct_beta                 5.587866\nvigogne-2-7b-chat                              4.218750\n```\n\n\n### Quantized versions\n\n* **4-bit quantized version** is available here : [jpacifico/Chocolatine-3B-Instruct-DPO-Revised-Q4_K_M-GGUF](https://huggingface.co/jpacifico/Chocolatine-3B-Instruct-DPO-Revised-Q4_K_M-GGUF)\n\n* **8-bit quantized version** also available here : [jpacifico/Chocolatine-3B-Instruct-DPO-Revised-Q8_0-GGUF](https://huggingface.co/jpacifico/Chocolatine-3B-Instruct-DPO-Revised-Q8_0-GGUF)\n\n* **Ollama**: [jpacifico/chocolatine-3b](https://ollama.com/jpacifico/chocolatine-3b)\n\n```bash\nollama run jpacifico/chocolatine-3b\n```\n\nOllama *Modelfile* example :\n\n```bash\nFROM ./chocolatine-3b-instruct-dpo-revised-q4_k_m.gguf\nTEMPLATE \"\"\"{{ if .System }}<|system|>\n{{ .System }}<|end|>\n{{ end }}{{ if .Prompt }}<|user|>\n{{ .Prompt }}<|end|>\n{{ end }}<|assistant|>\n{{ .Response }}<|end|>\n\"\"\"\nPARAMETER stop \"\"\"{\"stop\": [\"<|end|>\",\"<|user|>\",\"<|assistant|>\"]}\"\"\"\nSYSTEM \"\"\"You are a friendly assistant called Chocolatine.\"\"\"\n```\n\n### Usage\n\nYou can run this model using my [Colab notebook](https://github.com/jpacifico/Chocolatine-LLM/blob/main/Chocolatine_3B_inference_test_colab.ipynb) \n\nYou can also run Chocolatine using the following code:\n\n```python\nimport transformers\nfrom transformers import AutoTokenizer\n\n# Format prompt\nmessage = [\n    {\"role\": \"system\", \"content\": \"You are a helpful assistant chatbot.\"},\n    {\"role\": \"user\", \"content\": \"What is a Large Language Model?\"}\n]\ntokenizer = AutoTokenizer.from_pretrained(new_model)\nprompt = tokenizer.apply_chat_template(message, add_generation_prompt=True, tokenize=False)\n\n# Create pipeline\npipeline = transformers.pipeline(\n    \"text-generation\",\n    model=new_model,\n    tokenizer=tokenizer\n)\n\n# Generate text\nsequences = pipeline(\n    prompt,\n    do_sample=True,\n    temperature=0.7,\n    top_p=0.9,\n    num_return_sequences=1,\n    max_length=200,\n)\nprint(sequences[0]['generated_text'])\n```\n\n### Limitations\n\nThe Chocolatine model is a quick demonstration that a base model can be easily fine-tuned to achieve compelling performance.  \nIt does not have any moderation mechanism.  \n\n- **Developed by:** Jonathan Pacifico, 2024\n- **Model type:** LLM \n- **Language(s) (NLP):** French, English\n- **License:** MIT",
+  "fetched_at": "2026-09-19T15:02:08.085024+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "jpacifico",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "mit",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "phi3",
+      "text-generation",
+      "french",
+      "chocolatine",
+      "conversational",
+      "custom_code",
+      "fr",
+      "en",
+      "dataset:jpacifico/french-orca-dpo-pairs-revised",
+      "license:mit",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "chocolatine-3b-instruct-dpo-revised",
+  "ok": true,
+  "popularity": {
+    "downloads": 94,
+    "downloadsAllTime": 7977,
+    "likes": 28,
+    "trendingScore": 0
+  },
+  "repo_id": "jpacifico/Chocolatine-3B-Instruct-DPO-Revised",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2024-07-17T07:42:51.000Z",
+    "lastModified": "2024-10-15T19:04:05.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": true,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

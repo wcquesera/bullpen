@@ -1,0 +1,83 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 2048,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": null,
+    "parameter_dtypes": {},
+    "torch_dtype": "float32",
+    "vocab_size": 32000
+  },
+  "card_chars": 4580,
+  "card_text": "---\nlicense: gpl\ndatasets:\n- nomic-ai/gpt4all-j-prompt-generations\nlanguage:\n- en\n---\n# Model Card for GPT4All-13b-snoozy\n\nA GPL licensed chatbot trained over a massive curated corpus of assistant interactions including word problems, multi-turn dialogue, code, poems, songs, and stories.\n\n## Model Details\n\n### Model Description\n\n<!-- Provide a longer summary of what this model is. -->\n\nThis model has been finetuned from LLama 13B\n\n- **Developed by:** [Nomic AI](https://home.nomic.ai)\n- **Model Type:** A finetuned LLama 13B model on assistant style interaction data\n- **Language(s) (NLP):** English\n- **License:** GPL\n- **Finetuned from model [optional]:** LLama 13B\n\nThis model was trained on `nomic-ai/gpt4all-j-prompt-generations` using `revision=v1.3-groovy`\n\n### Model Sources [optional]\n\n<!-- Provide the basic links for the model. -->\n\n- **Repository:** [https://github.com/nomic-ai/gpt4all](https://github.com/nomic-ai/gpt4all)\n- **Base Model Repository:** [https://github.com/facebookresearch/llama](https://github.com/facebookresearch/llama)\n- **Demo [optional]:** [https://gpt4all.io/](https://gpt4all.io/)\n\n\n### Results\n\nResults on common sense reasoning benchmarks\n\n```\n| Model                     |  BoolQ   |   PIQA   | HellaSwag | WinoGrande |  ARC-e   |  ARC-c   |   OBQA   |   Avg.   |\n|:--------------------------|:--------:|:--------:|:---------:|:----------:|:--------:|:--------:|:--------:|:--------:|\n| GPT4All-J 6B v1.0         |   73.4   |   74.8   |   63.4    |    64.7    |   54.9   |   36.0   |   40.2   |   58.2   |\n| GPT4All-J v1.1-breezy     |   74.0   |   75.1   |   63.2    |    63.6    |   55.4   |   34.9   |   38.4   |   57.8   |\n| GPT4All-J v1.2-jazzy      |   74.8   |   74.9   |   63.6    |    63.8    |   56.6   |   35.3   |   41.0   |   58.6   |\n| GPT4All-J v1.3-groovy     |   73.6   |   74.3   |   63.8    |    63.5    |   57.7   |   35.0   |   38.8   |   58.1   |\n| GPT4All-J Lora 6B         |   68.6   |   75.8   |   66.2    |    63.5    |   56.4   |   35.7   |   40.2   |   58.1   |\n| GPT4All LLaMa Lora 7B     |   73.1   |   77.6   |   72.1    |    67.8    |   51.1   |   40.4   |   40.2   |   60.3   |\n| GPT4All 13B snoozy        | **83.3** |   79.2   |   75.0    |  **71.3**  |   60.9   |   44.2   |   43.4   | **65.3** |\n| Dolly 6B                  |   68.8   |   77.3   |   67.6    |    63.9    |   62.9   |   38.7   |   41.2   |   60.1   |\n| Dolly 12B                 |   56.7   |   75.4   |   71.0    |    62.2    |   64.6   |   38.5   |   40.4   |   58.4   |\n| Alpaca 7B                 |   73.9   |   77.2   |   73.9    |    66.1    |   59.8   |   43.3   |   43.4   |   62.4   |\n| Alpaca Lora 7B            |   74.3   | **79.3** |   74.0    |    68.8    |   56.6   |   43.9   |   42.6   |   62.8   |\n| GPT-J 6.7B                |   65.4   |   76.2   |   66.2    |    64.1    |   62.2   |   36.6   |   38.2   |   58.4   |\n| LLama 7B                  |   73.1   |   77.4   |   73.0    |    66.9    |   52.5   |   41.4   |   42.4   |   61.0   |\n| LLama 13B                 |   68.5   |   79.1   |   76.2    |    70.1    |   60.0   | **44.6** |   42.2   |   63.0   |\n| Pythia 6.7B               |   63.5   |   76.3   |   64.0    |    61.1    |   61.3   |   35.2   |   37.2   |   57.0   |\n| Pythia 12B                |   67.7   |   76.6   |   67.3    |    63.8    |   63.9   |   34.8   |    38    |   58.9   |\n| Fastchat T5               |   81.5   |   64.6   |   46.3    |    61.8    |   49.3   |   33.3   |   39.4   |   53.7   |\n| Fastchat Vicu\u00f1a 7B        |   76.6   |   77.2   |   70.7    |    67.3    |   53.5   |   41.2   |   40.8   |   61.0   |\n| Fastchat Vicu\u00f1a 13B       |   81.5   |   76.8   |   73.3    |    66.7    |   57.4   |   42.7   |   43.6   |   63.1   |\n| StableVicu\u00f1a RLHF         |   82.3   |   78.6   |   74.1    |    70.9    |   61.0   |   43.5   | **44.4** |   65.0   |\n| StableLM Tuned            |   62.5   |   71.2   |   53.6    |    54.8    |   52.4   |   31.1   |   33.4   |   51.3   |\n| StableLM Base             |   60.1   |   67.4   |   41.2    |    50.1    |   44.9   |   27.0   |   32.0   |   42.2   |\n| Koala 13B                 |   76.5   |   77.9   |   72.6    |    68.8    |   54.3   |   41.0   |   42.8   |   62.0   |\n| Open Assistant Pythia 12B |   67.9   |   78.0   |   68.1    |    65.0    |   64.2   |   40.4   |   43.2   |   61.0   |\n| Mosaic mpt-7B              |   74.8   | **79.3** | **76.3**  |    68.6    | **70.0** |   42.2   |   42.6   |   64.8   |\n| text-davinci-003          |   88.1   |   83.8   |   83.4    |    75.8    |   83.9   |   63.9   |   51.0   |   75.7   |\n```",
+  "fetched_at": "2026-09-19T15:01:45.552788+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "nomic-ai",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "gpl",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "en",
+      "dataset:nomic-ai/gpt4all-j-prompt-generations",
+      "license:gpl",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "nomic-ai__gpt4all-13b-snoozy",
+  "ok": true,
+  "popularity": {
+    "downloads": 102,
+    "downloadsAllTime": 45372,
+    "likes": 86,
+    "trendingScore": 0
+  },
+  "repo_id": "nomic-ai/gpt4all-13b-snoozy",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-04-24T14:08:35.000Z",
+    "lastModified": "2023-05-19T20:56:13.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

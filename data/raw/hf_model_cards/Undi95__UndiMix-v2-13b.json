@@ -1,0 +1,84 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": 13015866880,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {
+      "BF16": 12688186880,
+      "F32": 327680000
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 1172,
+  "card_text": "---\nlicense: cc-by-nc-4.0\n---\nThis model speak way more than the v1, be warned.\n\nCommand used :\n```shell\npython ties_merge.py TheBloke/Llama-2-13B-fp16 ./UndiMix-v2-13b  --merge jondurbin/airoboros-l2-13b-2.1 --density 0.10 --merge IkariDev/Athena-v1 --density 0.10 --merge Undi95/UndiMix-v1-13b --density 0.80 --cuda\n```\n\nTesting around\u00b2...\n\n<!-- description start -->\n## Description\n\nThis repo contains fp16 files of personal mix : \"UndiMix-v2\".\n\nIt can be hot, serious, playful, and can use emoji thanks to llama-2-13b-chat-limarp-v2-merged.\n\n<!-- description end -->\n<!-- description start -->\n## Models used\n\n\n- TheBloke/Llama-2-13B-fp16 (base)\n- Undi95/MythoMax-L2-Kimiko-v2-13b (0.33)\n- The-Face-Of-Goonery/Huginn-13b-v1.2 (0.33)\n- Doctor-Shotgun/llama-2-13b-chat-limarp-v2-merged (0.33)\n- ====REMIX====\n- jondurbin/airoboros-l2-13b-2.1 (0.10)\n- IkariDev/Athena-v1 (0.10)\n- UndiMix-v1-13b (0.80)\n<!-- description end -->\n<!-- prompt-template start -->\n## Prompt template: Alpaca\n\n```\nBelow is an instruction that describes a task. Write a response that appropriately completes the request.\n\n### Instruction:\n{prompt}\n\n### Response:\n\n```\n\nSpecial thanks to Sushi kek",
+  "fetched_at": "2026-09-22T06:45:05.543097+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "Undi95",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "license:cc-by-nc-4.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "Undi95__UndiMix-v2-13b",
+  "ok": true,
+  "popularity": {
+    "downloads": 37,
+    "downloadsAllTime": 194,
+    "likes": 3,
+    "trendingScore": 0
+  },
+  "repo_id": "Undi95/UndiMix-v2-13b",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-01T00:40:40.000Z",
+    "lastModified": "2023-09-09T21:08:53.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 11008,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 32,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 0,
+  "card_text": null,
+  "fetched_at": "2026-09-22T06:46:36.310027+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 404
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "oh-yeontaek",
+    "gated": false,
+    "library_name": "transformers",
+    "license": null,
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "oh-yeontaek__llama-2-7B-LoRA-assemble",
+  "ok": true,
+  "popularity": {
+    "downloads": 508,
+    "downloadsAllTime": 61998,
+    "likes": 5,
+    "trendingScore": 0
+  },
+  "repo_id": "oh-yeontaek/llama-2-7B-LoRA-assemble",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-13T15:30:35.000Z",
+    "lastModified": "2023-09-13T15:40:26.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

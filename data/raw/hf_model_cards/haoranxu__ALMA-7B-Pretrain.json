@@ -1,0 +1,83 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 11008,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 32,
+    "parameter_dtypes": {},
+    "torch_dtype": "float32",
+    "vocab_size": 32000
+  },
+  "card_chars": 5316,
+  "card_text": "---\nlicense: mit\n---\n**ALMA** (**A**dvanced **L**anguage **M**odel-based tr**A**nslator) is an LLM-based translation model, which adopts a new translation model paradigm: it begins with fine-tuning on monolingual data and is further optimized using high-quality parallel data. This two-step fine-tuning process ensures strong translation performance. \nPlease find more details in our [paper](https://arxiv.org/abs/2309.11674).\n\n**[ALMA-R](https://arxiv.org/abs/2401.08417) (NEW!) is released now!** ALMA-R builds upon ALMA models, with further LoRA fine-tuning with our proposed **Contrastive Preference Optimization (CPO)** as opposed to the Supervised Fine-tuning used in ALMA. CPO fine-tuning requires our [triplet preference data](https://huggingface.co/datasets/haoranxu/ALMA-R-Preference) for preference learning. ALMA-R now can matches or even exceeds GPT-4 or WMT winners!\n\n```\n@misc{xu2023paradigm,\n      title={A Paradigm Shift in Machine Translation: Boosting Translation Performance of Large Language Models}, \n      author={Haoran Xu and Young Jin Kim and Amr Sharaf and Hany Hassan Awadalla},\n      year={2023},\n      eprint={2309.11674},\n      archivePrefix={arXiv},\n      primaryClass={cs.CL}\n}\n```\nWe release six translation models presented in the paper:\n- **ALMA-7B**: Full-weight Fine-tune LLaMA-2-7B on 20B monolingual tokens and then **Full-weight** fine-tune on human-written parallel data\n- **ALMA-7B-LoRA**: Full-weight Fine-tune LLaMA-2-7B on 20B monolingual tokens and then **LoRA** fine-tune on human-written parallel data\n- **ALMA-7B-R (NEW!)**: Further LoRA fine-tuning upon ALMA-7B-LoRA with contrastive preference optimization.\n- **ALMA-13B**: Full-weight Fine-tune LLaMA-2-7B on 12B monolingual tokens and then **Full-weight** fine-tune on human-written parallel data\n- **ALMA-13B-LoRA** (Our best system): Full-weight Fine-tune LLaMA-2-7B on 12B monolingual tokens and then **LoRA** fine-tune on human-written parallel data\n- **ALMA-13B-R (NEW!)**: Further LoRA fine-tuning upon ALMA-13B-LoRA with contrastive preference optimization. \n  \nModel checkpoints are released at huggingface:\n|     Models    | Base Model Link | LoRA Link |\n|:-------------:|:---------------:|:---------:|\n|    ALMA-7B    |        [haoranxu/ALMA-7B](https://huggingface.co/haoranxu/ALMA-7B)        |     -     |\n|  ALMA-7B-LoRA |        [haoranxu/ALMA-7B-Pretrain](https://huggingface.co/haoranxu/ALMA-7B-Pretrain)        |     [haoranxu/ALMA-7B-Pretrain-LoRA](https://huggingface.co/haoranxu/ALMA-7B-Pretrain-LoRA)     |\n|  **ALMA-7B-R (NEW!)** |        [haoranxu/ALMA-7B-Pretrain](https://huggingface.co/haoranxu/ALMA-7B-Pretrain)        |     [haoranxu/ALMA-7B-R](https://huggingface.co/haoranxu/ALMA-7B-R)     |\n|    ALMA-13B   |        [haoranxu/ALMA-13B](https://huggingface.co/haoranxu/ALMA-13B)        |     -     |\n| ALMA-13B-LoRA |        [haoranxu/ALMA-13B-Pretrain](https://huggingface.co/haoranxu/ALMA-13B-Pretrain)        |     [haoranxu/ALMA-13B-Pretrain-LoRA](https://huggingface.co/haoranxu/ALMA-13B-Pretrain-LoRA)     |\n| **ALMA-13B-R (NEW!)** |        [haoranxu/ALMA-13B-Pretrain](https://huggingface.co/haoranxu/ALMA-13B-Pretrain)        |     [haoranxu/ALMA-13B-R](https://huggingface.co/haoranxu/ALMA-13B-R)     |\n\n**Note that `ALMA-7B-Pretrain` and `ALMA-13B-Pretrain` are NOT translation models. They only experience stage 1 monolingual fine-tuning (20B tokens for the 7B model and 12B tokens for the 13B model), and should be utilized in conjunction with their LoRA models.** \n\nDatasets used by ALMA and ALMA-R are also released at huggingface now (NEW!)\n|     Datasets    | Train / Validation| Test |\n|:-------------:|:---------------:|:---------:|\n|    Human-Written Parallel Data (ALMA)    |        [train and validation](https://huggingface.co/datasets/haoranxu/ALMA-Human-Parallel)        |     [WMT'22](https://huggingface.co/datasets/haoranxu/WMT22-Test)    |\n|  Triplet Preference Data |        [train](https://huggingface.co/datasets/haoranxu/ALMA-R-Preference)        |   [WMT'22](https://huggingface.co/datasets/haoranxu/WMT22-Test) and [WMT'23](https://huggingface.co/datasets/haoranxu/WMT23-Test)   |\n\nA quick start to use our best system (ALMA-13B-LoRA) for translation. An example of translating \"\u6211\u7231\u673a\u5668\u7ffb\u8bd1\u3002\" into English:\n```\nimport torch\nfrom peft import PeftModel\nfrom transformers import AutoModelForCausalLM\nfrom transformers import LlamaTokenizer\n\n# Load base model and LoRA weights\nmodel = AutoModelForCausalLM.from_pretrained(\"haoranxu/ALMA-13B-Pretrain\", torch_dtype=torch.float16, device_map=\"auto\")\nmodel = PeftModel.from_pretrained(model, \"haoranxu/ALMA-13B-Pretrain-LoRA\")\ntokenizer = LlamaTokenizer.from_pretrained(\"haoranxu/ALMA-13B-Pretrain\", padding_side='left')\n\n# Add the source setence into the prompt template\nprompt=\"Translate this from Chinese to English:\\nChinese: \u6211\u7231\u673a\u5668\u7ffb\u8bd1\u3002\\nEnglish:\"\ninput_ids = tokenizer(prompt, return_tensors=\"pt\", padding=True, max_length=40, truncation=True).input_ids.cuda()\n\n# Translation\nwith torch.no_grad():\n    generated_ids = model.generate(input_ids=input_ids, num_beams=5, max_new_tokens=20, do_sample=True, temperature=0.6, top_p=0.9)\noutputs = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)\nprint(outputs)\n```\n\nPlease find more details in our [GitHub repository](https://github.com/fe1ixxu/ALMA)",
+  "fetched_at": "2026-09-22T06:45:54.722208+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "haoranxu",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "mit",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "arxiv:2309.11674",
+      "arxiv:2401.08417",
+      "license:mit",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "haoranxu__ALMA-7B-Pretrain",
+  "ok": true,
+  "popularity": {
+    "downloads": 2376,
+    "downloadsAllTime": 137981,
+    "likes": 4,
+    "trendingScore": 0
+  },
+  "repo_id": "haoranxu/ALMA-7B-Pretrain",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-17T17:42:40.000Z",
+    "lastModified": "2024-01-18T04:05:14.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

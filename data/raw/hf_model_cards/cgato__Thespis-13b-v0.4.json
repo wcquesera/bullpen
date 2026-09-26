@@ -1,0 +1,81 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 1812,
+  "card_text": "---\ntags:\n- not-for-all-audiences\n---\n\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/64dd7cda3d6b954bf7cdd922/ZXmxNKGaHUrqjdS1I3GkL.png)\n\nThis model is a personal project. It uses a vanilla chat template and is focused on providing multiturn sfw and nsfw RP experience. \n\nThis model works best with internet style RP using standard markup with asterisks surrounding actions and no quotes around dialogue.\n\nIt uses the following data:\n\n* 3000 samples from Claude Multiround Chat 30k dataset ( 45 token length or greater. Coding and math filtered out. )\n* 3000 samples from Pippa Dataset ( 90 token length or greater. Filtered for responses which did not contain quotes and contained at least one asterisk. )\n* 2200 samples from Puffin Dataset ( 90 token length or greater. Coding and math filtered out. )\n* 700 samples from Airoboros 3.1 ( 1500 token length or greater. Writing samples only. )\n* 4700 samples of hand curated RP conversation with various characters.\n\n\nWorks with standard chat format for Ooba or SillyTavern.\n\n## Prompt Format: Chat\n```\n{System Prompt}\n\nUsername: {Input}\nBotName: {Response}\nUsername: {Input}\nBotName: {Response}\n\n```\n\n## Turn Template (for Ooba Instruct):\nYou can either bake usernames into the prompt directly for ease of use or programatically add them if running through the API to use as a chatbot.\n```\n<|user|>{Username}: <|user-message|>\\n<|bot|>{BotName}: <|bot-message|>\\n\n```\n\n## Examples\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/64dd7cda3d6b954bf7cdd922/Uhf5IRiudjEB8-z547BWi.png)\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/64dd7cda3d6b954bf7cdd922/maO25mC1pfcYoJacpaM2t.png)\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/64dd7cda3d6b954bf7cdd922/t7zJ4cCkSbtQv0ONVgOoS.png)",
+  "fetched_at": "2026-09-22T06:45:40.790627+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "cgato",
+    "gated": false,
+    "library_name": "transformers",
+    "license": null,
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "not-for-all-audiences",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "cgato__Thespis-13b-v0.4",
+  "ok": true,
+  "popularity": {
+    "downloads": 18,
+    "downloadsAllTime": 103,
+    "likes": 5,
+    "trendingScore": 0
+  },
+  "repo_id": "cgato/Thespis-13b-v0.4",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-10-22T13:42:13.000Z",
+    "lastModified": "2023-10-23T14:49:45.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

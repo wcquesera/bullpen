@@ -1,0 +1,85 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {},
+    "torch_dtype": "float32",
+    "vocab_size": 32003
+  },
+  "card_chars": 12097,
+  "card_text": "---\npipeline_tag: text-generation\ntags:\n- orca\n- orca2\n- microsoft\nlicense: other\nlicense_name: microsoft-research-license\nlicense_link: LICENSE\n---\n\n# Orca 2\n\n<!-- Provide a quick summary of what the model is/does. -->\n\nOrca 2 is built for research purposes only and provides a single turn response in tasks such as reasoning over user given data, reading comprehension, math problem solving and text summarization. The model is designed to excel particularly in reasoning.\n\nNote that:\n\n1. This is a research model, intended to show that we can use capable models and complex workflows (advanced prompts, multiple calls) to create synthetic data that can teach Small Language Models (SLMs) new capabilities. We chose reasoning because it is a widely useful capability that SLMs lack.\n2. The model is not optimized for chat and has not been trained with RLHF or DPO. It is best used after being finetuned for chat or for a specific task.\n3. Beyond reasoning, the model inherits capabilities and limitations of its base (LLAMA-2 base). We have already seen that the benefits of the Orca training can be applied to other base model too.\n\nWe make Orca 2's weights publicly available to support further research on the development, evaluation, and alignment of SLMs.\n\n## What is Orca 2\u2019s intended use(s)?\n\n+ Orca 2 is built for research purposes only.\n+ The main purpose is to allow the research community to assess its abilities and to provide a foundation for\nbuilding better frontier models.\n\n## How was Orca 2 evaluated?\n\n+ Orca 2 has been evaluated on a large number of tasks ranging from reasoning to grounding and safety. Please refer\nto Section 6 and Appendix in the [Orca 2 paper](https://arxiv.org/pdf/2311.11045.pdf) for details on evaluations.\n\n## Model Details\n\nOrca 2 is a finetuned version of LLAMA-2. Orca 2\u2019s training data is a synthetic dataset that was created to enhance the small model\u2019s reasoning abilities. \nAll synthetic training data was moderated using the Microsoft Azure content filters. More details about the model can be found in the [Orca 2 paper](https://arxiv.org/pdf/2311.11045.pdf).\n\nPlease refer to LLaMA-2 technical report for details on the model architecture.\n\n## License\n\nOrca 2 is licensed under the [Microsoft Research License](LICENSE).\n\nLlama 2 is licensed under the [LLAMA 2 Community License](https://ai.meta.com/llama/license/), Copyright \u00a9 Meta Platforms, Inc. All Rights Reserved.\n\n## Bias, Risks, and Limitations\n\nOrca 2, built upon the LLaMA 2 model family, retains many of its limitations, as well as the\ncommon limitations of other large language models or limitation caused by its training process,\nincluding:\n\n**Data Biases**: Large language models, trained on extensive data, can inadvertently carry\nbiases present in the source data. Consequently, the models may generate outputs that could\nbe potentially biased or unfair.\n\n**Lack of Contextual Understanding**: Despite their impressive capabilities in language understanding and generation, these models exhibit limited real-world understanding, resulting\nin potential inaccuracies or nonsensical responses.\n\n**Lack of Transparency**: Due to the complexity and size, large language models can act\nas \u201cblack boxes\u201d, making it difficult to comprehend the rationale behind specific outputs or\ndecisions. We recommend reviewing transparency notes from Azure for more information.\n\n**Content Harms**: There are various types of content harms that large language models\ncan cause. It is important to be aware of them when using these models, and to take\nactions to prevent them. It is recommended to leverage various content moderation services\nprovided by different companies and institutions. On an important note, we hope for better\nregulations and standards from government and technology leaders around content harms\nfor AI technologies in future. We value and acknowledge the important role that research\nand open source community can play in this direction.\n\n**Hallucination**: It is important to be aware and cautious not to entirely rely on a given\nlanguage model for critical decisions or information that might have deep impact as it is\nnot obvious how to prevent these models from fabricating content. Moreover, it is not clear\nwhether small models may be more susceptible to hallucination in ungrounded generation\nuse cases due to their smaller sizes and hence reduced memorization capacities. This is an\nactive research topic and we hope there will be more rigorous measurement, understanding\nand mitigations around this topic.\n\n**Potential for Misuse**: Without suitable safeguards, there is a risk that these models could\nbe maliciously used for generating disinformation or harmful content.\n\n**Data Distribution**: Orca 2\u2019s performance is likely to correlate strongly with the distribution\nof the tuning data. This correlation might limit its accuracy in areas underrepresented in\nthe training dataset such as math, coding, and reasoning.\n\n**System messages**: Orca 2 demonstrates variance in performance depending on the system\ninstructions. Additionally, the stochasticity introduced by the model size may lead to\ngeneration of non-deterministic responses to different system instructions.\n\n**Zero-Shot Settings**: Orca 2 was trained on data that mostly simulate zero-shot settings.\nWhile the model demonstrate very strong performance in zero-shot settings, it does not show\nthe same gains of using few-shot learning compared to other, specially larger, models.\n\n**Synthetic data**: As Orca 2 is trained on synthetic data, it could inherit both the advantages\nand shortcomings of the models and methods used for data generation. We posit that Orca\n2 benefits from the safety measures incorporated during training and safety guardrails (e.g.,\ncontent filter) within the Azure OpenAI API. However, detailed studies are required for\nbetter quantification of such risks.\n\nThis model is solely designed for research settings, and its testing has only been carried\nout in such environments. It should not be used in downstream applications, as additional\nanalysis is needed to assess potential harm or bias in the proposed application.\n\n## Getting started with Orca 2\n\n**Inference with Hugging Face library**\n\n```python\nimport torch\nimport transformers\n\nif torch.cuda.is_available():\n    torch.set_default_device(\"cuda\")\nelse:\n    torch.set_default_device(\"cpu\")\n    \nmodel = transformers.AutoModelForCausalLM.from_pretrained(\"microsoft/Orca-2-13b\", device_map='auto')\n\n# https://github.com/huggingface/transformers/issues/27132\n# please use the slow tokenizer since fast and slow tokenizer produces different tokens\ntokenizer = transformers.AutoTokenizer.from_pretrained(\n        \"microsoft/Orca-2-13b\",\n        use_fast=False,\n    )\n\nsystem_message = \"You are Orca, an AI language model created by Microsoft. You are a cautious assistant. You carefully follow instructions. You are helpful and harmless and you follow ethical guidelines and promote positive behavior.\"\nuser_message = \"How can you determine if a restaurant is popular among locals or mainly attracts tourists, and why might this information be useful?\"\n\nprompt = f\"<|im_start|>system\\n{system_message}<|im_end|>\\n<|im_start|>user\\n{user_message}<|im_end|>\\n<|im_start|>assistant\"\n\ninputs = tokenizer(prompt, return_tensors='pt')\noutput_ids = model.generate(inputs[\"input_ids\"],)\nanswer = tokenizer.batch_decode(output_ids)[0]\n\nprint(answer)\n\n# This example continues showing how to add a second turn message by the user to the conversation\nsecond_turn_user_message = \"Give me a list of the key points of your first answer.\"\n\n# we set add_special_tokens=False because we dont want to automatically add a bos_token between messages\nsecond_turn_message_in_markup = f\"\\n<|im_start|>user\\n{second_turn_user_message}<|im_end|>\\n<|im_start|>assistant\"\nsecond_turn_tokens = tokenizer(second_turn_message_in_markup, return_tensors='pt', add_special_tokens=False)\nsecond_turn_input = torch.cat([output_ids, second_turn_tokens['input_ids']], dim=1)\n\noutput_ids_2 = model.generate(second_turn_input,)\nsecond_turn_answer = tokenizer.batch_decode(output_ids_2)[0]\n\nprint(second_turn_answer)\n```\n\n\n**Safe inference with Azure AI Content Safety**\n\nThe usage of [Azure AI Content Safety](https://azure.microsoft.com/en-us/products/ai-services/ai-content-safety/) on top of model prediction is strongly encouraged \nand can help prevent content harms. Azure AI Content Safety is a content moderation platform\nthat uses AI to keep your content safe. By integrating Orca 2 with Azure AI Content Safety, \nwe can moderate the model output by scanning it for sexual content, violence, hate, and \nself-harm with multiple severity levels and multi-lingual detection. \n\n```python\nimport os\nimport math\nimport transformers\nimport torch\n\nfrom azure.ai.contentsafety import ContentSafetyClient\nfrom azure.core.credentials import AzureKeyCredential\nfrom azure.core.exceptions import HttpResponseError\nfrom azure.ai.contentsafety.models import AnalyzeTextOptions\n\nCONTENT_SAFETY_KEY = os.environ[\"CONTENT_SAFETY_KEY\"]\nCONTENT_SAFETY_ENDPOINT = os.environ[\"CONTENT_SAFETY_ENDPOINT\"]\n\n# We use Azure AI Content Safety to filter out any content that reaches \"Medium\" threshold\n# For more information: https://learn.microsoft.com/en-us/azure/ai-services/content-safety/\ndef should_filter_out(input_text, threshold=4):\n    # Create an Content Safety client\n    client = ContentSafetyClient(CONTENT_SAFETY_ENDPOINT, AzureKeyCredential(CONTENT_SAFETY_KEY))\n\n    # Construct a request\n    request = AnalyzeTextOptions(text=input_text)\n\n    # Analyze text\n    try:\n        response = client.analyze_text(request)\n    except HttpResponseError as e:\n        print(\"Analyze text failed.\")\n        if e.error:\n            print(f\"Error code: {e.error.code}\")\n            print(f\"Error message: {e.error.message}\")\n            raise\n        print(e)\n        raise\n\n    categories = [\"hate_result\", \"self_harm_result\", \"sexual_result\", \"violence_result\"]\n    max_score = -math.inf\n    for category in categories:\n        max_score = max(max_score, getattr(response, category).severity)\n\n    return max_score >= threshold\n\nmodel_path = 'microsoft/Orca-2-13b'\ndevice = torch.device(\"cuda:0\" if torch.cuda.is_available() else \"cpu\")\nmodel = transformers.AutoModelForCausalLM.from_pretrained(model_path)\nmodel.to(device)\n\ntokenizer = transformers.AutoTokenizer.from_pretrained(\n    model_path,\n    model_max_length=4096,\n    padding_side=\"right\",\n    use_fast=False,\n    add_special_tokens=False,\n)\n\nsystem_message = \"You are Orca, an AI language model created by Microsoft. You are a cautious assistant. You carefully follow instructions. You are helpful and harmless and you follow ethical guidelines and promote positive behavior.\"\nuser_message = \"\\\" \\n :You can't just say, \\\"\\\"that's crap\\\"\\\" and remove it without gaining a consensus. You already know this, based on your block history. \u2014/ \\\" \\nIs the comment obscene? \\nOptions : Yes, No.\"\n\nprompt =  f\"<|im_start|>system\\n{system_message}<|im_end|>\\n<|im_start|>user\\n{user_message}<|im_end|>\\n<|im_start|>assistant\"\n\ninputs = tokenizer(prompt, return_tensors='pt')\ninputs = inputs.to(device)\n\noutput_ids = model.generate(inputs[\"input_ids\"], max_length=4096, do_sample=False, temperature=0.0, use_cache=True)\nsequence_length = inputs[\"input_ids\"].shape[1]\nnew_output_ids = output_ids[:, sequence_length:]\nanswers = tokenizer.batch_decode(new_output_ids, skip_special_tokens=True)\nfinal_output = answers[0] if not should_filter_out(answers[0]) else \"[Content Filtered]\"\n\nprint(final_output)\n```\n\n## Citation\n```bibtex\n@misc{mitra2023orca,\n      title={Orca 2: Teaching Small Language Models How to Reason}, \n      author={Arindam Mitra and Luciano Del Corro and Shweti Mahajan and Andres Codas and Clarisse Simoes and Sahaj Agrawal and Xuxi Chen and Anastasia Razdaibiedina and Erik Jones and Kriti Aggarwal and Hamid Palangi and Guoqing Zheng and Corby Rosset and Hamed Khanpour and Ahmed Awadallah},\n      year={2023},\n      eprint={2311.11045},\n      archivePrefix={arXiv},\n      primaryClass={cs.AI}\n}\n```",
+  "fetched_at": "2026-09-19T15:01:38.334798+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "microsoft",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "other",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "orca",
+      "orca2",
+      "microsoft",
+      "arxiv:2311.11045",
+      "license:other",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "microsoft__Orca-2-13b",
+  "ok": true,
+  "popularity": {
+    "downloads": 2052,
+    "downloadsAllTime": 483136,
+    "likes": 669,
+    "trendingScore": 1
+  },
+  "repo_id": "microsoft/Orca-2-13b",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-11-14T01:12:36.000Z",
+    "lastModified": "2023-11-22T17:56:02.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

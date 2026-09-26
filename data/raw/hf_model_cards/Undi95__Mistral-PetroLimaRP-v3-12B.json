@@ -1,0 +1,85 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "llama",
+    "n_parameters": 11167748096,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 50,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "F16": 11167748096
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 645,
+  "card_text": "---\nlicense: cc-by-nc-4.0\ntags:\n- not-for-all-audiences\n- nsfw\n---\n\n```shell\nlayer_slices:\n  - model: Norquinal/PetrolLM\n    start: 0\n    end: 16\n  - model: Undi95/Mistral-LimaRP-v3-7B\n    start: 8\n    end: 20\n  - model: Norquinal/PetrolLM\n    start: 17\n    end: 22\n  - model: Undi95/Mistral-LimaRP-v3-7B\n    start: 21\n    end: 26\n  - model: Norquinal/PetrolLM\n    start: 23\n    end: 30\n  - model: Undi95/Mistral-LimaRP-v3-7B\n    start: 27\n    end: 32\n```\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/63ab1241ad514ca8d1430003/Im5SYoTxpvcwG7CHjTJeN.png)\n\nIf you want to support me, you can [here](https://ko-fi.com/undiai).",
+  "fetched_at": "2026-09-22T06:44:53.369614+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "Undi95",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "not-for-all-audiences",
+      "nsfw",
+      "license:cc-by-nc-4.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "Undi95__Mistral-PetroLimaRP-v3-12B",
+  "ok": true,
+  "popularity": {
+    "downloads": 21,
+    "downloadsAllTime": 1489,
+    "likes": 2,
+    "trendingScore": 0
+  },
+  "repo_id": "Undi95/Mistral-PetroLimaRP-v3-12B",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-28T03:20:00.000Z",
+    "lastModified": "2023-09-28T03:37:20.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

@@ -1,0 +1,23 @@
+# Data: the real core subset below is tracked (see data/README.md); anything else under
+# data/ (the full checkpoint, raw collection trees) stays local.
+data/*
+!data/README.md
+!data/core/
+!data/paper_ckpt/
+!data/raw/
+!data/question_text_mpnet.npz
+# the full checkpoint's fp16 banks, if unpacked over the subset
+data/paper_ckpt/answers.npz
+data/paper_ckpt/answers.core.npz
+
+# Outputs
+results/
+logs/
+
+# Environment and caches
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/

@@ -1,0 +1,7 @@
+# The quality gates of process.py build. A model that answered less than coverage_floor
+# of the question axis is dropped (named in qc_report.json); above it, unanswered cells
+# are written as incorrect. A survivor at or below degenerate_accuracy is flagged, and
+# dropped only with --drop-degenerate.
+
+coverage_floor: 0.9
+degenerate_accuracy: 0.01

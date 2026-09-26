@@ -1,0 +1,92 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 8192,
+    "model_type": "mistral",
+    "n_parameters": 7241748480,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "BF16": 7241748480
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 32002
+  },
+  "card_chars": 6093,
+  "card_text": "---\nlicense: apache-2.0\ndatasets:\n- berkeley-nest/Nectar\nlanguage:\n- en\nlibrary_name: transformers\ntags:\n- reward model\n- RLHF\n- RLAIF\n---\n# Starling-LM-7B-beta\n\n<!-- Provide a quick summary of what the model is/does. -->\n\n- **Developed by: The Nexusflow Team (** Banghua Zhu * , Evan Frick * , Tianhao Wu * , Hanlin Zhu, Karthik Ganesan, Wei-Lin Chiang, Jian Zhang, and Jiantao Jiao).\n- **Model type:** Language Model finetuned with RLHF / RLAIF\n- **License:** Apache-2.0 license under the condition that the model is not used to compete with OpenAI\n- **Finetuned from model:** [Openchat-3.5-0106](https://huggingface.co/openchat/openchat-3.5-0106) (based on [Mistral-7B-v0.1](https://huggingface.co/mistralai/Mistral-7B-v0.1))\n \n\n\nWe introduce Starling-LM-7B-beta, an open large language model (LLM) trained by Reinforcement Learning from AI Feedback (RLAIF). Starling-LM-7B-beta is trained from [Openchat-3.5-0106](https://huggingface.co/openchat/openchat-3.5-0106) with our new reward model [Nexusflow/Starling-RM-34B](https://huggingface.co/Nexusflow/Starling-RM-34B) and policy optimization method [Fine-Tuning Language Models from Human Preferences (PPO)](https://arxiv.org/abs/1909.08593).\nHarnessing the power of the ranking dataset, [berkeley-nest/Nectar](https://huggingface.co/datasets/berkeley-nest/Nectar), the upgraded reward model, [Starling-RM-34B](https://huggingface.co/Nexusflow/Starling-RM-34B), and the new reward training and policy tuning pipeline, Starling-LM-7B-beta scores an improved 8.12 in MT Bench with GPT-4 as a judge. \n\n\n## Uses\n\n<!-- Address questions around how the model is intended to be used, including the foreseeable users of the model and those affected by the model. -->\n\n**Important: Please use the exact chat template provided below for the model. Otherwise there will be a degradation in the performance. The model output can be verbose in rare cases. Please consider setting temperature = 0 to make this happen less.**\n\nOur model follows the exact chat template and usage as [Openchat-3.5-0106](https://huggingface.co/openchat/openchat-3.5-0106). Please refer to their model card for more details.\nIn addition, our model is hosted on LMSYS [Chatbot Arena](https://chat.lmsys.org) for free test.\n\nThe conversation template is the same as Openchat-3.5-0106:\n```\nimport transformers\ntokenizer = transformers.AutoTokenizer.from_pretrained(\"openchat/openchat-3.5-0106\")\n\n# Single-turn\ntokens = tokenizer(\"GPT4 Correct User: Hello<|end_of_turn|>GPT4 Correct Assistant:\").input_ids\nassert tokens == [1, 420, 6316, 28781, 3198, 3123, 1247, 28747, 22557, 32000, 420, 6316, 28781, 3198, 3123, 21631, 28747]\n\n# Multi-turn\ntokens = tokenizer(\"GPT4 Correct User: Hello<|end_of_turn|>GPT4 Correct Assistant: Hi<|end_of_turn|>GPT4 Correct User: How are you today?<|end_of_turn|>GPT4 Correct Assistant:\").input_ids\nassert tokens == [1, 420, 6316, 28781, 3198, 3123, 1247, 28747, 22557, 32000, 420, 6316, 28781, 3198, 3123, 21631, 28747, 15359, 32000, 420, 6316, 28781, 3198, 3123, 1247, 28747, 1602, 460, 368, 3154, 28804, 32000, 420, 6316, 28781, 3198, 3123, 21631, 28747]\n\n# Coding Mode\ntokens = tokenizer(\"Code User: Implement quicksort using C++<|end_of_turn|>Code Assistant:\").input_ids\nassert tokens == [1, 7596, 1247, 28747, 26256, 2936, 7653, 1413, 334, 1680, 32000, 7596, 21631, 28747]\n```\n## Code Examples\n\n```python\nimport transformers\n\ntokenizer = transformers.AutoTokenizer.from_pretrained(\"Nexusflow/Starling-LM-7B-beta\")\nmodel = transformers.AutoModelForCausalLM.from_pretrained(\"Nexusflow/Starling-LM-7B-beta\")\n\ndef generate_response(prompt):\n    input_ids = tokenizer(prompt, return_tensors=\"pt\").input_ids\n    outputs = model.generate(\n        input_ids,\n        max_length=256,\n        pad_token_id=tokenizer.pad_token_id,\n        eos_token_id=tokenizer.eos_token_id,\n    )\n    response_ids = outputs[0]\n    response_text = tokenizer.decode(response_ids, skip_special_tokens=True)\n    return response_text\n\n# Single-turn conversation\nprompt = \"Hello, how are you?\"\nsingle_turn_prompt = f\"GPT4 Correct User: {prompt}<|end_of_turn|>GPT4 Correct Assistant:\"\nresponse_text = generate_response(single_turn_prompt)\nprint(\"Response:\", response_text)\n\n## Multi-turn conversation\nprompt = \"Hello\"\nfollow_up_question =  \"How are you today?\"\nresponse = \"\"\nmulti_turn_prompt = f\"GPT4 Correct User: {prompt}<|end_of_turn|>GPT4 Correct Assistant: {response}<|end_of_turn|>GPT4 Correct User: {follow_up_question}<|end_of_turn|>GPT4 Correct Assistant:\"\nresponse_text = generate_response(multi_turn_prompt)\nprint(\"Multi-turn conversation response:\", response_text)\n\n### Coding conversation\nprompt = \"Implement quicksort using C++\"\ncoding_prompt = f\"Code User: {prompt}<|end_of_turn|>Code Assistant:\"\nresponse = generate_response(coding_prompt)\nprint(\"Coding conversation response:\", response)\n```\n\n## License\nThe dataset, model and online demo is subject to the [Terms of Use](https://openai.com/policies/terms-of-use) of the data generated by OpenAI, and [Privacy Practices](https://chrome.google.com/webstore/detail/sharegpt-share-your-chatg/daiacboceoaocpibfodeljbdfacokfjb) of ShareGPT. Please contact us if you find any potential violation.\n\n\n## Acknowledgment\nWe would like to thank Tianle Li from UC Berkeley for detailed feedback and evaluation of this beta release. We would like to thank the [LMSYS Organization](https://lmsys.org/) for their support of [lmsys-chat-1M](https://huggingface.co/datasets/lmsys/lmsys-chat-1m) dataset, evaluation and online demo. We would like to thank the open source community for their efforts in providing the datasets and base models we used to develope the project, including but not limited to Anthropic, Llama, Mistral, Hugging Face H4, LMSYS, OpenChat, OpenBMB, Flan and ShareGPT.\n\n## Citation\n```\n@misc{starling2023,\n    title = {Starling-7B: Improving LLM Helpfulness & Harmlessness with RLAIF},\n    url = {},\n    author = {Zhu, Banghua and Frick, Evan and Wu, Tianhao and Zhu, Hanlin and Ganesan, Karthik and Chiang, Wei-Lin and Zhang, Jian and Jiao, Jiantao},\n    month = {November},\n    year = {2023}\n}\n```",
+  "fetched_at": "2026-09-19T15:00:32.556053+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "Nexusflow",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "mistral",
+      "text-generation",
+      "reward model",
+      "RLHF",
+      "RLAIF",
+      "conversational",
+      "en",
+      "dataset:berkeley-nest/Nectar",
+      "arxiv:1909.08593",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:sagemaker",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "Nexusflow__Starling-LM-7B-beta",
+  "ok": true,
+  "popularity": {
+    "downloads": 1411,
+    "downloadsAllTime": 191317,
+    "likes": 343,
+    "trendingScore": 0
+  },
+  "repo_id": "Nexusflow/Starling-LM-7B-beta",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2024-03-19T07:04:01.000Z",
+    "lastModified": "2024-04-03T21:30:33.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": true,
+    "sft": false
+  }
+}

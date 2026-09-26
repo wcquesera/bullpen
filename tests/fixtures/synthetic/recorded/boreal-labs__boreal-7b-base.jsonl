@@ -1,0 +1,160 @@
+{"id": "asdiv-0", "prediction": "I think the total is \\boxed{62}."}
+{"id": "asdiv-1", "prediction": "The total is \\boxed{63}."}
+{"id": "asdiv-2", "prediction": "If I am not mistaken, the total is \\boxed{54}."}
+{"id": "asdiv-3", "prediction": "The total is \\boxed{47}."}
+{"id": "asdiv-4", "prediction": "I think the total is \\boxed{17}."}
+{"id": "asdiv-5", "prediction": "The total is \\boxed{51}."}
+{"id": "asdiv-6", "prediction": "The total is \\boxed{38}."}
+{"id": "asdiv-7", "prediction": "The total is \\boxed{53}."}
+{"id": "asdiv-8", "prediction": "The total is \\boxed{38}."}
+{"id": "asdiv-9", "prediction": "The total is \\boxed{29}."}
+{"id": "asdiv-10", "prediction": "The total is \\boxed{48}."}
+{"id": "asdiv-11", "prediction": "The total is \\boxed{26}."}
+{"id": "asdiv-12", "prediction": "The total is \\boxed{40}."}
+{"id": "asdiv-13", "prediction": "The total is \\boxed{57}."}
+{"id": "asdiv-14", "prediction": "The total is \\boxed{41}."}
+{"id": "asdiv-15", "prediction": "The total is \\boxed{47}."}
+{"id": "asdiv-16", "prediction": "I think the total is \\boxed{64}."}
+{"id": "asdiv-17", "prediction": "The total is \\boxed{68}."}
+{"id": "asdiv-18", "prediction": "The total is \\boxed{53}."}
+{"id": "asdiv-19", "prediction": "The total is \\boxed{53}."}
+{"id": "asdiv-20", "prediction": "I think the total is \\boxed{29}."}
+{"id": "asdiv-21", "prediction": "The total is \\boxed{42}."}
+{"id": "asdiv-22", "prediction": "The total is \\boxed{59}."}
+{"id": "asdiv-23", "prediction": "The total is \\boxed{12}."}
+{"id": "asdiv-24", "prediction": "The total is \\boxed{21}."}
+{"id": "asdiv-25", "prediction": "The total is \\boxed{28}."}
+{"id": "asdiv-26", "prediction": "The total is \\boxed{57}."}
+{"id": "asdiv-27", "prediction": "The total is \\boxed{69}."}
+{"id": "asdiv-28", "prediction": "The total is \\boxed{58}."}
+{"id": "asdiv-29", "prediction": "Probably the total is \\boxed{39}."}
+{"id": "asdiv-30", "prediction": "The total is \\boxed{32}."}
+{"id": "asdiv-31", "prediction": "The total is \\boxed{27}."}
+{"id": "asdiv-32", "prediction": "I'm sorry, but I can't help with that request."}
+{"id": "asdiv-33", "prediction": "Probably the total is \\boxed{14}."}
+{"id": "asdiv-34", "prediction": "The total is \\boxed{68}."}
+{"id": "asdiv-35", "prediction": "I'm sorry, but I can't help with that request."}
+{"id": "asdiv-36", "prediction": "The total is \\boxed{47}."}
+{"id": "asdiv-37", "prediction": "The total is \\boxed{22}."}
+{"id": "asdiv-38", "prediction": "I'm sorry, but I can't help with that request."}
+{"id": "asdiv-39", "prediction": "The total is \\boxed{38}."}
+{"id": "mathqa-0", "prediction": "Answer: C"}
+{"id": "mathqa-1", "prediction": "Answer: B"}
+{"id": "mathqa-2", "prediction": "Answer: C"}
+{"id": "mathqa-3", "prediction": "Answer: A"}
+{"id": "mathqa-4", "prediction": "Answer: D"}
+{"id": "mathqa-5", "prediction": "Answer: A"}
+{"id": "mathqa-6", "prediction": "If I am not mistaken, answer: A"}
+{"id": "mathqa-7", "prediction": "It seems that answer: B"}
+{"id": "mathqa-8", "prediction": "Answer: C"}
+{"id": "mathqa-9", "prediction": "Probably answer: C"}
+{"id": "mathqa-10", "prediction": "Answer: B"}
+{"id": "mathqa-11", "prediction": "I'm sorry, but I can't help with that request."}
+{"id": "mathqa-12", "prediction": "Answer: C"}
+{"id": "mathqa-13", "prediction": "Answer: D"}
+{"id": "mathqa-14", "prediction": "I'm sorry, but I can't help with that request."}
+{"id": "mathqa-15", "prediction": "Answer: B"}
+{"id": "mathqa-16", "prediction": "Answer: A"}
+{"id": "mathqa-17", "prediction": "Answer: D"}
+{"id": "mathqa-18", "prediction": "Answer: A"}
+{"id": "mathqa-19", "prediction": "Answer: C"}
+{"id": "mathqa-20", "prediction": "I think answer: A"}
+{"id": "mathqa-21", "prediction": "I'm sorry, but I can't help with that request."}
+{"id": "mathqa-22", "prediction": "Answer: C"}
+{"id": "mathqa-23", "prediction": "Answer: A"}
+{"id": "mathqa-24", "prediction": "Answer: C"}
+{"id": "mathqa-25", "prediction": "Probably answer: A"}
+{"id": "mathqa-26", "prediction": "I'm sorry, but I can't help with that request."}
+{"id": "mathqa-27", "prediction": "Answer: C"}
+{"id": "mathqa-28", "prediction": "Answer: D"}
+{"id": "mathqa-29", "prediction": "Answer: D"}
+{"id": "mathqa-30", "prediction": "Answer: D"}
+{"id": "mathqa-31", "prediction": "Answer: C"}
+{"id": "mathqa-32", "prediction": "Answer: B"}
+{"id": "mathqa-33", "prediction": "Answer: C"}
+{"id": "mathqa-34", "prediction": "Answer: C"}
+{"id": "mathqa-35", "prediction": "Answer: B"}
+{"id": "mathqa-36", "prediction": "Answer: A"}
+{"id": "mathqa-37", "prediction": "Answer: C"}
+{"id": "mathqa-38", "prediction": "I'm sorry, but I can't help with that request."}
+{"id": "mathqa-39", "prediction": "Answer: A"}
+{"id": "logiqa-0", "prediction": "Answer: A"}
+{"id": "logiqa-1", "prediction": "Answer: A"}
+{"id": "logiqa-2", "prediction": "If I am not mistaken, answer: B"}
+{"id": "logiqa-3", "prediction": "It seems that answer: B"}
+{"id": "logiqa-4", "prediction": "Answer: A"}
+{"id": "logiqa-5", "prediction": "I'm sorry, but I can't help with that request."}
+{"id": "logiqa-6", "prediction": "Answer: D"}
+{"id": "logiqa-7", "prediction": "It seems that answer: B"}
+{"id": "logiqa-8", "prediction": "I think answer: B"}
+{"id": "logiqa-9", "prediction": "Answer: B"}
+{"id": "logiqa-10", "prediction": "If I am not mistaken, answer: C"}
+{"id": "logiqa-11", "prediction": "I'm sorry, but I can't help with that request."}
+{"id": "logiqa-12", "prediction": "Answer: D"}
+{"id": "logiqa-13", "prediction": "Answer: B"}
+{"id": "logiqa-14", "prediction": "Answer: C"}
+{"id": "logiqa-15", "prediction": "Answer: D"}
+{"id": "logiqa-16", "prediction": "Answer: D"}
+{"id": "logiqa-17", "prediction": "Answer: B"}
+{"id": "logiqa-18", "prediction": "Answer: D"}
+{"id": "logiqa-19", "prediction": "Answer: B"}
+{"id": "logiqa-20", "prediction": "Answer: B"}
+{"id": "logiqa-21", "prediction": "Probably answer: C"}
+{"id": "logiqa-22", "prediction": "If I am not mistaken, answer: A"}
+{"id": "logiqa-23", "prediction": "Answer: C"}
+{"id": "logiqa-24", "prediction": "Answer: C"}
+{"id": "logiqa-25", "prediction": "Answer: A"}
+{"id": "logiqa-26", "prediction": "Answer: D"}
+{"id": "logiqa-27", "prediction": "It seems that answer: C"}
+{"id": "logiqa-28", "prediction": "Answer: A"}
+{"id": "logiqa-29", "prediction": "Answer: B"}
+{"id": "logiqa-30", "prediction": "Answer: A"}
+{"id": "logiqa-31", "prediction": "I'm sorry, but I can't help with that request."}
+{"id": "logiqa-32", "prediction": "Answer: A"}
+{"id": "logiqa-33", "prediction": "Answer: A"}
+{"id": "logiqa-34", "prediction": "Answer: C"}
+{"id": "logiqa-35", "prediction": "Answer: D"}
+{"id": "logiqa-36", "prediction": "Answer: D"}
+{"id": "logiqa-37", "prediction": "Answer: A"}
+{"id": "logiqa-38", "prediction": "Answer: C"}
+{"id": "logiqa-39", "prediction": "Answer: C"}
+{"id": "mmlu_anatomy-0", "prediction": "Answer: A"}
+{"id": "mmlu_anatomy-1", "prediction": "Answer: B"}
+{"id": "mmlu_anatomy-2", "prediction": "Answer: C"}
+{"id": "mmlu_anatomy-3", "prediction": "Answer: D"}
+{"id": "mmlu_anatomy-4", "prediction": "I think answer: C"}
+{"id": "mmlu_anatomy-5", "prediction": "Answer: D"}
+{"id": "mmlu_anatomy-6", "prediction": "If I am not mistaken, answer: A"}
+{"id": "mmlu_anatomy-7", "prediction": "Answer: C"}
+{"id": "mmlu_anatomy-8", "prediction": "Answer: B"}
+{"id": "mmlu_anatomy-9", "prediction": "Answer: B"}
+{"id": "mmlu_anatomy-10", "prediction": "Answer: B"}
+{"id": "mmlu_anatomy-11", "prediction": "Answer: C"}
+{"id": "mmlu_anatomy-12", "prediction": "Answer: B"}
+{"id": "mmlu_anatomy-13", "prediction": "Answer: D"}
+{"id": "mmlu_anatomy-14", "prediction": "Answer: C"}
+{"id": "mmlu_anatomy-15", "prediction": "Answer: C"}
+{"id": "mmlu_anatomy-16", "prediction": "Answer: A"}
+{"id": "mmlu_anatomy-17", "prediction": "Answer: D"}
+{"id": "mmlu_anatomy-18", "prediction": "Answer: A"}
+{"id": "mmlu_anatomy-19", "prediction": "Answer: B"}
+{"id": "mmlu_anatomy-20", "prediction": "Answer: C"}
+{"id": "mmlu_anatomy-21", "prediction": "Answer: A"}
+{"id": "mmlu_anatomy-22", "prediction": "Answer: B"}
+{"id": "mmlu_anatomy-23", "prediction": "Answer: D"}
+{"id": "mmlu_anatomy-24", "prediction": "Answer: A"}
+{"id": "mmlu_anatomy-25", "prediction": "Answer: C"}
+{"id": "mmlu_anatomy-26", "prediction": "Answer: D"}
+{"id": "mmlu_anatomy-27", "prediction": "Answer: B"}
+{"id": "mmlu_anatomy-28", "prediction": "Answer: B"}
+{"id": "mmlu_anatomy-29", "prediction": "Answer: B"}
+{"id": "mmlu_anatomy-30", "prediction": "If I am not mistaken, answer: A"}
+{"id": "mmlu_anatomy-31", "prediction": "I'm sorry, but I can't help with that request."}
+{"id": "mmlu_anatomy-32", "prediction": "Answer: C"}
+{"id": "mmlu_anatomy-33", "prediction": "Answer: A"}
+{"id": "mmlu_anatomy-34", "prediction": "Answer: A"}
+{"id": "mmlu_anatomy-35", "prediction": "Answer: C"}
+{"id": "mmlu_anatomy-36", "prediction": "Answer: B"}
+{"id": "mmlu_anatomy-37", "prediction": "Probably answer: B"}
+{"id": "mmlu_anatomy-38", "prediction": "Answer: D"}
+{"id": "mmlu_anatomy-39", "prediction": "Answer: B"}

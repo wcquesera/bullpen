@@ -1,0 +1,88 @@
+{
+  "architecture": {
+    "architectures": [
+      "PhiForCausalLM"
+    ],
+    "hidden_size": 2560,
+    "intermediate_size": 10240,
+    "max_position_embeddings": 2048,
+    "model_type": "phi",
+    "n_parameters": 2779683840,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 32,
+    "parameter_dtypes": {
+      "F16": 2779683840
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 51200
+  },
+  "card_chars": 7878,
+  "card_text": "---\nlicense: mit\nlicense_link: https://huggingface.co/microsoft/phi-2/resolve/main/LICENSE\nlanguage:\n- en\npipeline_tag: text-generation\ntags:\n- nlp\n- code\n---\n\n## Model Summary\n\nPhi-2 is a Transformer with **2.7 billion** parameters. It was trained using the same data sources as [Phi-1.5](https://huggingface.co/microsoft/phi-1.5), augmented with a new data source that consists of various NLP synthetic texts and filtered websites (for safety and educational value). When assessed against benchmarks testing common sense, language understanding, and logical reasoning, Phi-2 showcased a nearly state-of-the-art performance among models with less than 13 billion parameters.\n\nOur model hasn't been fine-tuned through reinforcement learning from human feedback. The intention behind crafting this open-source model is to provide the research community with a non-restricted small model to explore vital safety challenges, such as reducing toxicity, understanding societal biases, enhancing controllability, and more.\n\n## How to Use\n\nPhi-2 has been integrated in the `transformers` version 4.37.0, please ensure that you are using a version equal or higher than it.\n\nPhi-2 is known for having an attention overflow issue (with FP16). If you are facing this issue, please enable/disable autocast on the [PhiAttention.forward()](https://github.com/huggingface/transformers/blob/main/src/transformers/models/phi/modeling_phi.py#L306) function.\n\n## Intended Uses\n\nGiven the nature of the training data, the Phi-2 model is best suited for prompts using the QA format, the chat format, and the code format.\n\n### QA Format:\n\nYou can provide the prompt as a standalone question as follows:\n\n```markdown\nWrite a detailed analogy between mathematics and a lighthouse.\n```\nwhere the model generates the text after \".\" . \nTo encourage the model to write more concise answers, you can also try the following QA format using \"Instruct: \\<prompt\\>\\nOutput:\"\n```markdown\nInstruct: Write a detailed analogy between mathematics and a lighthouse.\nOutput: Mathematics is like a lighthouse. Just as a lighthouse guides ships safely to shore, mathematics provides a guiding light in the world of numbers and logic. It helps us navigate through complex problems and find solutions. Just as a lighthouse emits a steady beam of light, mathematics provides a consistent framework for reasoning and problem-solving. It illuminates the path to understanding and helps us make sense of the world around us.\n```\n\nwhere the model generates the text after \"Output:\".\n\n### Chat Format:\n\n```markdown\nAlice: I don't know why, I'm struggling to maintain focus while studying. Any suggestions?\nBob: Well, have you tried creating a study schedule and sticking to it?\nAlice: Yes, I have, but it doesn't seem to help much.\nBob: Hmm, maybe you should try studying in a quiet environment, like the library.\nAlice: ...\n```\n\nwhere the model generates the text after the first \"Bob:\".\n\n### Code Format:\n\n```python\ndef print_prime(n):\n   \"\"\"\n   Print all primes between 1 and n\n   \"\"\"\n   primes = []\n   for num in range(2, n+1):\n       is_prime = True\n       for i in range(2, int(math.sqrt(num))+1):\n           if num % i == 0:\n               is_prime = False\n               break\n       if is_prime:\n           primes.append(num)\n   print(primes)\n```\n\nwhere the model generates the text after the comments.\n\n**Notes:**\n\n* Phi-2 is intended for QA, chat, and code purposes. The model-generated text/code should be treated as a starting point rather than a definitive solution for potential use cases. Users should be cautious when employing these models in their applications.\n\n* Direct adoption for production tasks without evaluation is out of scope of this project. As a result, the Phi-2 model has not been tested to ensure that it performs adequately for any production-level application. Please refer to the limitation sections of this document for more details.\n\n* If you are using `transformers<4.37.0`, always load the model with `trust_remote_code=True` to prevent side-effects.\n\n## Sample Code\n\n```python\nimport torch\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\ntorch.set_default_device(\"cuda\")\n\nmodel = AutoModelForCausalLM.from_pretrained(\"microsoft/phi-2\", torch_dtype=\"auto\", trust_remote_code=True)\ntokenizer = AutoTokenizer.from_pretrained(\"microsoft/phi-2\", trust_remote_code=True)\n\ninputs = tokenizer('''def print_prime(n):\n   \"\"\"\n   Print all primes between 1 and n\n   \"\"\"''', return_tensors=\"pt\", return_attention_mask=False)\n\noutputs = model.generate(**inputs, max_length=200)\ntext = tokenizer.batch_decode(outputs)[0]\nprint(text)\n```\n\n## Limitations of Phi-2\n\n* Generate Inaccurate Code and Facts: The model may produce incorrect code snippets and statements. Users should treat these outputs as suggestions or starting points, not as definitive or accurate solutions.\n\n* Limited Scope for code: Majority of Phi-2 training data is based in Python and use common packages such as \"typing, math, random, collections, datetime, itertools\". If the model generates Python scripts that utilize other packages or scripts in other languages, we strongly recommend users manually verify all API uses.\n\n* Unreliable Responses to Instruction: The model has not undergone instruction fine-tuning. As a result, it may struggle or fail to adhere to intricate or nuanced instructions provided by users.\n\n* Language Limitations: The model is primarily designed to understand standard English. Informal English, slang, or any other languages might pose challenges to its comprehension, leading to potential misinterpretations or errors in response.\n\n* Potential Societal Biases: Phi-2 is not entirely free from societal biases despite efforts in assuring training data safety. There's a possibility it may generate content that mirrors these societal biases, particularly if prompted or instructed to do so. We urge users to be aware of this and to exercise caution and critical thinking when interpreting model outputs.\n\n* Toxicity: Despite being trained with carefully selected data, the model can still produce harmful content if explicitly prompted or instructed to do so. We chose to release the model to help the open-source community develop the most effective ways to reduce the toxicity of a model directly after pretraining.\n\n* Verbosity: Phi-2 being a base model often produces irrelevant or extra text and responses following its first answer to user prompts within a single turn. This is due to its training dataset being primarily textbooks, which results in textbook-like responses.\n\n## Training\n\n### Model\n\n* Architecture: a Transformer-based model with next-word prediction objective\n\n* Context length: 2048 tokens\n\n* Dataset size: 250B tokens, combination of NLP synthetic data created by AOAI GPT-3.5 and filtered web data from Falcon RefinedWeb and SlimPajama, which was assessed by AOAI GPT-4.\n\n* Training tokens: 1.4T tokens\n\n* GPUs: 96xA100-80G\n\n* Training time: 14 days\n\n### Software\n\n* [PyTorch](https://github.com/pytorch/pytorch)\n\n* [DeepSpeed](https://github.com/microsoft/DeepSpeed)\n\n* [Flash-Attention](https://github.com/HazyResearch/flash-attention)\n\n### License\n\nThe model is licensed under the [MIT license](https://huggingface.co/microsoft/phi-2/resolve/main/LICENSE).\n\n## Trademarks\n\nThis project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow\u202f[Microsoft\u2019s Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party\u2019s policies.\n\n## Data Summary\nhttps://huggingface.co/microsoft/phi-2/blob/main/data_summary_card.md",
+  "fetched_at": "2026-09-19T15:01:39.654385+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "microsoft",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "mit",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "phi",
+      "text-generation",
+      "nlp",
+      "code",
+      "en",
+      "license:mit",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:sagemaker",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "microsoft__phi-2",
+  "ok": true,
+  "popularity": {
+    "downloads": 574169,
+    "downloadsAllTime": 23314112,
+    "likes": 3523,
+    "trendingScore": 1
+  },
+  "repo_id": "microsoft/phi-2",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-12-13T21:19:59.000Z",
+    "lastModified": "2025-12-08T11:35:44.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": 13015866880,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {
+      "BF16": 12688186880,
+      "F32": 327680000
+    },
+    "torch_dtype": "float32",
+    "vocab_size": 32000
+  },
+  "card_chars": 2813,
+  "card_text": "---\nlicense: llama2\n---\n## KEY DETAILS\nPrompt format: SillyTavern\nBase model: MythoMax-L2-13b\nWhat's new: finetuned on the script of a visual novel that was processed and revamped by GPT-4 to make ~1300 high-quality training examples. The end goal was a model that could speak like a specific character from that game, but the end result was a model that seems to excel in banter, conversation, and roleplay overall.\nNote: compared to the original MythoMakise-13b, this model has 33% of MythoMax-L2-13b merged back into it, so that it better retains MythoMax's intelligence with MythoMakise's personality and style. The result of this seems to be pretty good so far. Ironcially, the model seems better at roleplaying characters other than the one it was originally created to mimic. \n\n### LONG FORM\n\nA finetune of MythoMax-13b on lines extracted from the script of Steins;Gate. Rather than simply giving the model \"previous line\\nline to predict\" a custom script was used to group conversations into training examples. \nDespite being finetuned on one character's lines from one visual novel, I've found (at least in my initial testing) that the model does an excellent job of roleplaying other characters too, probably because the creative writing GPT-4 did on top of the already-well-written Steins;Gate script was very high-quality. The model might be best at roleplaying characters if the personality of that character is similar to the character it was originally made to act like.\n\nBesides being built for RP, I bet that this model could be used in any generic conversational role. Just don't expect it to be accurate, or good at anything other than talking.\n\nThe model is not censored.\n\nThis variation has MythoMax merged back into it with 33% weighting to make it more stable and intelligent while retaining its Kurisu-ness and better personality. In my experience, this seems to be the decisive change that led to higher-quality outputs.\n\n### Prompt format \nI know it's wasteful as hell, don't judge me, this is the SillyTavern prompt format (discovered using the simple proxy for ST). I finetuned the model on this so that it would perform better on that frontend.\n```\n## {{charname}}:\n- You're \"{{charname}}\" in this never-ending roleplay with \"{{user}}\".\n### Input:\\n\n[user description (note, square brackets are a part of it)]\nDescription of the character's personality would go here (a 'character card')\n\n### Response:\n(OOC) Understood. I will take this info into account for the roleplay. (end OOC)\n\n### New Roleplay:\n### Instruction:\n#### {{char}}:\nwhatever the char says, this is the chat history\n#### {{user}}:\nwhatever the user says, this is the chat history\n... repeated some number of times ...\n### Response 2 paragraphs, engaging, natural, authentic, descriptive, creative):\n#### {char}:\n```\n",
+  "fetched_at": "2026-09-22T06:43:48.012764+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "Heralax",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "llama2",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "gguf",
+      "llama",
+      "text-generation",
+      "license:llama2",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "Heralax__MythoMakiseMerged-13b",
+  "ok": true,
+  "popularity": {
+    "downloads": 167,
+    "downloadsAllTime": 4634,
+    "likes": 9,
+    "trendingScore": 0
+  },
+  "repo_id": "Heralax/MythoMakiseMerged-13b",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-30T06:59:22.000Z",
+    "lastModified": "2023-10-23T09:42:30.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": true,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "architecture": {
+    "architectures": [
+      "Qwen2ForCausalLM"
+    ],
+    "hidden_size": 3584,
+    "intermediate_size": 18944,
+    "max_position_embeddings": 131072,
+    "model_type": "qwen2",
+    "n_parameters": 7615616512,
+    "num_attention_heads": 28,
+    "num_hidden_layers": 28,
+    "num_key_value_heads": 4,
+    "parameter_dtypes": {
+      "BF16": 7615616512
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 152064
+  },
+  "card_chars": 1156,
+  "card_text": "---\nbase_model:\n- Tsunami-th/Tsunami-0.5x-7B-Instruct\n- rombodawg/Rombos-LLM-V2.5-Qwen-7b\nlibrary_name: transformers\ntags:\n- mergekit\n- merge\nlicense: apache-2.0\n---\n# merged_model\n\nThis is a merge of pre-trained language models created using [mergekit](https://github.com/cg123/mergekit).\n\n## Merge Details\n### Merge Method\n\nThis model was merged using the SLERP merge method.\n\n### Models Merged\n\nThe following models were included in the merge:\n* [Tsunami-th/Tsunami-0.5x-7B-Instruct](https://huggingface.co/Tsunami-th/Tsunami-0.5x-7B-Instruct)\n* [rombodawg/Rombos-LLM-V2.5-Qwen-7b](https://huggingface.co/rombodawg/Rombos-LLM-V2.5-Qwen-7b)\n\n### Configuration\n\nThe following YAML configuration was used to produce this model:\n\n```yaml\nslices:\n  - sources:\n      - model: rombodawg/Rombos-LLM-V2.5-Qwen-7b\n        layer_range: [0, 28]\n      - model: Tsunami-th/Tsunami-0.5x-7B-Instruct\n        layer_range: [0, 28]    \nmerge_method: slerp\nbase_model: rombodawg/Rombos-LLM-V2.5-Qwen-7b\nparameters:\n  t:\n    - filter: self_attn\n      value: [0, 0.25, 0.5, 0.75, 1]\n    - filter: mlp\n      value: [1, 0.75, 0.5, 0.25, 0]\n    - value: 0.5\ndtype: bfloat16\n\n```",
+  "fetched_at": "2026-09-19T15:00:01.127149+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "Tsunami-th/Tsunami-0.5x-7B-Instruct",
+      "rombodawg/Rombos-LLM-V2.5-Qwen-7b"
+    ],
+    "card_base_models": [
+      "Tsunami-th/Tsunami-0.5x-7B-Instruct",
+      "rombodawg/Rombos-LLM-V2.5-Qwen-7b"
+    ],
+    "merge_tags": [
+      "mergekit",
+      "merge",
+      "base_model:merge:Tsunami-th/Tsunami-0.5x-7B-Instruct",
+      "base_model:merge:rombodawg/Rombos-LLM-V2.5-Qwen-7b"
+    ],
+    "n_base_models": 2,
+    "relations": {
+      "": [
+        "Tsunami-th/Tsunami-0.5x-7B-Instruct",
+        "rombodawg/Rombos-LLM-V2.5-Qwen-7b"
+      ],
+      "merge": [
+        "Tsunami-th/Tsunami-0.5x-7B-Instruct",
+        "rombodawg/Rombos-LLM-V2.5-Qwen-7b"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "Lil-R",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "qwen2",
+      "text-generation",
+      "mergekit",
+      "merge",
+      "conversational",
+      "base_model:Tsunami-th/Tsunami-0.5x-7B-Instruct",
+      "base_model:merge:Tsunami-th/Tsunami-0.5x-7B-Instruct",
+      "base_model:rombodawg/Rombos-LLM-V2.5-Qwen-7b",
+      "base_model:merge:rombodawg/Rombos-LLM-V2.5-Qwen-7b",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "2-prymmal-ece-7b-slerp",
+  "ok": true,
+  "popularity": {
+    "downloads": 26,
+    "downloadsAllTime": 279,
+    "likes": 0,
+    "trendingScore": 0
+  },
+  "repo_id": "Lil-R/2_PRYMMAL-ECE-7B-SLERP",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2024-11-04T17:18:35.000Z",
+    "lastModified": "2024-11-04T19:01:40.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": true,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

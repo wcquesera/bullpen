@@ -1,0 +1,92 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": null,
+    "intermediate_size": null,
+    "max_position_embeddings": null,
+    "model_type": "llama",
+    "n_parameters": 8030261248,
+    "num_attention_heads": null,
+    "num_hidden_layers": null,
+    "num_key_value_heads": null,
+    "parameter_dtypes": {
+      "BF16": 8030261248
+    },
+    "torch_dtype": null,
+    "vocab_size": null
+  },
+  "card_chars": 0,
+  "card_text": null,
+  "fetched_at": "2026-09-19T15:01:29.970604+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 401,
+    "readme": 401
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "meta-llama",
+    "gated": "manual",
+    "library_name": "transformers",
+    "license": "llama3",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "facebook",
+      "meta",
+      "pytorch",
+      "llama-3",
+      "conversational",
+      "en",
+      "license:llama3",
+      "eval-results",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:sagemaker",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "meta-llama__Meta-Llama-3-8B-Instruct",
+  "ok": true,
+  "popularity": {
+    "downloads": 1199847,
+    "downloadsAllTime": 48263766,
+    "likes": 5054,
+    "trendingScore": 31
+  },
+  "repo_id": "meta-llama/Meta-Llama-3-8B-Instruct",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2024-04-17T09:35:12.000Z",
+    "lastModified": "2025-06-18T23:49:51.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

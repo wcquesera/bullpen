@@ -1,0 +1,176 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 8192,
+    "model_type": "llama",
+    "n_parameters": 8030261248,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "BF16": 8030261248
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 128256
+  },
+  "card_chars": 6200,
+  "card_text": "---\nlicense: cc-by-nc-4.0\nlibrary_name: transformers\ntags:\n- mergekit\n- merge\nbase_model:\n- Orenguteng/Llama-3.1-8B-Lexi-Uncensored-V2\n- kloodia/lora-8b-bio\n- ArliAI/Llama-3.1-8B-ArliAI-RPMax-v1.1\n- Blackroot/Llama-3-8B-Abomination-LORA\n- Sao10K/L3-8B-Stheno-v3.2\n- grimjim/Llama-3-Instruct-abliteration-LoRA-8B\n- arcee-ai/Llama-3.1-SuperNova-Lite\n- grimjim/Llama-3-Instruct-abliteration-LoRA-8B\n- mlabonne/Hermes-3-Llama-3.1-8B-lorablated\n- kloodia/lora-8b-physic\n- aifeifei798/DarkIdol-Llama-3.1-8B-Instruct-1.2-Uncensored\n- kloodia/lora-8b-medic\nmodel-index:\n- name: Aspire-8B-model_stock\n  results:\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: IFEval (0-Shot)\n      type: HuggingFaceH4/ifeval\n      args:\n        num_few_shot: 0\n    metrics:\n    - type: inst_level_strict_acc and prompt_level_strict_acc\n      value: 71.41\n      name: strict accuracy\n    source:\n      url: >-\n        https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard?query=DreadPoor/Aspire-8B-model_stock\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: BBH (3-Shot)\n      type: BBH\n      args:\n        num_few_shot: 3\n    metrics:\n    - type: acc_norm\n      value: 32.53\n      name: normalized accuracy\n    source:\n      url: >-\n        https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard?query=DreadPoor/Aspire-8B-model_stock\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: MATH Lvl 5 (4-Shot)\n      type: hendrycks/competition_math\n      args:\n        num_few_shot: 4\n    metrics:\n    - type: exact_match\n      value: 12.99\n      name: exact match\n    source:\n      url: >-\n        https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard?query=DreadPoor/Aspire-8B-model_stock\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: GPQA (0-shot)\n      type: Idavidrein/gpqa\n      args:\n        num_few_shot: 0\n    metrics:\n    - type: acc_norm\n      value: 8.61\n      name: acc_norm\n    source:\n      url: >-\n        https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard?query=DreadPoor/Aspire-8B-model_stock\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: MuSR (0-shot)\n      type: TAUR-Lab/MuSR\n      args:\n        num_few_shot: 0\n    metrics:\n    - type: acc_norm\n      value: 13.46\n      name: acc_norm\n    source:\n      url: >-\n        https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard?query=DreadPoor/Aspire-8B-model_stock\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: MMLU-PRO (5-shot)\n      type: TIGER-Lab/MMLU-Pro\n      config: main\n      split: test\n      args:\n        num_few_shot: 5\n    metrics:\n    - type: acc\n      value: 30.7\n      name: accuracy\n    source:\n      url: >-\n        https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard?query=DreadPoor/Aspire-8B-model_stock\n      name: Open LLM Leaderboard\n---\n# merge\n\nThis is a merge of pre-trained language models created using [mergekit](https://github.com/cg123/mergekit).\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/632149f88c0da827c72dccde/q6Thxxj1M8nyhyzmlrn0K.png)\n\n## Merge Details\n### Merge Method\n\nThis model was merged using the [Model Stock](https://arxiv.org/abs/2403.19522) merge method using [Sao10K/L3-8B-Stheno-v3.2](https://huggingface.co/Sao10K/L3-8B-Stheno-v3.2) + [grimjim/Llama-3-Instruct-abliteration-LoRA-8B](https://huggingface.co/grimjim/Llama-3-Instruct-abliteration-LoRA-8B) as a base.\n\n### Models Merged\n\nThe following models were included in the merge:\n* [Orenguteng/Llama-3.1-8B-Lexi-Uncensored-V2](https://huggingface.co/Orenguteng/Llama-3.1-8B-Lexi-Uncensored-V2) + [kloodia/lora-8b-bio](https://huggingface.co/kloodia/lora-8b-bio)\n* [ArliAI/Llama-3.1-8B-ArliAI-RPMax-v1.1](https://huggingface.co/ArliAI/Llama-3.1-8B-ArliAI-RPMax-v1.1) + [Blackroot/Llama-3-8B-Abomination-LORA](https://huggingface.co/Blackroot/Llama-3-8B-Abomination-LORA)\n* [arcee-ai/Llama-3.1-SuperNova-Lite](https://huggingface.co/arcee-ai/Llama-3.1-SuperNova-Lite) + [grimjim/Llama-3-Instruct-abliteration-LoRA-8B](https://huggingface.co/grimjim/Llama-3-Instruct-abliteration-LoRA-8B)\n* [mlabonne/Hermes-3-Llama-3.1-8B-lorablated](https://huggingface.co/mlabonne/Hermes-3-Llama-3.1-8B-lorablated) + [kloodia/lora-8b-physic](https://huggingface.co/kloodia/lora-8b-physic)\n* [aifeifei798/DarkIdol-Llama-3.1-8B-Instruct-1.2-Uncensored](https://huggingface.co/aifeifei798/DarkIdol-Llama-3.1-8B-Instruct-1.2-Uncensored) + [kloodia/lora-8b-medic](https://huggingface.co/kloodia/lora-8b-medic)\n\n### Configuration\n\nThe following YAML configuration was used to produce this model:\n\n```yaml\nmodels:\n  - model: Orenguteng/Llama-3.1-8B-Lexi-Uncensored-V2+kloodia/lora-8b-bio\n  - model: arcee-ai/Llama-3.1-SuperNova-Lite+grimjim/Llama-3-Instruct-abliteration-LoRA-8B\n  - model: mlabonne/Hermes-3-Llama-3.1-8B-lorablated+kloodia/lora-8b-physic\n  - model: aifeifei798/DarkIdol-Llama-3.1-8B-Instruct-1.2-Uncensored+kloodia/lora-8b-medic\n  - model: ArliAI/Llama-3.1-8B-ArliAI-RPMax-v1.1+Blackroot/Llama-3-8B-Abomination-LORA\nmerge_method: model_stock\nbase_model: Sao10K/L3-8B-Stheno-v3.2+grimjim/Llama-3-Instruct-abliteration-LoRA-8B\nnormalize: false\nint8_mask: true\ndtype: bfloat16\n\n```\n\n![image.png](https://cdn-uploads.huggingface.co/production/uploads/632149f88c0da827c72dccde/IkTIiq6HjCkaJefSNtGLD.png)\n\n# [Open LLM Leaderboard Evaluation Results](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard)\nDetailed results can be found [here](https://huggingface.co/datasets/open-llm-leaderboard/details_DreadPoor__Aspire-8B-model_stock)\n\n|      Metric       |Value|\n|-------------------|----:|\n|Avg.               |28.28|\n|IFEval (0-Shot)    |71.41|\n|BBH (3-Shot)       |32.53|\n|MATH Lvl 5 (4-Shot)|12.99|\n|GPQA (0-shot)      | 8.61|\n|MuSR (0-shot)      |13.46|\n|MMLU-PRO (5-shot)  |30.70|",
+  "fetched_at": "2026-09-19T15:00:51.953878+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "Orenguteng/Llama-3.1-8B-Lexi-Uncensored-V2",
+      "kloodia/lora-8b-bio",
+      "ArliAI/Llama-3.1-8B-ArliAI-RPMax-v1.1",
+      "Blackroot/Llama-3-8B-Abomination-LORA",
+      "Sao10K/L3-8B-Stheno-v3.2",
+      "grimjim/Llama-3-Instruct-abliteration-LoRA-8B",
+      "arcee-ai/Llama-3.1-SuperNova-Lite",
+      "mlabonne/Hermes-3-Llama-3.1-8B-lorablated",
+      "kloodia/lora-8b-physic",
+      "aifeifei798/DarkIdol-Llama-3.1-8B-Instruct-1.2-Uncensored",
+      "kloodia/lora-8b-medic"
+    ],
+    "card_base_models": [
+      "Orenguteng/Llama-3.1-8B-Lexi-Uncensored-V2",
+      "kloodia/lora-8b-bio",
+      "ArliAI/Llama-3.1-8B-ArliAI-RPMax-v1.1",
+      "Blackroot/Llama-3-8B-Abomination-LORA",
+      "Sao10K/L3-8B-Stheno-v3.2",
+      "grimjim/Llama-3-Instruct-abliteration-LoRA-8B",
+      "arcee-ai/Llama-3.1-SuperNova-Lite",
+      "grimjim/Llama-3-Instruct-abliteration-LoRA-8B",
+      "mlabonne/Hermes-3-Llama-3.1-8B-lorablated",
+      "kloodia/lora-8b-physic",
+      "aifeifei798/DarkIdol-Llama-3.1-8B-Instruct-1.2-Uncensored",
+      "kloodia/lora-8b-medic"
+    ],
+    "merge_tags": [
+      "mergekit",
+      "merge",
+      "base_model:merge:ArliAI/Llama-3.1-8B-ArliAI-RPMax-v1.1",
+      "base_model:merge:Blackroot/Llama-3-8B-Abomination-LORA",
+      "base_model:merge:Orenguteng/Llama-3.1-8B-Lexi-Uncensored-V2",
+      "base_model:merge:Sao10K/L3-8B-Stheno-v3.2",
+      "base_model:merge:aifeifei798/DarkIdol-Llama-3.1-8B-Instruct-1.2-Uncensored",
+      "base_model:merge:arcee-ai/Llama-3.1-SuperNova-Lite",
+      "base_model:merge:grimjim/Llama-3-Instruct-abliteration-LoRA-8B",
+      "base_model:merge:kloodia/lora-8b-bio",
+      "base_model:merge:kloodia/lora-8b-medic",
+      "base_model:merge:kloodia/lora-8b-physic",
+      "base_model:merge:mlabonne/Hermes-3-Llama-3.1-8B-lorablated"
+    ],
+    "n_base_models": 11,
+    "relations": {
+      "": [
+        "ArliAI/Llama-3.1-8B-ArliAI-RPMax-v1.1",
+        "Blackroot/Llama-3-8B-Abomination-LORA",
+        "Orenguteng/Llama-3.1-8B-Lexi-Uncensored-V2",
+        "Sao10K/L3-8B-Stheno-v3.2",
+        "aifeifei798/DarkIdol-Llama-3.1-8B-Instruct-1.2-Uncensored",
+        "arcee-ai/Llama-3.1-SuperNova-Lite",
+        "grimjim/Llama-3-Instruct-abliteration-LoRA-8B",
+        "kloodia/lora-8b-bio",
+        "kloodia/lora-8b-medic",
+        "kloodia/lora-8b-physic",
+        "mlabonne/Hermes-3-Llama-3.1-8B-lorablated"
+      ],
+      "merge": [
+        "ArliAI/Llama-3.1-8B-ArliAI-RPMax-v1.1",
+        "Blackroot/Llama-3-8B-Abomination-LORA",
+        "Orenguteng/Llama-3.1-8B-Lexi-Uncensored-V2",
+        "Sao10K/L3-8B-Stheno-v3.2",
+        "aifeifei798/DarkIdol-Llama-3.1-8B-Instruct-1.2-Uncensored",
+        "arcee-ai/Llama-3.1-SuperNova-Lite",
+        "grimjim/Llama-3-Instruct-abliteration-LoRA-8B",
+        "kloodia/lora-8b-bio",
+        "kloodia/lora-8b-medic",
+        "kloodia/lora-8b-physic",
+        "mlabonne/Hermes-3-Llama-3.1-8B-lorablated"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "DreadPoor",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "mergekit",
+      "merge",
+      "conversational",
+      "arxiv:2403.19522",
+      "base_model:ArliAI/Llama-3.1-8B-ArliAI-RPMax-v1.1",
+      "base_model:merge:ArliAI/Llama-3.1-8B-ArliAI-RPMax-v1.1",
+      "base_model:Blackroot/Llama-3-8B-Abomination-LORA",
+      "base_model:merge:Blackroot/Llama-3-8B-Abomination-LORA",
+      "base_model:Orenguteng/Llama-3.1-8B-Lexi-Uncensored-V2",
+      "base_model:merge:Orenguteng/Llama-3.1-8B-Lexi-Uncensored-V2",
+      "base_model:Sao10K/L3-8B-Stheno-v3.2",
+      "base_model:merge:Sao10K/L3-8B-Stheno-v3.2",
+      "base_model:aifeifei798/DarkIdol-Llama-3.1-8B-Instruct-1.2-Uncensored",
+      "base_model:merge:aifeifei798/DarkIdol-Llama-3.1-8B-Instruct-1.2-Uncensored",
+      "base_model:arcee-ai/Llama-3.1-SuperNova-Lite",
+      "base_model:merge:arcee-ai/Llama-3.1-SuperNova-Lite",
+      "base_model:grimjim/Llama-3-Instruct-abliteration-LoRA-8B",
+      "base_model:merge:grimjim/Llama-3-Instruct-abliteration-LoRA-8B",
+      "base_model:kloodia/lora-8b-bio",
+      "base_model:merge:kloodia/lora-8b-bio",
+      "base_model:kloodia/lora-8b-medic",
+      "base_model:merge:kloodia/lora-8b-medic",
+      "base_model:kloodia/lora-8b-physic",
+      "base_model:merge:kloodia/lora-8b-physic",
+      "base_model:mlabonne/Hermes-3-Llama-3.1-8B-lorablated",
+      "base_model:merge:mlabonne/Hermes-3-Llama-3.1-8B-lorablated",
+      "license:cc-by-nc-4.0",
+      "model-index",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "aspire-8b-model_stock",
+  "ok": true,
+  "popularity": {
+    "downloads": 40,
+    "downloadsAllTime": 932,
+    "likes": 7,
+    "trendingScore": 0
+  },
+  "repo_id": "DreadPoor/Aspire-8B-model_stock",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2024-09-16T22:52:25.000Z",
+    "lastModified": "2025-01-19T15:58:33.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": true,
+    "kto": false,
+    "lora": true,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

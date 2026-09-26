@@ -1,0 +1,502 @@
+{
+  "architecture": {
+    "architectures": [
+      "Qwen3ForCausalLM"
+    ],
+    "hidden_size": 2560,
+    "intermediate_size": 9728,
+    "max_position_embeddings": 40960,
+    "model_type": "qwen3",
+    "n_parameters": 4022468096,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 36,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "BF16": 4022468096
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 151936
+  },
+  "card_chars": 16857,
+  "card_text": "---\nlibrary_name: transformers\nlicense: apache-2.0\nlicense_link: https://huggingface.co/Qwen/Qwen3-4B/blob/main/LICENSE\npipeline_tag: text-generation\nbase_model:\n- Qwen/Qwen3-4B-Base\n---\n\n# Qwen3-4B\n<a href=\"https://chat.qwen.ai/\" target=\"_blank\" style=\"margin: 2px;\">\n    <img alt=\"Chat\" src=\"https://img.shields.io/badge/%F0%9F%92%9C%EF%B8%8F%20Qwen%20Chat%20-536af5\" style=\"display: inline-block; vertical-align: middle;\"/>\n</a>\n\n## Qwen3 Highlights\n\nQwen3 is the latest generation of large language models in Qwen series, offering a comprehensive suite of dense and mixture-of-experts (MoE) models. Built upon extensive training, Qwen3 delivers groundbreaking advancements in reasoning, instruction-following, agent capabilities, and multilingual support, with the following key features:\n\n- **Uniquely support of seamless switching between thinking mode** (for complex logical reasoning, math, and coding) and **non-thinking mode** (for efficient, general-purpose dialogue) **within single model**, ensuring optimal performance across various scenarios.\n- **Significantly enhancement in its reasoning capabilities**, surpassing previous QwQ (in thinking mode) and Qwen2.5 instruct models (in non-thinking mode) on mathematics, code generation, and commonsense logical reasoning.\n- **Superior human preference alignment**, excelling in creative writing, role-playing, multi-turn dialogues, and instruction following, to deliver a more natural, engaging, and immersive conversational experience.\n- **Expertise in agent capabilities**, enabling precise integration with external tools in both thinking and unthinking modes and achieving leading performance among open-source models in complex agent-based tasks.\n- **Support of 100+ languages and dialects** with strong capabilities for **multilingual instruction following** and **translation**.\n\n## Model Overview\n\n**Qwen3-4B** has the following features:\n- Type: Causal Language Models\n- Training Stage: Pretraining & Post-training\n- Number of Parameters: 4.0B\n- Number of Paramaters (Non-Embedding): 3.6B\n- Number of Layers: 36\n- Number of Attention Heads (GQA): 32 for Q and 8 for KV\n- Context Length: 32,768 natively and [131,072 tokens with YaRN](#processing-long-texts). \n\nFor more details, including benchmark evaluation, hardware requirements, and inference performance, please refer to our [blog](https://qwenlm.github.io/blog/qwen3/), [GitHub](https://github.com/QwenLM/Qwen3), and [Documentation](https://qwen.readthedocs.io/en/latest/).\n\n> [!TIP]\n> If you encounter significant endless repetitions, please refer to the [Best Practices](#best-practices) section for optimal sampling parameters, and set the ``presence_penalty`` to 1.5.\n\n## Quickstart\n\nThe code of Qwen3 has been in the latest Hugging Face `transformers` and we advise you to use the latest version of `transformers`.\n\nWith `transformers<4.51.0`, you will encounter the following error:\n```\nKeyError: 'qwen3'\n```\n\nThe following contains a code snippet illustrating how to use the model generate content based on given inputs. \n```python\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\nmodel_name = \"Qwen/Qwen3-4B\"\n\n# load the tokenizer and the model\ntokenizer = AutoTokenizer.from_pretrained(model_name)\nmodel = AutoModelForCausalLM.from_pretrained(\n    model_name,\n    torch_dtype=\"auto\",\n    device_map=\"auto\"\n)\n\n# prepare the model input\nprompt = \"Give me a short introduction to large language model.\"\nmessages = [\n    {\"role\": \"user\", \"content\": prompt}\n]\ntext = tokenizer.apply_chat_template(\n    messages,\n    tokenize=False,\n    add_generation_prompt=True,\n    enable_thinking=True # Switches between thinking and non-thinking modes. Default is True.\n)\nmodel_inputs = tokenizer([text], return_tensors=\"pt\").to(model.device)\n\n# conduct text completion\ngenerated_ids = model.generate(\n    **model_inputs,\n    max_new_tokens=32768\n)\noutput_ids = generated_ids[0][len(model_inputs.input_ids[0]):].tolist() \n\n# parsing thinking content\ntry:\n    # rindex finding 151668 (</think>)\n    index = len(output_ids) - output_ids[::-1].index(151668)\nexcept ValueError:\n    index = 0\n\nthinking_content = tokenizer.decode(output_ids[:index], skip_special_tokens=True).strip(\"\\n\")\ncontent = tokenizer.decode(output_ids[index:], skip_special_tokens=True).strip(\"\\n\")\n\nprint(\"thinking content:\", thinking_content)\nprint(\"content:\", content)\n```\n\nFor deployment, you can use `sglang>=0.4.6.post1` or `vllm>=0.8.5` or to create an OpenAI-compatible API endpoint:\n- SGLang:\n    ```shell\n    python -m sglang.launch_server --model-path Qwen/Qwen3-4B --reasoning-parser qwen3\n    ```\n- vLLM:\n    ```shell\n    vllm serve Qwen/Qwen3-4B --enable-reasoning --reasoning-parser deepseek_r1\n    ```\n\nFor local use, applications such as Ollama, LMStudio, MLX-LM, llama.cpp, and KTransformers have also supported Qwen3.\n\n## Switching Between Thinking and Non-Thinking Mode\n\n> [!TIP]\n> The `enable_thinking` switch is also available in APIs created by SGLang and vLLM. \n> Please refer to our documentation for [SGLang](https://qwen.readthedocs.io/en/latest/deployment/sglang.html#thinking-non-thinking-modes) and [vLLM](https://qwen.readthedocs.io/en/latest/deployment/vllm.html#thinking-non-thinking-modes) users.\n\n### `enable_thinking=True`\n\nBy default, Qwen3 has thinking capabilities enabled, similar to QwQ-32B. This means the model will use its reasoning abilities to enhance the quality of generated responses. For example, when explicitly setting `enable_thinking=True` or leaving it as the default value in `tokenizer.apply_chat_template`, the model will engage its thinking mode.\n\n```python\ntext = tokenizer.apply_chat_template(\n    messages,\n    tokenize=False,\n    add_generation_prompt=True,\n    enable_thinking=True  # True is the default value for enable_thinking\n)\n```\n\nIn this mode, the model will generate think content wrapped in a `<think>...</think>` block, followed by the final response.\n\n> [!NOTE]\n> For thinking mode, use `Temperature=0.6`, `TopP=0.95`, `TopK=20`, and `MinP=0` (the default setting in `generation_config.json`). **DO NOT use greedy decoding**, as it can lead to performance degradation and endless repetitions. For more detailed guidance, please refer to the [Best Practices](#best-practices) section.\n\n\n### `enable_thinking=False`\n\nWe provide a hard switch to strictly disable the model's thinking behavior, aligning its functionality with the previous Qwen2.5-Instruct models. This mode is particularly useful in scenarios where disabling thinking is essential for enhancing efficiency.\n\n```python\ntext = tokenizer.apply_chat_template(\n    messages,\n    tokenize=False,\n    add_generation_prompt=True,\n    enable_thinking=False  # Setting enable_thinking=False disables thinking mode\n)\n```\n\nIn this mode, the model will not generate any think content and will not include a `<think>...</think>` block.\n\n> [!NOTE]\n> For non-thinking mode, we suggest using `Temperature=0.7`, `TopP=0.8`, `TopK=20`, and `MinP=0`. For more detailed guidance, please refer to the [Best Practices](#best-practices) section.\n\n### Advanced Usage: Switching Between Thinking and Non-Thinking Modes via User Input\n\nWe provide a soft switch mechanism that allows users to dynamically control the model's behavior when `enable_thinking=True`. Specifically, you can add `/think` and `/no_think` to user prompts or system messages to switch the model's thinking mode from turn to turn. The model will follow the most recent instruction in multi-turn conversations.\n\nHere is an example of a multi-turn conversation:\n\n```python\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\nclass QwenChatbot:\n    def __init__(self, model_name=\"Qwen/Qwen3-4B\"):\n        self.tokenizer = AutoTokenizer.from_pretrained(model_name)\n        self.model = AutoModelForCausalLM.from_pretrained(model_name)\n        self.history = []\n\n    def generate_response(self, user_input):\n        messages = self.history + [{\"role\": \"user\", \"content\": user_input}]\n\n        text = self.tokenizer.apply_chat_template(\n            messages,\n            tokenize=False,\n            add_generation_prompt=True\n        )\n\n        inputs = self.tokenizer(text, return_tensors=\"pt\")\n        response_ids = self.model.generate(**inputs, max_new_tokens=32768)[0][len(inputs.input_ids[0]):].tolist()\n        response = self.tokenizer.decode(response_ids, skip_special_tokens=True)\n\n        # Update history\n        self.history.append({\"role\": \"user\", \"content\": user_input})\n        self.history.append({\"role\": \"assistant\", \"content\": response})\n\n        return response\n\n# Example Usage\nif __name__ == \"__main__\":\n    chatbot = QwenChatbot()\n\n    # First input (without /think or /no_think tags, thinking mode is enabled by default)\n    user_input_1 = \"How many r's in strawberries?\"\n    print(f\"User: {user_input_1}\")\n    response_1 = chatbot.generate_response(user_input_1)\n    print(f\"Bot: {response_1}\")\n    print(\"----------------------\")\n\n    # Second input with /no_think\n    user_input_2 = \"Then, how many r's in blueberries? /no_think\"\n    print(f\"User: {user_input_2}\")\n    response_2 = chatbot.generate_response(user_input_2)\n    print(f\"Bot: {response_2}\") \n    print(\"----------------------\")\n\n    # Third input with /think\n    user_input_3 = \"Really? /think\"\n    print(f\"User: {user_input_3}\")\n    response_3 = chatbot.generate_response(user_input_3)\n    print(f\"Bot: {response_3}\")\n```\n\n> [!NOTE]\n> For API compatibility, when `enable_thinking=True`, regardless of whether the user uses `/think` or `/no_think`, the model will always output a block wrapped in `<think>...</think>`. However, the content inside this block may be empty if thinking is disabled.\n> When `enable_thinking=False`, the soft switches are not valid. Regardless of any `/think` or `/no_think` tags input by the user, the model will not generate think content and will not include a `<think>...</think>` block.\n\n## Agentic Use\n\nQwen3 excels in tool calling capabilities. We recommend using [Qwen-Agent](https://github.com/QwenLM/Qwen-Agent) to make the best use of agentic ability of Qwen3. Qwen-Agent encapsulates tool-calling templates and tool-calling parsers internally, greatly reducing coding complexity.\n\nTo define the available tools, you can use the MCP configuration file, use the integrated tool of Qwen-Agent, or integrate other tools by yourself.\n```python\nfrom qwen_agent.agents import Assistant\n\n# Define LLM\nllm_cfg = {\n    'model': 'Qwen3-4B',\n\n    # Use the endpoint provided by Alibaba Model Studio:\n    # 'model_type': 'qwen_dashscope',\n    # 'api_key': os.getenv('DASHSCOPE_API_KEY'),\n\n    # Use a custom endpoint compatible with OpenAI API:\n    'model_server': 'http://localhost:8000/v1',  # api_base\n    'api_key': 'EMPTY',\n\n    # Other parameters:\n    # 'generate_cfg': {\n    #         # Add: When the response content is `<think>this is the thought</think>this is the answer;\n    #         # Do not add: When the response has been separated by reasoning_content and content.\n    #         'thought_in_content': True,\n    #     },\n}\n\n# Define Tools\ntools = [\n    {'mcpServers': {  # You can specify the MCP configuration file\n            'time': {\n                'command': 'uvx',\n                'args': ['mcp-server-time', '--local-timezone=Asia/Shanghai']\n            },\n            \"fetch\": {\n                \"command\": \"uvx\",\n                \"args\": [\"mcp-server-fetch\"]\n            }\n        }\n    },\n  'code_interpreter',  # Built-in tools\n]\n\n# Define Agent\nbot = Assistant(llm=llm_cfg, function_list=tools)\n\n# Streaming generation\nmessages = [{'role': 'user', 'content': 'https://qwenlm.github.io/blog/ Introduce the latest developments of Qwen'}]\nfor responses in bot.run(messages=messages):\n    pass\nprint(responses)\n```\n\n## Processing Long Texts\n\nQwen3 natively supports context lengths of up to 32,768 tokens. For conversations where the total length (including both input and output) significantly exceeds this limit, we recommend using RoPE scaling techniques to handle long texts effectively. We have validated the model's performance on context lengths of up to 131,072 tokens using the [YaRN](https://arxiv.org/abs/2309.00071) method.\n\nYaRN is currently supported by several inference frameworks, e.g., `transformers` and `llama.cpp` for local use, `vllm` and `sglang` for deployment. In general, there are two approaches to enabling YaRN for supported frameworks:\n\n- Modifying the model files:\n  In the `config.json` file, add the `rope_scaling` fields:\n    ```json\n    {\n        ...,\n        \"rope_scaling\": {\n            \"rope_type\": \"yarn\",\n            \"factor\": 4.0,\n            \"original_max_position_embeddings\": 32768\n        }\n    }\n    ```\n  For `llama.cpp`, you need to regenerate the GGUF file after the modification.\n\n- Passing command line arguments:\n\n  For `vllm`, you can use\n    ```shell\n    vllm serve ... --rope-scaling '{\"rope_type\":\"yarn\",\"factor\":4.0,\"original_max_position_embeddings\":32768}' --max-model-len 131072  \n    ```\n\n  For `sglang`, you can use\n    ```shell\n    python -m sglang.launch_server ... --json-model-override-args '{\"rope_scaling\":{\"rope_type\":\"yarn\",\"factor\":4.0,\"original_max_position_embeddings\":32768}}'\n    ```\n\n  For `llama-server` from `llama.cpp`, you can use\n    ```shell\n    llama-server ... --rope-scaling yarn --rope-scale 4 --yarn-orig-ctx 32768\n    ```\n\n> [!IMPORTANT]\n> If you encounter the following warning\n> ```\n> Unrecognized keys in `rope_scaling` for 'rope_type'='yarn': {'original_max_position_embeddings'}\n> ```\n> please upgrade `transformers>=4.51.0`.\n\n> [!NOTE]\n> All the notable open-source frameworks implement static YaRN, which means the scaling factor remains constant regardless of input length, **potentially impacting performance on shorter texts.**\n> We advise adding the `rope_scaling` configuration only when processing long contexts is required. \n> It is also recommended to modify the `factor` as needed. For example, if the typical context length for your application is 65,536 tokens, it would be better to set `factor` as 2.0. \n\n> [!NOTE]\n> The default `max_position_embeddings` in `config.json` is set to 40,960. This allocation includes reserving 32,768 tokens for outputs and 8,192 tokens for typical prompts, which is sufficient for most scenarios involving short text processing. If the average context length does not exceed 32,768 tokens, we do not recommend enabling YaRN in this scenario, as it may potentially degrade model performance.\n\n> [!TIP]\n> The endpoint provided by Alibaba Model Studio supports dynamic YaRN by default and no extra configuration is needed.\n\n## Best Practices\n\nTo achieve optimal performance, we recommend the following settings:\n\n1. **Sampling Parameters**:\n   - For thinking mode (`enable_thinking=True`), use `Temperature=0.6`, `TopP=0.95`, `TopK=20`, and `MinP=0`. **DO NOT use greedy decoding**, as it can lead to performance degradation and endless repetitions.\n   - For non-thinking mode (`enable_thinking=False`), we suggest using `Temperature=0.7`, `TopP=0.8`, `TopK=20`, and `MinP=0`.\n   - For supported frameworks, you can adjust the `presence_penalty` parameter between 0 and 2 to reduce endless repetitions. However, using a higher value may occasionally result in language mixing and a slight decrease in model performance.\n\n2. **Adequate Output Length**: We recommend using an output length of 32,768 tokens for most queries. For benchmarking on highly complex problems, such as those found in math and programming competitions, we suggest setting the max output length to 38,912 tokens. This provides the model with sufficient space to generate detailed and comprehensive responses, thereby enhancing its overall performance.\n\n3. **Standardize Output Format**: We recommend using prompts to standardize model outputs when benchmarking.\n   - **Math Problems**: Include \"Please reason step by step, and put your final answer within \\boxed{}.\" in the prompt.\n   - **Multiple-Choice Questions**: Add the following JSON structure to the prompt to standardize responses: \"Please show your choice in the `answer` field with only the choice letter, e.g., `\"answer\": \"C\"`.\"\n\n4. **No Thinking Content in History**: In multi-turn conversations, the historical model output should only include the final output part and does not need to include the thinking content. It is implemented in the provided chat template in Jinja2. However, for frameworks that do not directly use the Jinja2 chat template, it is up to the developers to ensure that the best practice is followed.\n\n### Citation\n\nIf you find our work helpful, feel free to give us a cite.\n\n```\n@misc{qwen3technicalreport,\n      title={Qwen3 Technical Report}, \n      author={Qwen Team},\n      year={2025},\n      eprint={2505.09388},\n      archivePrefix={arXiv},\n      primaryClass={cs.CL},\n      url={https://arxiv.org/abs/2505.09388}, \n}\n```",
+  "fetched_at": "2026-09-19T15:02:52.455607+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "Qwen/Qwen3-4B-Base"
+    ],
+    "card_base_models": [
+      "Qwen/Qwen3-4B-Base"
+    ],
+    "merge_tags": [],
+    "n_base_models": 1,
+    "relations": {
+      "": [
+        "Qwen/Qwen3-4B-Base"
+      ],
+      "finetune": [
+        "Qwen/Qwen3-4B-Base"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "Qwen",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "qwen3",
+      "text-generation",
+      "conversational",
+      "arxiv:2309.00071",
+      "arxiv:2505.09388",
+      "base_model:Qwen/Qwen3-4B-Base",
+      "base_model:finetune:Qwen/Qwen3-4B-Base",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:sagemaker",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "qwen3-4b",
+  "ok": true,
+  "popularity": {
+    "downloads": 7098338,
+    "downloadsAllTime": 80440976,
+    "likes": 703,
+    "trendingScore": 3
+  },
+  "repo_id": "Qwen/Qwen3-4B",
+  "resolved_via": "search",
+  "search_candidates": [
+    [
+      "lmstudio-community/Qwen3.8-27B-MLX-4bit",
+      4749304
+    ],
+    [
+      "empero-ai/Qwen3.8-4B-Distill-GGUF",
+      791931
+    ],
+    [
+      "mlx-community/Qwen3.8-27B-4bit",
+      99250
+    ],
+    [
+      "Qwen/Qwen3.5-4B",
+      6929178
+    ],
+    [
+      "HauhauCS/Qwen3.5-4B-Uncensored-HauhauCS-Aggressive",
+      175046
+    ],
+    [
+      "unsloth/Qwen3.5-4B-GGUF",
+      904623
+    ],
+    [
+      "DreamFast/Qwen3-VL-4b-Heretic-ComfyUI",
+      0
+    ],
+    [
+      "Archsloth/Qwen3-4B-GGUF",
+      1055
+    ],
+    [
+      "empero-ai/Qwen3.8-4B-Distill",
+      15911
+    ],
+    [
+      "Qwen/Qwen3-4B-Instruct-2507",
+      4024479
+    ],
+    [
+      "Foresee/Qwen3.8-9B-heretic-uncensored-4bit-MTPLX",
+      10818
+    ],
+    [
+      "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+      149461
+    ],
+    [
+      "mlx-community/Qwen3.5-9B-MLX-4bit",
+      27778
+    ],
+    [
+      "unsloth/Qwen3.5-4B-MTP-GGUF",
+      102012
+    ],
+    [
+      "jica98/qwen3.5-4B-super-coder",
+      36234
+    ],
+    [
+      "ahmed22xa/Huihui-Qwen3-VL-4B-Instruct-abliterated-comfy",
+      0
+    ],
+    [
+      "sh0wie/Qwen3.8-Flash-Next-REAP-288-MLX-4bit",
+      22019
+    ],
+    [
+      "pngwn/system-one-qwen3.5-4b-scorer",
+      324
+    ],
+    [
+      "unsloth/Qwen3-4B-GGUF",
+      481224
+    ],
+    [
+      "Qwen/Qwen3-Embedding-4B",
+      2108477
+    ],
+    [
+      "huihui-ai/Huihui-Qwen3-VL-4B-Instruct-abliterated",
+      15001
+    ],
+    [
+      "OBLITERATUS/Qwen3-4B-OBLITERATED",
+      889
+    ],
+    [
+      "sillykiwi/Qwen3-4B-Cybersecurity-Heretic-16bit-Q4_K_M-GGUF",
+      1614
+    ],
+    [
+      "Vontra/Qwen3.8-Flash-Next-MLX-4bit-MTP",
+      1901
+    ],
+    [
+      "mlx-community/Qwen3.8-Flash-Next-4bit",
+      7061
+    ],
+    [
+      "uzzero/Qwen3.8-27B-OBLITERATED-Mythos-Class-Agentic-MLX-4bit",
+      720
+    ],
+    [
+      "Qwen/Qwen3-4B",
+      7098338
+    ],
+    [
+      "Qwen/Qwen3-VL-4B-Instruct",
+      3682136
+    ],
+    [
+      "Qwen/Qwen3-VL-4B-Instruct-GGUF",
+      129147
+    ],
+    [
+      "Qwen/Qwen3.5-4B-Base",
+      544162
+    ],
+    [
+      "ISTA-DASLab/Qwen3.5-4B-GGUF-GSQ",
+      1676
+    ],
+    [
+      "mlx-community/Qwen3.8-27B-Uncensored-OptiQ-4bit",
+      11401
+    ],
+    [
+      "Lygodactylus/Qwen3.8-27B-Uncensored-exl3-4bpw",
+      446
+    ],
+    [
+      "pngwn/system-one-qwen3.5-4b-scorer-v2b",
+      53
+    ],
+    [
+      "huihui-ai/Qwen3-4B-abliterated",
+      206
+    ],
+    [
+      "mlx-community/Qwen3-Embedding-4B-4bit-DWQ",
+      5685
+    ],
+    [
+      "Qwen/Qwen3-4B-Instruct-2507-FP8",
+      940305
+    ],
+    [
+      "FooFoo/qwen3-4b-heretic-zimage-v2-merged",
+      0
+    ],
+    [
+      "BennyDaBall/Qwen3-4b-Z-Image-Turbo-AbliteratedV1",
+      23613
+    ],
+    [
+      "lmstudio-community/Qwen3.5-4B-GGUF",
+      119189
+    ],
+    [
+      "Jackrong/Qwen3.5-4B-Claude-4.6-Opus-Reasoning-Distilled-GGUF",
+      309495
+    ],
+    [
+      "huihui-ai/Huihui-Qwen3.5-4B-abliterated",
+      8135
+    ],
+    [
+      "mradermacher/Huihui-Qwen3.5-4B-abliterated-GGUF",
+      15816
+    ],
+    [
+      "DreamFast/qwen3-4b-heretic",
+      4348
+    ],
+    [
+      "mlx-community/Qwen3.6-35B-A3B-4bit",
+      30346
+    ],
+    [
+      "ethanfel/Qwen3-VL-4B-Heretic-ComfyUI-ConvRot-INT8",
+      0
+    ],
+    [
+      "21world/KiCAD-MCP-Qwen3.5-4B-GGUF",
+      136
+    ],
+    [
+      "mlx-community/Qwen3.8-27B-MTP-4bit",
+      32670
+    ],
+    [
+      "lukaskremla/Qwen3.8-27B-4bit-MLX-TextOnly",
+      1612
+    ],
+    [
+      "insraq/Qwen3.5-4B-EmperoAI-Qwen3.8-Distill-Heretic-Abliterated-MTP-GGUF",
+      7458
+    ],
+    [
+      "mradermacher/Qwen3.8-4B-Distill-heretic-i1-GGUF",
+      3421
+    ],
+    [
+      "textclf/Qwen3.8-Flash-Next-TQ-4bit",
+      450
+    ],
+    [
+      "mlx-community/Qwen3.6-35B-A3B-OptiQ-4bit-REAP-19B",
+      1701
+    ],
+    [
+      "Lygodactylus/Qwen3.8-Flash-Next-Uncensored-exl3-4bpw",
+      391
+    ],
+    [
+      "dburner/Qwen3.5-4B-Q8_0-FlashNgram-NativeBridgeV3",
+      1828
+    ],
+    [
+      "Miiche/visualrl-qwen3vl4b-ppo1-visionsr1-clean",
+      0
+    ],
+    [
+      "khazarai/Qwen3.5-4B-Agentic-Coding-GGUF",
+      339
+    ],
+    [
+      "mj0530/CERA-MoA-Qwen3-4B-4agents",
+      0
+    ],
+    [
+      "unsloth/Qwen3-14B-bnb-4bit",
+      10251
+    ],
+    [
+      "mlx-community/Qwen3-14B-4bit",
+      12121
+    ],
+    [
+      "enacimie/Qwen3-4B-Q4_K_M-GGUF",
+      3019
+    ],
+    [
+      "Mungert/Qwen3-4B-abliterated-GGUF",
+      6518
+    ],
+    [
+      "mlx-community/Qwen3-30B-A3B-4bit-DWQ",
+      353
+    ],
+    [
+      "Qwen/Qwen3-4B-AWQ",
+      265399
+    ],
+    [
+      "mozilla-ai/Qwen3-4B-llamafile",
+      292
+    ],
+    [
+      "Qwen/Qwen3-14B-MLX-4bit",
+      2102
+    ],
+    [
+      "Qwen/Qwen3-Reranker-4B",
+      2491896
+    ],
+    [
+      "mlx-community/Josiefied-Qwen3-14B-abliterated-v3-4bit",
+      821
+    ],
+    [
+      "mlx-community/Qwen3-Embedding-8B-4bit-DWQ",
+      2323
+    ],
+    [
+      "Qwen/Qwen3-30B-A3B-MLX-4bit",
+      599
+    ],
+    [
+      "huihui-ai/Huihui-Qwen3-4B-abliterated-v2",
+      2111
+    ],
+    [
+      "mlx-community/Qwen3-30B-A3B-Instruct-2507-4bit",
+      81455
+    ],
+    [
+      "unsloth/Qwen3-4B-Thinking-2507-GGUF",
+      6564
+    ],
+    [
+      "mradermacher/Huihui-Qwen3-4B-Instruct-2507-abliterated-GGUF",
+      7407
+    ],
+    [
+      "Goekdeniz-Guelmez/Josiefied-Qwen3-4B-Instruct-2507-abliterated-v1",
+      42
+    ],
+    [
+      "vserifsaglam/Qwen3-Reranker-4B-4bit-MLX",
+      423
+    ],
+    [
+      "Eldadalbajob/Qwen3-42B-A3B-2507-Thinking-Abliterated-uncensored-TOTAL-RECALL-v2-Medium-MASTER-CODER-mlx-4Bit",
+      184
+    ],
+    [
+      "Qwen/Qwen3-VL-4B-Thinking",
+      65026
+    ],
+    [
+      "lmstudio-community/Qwen3-VL-4B-Instruct-MLX-4bit",
+      109872
+    ],
+    [
+      "cyankiwi/Qwen3-VL-8B-Instruct-AWQ-4bit",
+      633508
+    ],
+    [
+      "huihui-ai/Huihui-Qwen3-VL-4B-Thinking-abliterated",
+      88
+    ],
+    [
+      "codelion/Qwen3-4B-execution-world-model-lora",
+      16
+    ],
+    [
+      "ByteDance/Sa2VA-Qwen3-VL-4B",
+      1094
+    ],
+    [
+      "noctrex/Huihui-Qwen3-VL-4B-Instruct-abliterated-GGUF",
+      16182
+    ],
+    [
+      "huihui-ai/Huihui-Qwen3-VL-4B-Instruct-abliterated-FP8",
+      551
+    ],
+    [
+      "TenStrip/qwen_3_4b_heretic_bf16",
+      0
+    ],
+    [
+      "straino/Qwen3-Coder-30B-A3B-Instruct-AWQ-4bit-Q4_K_M-GGUF",
+      432
+    ],
+    [
+      "BennyDaBall/qwen3-4b-Z-Image-Engineer",
+      2018
+    ],
+    [
+      "TeichAI/Qwen3-4B-Instruct-2507-Claude-Haiku-4.5-Distill-GGUF",
+      351
+    ],
+    [
+      "internlm/CapRL-Qwen3VL-4B",
+      2959
+    ],
+    [
+      "internlm/CapRL-Qwen3VL-4B-GGUF",
+      573
+    ],
+    [
+      "CalmState/Qwen-3-4b-Polyglot-r2",
+      20
+    ],
+    [
+      "piotr-ai/polanka_4b_v0.3_preview_260106_qwen3",
+      12
+    ],
+    [
+      "piotr-ai/polanka_4b_v0.3_preview_260108_qwen3_gguf",
+      40
+    ],
+    [
+      "piotr-ai/polanka_4b_v0.3_qwen3_260111",
+      9
+    ],
+    [
+      "piotr-ai/polanka_4b_v0.3_qwen3_260111_gguf",
+      68
+    ],
+    [
+      "mradermacher/Arabic-English-handwritten-OCR-Qwen3-VL-4B-GGUF",
+      302
+    ],
+    [
+      "piotr-ai/Polanka_VL_v0.1_Qwen3_VL_4b_260120_gguf",
+      146
+    ],
+    [
+      "HauhauCS/Qwen3-4B-2507-Instruct-Uncensored-HauhauCS-Aggressive",
+      6972
+    ],
+    [
+      "mlx-community/Qwen3-Coder-Next-4bit",
+      5995
+    ]
+  ],
+  "timestamps": {
+    "createdAt": "2025-04-27T03:41:29.000Z",
+    "lastModified": "2025-07-26T03:46:39.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

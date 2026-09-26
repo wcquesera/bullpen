@@ -1,0 +1,104 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 5185,
+  "card_text": "---\nbase_model: mistralai/Mistral-7B-v0.1\ntags:\n- mistral-7b\n- instruct\n- finetune\n- gpt4\n- synthetic data\n- distillation\n- sharegpt\ndatasets:\n- CollectiveCognition/chats-data-2023-09-27\nmodel-index:\n- name: CollectiveCognition-v1-Mistral-7B\n  results: []\nlicense: apache-2.0\nlanguage:\n- en\n---\n\n**Collective Cognition v1.1 - Mistral 7B**\n<div style=\"display: flex; justify-content: center;\">\n  <a href=\"https://collectivecognition.ai\" target=\"_blank\" style=\"display: inline-block; text-align: center;\">\n    <img src=\"https://cdn-uploads.huggingface.co/production/uploads/6317aade83d8d2fd903192d9/DNZXsJE5oC_rM8eYY6H_x.png\" alt=\"Collective Cognition Logo\" width=\"50%\" style=\"display: block; margin: 0 auto;\">\n  </a>\n</div>\n\n## Model Description:\n\nCollective Cognition v1.1 is a state-of-the-art model fine-tuned using the Mistral approach. This model is particularly notable for its performance, outperforming many 70B models on the TruthfulQA benchmark. This benchmark assesses models for common misconceptions, potentially indicating hallucination rates.\n\n## Special Features:\n- **Quick Training**: This model was trained in just 3 minutes on a single 4090 with a qlora, and competes with 70B scale Llama-2 Models at TruthfulQA.\n- **Limited Data**: Despite its exceptional performance, it was trained on only ONE HUNDRED data points, all of which were gathered from a platform reminiscent of ShareGPT.\n- **Extreme TruthfulQA Benchmark**: This model is competing strongly with top 70B models on the TruthfulQA benchmark despite the small dataset and qlora training!\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/6317aade83d8d2fd903192d9/-pnifxPcMeeUONyE3efo3.png)\n\n## Acknowledgements:\n\nSpecial thanks to @a16z and all contributors to the Collective Cognition dataset for making the development of this model possible.\n\n## Dataset:\n\nThe model was trained using data from the Collective Cognition website. The efficacy of this dataset is demonstrated by the model's stellar performance, suggesting that further expansion of this dataset could yield even more promising results. The data is reminiscent of that collected from platforms like ShareGPT.\n\nYou can contribute to the growth of the dataset by sharing your own ChatGPT chats [here](https://CollectiveCognition.ai).\n\nYou can download the datasets created by Collective Cognition here: https://huggingface.co/CollectiveCognition\n\n## Performance:\n\n- **TruthfulQA**: Collective Cognition v1.1 has notably outperformed various 70B models on the TruthfulQA benchmark, highlighting its ability to understand and rectify common misconceptions.\n\n\n## Usage:\n\nPrompt Format:\n```\nUSER: <prompt>\nASSISTANT:\n```\nOR\n```\n<system message>\nUSER: <prompt>\nASSISTANT:\n```\n\n## Benchmarks:\n\nCollective Cognition v1.0 TruthfulQA:\n```\n|    Task     |Version|Metric|Value |   |Stderr|\n|-------------|------:|------|-----:|---|-----:|\n|truthfulqa_mc|      1|mc1   |0.4051|\u00b1  |0.0172|\n|             |       |mc2   |0.5738|\u00b1  |0.0157|\n```\n\nCollective Cognition v1.1 GPT4All:\n```\n|    Task     |Version| Metric |Value |   |Stderr|\n|-------------|------:|--------|-----:|---|-----:|\n|arc_challenge|      0|acc     |0.5085|\u00b1  |0.0146|\n|             |       |acc_norm|0.5384|\u00b1  |0.0146|\n|arc_easy     |      0|acc     |0.7963|\u00b1  |0.0083|\n|             |       |acc_norm|0.7668|\u00b1  |0.0087|\n|boolq        |      1|acc     |0.8495|\u00b1  |0.0063|\n|hellaswag    |      0|acc     |0.6399|\u00b1  |0.0048|\n|             |       |acc_norm|0.8247|\u00b1  |0.0038|\n|openbookqa   |      0|acc     |0.3240|\u00b1  |0.0210|\n|             |       |acc_norm|0.4540|\u00b1  |0.0223|\n|piqa         |      0|acc     |0.7992|\u00b1  |0.0093|\n|             |       |acc_norm|0.8107|\u00b1  |0.0091|\n|winogrande   |      0|acc     |0.7348|\u00b1  |0.0124|\nAverage: 71.13\n```\n\nAGIEval:\n```\n|             Task             |Version| Metric |Value |   |Stderr|\n|------------------------------|------:|--------|-----:|---|-----:|\n|agieval_aqua_rat              |      0|acc     |0.1929|\u00b1  |0.0248|\n|                              |       |acc_norm|0.2008|\u00b1  |0.0252|\n|agieval_logiqa_en             |      0|acc     |0.3134|\u00b1  |0.0182|\n|                              |       |acc_norm|0.3333|\u00b1  |0.0185|\n|agieval_lsat_ar               |      0|acc     |0.2217|\u00b1  |0.0275|\n|                              |       |acc_norm|0.2043|\u00b1  |0.0266|\n|agieval_lsat_lr               |      0|acc     |0.3412|\u00b1  |0.0210|\n|                              |       |acc_norm|0.3216|\u00b1  |0.0207|\n|agieval_lsat_rc               |      0|acc     |0.4721|\u00b1  |0.0305|\n|                              |       |acc_norm|0.4201|\u00b1  |0.0301|\n|agieval_sat_en                |      0|acc     |0.6068|\u00b1  |0.0341|\n|                              |       |acc_norm|0.5777|\u00b1  |0.0345|\n|agieval_sat_en_without_passage|      0|acc     |0.3932|\u00b1  |0.0341|\n|                              |       |acc_norm|0.3641|\u00b1  |0.0336|\n|agieval_sat_math              |      0|acc     |0.2864|\u00b1  |0.0305|\n|                              |       |acc_norm|0.2636|\u00b1  |0.0298|\nAverage: 33.57\n```\n\nTraining run on wandb here: https://wandb.ai/teknium1/collectivecognition-mistral-7b/runs/collectivecognition-mistral-8/workspace\n\n## Licensing:\n\nApache 2.0\n\n---\n\n",
+  "fetched_at": "2026-09-22T06:46:53.517739+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "mistralai/Mistral-7B-v0.1"
+    ],
+    "card_base_models": [
+      "mistralai/Mistral-7B-v0.1"
+    ],
+    "merge_tags": [],
+    "n_base_models": 1,
+    "relations": {
+      "": [
+        "mistralai/Mistral-7B-v0.1"
+      ],
+      "finetune": [
+        "mistralai/Mistral-7B-v0.1"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "teknium",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "mistral",
+      "text-generation",
+      "mistral-7b",
+      "instruct",
+      "finetune",
+      "gpt4",
+      "synthetic data",
+      "distillation",
+      "sharegpt",
+      "en",
+      "dataset:CollectiveCognition/chats-data-2023-09-27",
+      "base_model:mistralai/Mistral-7B-v0.1",
+      "base_model:finetune:mistralai/Mistral-7B-v0.1",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "teknium__CollectiveCognition-v1.1-Mistral-7B",
+  "ok": true,
+  "popularity": {
+    "downloads": 49,
+    "downloadsAllTime": 31557,
+    "likes": 78,
+    "trendingScore": 0
+  },
+  "repo_id": "teknium/CollectiveCognition-v1.1-Mistral-7B",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-10-04T20:29:59.000Z",
+    "lastModified": "2023-10-07T00:22:52.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": true,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

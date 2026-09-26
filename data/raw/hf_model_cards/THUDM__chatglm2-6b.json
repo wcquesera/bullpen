@@ -1,0 +1,87 @@
+{
+  "architecture": {
+    "architectures": [
+      "ChatGLMModel"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": null,
+    "max_position_embeddings": null,
+    "model_type": "chatglm",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": null,
+    "num_key_value_heads": null,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": null
+  },
+  "card_chars": 7094,
+  "card_text": "---\nlanguage:\n- zh\n- en\ntags:\n- glm\n- chatglm\n- thudm\n---\n# ChatGLM2-6B\n<p align=\"center\">\n  \ud83d\udcbb <a href=\"https://github.com/THUDM/ChatGLM2-6B\" target=\"_blank\">Github Repo</a> \u2022 \ud83d\udc26 <a href=\"https://twitter.com/thukeg\" target=\"_blank\">Twitter</a> \u2022 \ud83d\udcc3 <a href=\"https://arxiv.org/abs/2103.10360\" target=\"_blank\">[GLM@ACL 22]</a> <a href=\"https://github.com/THUDM/GLM\" target=\"_blank\">[GitHub]</a> \u2022 \ud83d\udcc3 <a href=\"https://arxiv.org/abs/2210.02414\" target=\"_blank\">[GLM-130B@ICLR 23]</a> <a href=\"https://github.com/THUDM/GLM-130B\" target=\"_blank\">[GitHub]</a> <br>\n</p>\n\n<p align=\"center\">\n    \ud83d\udc4b Join our <a href=\"https://join.slack.com/t/chatglm/shared_invite/zt-1y7pqoloy-9b1g6T6JjA8J0KxvUjbwJw\" target=\"_blank\">Slack</a> and <a href=\"https://github.com/THUDM/ChatGLM-6B/blob/main/resources/WECHAT.md\" target=\"_blank\">WeChat</a>\n</p>\n<p align=\"center\">\n\ud83d\udccdExperience the larger-scale ChatGLM model at <a href=\"https://www.chatglm.cn\">chatglm.cn</a>\n</p>\n\n## \u4ecb\u7ecd\nChatGLM**2**-6B \u662f\u5f00\u6e90\u4e2d\u82f1\u53cc\u8bed\u5bf9\u8bdd\u6a21\u578b [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B) \u7684\u7b2c\u4e8c\u4ee3\u7248\u672c\uff0c\u5728\u4fdd\u7559\u4e86\u521d\u4ee3\u6a21\u578b\u5bf9\u8bdd\u6d41\u7545\u3001\u90e8\u7f72\u95e8\u69db\u8f83\u4f4e\u7b49\u4f17\u591a\u4f18\u79c0\u7279\u6027\u7684\u57fa\u7840\u4e4b\u4e0a\uff0cChatGLM**2**-6B \u5f15\u5165\u4e86\u5982\u4e0b\u65b0\u7279\u6027\uff1a\n\n1. **\u66f4\u5f3a\u5927\u7684\u6027\u80fd**\uff1a\u57fa\u4e8e ChatGLM \u521d\u4ee3\u6a21\u578b\u7684\u5f00\u53d1\u7ecf\u9a8c\uff0c\u6211\u4eec\u5168\u9762\u5347\u7ea7\u4e86 ChatGLM2-6B \u7684\u57fa\u5ea7\u6a21\u578b\u3002ChatGLM2-6B \u4f7f\u7528\u4e86 [GLM](https://github.com/THUDM/GLM) \u7684\u6df7\u5408\u76ee\u6807\u51fd\u6570\uff0c\u7ecf\u8fc7\u4e86 1.4T \u4e2d\u82f1\u6807\u8bc6\u7b26\u7684\u9884\u8bad\u7ec3\u4e0e\u4eba\u7c7b\u504f\u597d\u5bf9\u9f50\u8bad\u7ec3\uff0c[\u8bc4\u6d4b\u7ed3\u679c](#\u8bc4\u6d4b\u7ed3\u679c)\u663e\u793a\uff0c\u76f8\u6bd4\u4e8e\u521d\u4ee3\u6a21\u578b\uff0cChatGLM2-6B \u5728 MMLU\uff08+23%\uff09\u3001CEval\uff08+33%\uff09\u3001GSM8K\uff08+571%\uff09 \u3001BBH\uff08+60%\uff09\u7b49\u6570\u636e\u96c6\u4e0a\u7684\u6027\u80fd\u53d6\u5f97\u4e86\u5927\u5e45\u5ea6\u7684\u63d0\u5347\uff0c\u5728\u540c\u5c3a\u5bf8\u5f00\u6e90\u6a21\u578b\u4e2d\u5177\u6709\u8f83\u5f3a\u7684\u7ade\u4e89\u529b\u3002\n2. **\u66f4\u957f\u7684\u4e0a\u4e0b\u6587**\uff1a\u57fa\u4e8e [FlashAttention](https://github.com/HazyResearch/flash-attention) \u6280\u672f\uff0c\u6211\u4eec\u5c06\u57fa\u5ea7\u6a21\u578b\u7684\u4e0a\u4e0b\u6587\u957f\u5ea6\uff08Context Length\uff09\u7531 ChatGLM-6B \u7684 2K \u6269\u5c55\u5230\u4e86 32K\uff0c\u5e76\u5728\u5bf9\u8bdd\u9636\u6bb5\u4f7f\u7528 8K \u7684\u4e0a\u4e0b\u6587\u957f\u5ea6\u8bad\u7ec3\uff0c\u5141\u8bb8\u66f4\u591a\u8f6e\u6b21\u7684\u5bf9\u8bdd\u3002\u4f46\u5f53\u524d\u7248\u672c\u7684 ChatGLM2-6B \u5bf9\u5355\u8f6e\u8d85\u957f\u6587\u6863\u7684\u7406\u89e3\u80fd\u529b\u6709\u9650\uff0c\u6211\u4eec\u4f1a\u5728\u540e\u7eed\u8fed\u4ee3\u5347\u7ea7\u4e2d\u7740\u91cd\u8fdb\u884c\u4f18\u5316\u3002\n3. **\u66f4\u9ad8\u6548\u7684\u63a8\u7406**\uff1a\u57fa\u4e8e [Multi-Query Attention](http://arxiv.org/abs/1911.02150) \u6280\u672f\uff0cChatGLM2-6B \u6709\u66f4\u9ad8\u6548\u7684\u63a8\u7406\u901f\u5ea6\u548c\u66f4\u4f4e\u7684\u663e\u5b58\u5360\u7528\uff1a\u5728\u5b98\u65b9\u7684\u6a21\u578b\u5b9e\u73b0\u4e0b\uff0c\u63a8\u7406\u901f\u5ea6\u76f8\u6bd4\u521d\u4ee3\u63d0\u5347\u4e86 42%\uff0cINT4 \u91cf\u5316\u4e0b\uff0c6G \u663e\u5b58\u652f\u6301\u7684\u5bf9\u8bdd\u957f\u5ea6\u7531 1K \u63d0\u5347\u5230\u4e86 8K\u3002\n4. **\u66f4\u5f00\u653e\u7684\u534f\u8bae**\uff1aChatGLM2-6B \u6743\u91cd\u5bf9\u5b66\u672f\u7814\u7a76**\u5b8c\u5168\u5f00\u653e**\uff0c\u5728\u586b\u5199[\u95ee\u5377](https://open.bigmodel.cn/mla/form)\u8fdb\u884c\u767b\u8bb0\u540e**\u4ea6\u5141\u8bb8\u514d\u8d39\u5546\u4e1a\u4f7f\u7528**\u3002\n\nChatGLM**2**-6B is the second-generation version of the open-source bilingual (Chinese-English) chat model [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B). It retains the smooth conversation flow and low deployment threshold of the first-generation model, while introducing the following new features:\n\n1. **Stronger Performance**: Based on the development experience of the first-generation ChatGLM model, we have fully upgraded the base model of ChatGLM2-6B. ChatGLM2-6B uses the hybrid objective function of [GLM](https://github.com/THUDM/GLM), and has undergone pre-training with 1.4T bilingual tokens and human preference alignment training. The [evaluation results](README.md#evaluation-results) show that, compared to the first-generation model, ChatGLM2-6B has achieved substantial improvements in performance on datasets like MMLU (+23%), CEval (+33%), GSM8K (+571%), BBH (+60%), showing strong competitiveness among models of the same size.\n2. **Longer Context**: Based on [FlashAttention](https://github.com/HazyResearch/flash-attention) technique, we have extended the context length of the base model from 2K in ChatGLM-6B to 32K, and trained with a context length of 8K during the dialogue alignment, allowing for more rounds of dialogue. However, the current version of ChatGLM2-6B has limited understanding of single-round ultra-long documents, which we will focus on optimizing in future iterations.\n3. **More Efficient Inference**: Based on [Multi-Query Attention](http://arxiv.org/abs/1911.02150) technique, ChatGLM2-6B has more efficient inference speed and lower GPU memory usage: under the official  implementation, the inference speed has increased by 42% compared to the first generation; under INT4 quantization, the dialogue length supported by 6G GPU memory has increased from 1K to 8K.\n4. **More Open License**: ChatGLM2-6B weights are **completely open** for academic research, and **free commercial use** is also allowed after completing the [questionnaire](https://open.bigmodel.cn/mla/form).\n\n## \u8f6f\u4ef6\u4f9d\u8d56\n\n```shell\npip install protobuf transformers==4.30.2 cpm_kernels torch>=2.0 gradio mdtex2html sentencepiece accelerate\n```\n\n## \u4ee3\u7801\u8c03\u7528 \n\n\u53ef\u4ee5\u901a\u8fc7\u5982\u4e0b\u4ee3\u7801\u8c03\u7528 ChatGLM-6B \u6a21\u578b\u6765\u751f\u6210\u5bf9\u8bdd\uff1a\n\n```ipython\n>>> from transformers import AutoTokenizer, AutoModel\n>>> tokenizer = AutoTokenizer.from_pretrained(\"THUDM/chatglm2-6b\", trust_remote_code=True)\n>>> model = AutoModel.from_pretrained(\"THUDM/chatglm2-6b\", trust_remote_code=True).half().cuda()\n>>> model = model.eval()\n>>> response, history = model.chat(tokenizer, \"\u4f60\u597d\", history=[])\n>>> print(response)\n\u4f60\u597d\ud83d\udc4b!\u6211\u662f\u4eba\u5de5\u667a\u80fd\u52a9\u624b ChatGLM-6B,\u5f88\u9ad8\u5174\u89c1\u5230\u4f60,\u6b22\u8fce\u95ee\u6211\u4efb\u4f55\u95ee\u9898\u3002\n>>> response, history = model.chat(tokenizer, \"\u665a\u4e0a\u7761\u4e0d\u7740\u5e94\u8be5\u600e\u4e48\u529e\", history=history)\n>>> print(response)\n\u665a\u4e0a\u7761\u4e0d\u7740\u53ef\u80fd\u4f1a\u8ba9\u4f60\u611f\u5230\u7126\u8651\u6216\u4e0d\u8212\u670d,\u4f46\u4ee5\u4e0b\u662f\u4e00\u4e9b\u53ef\u4ee5\u5e2e\u52a9\u4f60\u5165\u7761\u7684\u65b9\u6cd5:\n\n1. \u5236\u5b9a\u89c4\u5f8b\u7684\u7761\u7720\u65f6\u95f4\u8868:\u4fdd\u6301\u89c4\u5f8b\u7684\u7761\u7720\u65f6\u95f4\u8868\u53ef\u4ee5\u5e2e\u52a9\u4f60\u5efa\u7acb\u5065\u5eb7\u7684\u7761\u7720\u4e60\u60ef,\u4f7f\u4f60\u66f4\u5bb9\u6613\u5165\u7761\u3002\u5c3d\u91cf\u5728\u6bcf\u5929\u7684\u76f8\u540c\u65f6\u95f4\u4e0a\u5e8a,\u5e76\u5728\u540c\u4e00\u65f6\u95f4\u8d77\u5e8a\u3002\n2. \u521b\u9020\u4e00\u4e2a\u8212\u9002\u7684\u7761\u7720\u73af\u5883:\u786e\u4fdd\u7761\u7720\u73af\u5883\u8212\u9002,\u5b89\u9759,\u9ed1\u6697\u4e14\u6e29\u5ea6\u9002\u5b9c\u3002\u53ef\u4ee5\u4f7f\u7528\u8212\u9002\u7684\u5e8a\u4e0a\u7528\u54c1,\u5e76\u4fdd\u6301\u623f\u95f4\u901a\u98ce\u3002\n3. \u653e\u677e\u8eab\u5fc3:\u5728\u7761\u524d\u505a\u4e9b\u653e\u677e\u7684\u6d3b\u52a8,\u4f8b\u5982\u6ce1\u4e2a\u70ed\u6c34\u6fa1,\u542c\u4e9b\u8f7b\u67d4\u7684\u97f3\u4e50,\u9605\u8bfb\u4e00\u4e9b\u6709\u8da3\u7684\u4e66\u7c4d\u7b49,\u6709\u52a9\u4e8e\u7f13\u89e3\u7d27\u5f20\u548c\u7126\u8651,\u4f7f\u4f60\u66f4\u5bb9\u6613\u5165\u7761\u3002\n4. \u907f\u514d\u996e\u7528\u542b\u6709\u5496\u5561\u56e0\u7684\u996e\u6599:\u5496\u5561\u56e0\u662f\u4e00\u79cd\u523a\u6fc0\u6027\u7269\u8d28,\u4f1a\u5f71\u54cd\u4f60\u7684\u7761\u7720\u8d28\u91cf\u3002\u5c3d\u91cf\u907f\u514d\u5728\u7761\u524d\u996e\u7528\u542b\u6709\u5496\u5561\u56e0\u7684\u996e\u6599,\u4f8b\u5982\u5496\u5561,\u8336\u548c\u53ef\u4e50\u3002\n5. \u907f\u514d\u5728\u5e8a\u4e0a\u505a\u4e0e\u7761\u7720\u65e0\u5173\u7684\u4e8b\u60c5:\u5728\u5e8a\u4e0a\u505a\u4e9b\u4e0e\u7761\u7720\u65e0\u5173\u7684\u4e8b\u60c5,\u4f8b\u5982\u770b\u7535\u5f71,\u73a9\u6e38\u620f\u6216\u5de5\u4f5c\u7b49,\u53ef\u80fd\u4f1a\u5e72\u6270\u4f60\u7684\u7761\u7720\u3002\n6. \u5c1d\u8bd5\u547c\u5438\u6280\u5de7:\u6df1\u547c\u5438\u662f\u4e00\u79cd\u653e\u677e\u6280\u5de7,\u53ef\u4ee5\u5e2e\u52a9\u4f60\u7f13\u89e3\u7d27\u5f20\u548c\u7126\u8651,\u4f7f\u4f60\u66f4\u5bb9\u6613\u5165\u7761\u3002\u8bd5\u7740\u6162\u6162\u5438\u6c14,\u4fdd\u6301\u51e0\u79d2\u949f,\u7136\u540e\u7f13\u6162\u547c\u6c14\u3002\n\n\u5982\u679c\u8fd9\u4e9b\u65b9\u6cd5\u65e0\u6cd5\u5e2e\u52a9\u4f60\u5165\u7761,\u4f60\u53ef\u4ee5\u8003\u8651\u54a8\u8be2\u533b\u751f\u6216\u7761\u7720\u4e13\u5bb6,\u5bfb\u6c42\u8fdb\u4e00\u6b65\u7684\u5efa\u8bae\u3002\n```\n\n\u5173\u4e8e\u66f4\u591a\u7684\u4f7f\u7528\u8bf4\u660e\uff0c\u5305\u62ec\u5982\u4f55\u8fd0\u884c\u547d\u4ee4\u884c\u548c\u7f51\u9875\u7248\u672c\u7684 DEMO\uff0c\u4ee5\u53ca\u4f7f\u7528\u6a21\u578b\u91cf\u5316\u4ee5\u8282\u7701\u663e\u5b58\uff0c\u8bf7\u53c2\u8003\u6211\u4eec\u7684 [Github Repo](https://github.com/THUDM/ChatGLM2-6B)\u3002\n\nFor more instructions, including how to run CLI and web demos, and model quantization, please refer to our [Github Repo](https://github.com/THUDM/ChatGLM2-6B).\n\n## Change Log\n* v1.0\n\n## \u534f\u8bae\n\n\u672c\u4ed3\u5e93\u7684\u4ee3\u7801\u4f9d\u7167 [Apache-2.0](LICENSE) \u534f\u8bae\u5f00\u6e90\uff0cChatGLM2-6B \u6a21\u578b\u7684\u6743\u91cd\u7684\u4f7f\u7528\u5219\u9700\u8981\u9075\u5faa [Model License](MODEL_LICENSE)\u3002\n\n## \u5f15\u7528\n\n\u5982\u679c\u4f60\u89c9\u5f97\u6211\u4eec\u7684\u5de5\u4f5c\u6709\u5e2e\u52a9\u7684\u8bdd\uff0c\u8bf7\u8003\u8651\u5f15\u7528\u4e0b\u5217\u8bba\u6587\u3002\n\nIf you find our work helpful, please consider citing the following paper.\n\n```\n@misc{glm2024chatglm,\n      title={ChatGLM: A Family of Large Language Models from GLM-130B to GLM-4 All Tools}, \n      author={Team GLM and Aohan Zeng and Bin Xu and Bowen Wang and Chenhui Zhang and Da Yin and Diego Rojas and Guanyu Feng and Hanlin Zhao and Hanyu Lai and Hao Yu and Hongning Wang and Jiadai Sun and Jiajie Zhang and Jiale Cheng and Jiayi Gui and Jie Tang and Jing Zhang and Juanzi Li and Lei Zhao and Lindong Wu and Lucen Zhong and Mingdao Liu and Minlie Huang and Peng Zhang and Qinkai Zheng and Rui Lu and Shuaiqi Duan and Shudan Zhang and Shulin Cao and Shuxun Yang and Weng Lam Tam and Wenyi Zhao and Xiao Liu and Xiao Xia and Xiaohan Zhang and Xiaotao Gu and Xin Lv and Xinghan Liu and Xinyi Liu and Xinyue Yang and Xixuan Song and Xunkai Zhang and Yifan An and Yifan Xu and Yilin Niu and Yuantao Yang and Yueyan Li and Yushi Bai and Yuxiao Dong and Zehan Qi and Zhaoyu Wang and Zhen Yang and Zhengxiao Du and Zhenyu Hou and Zihan Wang},\n      year={2024},\n      eprint={2406.12793},\n      archivePrefix={arXiv},\n      primaryClass={id='cs.CL' full_name='Computation and Language' is_active=True alt_name='cmp-lg' in_archive='cs' is_general=False description='Covers natural language processing. Roughly includes material in ACM Subject Class I.2.7. Note that work on artificial languages (programming languages, logics, formal systems) that does not explicitly address natural-language issues broadly construed (natural-language processing, computational linguistics, speech, text retrieval, etc.) is not appropriate for this area.'}\n}\n```",
+  "fetched_at": "2026-09-22T06:44:38.651691+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "zai-org",
+    "gated": false,
+    "library_name": "transformers",
+    "license": null,
+    "pipeline_tag": null,
+    "tags": [
+      "transformers",
+      "pytorch",
+      "chatglm",
+      "glm",
+      "thudm",
+      "custom_code",
+      "zh",
+      "en",
+      "arxiv:2103.10360",
+      "arxiv:2210.02414",
+      "arxiv:1911.02150",
+      "arxiv:2406.12793",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "THUDM__chatglm2-6b",
+  "ok": true,
+  "popularity": {
+    "downloads": 458861,
+    "downloadsAllTime": 22713967,
+    "likes": 2055,
+    "trendingScore": 0
+  },
+  "repo_id": "THUDM/chatglm2-6b",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-06-24T16:26:27.000Z",
+    "lastModified": "2024-08-04T08:41:38.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

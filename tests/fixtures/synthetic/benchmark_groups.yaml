@@ -1,0 +1,5 @@
+# The leave-one-group-out partition of the sample's four benchmark axes.
+groups:
+  arithmetic: [asdiv, mathqa]
+  logic: [logiqa]
+  anatomy: [mmlu_anatomy]

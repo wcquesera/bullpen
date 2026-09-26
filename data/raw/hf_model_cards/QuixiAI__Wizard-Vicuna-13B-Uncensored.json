@@ -1,0 +1,84 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 2048,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": null,
+    "parameter_dtypes": {},
+    "torch_dtype": "float32",
+    "vocab_size": 32000
+  },
+  "card_chars": 1668,
+  "card_text": "---\nlicense: other\ndatasets:\n- ehartford/wizard_vicuna_70k_unfiltered\nlanguage:\n- en\ntags:\n- uncensored\n---\n\nThis is [wizard-vicuna-13b](https://huggingface.co/junelee/wizard-vicuna-13b) trained with a subset of the dataset - responses that contained alignment / moralizing were removed. The intent is to train a WizardLM that doesn't have alignment built-in, so that alignment (of any sort) can be added separately with for example with a RLHF LoRA.\n\nShout out to the open source AI/ML community, and everyone who helped me out.\n\nNote:  \n\nAn uncensored model has no guardrails.  \n\nYou are responsible for anything you do with the model, just as you are responsible for anything you do with any dangerous object such as a knife, gun, lighter, or car.\n\nPublishing anything this model generates is the same as publishing it yourself.\n\nYou are responsible for the content you publish, and you cannot blame the model any more than you can blame the knife, gun, lighter, or car for what you do with it.\n# [Open LLM Leaderboard Evaluation Results](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard)\nDetailed results can be found [here](https://huggingface.co/datasets/open-llm-leaderboard/details_ehartford__Wizard-Vicuna-13B-Uncensored)\n\n| Metric                | Value                     |\n|-----------------------|---------------------------|\n| Avg.                  | 49.52   |\n| ARC (25-shot)         | 58.96          |\n| HellaSwag (10-shot)   | 81.95    |\n| MMLU (5-shot)         | 47.92         |\n| TruthfulQA (0-shot)   | 51.69   |\n| Winogrande (5-shot)   | 75.69   |\n| GSM8K (5-shot)        | 8.64        |\n| DROP (3-shot)         | 21.79         |\n",
+  "fetched_at": "2026-09-22T06:44:22.282763+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "QuixiAI",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "other",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "uncensored",
+      "en",
+      "dataset:ehartford/wizard_vicuna_70k_unfiltered",
+      "license:other",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "QuixiAI__Wizard-Vicuna-13B-Uncensored",
+  "ok": true,
+  "popularity": {
+    "downloads": 197,
+    "downloadsAllTime": 83195,
+    "likes": 323,
+    "trendingScore": 0
+  },
+  "repo_id": "QuixiAI/Wizard-Vicuna-13B-Uncensored",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-05-11T00:26:57.000Z",
+    "lastModified": "2023-11-18T03:51:02.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

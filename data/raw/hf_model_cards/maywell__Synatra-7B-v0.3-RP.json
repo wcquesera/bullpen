@@ -1,0 +1,84 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32002
+  },
+  "card_chars": 2990,
+  "card_text": "---\nlanguage:\n- ko\n\nlibrary_name: transformers\npipeline_tag: text-generation\nlicense: cc-by-nc-4.0\n---\n\n# **Synatra-7B-v0.3-RP\ud83d\udc27**  \n![Synatra-7B-v0.3-RP](./Synatra.png)\n\n## Support Me\n\uc2dc\ub098\ud2b8\ub77c\ub294 \uac1c\uc778 \ud504\ub85c\uc81d\ud2b8\ub85c, 1\uc778\uc758 \uc790\uc6d0\uc73c\ub85c \uac1c\ubc1c\ub418\uace0 \uc788\uc2b5\ub2c8\ub2e4. \ubaa8\ub378\uc774 \ub9c8\uc74c\uc5d0 \ub4dc\uc168\ub2e4\uba74 \uc57d\uac04\uc758 \uc5f0\uad6c\ube44 \uc9c0\uc6d0\uc740 \uc5b4\ub5a8\uae4c\uc694?\n[<img src=\"https://cdn.buymeacoffee.com/buttons/default-orange.png\" alt=\"Buy me a Coffee\" width=\"217\" height=\"50\">](https://www.buymeacoffee.com/mwell)\n\nWanna be a sponser? Contact me on Telegram **AlzarTakkarsen**\n\n# **License**\n\nThis model is strictly [*non-commercial*](https://creativecommons.org/licenses/by-nc/4.0/) (**cc-by-nc-4.0**) use only.\nThe \"Model\" is completely free (ie. base model, derivates, merges/mixes) to use for non-commercial purposes as long as the the included **cc-by-nc-4.0** license in any parent repository, and the non-commercial use statute remains, regardless of other models' licences. \nThe licence can be changed after new model released. If you are to use this model for commercial purpose, Contact me.\n\n# **Model Details**\n**Base Model**  \n[mistralai/Mistral-7B-Instruct-v0.1](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1)    \n\n**Trained On**  \nA6000 48GB * 8\n\n**Instruction format**\n\nIt follows [ChatML](https://github.com/openai/openai-python/blob/main/chatml.md) format.\n\n**TODO**\n\n- ~~``RP \uae30\ubc18 \ud29c\ub2dd \ubaa8\ub378 \uc81c\uc791``~~ \u2705\n- ~~``\ub370\uc774\ud130\uc14b \uc815\uc81c``~~ \u2705\n- \uc5b8\uc5b4 \uc774\ud574\ub2a5\ub825 \uac1c\uc120\n- ~~``\uc0c1\uc2dd \ubcf4\uc644``~~ \u2705\n- \ud1a0\ud06c\ub098\uc774\uc800 \ubcc0\uacbd\n\n\n# **Model Benchmark**\n\n## Ko-LLM-Leaderboard\n\nOn Benchmarking...\n\n# **Implementation Code**\n\nSince, chat_template already contains insturction format above.\nYou can use the code below.\n\n```python\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\ndevice = \"cuda\" # the device to load the model onto\n\nmodel = AutoModelForCausalLM.from_pretrained(\"maywell/Synatra-7B-v0.3-RP\")\ntokenizer = AutoTokenizer.from_pretrained(\"maywell/Synatra-7B-v0.3-RP\")\n\nmessages = [\n    {\"role\": \"user\", \"content\": \"\ubc14\ub098\ub098\ub294 \uc6d0\ub798 \ud558\uc580\uc0c9\uc774\uc57c?\"},\n]\n\nencodeds = tokenizer.apply_chat_template(messages, return_tensors=\"pt\")\n\nmodel_inputs = encodeds.to(device)\nmodel.to(device)\n\ngenerated_ids = model.generate(model_inputs, max_new_tokens=1000, do_sample=True)\ndecoded = tokenizer.batch_decode(generated_ids)\nprint(decoded[0])\n```\n\n# Why It's benchmark score is lower than preview version?\n\n**Apparently**, Preview model uses Alpaca Style prompt which has no pre-fix. But ChatML do.\n# [Open LLM Leaderboard Evaluation Results](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard)\nDetailed results can be found [here](https://huggingface.co/datasets/open-llm-leaderboard/details_maywell__Synatra-7B-v0.3-RP)\n\n| Metric                | Value                     |\n|-----------------------|---------------------------|\n| Avg.                  | 57.38   |\n| ARC (25-shot)         | 62.2          |\n| HellaSwag (10-shot)   | 82.29    |\n| MMLU (5-shot)         | 60.8         |\n| TruthfulQA (0-shot)   | 52.64   |\n| Winogrande (5-shot)   | 76.48   |\n| GSM8K (5-shot)        | 21.15        |\n| DROP (3-shot)         | 46.06         |\n",
+  "fetched_at": "2026-09-22T06:46:25.570474+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "maywell",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "mistral",
+      "text-generation",
+      "conversational",
+      "ko",
+      "license:cc-by-nc-4.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "maywell__Synatra-7B-v0.3-RP",
+  "ok": true,
+  "popularity": {
+    "downloads": 8565,
+    "downloadsAllTime": 262874,
+    "likes": 25,
+    "trendingScore": 0
+  },
+  "repo_id": "maywell/Synatra-7B-v0.3-RP",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-10-29T07:14:59.000Z",
+    "lastModified": "2023-11-20T23:26:04.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

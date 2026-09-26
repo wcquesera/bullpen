@@ -1,0 +1,89 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": 13015864320,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {
+      "F16": 13015864320
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 9088,
+  "card_text": "---\ninference: false\nlanguage:\n- de\nlibrary_name: transformers\nlicense: llama2\nmodel_creator: jphme\nmodel_name: EM German\nmodel_type: llama\npipeline_tag: text-generation\nprompt_template: 'Du bist ein hilfreicher Assistent. USER: Was ist 1+1? ASSISTANT:'\ntags:\n- pytorch\n- german\n- deutsch\n- llama2\n- meta\n- facebook\n---\n![EM Logo](em_model_logo_web.jpeg)\n\n# Table of Contents\n\n1. [Introduction](#introduction)\n2. [Links & Demos](#links--demos)\n   - [Model Links](#model-links)\n   - [Demos](#demos)\n3. [Prompt Format](#prompt-format)\n4. [Example Output](#example-output)\n5. [Acknowledgements](#acknowledgements)\n6. [Contact](#contact)\n7. [Disclaimer](#disclaimer)\n\n# Introduction\n\n**EM German** is a Llama2/Mistral/LeoLM-based model family, finetuned on a large dataset of various instructions in German language. The models are optimized for German text, providing proficiency in understanding, generating, and interacting with German language content.\n\nWe offer versions based on 7b, 13b and 70b Llama-2, Mistral and LeoLM (Llama-2/Mistral with continued pretraining on German texts) models.\n\nPlease find all Informations, Example Outputs, the special RAG prompt format, output examples and eval results for the EM German Model family in [our Github Repository](https://github.com/jphme/EM_German).  ([Deutsche Version](https://github.com/jphme/EM_German/blob/main/README_DE.md)). You will also find instructions on how to run the models with a GUI (GPT4All/LM Studio).\n\n\n# Links & Demos\n\n## Model Links\n\nShould you only try one model version, I strongly recommend the **[LeoLM Mistral](https://huggingface.co/jphme/em_german_leo_mistral)** model which offers by far the best combination of performance and computing requirements!\n\n| Base Model | HF    | GPTQ  | GGUF  | AWQ   |\n|-------|-------|-------|-------|-------|\n| Llama2 7b   | [Link](https://huggingface.co/jphme/em_german_7b_v01) | [Link](https://huggingface.co/TheBloke/em_german_7b_v01-GPTQ) | [Link](https://huggingface.co/TheBloke/em_german_7b_v01-GGUF) | [Link](https://huggingface.co/TheBloke/em_german_7b_v01-AWQ) |\n| Llama2 13b  | [Link](https://huggingface.co/jphme/em_german_13b_v01) | [Link](https://huggingface.co/TheBloke/em_german_13b_v01-GPTQ) | [Link](https://huggingface.co/TheBloke/em_german_13b_v01-GGUF) | [Link](https://huggingface.co/TheBloke/em_german_13b_v01-AWQ) |\n| Llama2 70b   | [Link](https://huggingface.co/jphme/em_german_70b_v01) | [Link](https://huggingface.co/TheBloke/em_german_70b_v01-GPTQ) | [Link](https://huggingface.co/TheBloke/em_german_70b_v01-GGUF) | [Link](https://huggingface.co/TheBloke/em_german_70b_v01-AWQ) |\n| [Mistral 7b](https://huggingface.co/mistralai/Mistral-7B-v0.1) | [Link](https://huggingface.co/jphme/em_german_mistral_v01) | [Link](https://huggingface.co/TheBloke/em_german_mistral_v01-GPTQ) | [Link](https://huggingface.co/TheBloke/em_german_mistral_v01-GGUF) | [Link](https://huggingface.co/TheBloke/em_german_mistral_v01-AWQ) |\n| [LeoLM 7b](https://huggingface.co/LeoLM/leo-hessianai-7b) | [Link](https://huggingface.co/jphme/em_german_7b_leo) | [Link](https://huggingface.co/jphme/em_german_7b_leo_gptq) | [Link](hhttps://huggingface.co/jphme/em_german_7b_leo_gguf) | tbc |\n| [LeoLM 13b](https://huggingface.co/LeoLM/leo-hessianai-13b) | soon | soon | [Link](https://huggingface.co/jphme/em_german_13b_leo_gguf) | tbc |\n| [LeoLM Mistral](https://huggingface.co/LeoLM/leo-mistral-hessianai-7b) | [Link](https://huggingface.co/jphme/em_german_leo_mistral) | [Link](https://huggingface.co/TheBloke/em_german_leo_mistral-GPTQ) | [Link](https://huggingface.co/TheBloke/em_german_leo_mistral-GGUF) | [Link](https://huggingface.co/TheBloke/em_german_leo_mistral-AWQ) |\n\n### Notes about the different versions:\nSee also the [comparison of example outputs](https://github.com/jphme/EM_German/blob/main/example_output_comparison.md) for a comparison of (7b) model capabilities.\n\nIf you get unsatisfying results with one or another EM German version, please try a different (and/or larger) model or version for your usecase.\n\n\n## Demos:\n\nYou can use some of the models with **free** google Colab instances (e.g. the 7bn model in 8bit or the 13b model with GPTQ):\n\n* [Example Colab Notebook for 13b with GPTQ](https://colab.research.google.com/drive/1IJfJdVwGkfe5MYOqHptystR3FBeEUdGn?usp=sharing)\n* [Example Colab Notebook for 7b with 8bit-Loading](https://colab.research.google.com/drive/1bsv6vkLM4AlCpSyXA6ol9P32zxZmf7Zu?usp=sharing)\n* [Example Colab Notebook for 7b Mistral GGUF with Grammar-based structured output](https://colab.research.google.com/drive/17O-a3D4BnVc_V9Of3dFfed18v1ULu1Sv?usp=sharing)\n\n\n# Prompt Format\n\nThis model follows the Vicuna format without linebreaks (but should work with linebreaks as well). The format is as follows:\n\n```\nDu bist ein hilfreicher Assistent. USER: <instruction> ASSISTANT:\n```\n\nYou can swap the standard system prompt for a better suited one (see below for RAG-tasks).\n\n# Example Output\n\nPlease find a selection of various example outputs for all 7b versions of EM German [here](https://github.com/jphme/EM_German/blob/main/example_output_comparison.md).\n\n**Prompt:**\n> Erkl\u00e4re die Bedeutung von drei wesentlichen Elementen der Bilanzierung und des Accountings nach IFRS f\u00fcr Unternehmen, die auf internationaler Ebene t\u00e4tig sind.\n\n**Antwort EM German Leo Mistral 7b:**\n```\nDie International Financial Reporting Standards (IFRS) sind eine Reihe von internationalen Rechnungslegungsstandards, die von der International Accounting Standards Board (IASB) entwickelt wurden. Sie sollen dazu beitragen, dass Finanzberichte vergleichbar, zuverl\u00e4ssig und relevant sind.\n\n1. Fair Value: Dieses Konzept ist ein zentraler Bestandteil der IFRS. Es besagt, dass Verm\u00f6genswerte und Schulden zum fairen Wert bilanziert werden sollten, was dem Preis entspricht, zu dem sie zwischen Marktteilnehmern gehandelt werden k\u00f6nnten. Dadurch wird sichergestellt, dass das Unternehmen eine genaue Darstellung seiner finanziellen Lage liefert.\n\n2. Konsolidierung: Die IFRS verlangen von Unternehmen, ihre Finanzergebnisse auf konsolidierter Basis darzustellen. Das bedeutet, dass alle Tochtergesellschaften und verbundenen Unternehmen in die Bilanz des Mutterunternehmens aufgenommen werden. Dadurch wird ein klareres Bild von der finanziellen Situation des Konzerns geschaffen.\n\n3. Vollst\u00e4ndigkeitsprinzip: Die IFRS verlangen von Unternehmen, alle relevanten Informationen offenzulegen. Dies umfasst sowohl positive als auch negative Faktoren, wie zum Beispiel Gewinne und Verluste, Einnahmen und Ausgaben sowie Risiken und Unsicherheiten. Durch dieses Prinzip wird sichergestellt, dass Investoren, Kreditgeber und andere Stakeholder eine umfassende Einsch\u00e4tzung der finanziellen Lage des Unternehmens vornehmen k\u00f6nnen.\n```\n\n**Prompt:**\n> Ein Mensch atmet durchschnittlich 16 Mal pro Minute. Wie oft atmet er an einem Tag?\n\n**Antwort EM German Leo Mistral 7b:**\n```\n Zuerst berechnen wir, wie oft eine Person in einer Stunde atmet. Wir wissen, dass eine Stunde 60 Minuten hat, also:\n\nAtemz\u00fcge pro Stunde = Atemfrequenz * Minuten pro Stunde\n= 16 Atemz\u00fcge pro Minute * 60 Minuten\n= 960 Atemz\u00fcge\n\nUm herauszufinden, wie viele Atemz\u00fcge eine Person an einem Tag macht, m\u00fcssen wir diese st\u00fcndliche Rate mit der Anzahl der Stunden an einem Tag multiplizieren, also 24:\n\nAtemz\u00fcge pro Tag = Atemz\u00fcge pro Stunde * Stunden pro Tag\n= 960 Atemz\u00fcge * 24 Stunden\n= 23.040 Atemz\u00fcge\n\nAlso macht ein durchschnittlicher Mensch etwa 23.040 Atemz\u00fcge an einem Tag.\n```\n(For more examples,  please visit [our Github Repository](https://github.com/jphme/EM_German).)\n\n# Acknowledgements:\n\nMany thanks to [winglian/caseus](https://huggingface.co/winglian) for his great work on Axolotl which I used to train the EM mdoels. I am also grateful to [Jon Durbin](https://huggingface.co/jondurbin) and his [Airoboros](https://huggingface.co/jondurbin/airoboros-l2-70b-2.2.1) models and code from which I borrowed many ideas and code snippets.\nAdditionally many thanks to [Bj\u00f6rn Pl\u00fcster](https://huggingface.co/bjoernp) and the LeoLM team for the outstanding pretraining work on LeoLM and last but not least many many thanks to [TheBloke](https://huggingface.co/TheBloke) for the preparation of quantized versions in all formats under the sun.\nThe 70b model was trained with support of the [OVH Cloud Startup Program](https://startup.ovhcloud.com/en/).\n\n# Contact\n\nFor detailed feedback & feature requests, please open an issue or get in contact with me via [my website](https://www.jph.me).\n\n*PS: We are also always interested in support for our startup [ellamind](https://ellamind.com), which will offer customized models for business applications in the future (we are currently still in stealth mode). If you use our models for business applications and have advanced needs for specialized capabilities, please get in touch.*\n\n# Disclaimer:\n\nI am not responsible for the actions of third parties who use this model or the outputs of the model. This model should only be used for research purposes. The original base model license applies and is distributed with the model files.",
+  "fetched_at": "2026-09-22T06:46:17.642119+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "jphme",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "llama2",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "pytorch",
+      "german",
+      "deutsch",
+      "llama2",
+      "meta",
+      "facebook",
+      "de",
+      "license:llama2",
+      "text-generation-inference",
+      "region:us"
+    ]
+  },
+  "model_key": "jphme__em_german_13b_v01",
+  "ok": true,
+  "popularity": {
+    "downloads": 38,
+    "downloadsAllTime": 2315,
+    "likes": 7,
+    "trendingScore": 0
+  },
+  "repo_id": "jphme/em_german_13b_v01",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-25T14:01:48.000Z",
+    "lastModified": "2023-10-12T11:12:00.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

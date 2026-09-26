@@ -1,0 +1,85 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 11008,
+    "max_position_embeddings": 2048,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 32,
+    "parameter_dtypes": {},
+    "torch_dtype": "bfloat16",
+    "vocab_size": 32000
+  },
+  "card_chars": 4654,
+  "card_text": "---\nlicense: apache-2.0\ndatasets:\n- andersonbcdefg/chemistry\nlanguage:\n- en\nmetrics:\n- bleu\n- rouge\npipeline_tag: text-generation\ntags:\n- chemistry\n---\n# Model Card for Model ID\n\n<!-- Provide a quick summary of what the model is/does. -->\n\nThis modelcard aims to be a base template for new models. It has been generated using [this raw template](https://github.com/huggingface/huggingface_hub/blob/main/src/huggingface_hub/templates/modelcard_template.md?plain=1).\n\n## Model Details\n\n### Model Description\n\n<!-- Provide a longer summary of what this model is. -->\nThis model is currently **under testing**. It can answer some **basic chemical questions** and is better than the base-sharded model.\n\nThrough some **chemical reactions**, it can clearly understand **the reactant and corresponding products**. **(For most, it is correct\ud83d\ude05)**\n\n**Just have fun testing it, and ask some interesting questions!!**\n\n\n- **Developed by:** FelixChao\n- **Shared by [optional]:** CleverShovel/vicuna-7b-v1.3-sharded-bf16\n- **Finetuned from model [optional]:** CleverShovel/vicuna-7b-v1.3-sharded-bf16\n\n\n## How to Get Started with the Model\n\nUse the code below to get started with the model.\n\n### For Pipeline\n\n```python\n# Use a pipeline as a high-level helper\nfrom transformers import pipeline\n\npipe = pipeline(\"text-generation\", model=\"FelixChao/vicuna-7B-chemical\")\n```\n### For Model_Loading\n```python\n# Load model directly\nfrom transformers import AutoTokenizer, AutoModelForCausalLM\n\ntokenizer = AutoTokenizer.from_pretrained(\"FelixChao/vicuna-7B-chemical\")\nmodel = AutoModelForCausalLM.from_pretrained(\"FelixChao/vicuna-7B-chemical\")\n```\n\n## Training Details\n\n### Training Data\n\n<!-- This should link to a Data Card, perhaps with a short stub of information on what the training data is all about as well as documentation related to data pre-processing or additional filtering. -->\n\n[More Information Needed]\n\n### Training Procedure \n\n<!-- This relates heavily to the Technical Specifications. Content here should link to that section when it is relevant to the training procedure. -->\n\n#### Preprocessing [optional]\n\n[More Information Needed]\n\n\n#### Training Hyperparameters\n\n- **Training regime:** [More Information Needed] <!--fp32, fp16 mixed precision, bf16 mixed precision, bf16 non-mixed precision, fp16 non-mixed precision, fp8 mixed precision -->\n\n#### Speeds, Sizes, Times [optional]\n\n<!-- This section provides information about throughput, start/end time, checkpoint size if relevant, etc. -->\n\n[More Information Needed]\n\n## Evaluation\n\n<!-- This section describes the evaluation protocols and provides the results. -->\n\n### Testing Data, Factors & Metrics\n\n#### Testing Data\n\n<!-- This should link to a Data Card if possible. -->\n\n[More Information Needed]\n\n#### Factors\n\n<!-- These are the things the evaluation is disaggregating by, e.g., subpopulations or domains. -->\n\n[More Information Needed]\n\n#### Metrics\n\n<!-- These are the evaluation metrics being used, ideally with a description of why. -->\n\n[More Information Needed]\n\n### Results\n\n[More Information Needed]\n\n#### Summary\n\n\n\n## Model Examination [optional]\n\n<!-- Relevant interpretability work for the model goes here -->\n\n[More Information Needed]\n\n## Environmental Impact\n\n<!-- Total emissions (in grams of CO2eq) and additional considerations, such as electricity usage, go here. Edit the suggested text below accordingly -->\n\nCarbon emissions can be estimated using the [Machine Learning Impact calculator](https://mlco2.github.io/impact#compute) presented in [Lacoste et al. (2019)](https://arxiv.org/abs/1910.09700).\n\n- **Hardware Type:** [More Information Needed]\n- **Hours used:** [More Information Needed]\n- **Cloud Provider:** [More Information Needed]\n- **Compute Region:** [More Information Needed]\n- **Carbon Emitted:** [More Information Needed]\n\n## Technical Specifications [optional]\n\n### Model Architecture and Objective\n\n[More Information Needed]\n\n### Compute Infrastructure\n\n[More Information Needed]\n\n#### Hardware\n\n[More Information Needed]\n\n#### Software\n\n[More Information Needed]\n\n## Citation [optional]\n\n<!-- If there is a paper or blog post introducing the model, the APA and Bibtex information for that should go in this section. -->\n\n**BibTeX:**\n\n[More Information Needed]\n\n**APA:**\n\n[More Information Needed]\n\n## Glossary [optional]\n\n<!-- If relevant, include terms and calculations in this section that can help readers understand the model or model card. -->\n\n[More Information Needed]\n\n## More Information [optional]\n\n[More Information Needed]\n\n## Model Card Authors [optional]\n\n[More Information Needed]\n\n## Model Card Contact\n\n[More Information Needed]\n\n\n",
+  "fetched_at": "2026-09-19T15:00:15.825247+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "FelixChao",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "chemistry",
+      "en",
+      "dataset:andersonbcdefg/chemistry",
+      "arxiv:1910.09700",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "FelixChao__vicuna-7B-chemical",
+  "ok": true,
+  "popularity": {
+    "downloads": 77,
+    "downloadsAllTime": 57500,
+    "likes": 3,
+    "trendingScore": 0
+  },
+  "repo_id": "FelixChao/vicuna-7B-chemical",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-08-09T04:36:39.000Z",
+    "lastModified": "2023-08-25T12:15:59.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

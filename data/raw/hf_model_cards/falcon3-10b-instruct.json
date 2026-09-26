@@ -1,0 +1,430 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 3072,
+    "intermediate_size": 23040,
+    "max_position_embeddings": 32768,
+    "model_type": "llama",
+    "n_parameters": 10305653760,
+    "num_attention_heads": 12,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 4,
+    "parameter_dtypes": {
+      "BF16": 10305653760
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 131072
+  },
+  "card_chars": 12494,
+  "card_text": "---\nbase_model: tiiuae/Falcon3-10B-Base\nlibrary_name: transformers\nlicense: other\nlicense_name: falcon-llm-license\nlicense_link: https://falconllm.tii.ae/falcon-terms-and-conditions.html\ntags:\n- falcon3\nmodel-index:\n- name: Falcon3-10B-Instruct\n  results:\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: IFEval (0-Shot)\n      type: HuggingFaceH4/ifeval\n      args:\n        num_few_shot: 0\n    metrics:\n    - type: inst_level_strict_acc and prompt_level_strict_acc\n      value: 78.17\n      name: strict accuracy\n    source:\n      url: https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard?query=tiiuae/Falcon3-10B-Instruct\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: BBH (3-Shot)\n      type: BBH\n      args:\n        num_few_shot: 3\n    metrics:\n    - type: acc_norm\n      value: 44.82\n      name: normalized accuracy\n    source:\n      url: https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard?query=tiiuae/Falcon3-10B-Instruct\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: MATH Lvl 5 (4-Shot)\n      type: hendrycks/competition_math\n      args:\n        num_few_shot: 4\n    metrics:\n    - type: exact_match\n      value: 25.91\n      name: exact match\n    source:\n      url: https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard?query=tiiuae/Falcon3-10B-Instruct\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: GPQA (0-shot)\n      type: Idavidrein/gpqa\n      args:\n        num_few_shot: 0\n    metrics:\n    - type: acc_norm\n      value: 10.51\n      name: acc_norm\n    source:\n      url: https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard?query=tiiuae/Falcon3-10B-Instruct\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: MuSR (0-shot)\n      type: TAUR-Lab/MuSR\n      args:\n        num_few_shot: 0\n    metrics:\n    - type: acc_norm\n      value: 13.61\n      name: acc_norm\n    source:\n      url: https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard?query=tiiuae/Falcon3-10B-Instruct\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: MMLU-PRO (5-shot)\n      type: TIGER-Lab/MMLU-Pro\n      config: main\n      split: test\n      args:\n        num_few_shot: 5\n    metrics:\n    - type: acc\n      value: 38.1\n      name: accuracy\n    source:\n      url: https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard?query=tiiuae/Falcon3-10B-Instruct\n      name: Open LLM Leaderboard\n---\n\n<div align=\"center\">\n    <img src=\"https://huggingface.co/datasets/tiiuae/documentation-images/resolve/main/general/falco3-logo.png\" alt=\"drawing\" width=\"500\"/>\n</div>\n\n# Falcon3-10B-Instruct\n\n**Falcon3** family of Open Foundation Models is a set of pretrained and instruct LLMs ranging from 1B to 10B parameters.\n\nThis repository contains the **Falcon3-10B-Instruct**. It achieves state-of-the-art results (at the time of release) on reasoning, language understanding, instruction following, code and mathematics tasks.\nFalcon3-10B-Instruct supports 4 languages (English, French, Spanish, Portuguese) and a context length of up to 32K.\n\n\n## Model Details\n- Architecture\n  - Transformer-based causal decoder-only architecture\n  - 40 decoder blocks\n  - Grouped Query Attention (GQA) for faster inference: 12 query heads and 4 key-value heads\n  - Wider head dimension: 256\n  - High RoPE value to support long context understanding: 1000042\n  - Uses SwiGLu and RMSNorm\n  - 32K context length\n  - 131K vocab size\n- Depth up-scaled from **Falcon3-7B-Base** with 2 Teratokens of datasets comprising of web, code, STEM, high quality and mutlilingual data using 1024 H100 GPU chips\n- Posttrained on 1.2 million samples of STEM, conversational, code, safety and function call data\n- Supports EN, FR, ES, PT\n- Developed by [Technology Innovation Institute](https://www.tii.ae)\n- License: TII Falcon-LLM License 2.0\n- Model Release Date: December 2024\n\n\n## Getting started\n\n<details>\n<summary> Click to expand </summary>\n\n```python\nfrom transformers import AutoTokenizer, AutoModelForCausalLM\n\n\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\nmodel_name = \"tiiuae/Falcon3-10B-Instruct\"\n\nmodel = AutoModelForCausalLM.from_pretrained(\n    model_name,\n    torch_dtype=\"auto\",\n    device_map=\"auto\"\n)\ntokenizer = AutoTokenizer.from_pretrained(model_name)\n\nprompt = \"How many hours in one day?\"\nmessages = [\n    {\"role\": \"system\", \"content\": \"You are a helpful friendly assistant Falcon3 from TII, try to follow instructions as much as possible.\"},\n    {\"role\": \"user\", \"content\": prompt}\n]\ntext = tokenizer.apply_chat_template(\n    messages,\n    tokenize=False,\n    add_generation_prompt=True\n)\nmodel_inputs = tokenizer([text], return_tensors=\"pt\").to(model.device)\n\ngenerated_ids = model.generate(\n    **model_inputs,\n    max_new_tokens=1024\n)\ngenerated_ids = [\n    output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)\n]\n\nresponse = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]\nprint(response)\n```\n\n</details>\n\n<br>\n\n## Benchmarks\nWe report the official HuggingFace leaderboard normalized evaluations [Open LLM Leaderboard Evaluation Results](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard) in the following table.\n<table border=\"1\" style=\"width: 100%; text-align: center; border-collapse: collapse;\">\n    <colgroup>\n        <col style=\"width: 10%;\">\n        <col style=\"width: 7%;\">\n        <col style=\"width: 7%;\">\n        <col style=\"width: 7%;\">\n        <col style=\"background-color: rgba(80, 15, 213, 0.5); width: 7%;\">\n    </colgroup>\n    <thead>\n        <tr>\n            <th>Benchmark</th>\n            <th>Yi-1.5-9B-Chat</th>\n            <th>Mistral-Nemo-Instruct-2407 (12B)</th>\n            <th>Gemma-2-9b-it</th>\n            <th>Falcon3-10B-Instruct</th>\n        </tr>\n    </thead>\n    <tbody>\n        <tr>\n            <td>IFEval</td>\n            <td>60.46</td>\n            <td>63.80</td>\n            <td>74.36</td>\n            <td><b>78.17</b></td>\n        </tr>\n        <tr>\n            <td>BBH (3-shot)</td>\n            <td>36.95</td>\n            <td>29.68</td>\n            <td>42.14</td>\n            <td><b>44.82</b></td>\n        </tr>\n        <tr>\n            <td>MATH Lvl-5 (4-shot)</td>\n            <td>12.76</td>\n            <td>6.50</td>\n            <td>0.23</td>\n            <td><b>25.91</b></td>\n        </tr>              \n        <tr>\n            <td>GPQA (0-shot)</td>\n            <td>11.30</td>\n            <td>5.37</td>\n            <td><b>14.77</b></td>\n            <td>10.51</td>\n        </tr>\n        <tr>\n            <td>MUSR (0-shot)</td>\n            <td>12.84</td>\n            <td>8.48</td>\n            <td>9.74</td>\n            <td><b>13.61</b></td>\n        </tr>\n        <tr>\n            <td>MMLU-PRO (5-shot)</td>\n            <td>33.06</td>\n            <td>27.97</td>\n            <td>31.95</td>\n            <td><b>38.10</b></td>\n        </tr>        \n    </tbody>\n</table>\n\nAlso, we report in the following table our internal pipeline benchmarks.\n - We use [lm-evaluation harness](https://github.com/EleutherAI/lm-evaluation-harness).\n - We report **raw scores** obtained by applying chat template and fewshot_as_multiturn.\n - We use same batch-size across all models.\n\n<table border=\"1\" style=\"width: 100%; text-align: center; border-collapse: collapse;\">\n    <colgroup>\n        <col style=\"width: 10%;\">\n        <col style=\"width: 10%;\">\n        <col style=\"width: 7%;\">\n        <col style=\"width: 7%;\">\n        <col style=\"background-color: rgba(80, 15, 213, 0.5); width: 7%;\">\n    </colgroup>\n    <thead>\n        <tr>\n            <th>Category</th>\n            <th>Benchmark</th>       \n            <th>Yi-1.5-9B-Chat</th>\n            <th>Mistral-Nemo-Instruct-2407 (12B)</th>\n            <th>Falcon3-10B-Instruct</th>\n        </tr>\n    </thead>\n    <tbody>\n        <tr>\n            <td rowspan=\"3\">General</td>\n            <td>MMLU (5-shot)</td>\n            <td>68.8</td>\n            <td>66.0</td>\n            <td><b>73.9</b></td>\n        </tr>\n        <tr>\n            <td>MMLU-PRO (5-shot)</td>\n            <td>38.8</td>\n            <td>34.3</td>\n            <td><b>44</b></td>\n        </tr>\n        <tr>\n            <td>IFEval</td>\n            <td>57.8</td>\n            <td>63.4</td>\n            <td><b>78</b></td>\n        </tr>\n        <tr>\n            <td rowspan=\"3\">Math</td>\n            <td>GSM8K (5-shot)</td>\n            <td>77.1</td>\n            <td>77.6</td>\n            <td><b>84.9</b></td>\n        </tr>\n        <tr>\n            <td>GSM8K (8-shot, COT)</td>\n            <td>76</td>\n            <td>80.4</td>\n            <td><b>84.6</b></td>\n        </tr>\n        <tr>\n            <td>MATH Lvl-5 (4-shot)</td>\n            <td>3.3</td>\n            <td>5.9</td>\n            <td><b>22.1</b></td>\n        </tr>\n        <tr>\n            <td rowspan=\"5\">Reasoning</td>\n            <td>Arc Challenge (25-shot)</td>\n            <td>58.3</td>\n            <td>63.4</td>\n            <td><b>66.2</b></td>\n        </tr>\n        <tr>\n            <td>GPQA (0-shot)</td>\n            <td><b>35.6</b></td>\n            <td>33.2</td>\n            <td>33.5</td>\n        </tr>\n        <tr>\n            <td>GPQA (0-shot, COT)</td>\n            <td>16</td>\n            <td>12.7</td>\n            <td><b>32.6</b></td>\n        </tr>\n        <tr>\n            <td>MUSR (0-shot)</td>\n            <td><b>41.9</b></td>\n            <td>38.1</td>\n            <td>41.1</td>\n        </tr>\n        <tr>\n            <td>BBH (3-shot)</td>\n            <td>50.6</td>\n            <td>47.5</td>\n            <td><b>58.4</b></td>\n        </tr>\n        <tr>\n            <td rowspan=\"4\">CommonSense Understanding</td>\n            <td>PIQA (0-shot)</td>\n            <td>76.4</td>\n            <td>78.2</td>\n            <td><b>78.4</b></td>\n        </tr>\n        <tr>\n            <td>SciQ (0-shot)</td>\n            <td>61.7</td>\n            <td>76.4</td>\n            <td><b>90.4</b></td>\n        </tr>\n        <tr>\n            <td>Winogrande (0-shot)</td>\n            <td>-</td>\n            <td>-</td>\n            <td>71</td>\n        </tr>\n        <tr>\n            <td>OpenbookQA (0-shot)</td>\n            <td>43.2</td>\n            <td>47.4</td>\n            <td><b>48.2</b></td>\n        </tr>\n        <tr>\n            <td rowspan=\"2\">Instructions following</td>\n            <td>MT-Bench (avg)</td>\n            <td>8.3</td>\n            <td><b>8.6</b></td>\n            <td>8.2</td>\n        </tr>\n        <tr>\n            <td>Alpaca (WC)</td>\n            <td>25.8</td>\n            <td><b>45.4</b></td>\n            <td>24.7</td>\n        </tr>\n        <tr>\n            <td>Tool use</td>\n            <td>BFCL AST (avg)</td>\n            <td>48.4</td>\n            <td>74.2</td>\n            <td><b>90.5</b></td>\n        </tr>\n        <tr>\n            <td rowspan=\"2\">Code</td>\n            <td>EvalPlus (0-shot) (avg)</td>\n            <td>69.4</td>\n            <td>58.9</td>\n            <td><b>74.7</b></td>\n        </tr>\n        <tr>\n            <td>Multipl-E (0-shot) (avg)</td>\n            <td>-</td>\n            <td>34.5</td>\n            <td><b>45.8</b></td>\n        </tr>      \n    </tbody>\n</table>\n\n## Useful links\n- View our [release blogpost](https://huggingface.co/blog/falcon3).\n- Feel free to join [our discord server](https://discord.gg/fwXpMyGc) if you have any questions or to interact with our researchers and developers.\n  \n## Technical Report\n\nComing soon....\n\n## Citation\nIf Falcon3 family were helpful in your work, feel free to give us a cite.\n\n```\n@misc{Falcon3,\n    title = {The Falcon 3 family of Open Models},\n    author = {TII Team},\n    month = {December},\n    year = {2024}\n}\n```\n\n\n# [Open LLM Leaderboard Evaluation Results](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard)\nDetailed results can be found [here](https://huggingface.co/datasets/open-llm-leaderboard/tiiuae__Falcon3-10B-Instruct-details)\n\n|      Metric       |Value|\n|-------------------|----:|\n|Avg.               |35.19|\n|IFEval (0-Shot)    |78.17|\n|BBH (3-Shot)       |44.82|\n|MATH Lvl 5 (4-Shot)|25.91|\n|GPQA (0-shot)      |10.51|\n|MuSR (0-shot)      |13.61|\n|MMLU-PRO (5-shot)  |38.10|\n\n",
+  "fetched_at": "2026-09-19T15:02:15.198272+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "tiiuae/Falcon3-10B-Base"
+    ],
+    "card_base_models": [
+      "tiiuae/Falcon3-10B-Base"
+    ],
+    "merge_tags": [],
+    "n_base_models": 1,
+    "relations": {
+      "": [
+        "tiiuae/Falcon3-10B-Base"
+      ],
+      "finetune": [
+        "tiiuae/Falcon3-10B-Base"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "tiiuae",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "other",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "falcon3",
+      "conversational",
+      "base_model:tiiuae/Falcon3-10B-Base",
+      "base_model:finetune:tiiuae/Falcon3-10B-Base",
+      "license:other",
+      "model-index",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:sagemaker",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "falcon3-10b-instruct",
+  "ok": true,
+  "popularity": {
+    "downloads": 8523,
+    "downloadsAllTime": 505279,
+    "likes": 117,
+    "trendingScore": 0
+  },
+  "repo_id": "tiiuae/Falcon3-10B-Instruct",
+  "resolved_via": "search",
+  "search_candidates": [
+    [
+      "tiiuae/Falcon3-10B-Instruct",
+      8523
+    ],
+    [
+      "tiiuae/Falcon3-10B-Instruct-GPTQ-Int8",
+      120
+    ],
+    [
+      "tiiuae/Falcon3-10B-Instruct-GPTQ-Int4",
+      374
+    ],
+    [
+      "tiiuae/Falcon3-10B-Instruct-AWQ",
+      186
+    ],
+    [
+      "tiiuae/Falcon3-10B-Instruct-GGUF",
+      355
+    ],
+    [
+      "tiiuae/Falcon3-10B-Instruct-1.58bit",
+      433
+    ],
+    [
+      "mlx-community/Falcon3-10B-Instruct-4bit",
+      328
+    ],
+    [
+      "DevQuasar-6/tiiuae.Falcon3-10B-Instruct-GGUF",
+      145
+    ],
+    [
+      "mlx-community/Falcon3-10B-Instruct-3bit",
+      32
+    ],
+    [
+      "mradermacher/Falcon3-10B-Instruct-GGUF",
+      358
+    ],
+    [
+      "bartowski/Falcon3-10B-Instruct-GGUF",
+      1852
+    ],
+    [
+      "lmstudio-community/Falcon3-10B-Instruct-GGUF",
+      197
+    ],
+    [
+      "mlx-community/Falcon3-10B-Instruct-8bit",
+      48
+    ],
+    [
+      "CuckmeisterFuller/Falcon3-10B-Instruct-Q4-mlx",
+      11
+    ],
+    [
+      "MaziyarPanahi/Falcon3-10B-Instruct-GGUF",
+      116
+    ],
+    [
+      "mradermacher/Falcon3-10B-Instruct-i1-GGUF",
+      1128
+    ],
+    [
+      "lucyknada/tiiuae_Falcon3-10B-Instruct-exl2",
+      0
+    ],
+    [
+      "mlx-community/Falcon3-10B-Instruct-6bit",
+      22
+    ],
+    [
+      "kaitchup/Falcon3-10B-Instruct-AutoRound-GPTQ-4bit",
+      13
+    ],
+    [
+      "NikolayKozloff/Falcon3-10B-Instruct-chatllm.cpp-Q8_0-GGML",
+      0
+    ],
+    [
+      "israellaguan/Falcon3-10B-Instruct-1.58bit-i2_s",
+      24
+    ],
+    [
+      "tiiuae/Falcon3-10B-Instruct-1.58bit-GGUF",
+      221
+    ],
+    [
+      "TheBlueObserver/Falcon3-10B-Instruct-MLX",
+      10
+    ],
+    [
+      "TheBlueObserver/Falcon3-10B-Instruct-MLX-0cb1b",
+      12
+    ],
+    [
+      "TheBlueObserver/Falcon3-10B-Instruct-MLX-104ce",
+      7
+    ],
+    [
+      "TheBlueObserver/Falcon3-10B-Instruct-MLX-196c8",
+      8
+    ],
+    [
+      "TheBlueObserver/Falcon3-10B-Instruct-MLX-8777b",
+      10
+    ],
+    [
+      "QuantFactory/Falcon3-10B-Instruct-GGUF",
+      767
+    ],
+    [
+      "TheBlueObserver/Falcon3-10B-Instruct-MLX-393a7",
+      12
+    ],
+    [
+      "ModelCloud/Falcon3-10B-Instruct-gptqmodel-4bit-vortex-v1",
+      13
+    ],
+    [
+      "mradermacher/Falcon3-10B-Instruct-abliterated-GGUF",
+      211
+    ],
+    [
+      "second-state/Falcon3-10B-Instruct-GGUF",
+      574
+    ],
+    [
+      "gaianet/Falcon3-10B-Instruct-GGUF",
+      297
+    ],
+    [
+      "mradermacher/Falcon3-10B-Instruct-abliterated-i1-GGUF",
+      394
+    ],
+    [
+      "SujanKarki/Falcon3-10B-Instruct_text_to_sql_qlora_newdataset",
+      0
+    ],
+    [
+      "bartowski/Falcon3-10B-Instruct-abliterated-GGUF",
+      2174
+    ],
+    [
+      "AIFunOver/Falcon3-10B-Instruct-openvino-fp16",
+      20
+    ],
+    [
+      "AIFunOver/Falcon3-10B-Instruct-openvino-8bit",
+      12
+    ],
+    [
+      "AIFunOver/Falcon3-10B-Instruct-openvino-4bit",
+      12
+    ],
+    [
+      "duyntnet/Falcon3-10B-Instruct-imatrix-GGUF",
+      193
+    ],
+    [
+      "nebuxcloud/Falcon3-10B-Instruct-1.58bit-GGUF",
+      37
+    ],
+    [
+      "Echo9Zulu/Falcon3-10B-Instruct-awq-ns-ov",
+      6
+    ],
+    [
+      "itlwas/Falcon3-10B-Instruct-abliterated-Q4_K_M-GGUF",
+      26
+    ],
+    [
+      "Melvin56/Falcon3-10B-Instruct-abliterated-Q2_K-GGUF",
+      24
+    ],
+    [
+      "Echo9Zulu/Falcon3-10B-Instruct-int4_asym-ns-ov",
+      7
+    ],
+    [
+      "Echo9Zulu/Falcon3-10B-Instruct-int4_asym-ov",
+      5
+    ],
+    [
+      "ModelCloud/Falcon3-10B-Instruct-gptqmodel-4bit-vortex-mlx-v1",
+      10
+    ],
+    [
+      "fbaldassarri/tiiuae_Falcon3-10B-Instruct-autoround-int4-gs128-asym",
+      10
+    ],
+    [
+      "fbaldassarri/tiiuae_Falcon3-10B-Instruct-autoround-int4-gs128-sym",
+      11
+    ],
+    [
+      "fbaldassarri/tiiuae_Falcon3-10B-Instruct-autogptq-int4-gs128-asym",
+      7
+    ],
+    [
+      "fbaldassarri/tiiuae_Falcon3-10B-Instruct-autogptq-int4-gs128-sym",
+      7
+    ],
+    [
+      "fbaldassarri/tiiuae_Falcon3-10B-Instruct-autoawq-int4-gs128-asym",
+      9
+    ],
+    [
+      "fbaldassarri/tiiuae_Falcon3-10B-Instruct-autoawq-int4-gs128-sym",
+      6
+    ],
+    [
+      "Nitral-Archive/Falcon3-10B-Instruct-abliterated-ChatMLified",
+      5
+    ],
+    [
+      "Nitral-Archive/Falcon3-10B-Instruct-ChatMLified",
+      7
+    ],
+    [
+      "Nitral-Archive/Falcon3-10B-Instruct-semi_refuse-ChatMLified",
+      6
+    ],
+    [
+      "fbaldassarri/tiiuae_Falcon3-10B-Instruct-autoround-int8-gs128-asym",
+      7
+    ],
+    [
+      "fbaldassarri/tiiuae_Falcon3-10B-Instruct-autoround-int8-gs128-sym",
+      6
+    ],
+    [
+      "fbaldassarri/tiiuae_Falcon3-10B-Instruct-autogptq-int8-gs128-asym",
+      7
+    ],
+    [
+      "fbaldassarri/tiiuae_Falcon3-10B-Instruct-autogptq-int8-gs128-sym",
+      6
+    ],
+    [
+      "mlx-community/Falcon3-10B-Instruct-abliterated-4bit",
+      35
+    ],
+    [
+      "mlx-community/Falcon3-10B-Instruct-abliterated-6bit",
+      20
+    ],
+    [
+      "mlx-community/Falcon3-10B-Instruct-abliterated-8bit",
+      27
+    ],
+    [
+      "alfonsogarciacaro/Falcon3-10B-Instruct-1.58bit",
+      56
+    ],
+    [
+      "Inventors-Hub/Falcon3-10B-Instruct-BehaviorTree-15epochs-BehaviorTree-15epochs-GGUF",
+      0
+    ],
+    [
+      "Inventors-Hub/Falcon3-10B-Instruct-BehaviorTree-7epochs-BehaviorTree-7epochs-GGUF",
+      0
+    ],
+    [
+      "Inventors-Hub/Falcon3-10B-Instruct-BehaviorTree-1epochs-BehaviorTree-1epochs-GGUF",
+      0
+    ],
+    [
+      "anishreddy91/Quantized-falcon3-10b-instruct",
+      10
+    ],
+    [
+      "mlx-community/Falcon3-10B-Instruct-1.58bit",
+      18
+    ],
+    [
+      "mlx-community/Falcon3-10B-Instruct-1.58bit-4bit",
+      17
+    ],
+    [
+      "mlx-community/Falcon3-10B-Instruct-1.58bit-6bit",
+      17
+    ],
+    [
+      "mlx-community/Falcon3-10B-Instruct-1.58bit-8bit",
+      14
+    ],
+    [
+      "Inventors-Hub/Falcon3-10B-Instruct-BehaviorTree-3-epochs",
+      0
+    ],
+    [
+      "Inventors-Hub/Falcon3-10B-Instruct-BehaviorTree-3-epochs-GGUF",
+      0
+    ],
+    [
+      "isbondarev/Falcon3-10B-Instruct-test-adv",
+      11
+    ],
+    [
+      "s3dev-ai/Falcon3-10B-Instruct-gguf",
+      245
+    ],
+    [
+      "xxxn3m3s1sxxx/Falcon3-10B-Instruct-1.58bit-ATLAS",
+      17
+    ],
+    [
+      "heterodoxin/falcon3-10b-instruct-apostate",
+      10
+    ],
+    [
+      "heterodoxin/falcon3-10b-instruct-apostate-gguf",
+      42
+    ],
+    [
+      "smarttasks/Falcon3-10B-Instruct-GGUF",
+      54
+    ],
+    [
+      "bong-water-water-bong/Falcon3-10B-Instruct-1BP",
+      0
+    ],
+    [
+      "PG-Defcon-2026/Falcon3-10B-Instruct-v2",
+      0
+    ]
+  ],
+  "timestamps": {
+    "createdAt": "2024-12-14T05:17:25.000Z",
+    "lastModified": "2025-01-14T11:53:55.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

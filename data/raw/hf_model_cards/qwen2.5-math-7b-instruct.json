@@ -1,0 +1,503 @@
+{
+  "architecture": {
+    "architectures": [
+      "Qwen2ForCausalLM"
+    ],
+    "hidden_size": 3584,
+    "intermediate_size": 18944,
+    "max_position_embeddings": 4096,
+    "model_type": "qwen2",
+    "n_parameters": 7615616512,
+    "num_attention_heads": 28,
+    "num_hidden_layers": 28,
+    "num_key_value_heads": 4,
+    "parameter_dtypes": {
+      "BF16": 7615616512
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 152064
+  },
+  "card_chars": 4948,
+  "card_text": "---\nbase_model: Qwen/Qwen2.5-Math-7B\nlanguage:\n- en\npipeline_tag: text-generation\ntags:\n- chat\nlibrary_name: transformers\nlicense: apache-2.0\nlicense_link: https://huggingface.co/Qwen/Qwen2.5-Math-7B-Instruct/blob/main/LICENSE\n---\n\n\n# Qwen2.5-Math-7B-Instruct\n\n> [!Warning]\n> <div align=\"center\">\n> <b>\n> \ud83d\udea8 Qwen2.5-Math mainly supports solving English and Chinese math problems through CoT and TIR. We do not recommend using this series of models for other tasks.\n> </b>\n> </div>\n\n## Introduction\n\nIn August 2024, we released the first series of mathematical LLMs - [Qwen2-Math](https://qwenlm.github.io/blog/qwen2-math/) - of our Qwen family. A month later, we have upgraded it and open-sourced **Qwen2.5-Math** series, including base models **Qwen2.5-Math-1.5B/7B/72B**, instruction-tuned models **Qwen2.5-Math-1.5B/7B/72B-Instruct**, and mathematical reward model **Qwen2.5-Math-RM-72B**. \n                                                                              \nUnlike Qwen2-Math series which only supports using Chain-of-Thught (CoT) to solve English math problems, Qwen2.5-Math series is expanded to support using both CoT and Tool-integrated Reasoning (TIR) to solve math problems in both Chinese and English. The Qwen2.5-Math series models have achieved significant performance improvements compared to the Qwen2-Math series models on the Chinese and English mathematics benchmarks with CoT. \n\n![](http://qianwen-res.oss-accelerate-overseas.aliyuncs.com/Qwen2.5/qwen2.5-math-pipeline.jpeg)\n\nWhile CoT plays a vital role in enhancing the reasoning capabilities of LLMs, it faces challenges in achieving computational accuracy and handling complex mathematical or algorithmic reasoning tasks, such as finding the roots of a quadratic equation or computing the eigenvalues of a matrix. TIR can further improve the model's proficiency in precise computation, symbolic manipulation, and algorithmic manipulation. Qwen2.5-Math-1.5B/7B/72B-Instruct achieve 79.7, 85.3, and 87.8 respectively on the MATH benchmark using TIR. \n\n## Model Details\n\n\nFor more details, please refer to our [blog post](https://qwenlm.github.io/blog/qwen2.5-math/) and [GitHub repo](https://github.com/QwenLM/Qwen2.5-Math).\n\n\n## Requirements\n* `transformers>=4.37.0` for Qwen2.5-Math models. The latest version is recommended.\n\n> [!Warning]\n> <div align=\"center\">\n> <b>\n> \ud83d\udea8 This is a must because <code>transformers</code> integrated Qwen2 codes since <code>4.37.0</code>.\n> </b>\n> </div>\n\nFor requirements on GPU memory and the respective throughput, see similar results of Qwen2 [here](https://qwen.readthedocs.io/en/latest/benchmark/speed_benchmark.html).\n\n## Quick Start\n\n> [!Important]\n>\n> **Qwen2.5-Math-7B-Instruct** is an instruction model for chatting;\n>\n> **Qwen2.5-Math-7B** is a base model typically used for completion and few-shot inference, serving as a better starting point for fine-tuning.\n> \n\n### \ud83e\udd17 Hugging Face Transformers\n\nQwen2.5-Math can be deployed and infered in the same way as [Qwen2.5](https://github.com/QwenLM/Qwen2.5). Here we show a code snippet to show you how to use the chat model with `transformers`:\n\n```python\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\nmodel_name = \"Qwen/Qwen2.5-Math-7B-Instruct\"\ndevice = \"cuda\" # the device to load the model onto\n\nmodel = AutoModelForCausalLM.from_pretrained(\n    model_name,\n    torch_dtype=\"auto\",\n    device_map=\"auto\"\n)\ntokenizer = AutoTokenizer.from_pretrained(model_name)\n\nprompt = \"Find the value of $x$ that satisfies the equation $4x+5 = 6x+7$.\"\n\n# CoT\nmessages = [\n    {\"role\": \"system\", \"content\": \"Please reason step by step, and put your final answer within \\\\boxed{}.\"},\n    {\"role\": \"user\", \"content\": prompt}\n]\n\n# TIR\nmessages = [\n    {\"role\": \"system\", \"content\": \"Please integrate natural language reasoning with programs to solve the problem above, and put your final answer within \\\\boxed{}.\"},\n    {\"role\": \"user\", \"content\": prompt}\n]\n\ntext = tokenizer.apply_chat_template(\n    messages,\n    tokenize=False,\n    add_generation_prompt=True\n)\nmodel_inputs = tokenizer([text], return_tensors=\"pt\").to(device)\n\ngenerated_ids = model.generate(\n    **model_inputs,\n    max_new_tokens=512\n)\ngenerated_ids = [\n    output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)\n]\n\nresponse = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]\n```\n\n## Citation\n\nIf you find our work helpful, feel free to give us a citation.\n\n```\n@article{yang2024qwen25mathtechnicalreportmathematical,\n  title={Qwen2.5-Math Technical Report: Toward Mathematical Expert Model via Self-Improvement}, \n  author={An Yang and Beichen Zhang and Binyuan Hui and Bofei Gao and Bowen Yu and Chengpeng Li and Dayiheng Liu and Jianhong Tu and Jingren Zhou and Junyang Lin and Keming Lu and Mingfeng Xue and Runji Lin and Tianyu Liu and Xingzhang Ren and Zhenru Zhang},\n  journal={arXiv preprint arXiv:2409.12122},\n  year={2024}\n}\n```",
+  "fetched_at": "2026-09-19T15:02:50.633539+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "Qwen/Qwen2.5-Math-7B"
+    ],
+    "card_base_models": [
+      "Qwen/Qwen2.5-Math-7B"
+    ],
+    "merge_tags": [],
+    "n_base_models": 1,
+    "relations": {
+      "": [
+        "Qwen/Qwen2.5-Math-7B"
+      ],
+      "finetune": [
+        "Qwen/Qwen2.5-Math-7B"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "Qwen",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "qwen2",
+      "text-generation",
+      "chat",
+      "conversational",
+      "en",
+      "arxiv:2409.12122",
+      "base_model:Qwen/Qwen2.5-Math-7B",
+      "base_model:finetune:Qwen/Qwen2.5-Math-7B",
+      "license:apache-2.0",
+      "eval-results",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "qwen2.5-math-7b-instruct",
+  "ok": true,
+  "popularity": {
+    "downloads": 51009,
+    "downloadsAllTime": 1940198,
+    "likes": 92,
+    "trendingScore": 1
+  },
+  "repo_id": "Qwen/Qwen2.5-Math-7B-Instruct",
+  "resolved_via": "search",
+  "search_candidates": [
+    [
+      "Qwen/Qwen2.5-Math-7B-Instruct",
+      51009
+    ],
+    [
+      "bartowski/Qwen2.5-Math-7B-Instruct-GGUF",
+      19531
+    ],
+    [
+      "lmstudio-community/Qwen2.5-Math-7B-Instruct-GGUF",
+      18181
+    ],
+    [
+      "mlx-community/Qwen2.5-Math-7B-Instruct-4bit",
+      183
+    ],
+    [
+      "QuantFactory/Qwen2.5-Math-7B-Instruct-GGUF",
+      1036
+    ],
+    [
+      "neopolita/qwen2.5-math-7b-instruct-gguf",
+      206
+    ],
+    [
+      "legraphista/Qwen2.5-Math-7B-Instruct-IMat-GGUF",
+      1066
+    ],
+    [
+      "second-state/Qwen2.5-Math-7B-Instruct-GGUF",
+      673
+    ],
+    [
+      "gaianet/Qwen2.5-Math-7B-Instruct-GGUF",
+      330
+    ],
+    [
+      "DrNicefellow/Qwen2.5-Math-7B-Instruct-4.0bpw-exl2",
+      17
+    ],
+    [
+      "DrNicefellow/Qwen2.5-Math-7B-Instruct-8.0bpw-h8-exl2",
+      5
+    ],
+    [
+      "DrNicefellow/Qwen2.5-Math-7B-Instruct-7.0bpw-exl2",
+      4
+    ],
+    [
+      "DrNicefellow/Qwen2.5-Math-7B-Instruct-6.0bpw-exl2",
+      5
+    ],
+    [
+      "DrNicefellow/Qwen2.5-Math-7B-Instruct-5.5bpw-exl2",
+      4
+    ],
+    [
+      "DrNicefellow/Qwen2.5-Math-7B-Instruct-4.5bpw-exl2",
+      9
+    ],
+    [
+      "DrNicefellow/Qwen2.5-Math-7B-Instruct-5.0bpw-exl2",
+      4
+    ],
+    [
+      "DrNicefellow/Qwen2.5-Math-7B-Instruct-3.0bpw-exl2",
+      4
+    ],
+    [
+      "DrNicefellow/Qwen2.5-Math-7B-Instruct-2.0bpw-exl2",
+      5
+    ],
+    [
+      "DrNicefellow/Qwen2.5-Math-7B-Instruct-1.0bpw-exl2",
+      3
+    ],
+    [
+      "TLAIHug/Qwen2.5-Math-7B-Instruct-Q4_K_M-GGUF",
+      37
+    ],
+    [
+      "unsloth/Qwen2.5-Math-7B-Instruct-bnb-4bit",
+      611
+    ],
+    [
+      "unsloth/Qwen2.5-Math-7B-Instruct",
+      188
+    ],
+    [
+      "3mei/qwen2.5_math_7b_instruct_4bit_reflection_405_v2_8k_gsm8k_3e_qkvogud_mlab_instr_resp",
+      11
+    ],
+    [
+      "mukel/Qwen2.5-Math-7B-Instruct-GGUF",
+      36
+    ],
+    [
+      "RichardErkhov/Qwen_-_Qwen2.5-Math-7B-Instruct-gguf",
+      939
+    ],
+    [
+      "mradermacher/Qwen2.5-Math-7B-Instruct-GGUF",
+      1290
+    ],
+    [
+      "mradermacher/Qwen2.5-Math-7B-Instruct-i1-GGUF",
+      1112
+    ],
+    [
+      "taobao-mnn/Qwen2.5-Math-7B-Instruct-MNN",
+      22
+    ],
+    [
+      "jacobcarajo/Qwen2.5-Math-7B-Instruct-Q5_K_M-GGUF",
+      34
+    ],
+    [
+      "RichardErkhov/unsloth_-_Qwen2.5-Math-7B-Instruct-gguf",
+      715
+    ],
+    [
+      "sheldonrobinson/Qwen2.5-Math-7B-Instruct-Q8_0-GGUF",
+      20
+    ],
+    [
+      "JohnnyBoy22/Qwen2.5-Math-7B-Instruct-Q4_K_M-GGUF",
+      38
+    ],
+    [
+      "sheldonrobinson/Qwen2.5-Math-7B-Instruct-Q4_K_M-GGUF",
+      41
+    ],
+    [
+      "SKNahin/Qwen2.5-Math-7B-Instruct-bnb-4bit-lora",
+      0
+    ],
+    [
+      "gmonair/Qwen2.5-Math-7B-Instruct-W8A16",
+      4
+    ],
+    [
+      "QuantFactory/Qwen2.5-7B-Instruct-MathCoder-GGUF",
+      575
+    ],
+    [
+      "adriszmar/Qwen2.5-Math-7B-Instruct-AWQ",
+      44
+    ],
+    [
+      "MaziyarPanahi/Qwen2.5-Math-7B-Instruct-GGUF",
+      130
+    ],
+    [
+      "RichardErkhov/DeepMount00_-_Qwen2.5-7B-Instruct-MathCoder-gguf",
+      258
+    ],
+    [
+      "neoservicios/Qwen2.5-Math-7B-Instruct-GGUF",
+      15
+    ],
+    [
+      "tensorblock/Qwen2.5-Math-7B-Instruct-GGUF",
+      93
+    ],
+    [
+      "c01zaut/Qwen2.5-Math-7B-Instruct-rk3588-1.1.1",
+      12
+    ],
+    [
+      "Jeremmmyyyyy/Qwen-2.5-Math-7B-Instruct-QA-10",
+      0
+    ],
+    [
+      "willieseun/AIMO-Qwen2.5-Math-7B-Instruct-Finetuned",
+      19
+    ],
+    [
+      "mradermacher/AIMO-Qwen2.5-Math-7B-Instruct-Finetuned-GGUF",
+      194
+    ],
+    [
+      "cym2784841400/Qwen2.5-Math-7B-Instruct-Custom-Handler",
+      12
+    ],
+    [
+      "hasibirok0/Qwen-Qwen2.5-Math-7B-Instruct",
+      10
+    ],
+    [
+      "c01zaut/Qwen2.5-Math-7B-Instruct-RK3588-1.1.4",
+      16
+    ],
+    [
+      "eddychu/Qwen2.5-Math-7B-Instruct-lora",
+      0
+    ],
+    [
+      "hasibirok0/ft-Qwen-Qwen2.5-Math-7B-Instruct",
+      9
+    ],
+    [
+      "hasibirok0/ft-Qwen-Qwen2.5-Math-7B-Instruct-bnb-4bit",
+      12
+    ],
+    [
+      "hasibirok0/lora_ft-Qwen-Qwen2.5-Math-7B-Instruct-bnb-4bit",
+      0
+    ],
+    [
+      "eddychu/Qwen2.5-Math-7B-Instruct-lora-merged",
+      14
+    ],
+    [
+      "hasibirok0/ft-Qwen-Qwen2.5-Math-7B-Instruct-AWQ",
+      4
+    ],
+    [
+      "eddychu/qwen2.5-math-7b-instruct-full-ft",
+      0
+    ],
+    [
+      "Jeremmmyyyyy/Qwen-2.5-Math-7B-Instruct-QA-100-full",
+      0
+    ],
+    [
+      "Jeremmmyyyyy/Qwen-2.5-Math-7B-Instruct-QA-10-full",
+      0
+    ],
+    [
+      "hasibirok0/ft-reasoning-Qwen-Qwen2.5-Math-7B-Instruct-AWQ",
+      5
+    ],
+    [
+      "Jeremmmyyyyy/Qwen-2.5-Math-7B-Instruct-Course-QA-1",
+      0
+    ],
+    [
+      "nikJ13/Qwen2.5-Coder-7B-Instruct-MathQA",
+      0
+    ],
+    [
+      "RedHatAI/Qwen2.5-Math-7B-Instruct-FP8-dynamic",
+      14
+    ],
+    [
+      "plaguss/Qwen2.5-Math-7B-Instruct-PRM-0.1",
+      9
+    ],
+    [
+      "Jeremmmyyyyy/Qwen-2.5-Math-7B-Instruct-QA-1-full-augmented",
+      0
+    ],
+    [
+      "Jeremmmyyyyy/Qwen-2.5-Math-7B-Instruct-QA-10-full-augmented",
+      0
+    ],
+    [
+      "timothy-geiger/Qwen2.5-Math-7B-Instruct-NominaMath-gguf",
+      39
+    ],
+    [
+      "CogBase-USTC/Qwen2.5-Math-7B-Instruct-SocraticLM",
+      30
+    ],
+    [
+      "zs0506/Qwen2.5-Math-7B-Instruct-GeoGLIP",
+      5
+    ],
+    [
+      "cutelemonlili/Qwen2.5-Math-7B-Instruct_MATH_training_response_AIDC-AI__Marco-o1_common_correct_macro_7b",
+      13
+    ],
+    [
+      "cutelemonlili/Qwen2.5-Math-7B-Instruct_MATH_training_Qwen2.5-32B-Instruct",
+      12
+    ],
+    [
+      "cutelemonlili/Qwen2.5-Math-7B-Instruct_MATH_training_Qwen_QwQ_32B_Preview",
+      9
+    ],
+    [
+      "cutelemonlili/Qwen2.5-3B-Instruct_MATH_training_response_Qwen2.5_7B",
+      10
+    ],
+    [
+      "cutelemonlili/Qwen2.5-Coder-7B-Instruct_MATH_training_response_Qwen_QwQ_32B_Preview_common_correct_level",
+      0
+    ],
+    [
+      "cutelemonlili/Qwen2.5-Coder-7B-Instruct_MATH_training_Qwen2.5-32B-Instruct",
+      9
+    ],
+    [
+      "cutelemonlili/Qwen2.5-Coder-7B-Instruct_MATH_training_response_Qwen2.5-32B-Instruct_common_correct_level",
+      13
+    ],
+    [
+      "cutelemonlili/Qwen2.5-Coder-7B-Instruct_MATH_training_Qwen_QwQ_32B_Preview",
+      0
+    ],
+    [
+      "cutelemonlili/Qwen2.5-7B-Instruct_MATH_training_sdft_response_Qwen2.5_7B_no_filtering",
+      10
+    ],
+    [
+      "cutelemonlili/Qwen2.5-7B-Instruct_MATH_training_response_Qwen2.5_14B",
+      9
+    ],
+    [
+      "cutelemonlili/Qwen2.5-7B-Instruct_MATH_training_response_Qwen_QwQ_32B_Preview_common_correct_level",
+      9
+    ],
+    [
+      "cutelemonlili/Qwen2.5-7B-Instruct_MATH_training_response_gpt-4o-mini_only_right",
+      10
+    ],
+    [
+      "cutelemonlili/Qwen2.5-7B-Instruct_MATH_training_response_Qwen2.5_72B",
+      9
+    ],
+    [
+      "cutelemonlili/Qwen2.5-7B-Instruct_MATH_training_response_Qwen_QwQ_32B_Previewlevel_1_2_3_selected_2353_data",
+      9
+    ],
+    [
+      "cutelemonlili/Qwen2.5-7B-Instruct_MATH_training_response_Qwen2.5_3B",
+      10
+    ],
+    [
+      "cutelemonlili/Qwen2.5-7B-Instruct_MATH_training_response_Qwen2.5-32B-Instructlevel_1_2_3_selected_2353_data",
+      9
+    ],
+    [
+      "cutelemonlili/Qwen2.5-7B-Instruct_MATH_training_sdft_response_Qwen2.5_7B_only_right",
+      9
+    ],
+    [
+      "cutelemonlili/Qwen2.5-7B-Instruct_MATH_training_response_Qwen2.5_7B_only_right",
+      10
+    ],
+    [
+      "cutelemonlili/Qwen2.5-7B-Instruct_MATH_training_response_Qwen2.5-32B-Instruct_common_correct_level",
+      9
+    ],
+    [
+      "cutelemonlili/Qwen2.5-7B-Instruct_MATH_training_response_Qwen2.5_32B",
+      9
+    ],
+    [
+      "cutelemonlili/Qwen2.5-7B-Instruct_MATH_training_response_Qwen2.5_7B",
+      9
+    ],
+    [
+      "cutelemonlili/Qwen2.5-7B-Instruct_MATH_training_Qwen_QwQ_32B_Preview",
+      9
+    ],
+    [
+      "cutelemonlili/Qwen2.5-14B-Instruct_lora_MATH_training_response_Qwen2.5_7B",
+      8
+    ],
+    [
+      "cutelemonlili/Qwen2.5-32B-Instruct_lora_MATH_training_response_Qwen2.5_7B",
+      11
+    ],
+    [
+      "cutelemonlili/Qwen2.5-1.5B-Instruct_MATH_training_response_Qwen2.5_7B",
+      9
+    ],
+    [
+      "cutelemonlili/Qwen2.5-0.5B-Instruct_MATH_training_response_Qwen2.5_7B",
+      11
+    ],
+    [
+      "cutelemonlili/Qwen2.5-Math-1.5B-Instruct_MATH_training_response_Qwen2.5-7B-Instruct_common_correct_macro_7b",
+      19
+    ],
+    [
+      "cutelemonlili/Qwen2.5-Math-1.5B-Instruct_MATH_training_response_AIDC-AI__Marco-o1_common_correct_macro_7b",
+      19
+    ],
+    [
+      "cutelemonlili/Qwen2.5-Math-7B_MATH_training_Qwen2.5-32B-Instruct",
+      12
+    ],
+    [
+      "rautamogh3/qwen2.5-math-7b-instruct-awq-4bit",
+      31
+    ],
+    [
+      "yizijian/Qwen2.5-Math-7B-Instruct-Q4_K_M-GGUF",
+      19
+    ],
+    [
+      "MaziyarPanahi/Qwen2.5-Math-7B-Instruct-SocraticLM-GGUF",
+      140
+    ],
+    [
+      "itlwas/Qwen2.5-Math-7B-Instruct-Q4_K_M-GGUF",
+      58
+    ]
+  ],
+  "timestamps": {
+    "createdAt": "2024-09-19T12:16:23.000Z",
+    "lastModified": "2024-09-23T06:10:43.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

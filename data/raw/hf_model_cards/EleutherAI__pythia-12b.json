@@ -1,0 +1,93 @@
+{
+  "architecture": {
+    "architectures": [
+      "GPTNeoXForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 20480,
+    "max_position_embeddings": 2048,
+    "model_type": "gpt_neox",
+    "n_parameters": 11997067840,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 36,
+    "num_key_value_heads": null,
+    "parameter_dtypes": {
+      "F16": 11846072896,
+      "U8": 150994944
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 50688
+  },
+  "card_chars": 13547,
+  "card_text": "---\nlanguage:\n- en\ntags:\n- pytorch\n- causal-lm\n- pythia\nlicense: apache-2.0\ndatasets:\n- EleutherAI/pile\n---\n\nThe *Pythia Scaling Suite* is a collection of models developed to facilitate \ninterpretability research [(see paper)](https://arxiv.org/pdf/2304.01373.pdf). \nIt contains two sets of eight models of sizes \n70M, 160M, 410M, 1B, 1.4B, 2.8B, 6.9B, and 12B. For each size, there are two \nmodels: one trained on the Pile, and one trained on the Pile after the dataset \nhas been globally deduplicated. All 8 model sizes are trained on the exact \nsame data, in the exact same order. We also provide 154 intermediate \ncheckpoints per model, hosted on Hugging Face as branches.\n\nThe Pythia model suite was deliberately designed to promote scientific \nresearch on large language models, especially interpretability research. \nDespite not centering downstream performance as a design goal, we find the \nmodels <a href=\"#evaluations\">match or exceed</a> the performance of \nsimilar and same-sized models, such as those in the OPT and GPT-Neo suites.\n\n<details>\n  <summary style=\"font-weight: 600\">Past early release and naming convention.</summary>\n\nPreviously, we released an early version of the Pythia suite to the public. \nHowever, we decided to retrain the model suite to address a few hyperparameter \ndiscrepancies. This model card <a href=\"#changelog\">lists the changes</a>; \nsee appendix B in the Pythia paper for further discussion. We found no \ndifference in benchmark performance between the two Pythia versions. \nThe old models are \n[still available](https://huggingface.co/models?other=pythia_v0), but we \nsuggest the retrained suite if you are just starting to use Pythia.<br>\n**This is the current release.**\n\nPlease note that all models in the *Pythia* suite were renamed in January \n2023. For clarity, a <a href=\"#naming-convention-and-parameter-count\">table \ncomparing the old and new names</a> is provided in this model card, together \nwith exact parameter counts.\n</details>\n<br>\n\n# Pythia-12B\n\n## Model Details\n\n- Developed by: [EleutherAI](http://eleuther.ai)\n- Model type: Transformer-based Language Model\n- Language: English\n- Learn more: [Pythia's GitHub repository](https://github.com/EleutherAI/pythia)\n for training procedure, config files, and details on how to use.\n [See paper](https://arxiv.org/pdf/2304.01373.pdf) for more evals and implementation\n details.\n- Library: [GPT-NeoX](https://github.com/EleutherAI/gpt-neox)\n- License: Apache 2.0\n- Contact: to ask questions about this model, join the [EleutherAI \nDiscord](https://discord.gg/zBGx3azzUn), and post them in `#release-discussion`.\n Please read the existing *Pythia* documentation before asking about it in the \n EleutherAI Discord. For general correspondence: [contact@eleuther.\n ai](mailto:contact@eleuther.ai).\n\n<figure>\n\n| Pythia model | Non-Embedding Params | Layers | Model Dim | Heads | Batch Size | Learning Rate         | Equivalent Models      |\n| -----------: | -------------------: | :----: | :-------: | :---: | :--------: | :-------------------: | :--------------------: |\n| 70M          | 18,915,328           | 6      | 512       | 8     | 2M         | 1.0 x 10<sup>-3</sup> | \u2014                      |\n| 160M         | 85,056,000           | 12     | 768       | 12    | 2M         | 6.0 x 10<sup>-4</sup> | GPT-Neo 125M, OPT-125M |\n| 410M         | 302,311,424          | 24     | 1024      | 16    | 2M         | 3.0 x 10<sup>-4</sup> | OPT-350M               |\n| 1.0B         | 805,736,448          | 16     | 2048      | 8     | 2M         | 3.0 x 10<sup>-4</sup> | \u2014                      |\n| 1.4B         | 1,208,602,624        | 24     | 2048      | 16    | 2M         | 2.0 x 10<sup>-4</sup> | GPT-Neo 1.3B, OPT-1.3B |\n| 2.8B         | 2,517,652,480        | 32     | 2560      | 32    | 2M         | 1.6 x 10<sup>-4</sup> | GPT-Neo 2.7B, OPT-2.7B |\n| 6.9B         | 6,444,163,072        | 32     | 4096      | 32    | 2M         | 1.2 x 10<sup>-4</sup> | OPT-6.7B               |\n| 12B          | 11,327,027,200       | 36     | 5120      | 40    | 2M         | 1.2 x 10<sup>-4</sup> | \u2014                      |\n<figcaption>Engineering details for the <i>Pythia Suite</i>. Deduped and \nnon-deduped models of a given size have the same hyperparameters. \u201cEquivalent\u201d \nmodels have <b>exactly</b> the same architecture, and the same number of \nnon-embedding parameters.</figcaption>\n</figure>\n\n## Uses and Limitations\n\n### Intended Use\n\nThe primary intended use of Pythia is research on the behavior, functionality, \nand limitations of large language models. This suite is intended to provide \na controlled setting for performing scientific experiments. We also provide \n154 checkpoints per model: initial `step0`, 10 log-spaced checkpoints \n`step{1,2,4...512}`, and 143 evenly-spaced checkpoints from `step1000` to \n`step143000`. These checkpoints are hosted on Hugging Face as branches. Note \nthat branch `143000` corresponds exactly to the model checkpoint on the `main` \nbranch of each model.\n\nYou may also further fine-tune and adapt Pythia-12B for deployment, \nas long as your use is in accordance with the Apache 2.0 license. Pythia \nmodels work with the Hugging Face [Transformers \nLibrary](https://huggingface.co/docs/transformers/index). If you decide to use \npre-trained Pythia-12B as a basis for your fine-tuned model, please \nconduct your own risk and bias assessment. \n\n### Out-of-scope use\n\nThe Pythia Suite is **not** intended for deployment. It is not a in itself \na product and cannot be used for human-facing interactions. For example, \nthe model may generate harmful or offensive text. Please evaluate the risks\nassociated with your particular use case.\n\nPythia models are English-language only, and are not suitable for translation \nor generating text in other languages.\n\nPythia-12B has not been fine-tuned for downstream contexts in which \nlanguage models are commonly deployed, such as writing genre prose, \nor commercial chatbots. This means Pythia-12B will **not** \nrespond to a given prompt the way a product like ChatGPT does. This is because,\n unlike this model, ChatGPT was fine-tuned using methods such as Reinforcement \nLearning from Human Feedback (RLHF) to better \u201cfollow\u201d human instructions.\n\n### Limitations and biases\n\nThe core functionality of a large language model is to take a string of text \nand predict the next token. The token used by the model need not produce the \nmost \u201caccurate\u201d text. Never rely on Pythia-12B to produce factually accurate \noutput.\n\nThis model was trained on [the Pile](https://pile.eleuther.ai/), a dataset \nknown to contain profanity and texts that are lewd or otherwise offensive. \nSee [Section 6 of the Pile paper](https://arxiv.org/abs/2101.00027) for a \ndiscussion of documented biases with regards to gender, religion, and race. \nPythia-12B may produce socially unacceptable or undesirable text, *even if* \nthe prompt itself does not include anything explicitly offensive. \n\nIf you plan on using text generated through, for example, the Hosted Inference \nAPI, we recommend having a human curate the outputs of this language model \nbefore presenting it to other people. Please inform your audience that the \ntext was generated by Pythia-12B.\n\n### Quickstart\n\nPythia models can be loaded and used via the following code, demonstrated here \nfor the third `pythia-70m-deduped` checkpoint:\n\n```python\nfrom transformers import GPTNeoXForCausalLM, AutoTokenizer\n\nmodel = GPTNeoXForCausalLM.from_pretrained(\n  \"EleutherAI/pythia-70m-deduped\",\n  revision=\"step3000\",\n  cache_dir=\"./pythia-70m-deduped/step3000\",\n)\n\ntokenizer = AutoTokenizer.from_pretrained(\n  \"EleutherAI/pythia-70m-deduped\",\n  revision=\"step3000\",\n  cache_dir=\"./pythia-70m-deduped/step3000\",\n)\n\ninputs = tokenizer(\"Hello, I am\", return_tensors=\"pt\")\ntokens = model.generate(**inputs)\ntokenizer.decode(tokens[0])\n```\n\nRevision/branch `step143000` corresponds exactly to the model checkpoint on \nthe `main` branch of each model.<br>\nFor more information on how to use all Pythia models, see [documentation on \nGitHub](https://github.com/EleutherAI/pythia).\n\n## Training\n\n### Training data\n\n[The Pile](https://pile.eleuther.ai/) is a 825GiB general-purpose dataset in \nEnglish. It was created by EleutherAI specifically for training large language \nmodels. It contains texts from 22 diverse sources, roughly broken down into \nfive categories: academic writing (e.g. arXiv), internet (e.g. CommonCrawl), \nprose (e.g. Project Gutenberg), dialogue (e.g. YouTube subtitles), and \nmiscellaneous (e.g. GitHub, Enron Emails). See [the Pile \npaper](https://arxiv.org/abs/2101.00027) for a breakdown of all data sources, \nmethodology, and a discussion of ethical implications. Consult [the \ndatasheet](https://arxiv.org/abs/2201.07311) for more detailed documentation \nabout the Pile and its component datasets. The Pile can be downloaded from \nthe [official website](https://pile.eleuther.ai/), or from a [community \nmirror](https://the-eye.eu/public/AI/pile/).<br>\nThe Pile was **not** deduplicated before being used to train Pythia-12B.\n\n### Training procedure\n\nAll models were trained on the exact same data, in the exact same order. Each \nmodel saw 299,892,736,000 tokens during training, and 143 checkpoints for each \nmodel are saved every 2,097,152,000 tokens, spaced evenly throughout training, \nfrom `step1000` to `step143000` (which is the same as `main`). In addition, we \nalso provide frequent early checkpoints: `step0` and `step{1,2,4...512}`.\nThis corresponds to training for just under 1 epoch on the Pile for \nnon-deduplicated models, and about 1.5 epochs on the deduplicated Pile.\n\nAll *Pythia* models trained for 143000 steps at a batch size \nof 2M (2,097,152 tokens).<br>\nSee [GitHub](https://github.com/EleutherAI/pythia) for more details on training\n procedure, including [how to reproduce \n it](https://github.com/EleutherAI/pythia/blob/main/README.md#reproducing-training).<br>\nPythia uses the same tokenizer as [GPT-NeoX-\n20B](https://huggingface.co/EleutherAI/gpt-neox-20b).\n\n## Evaluations\n\nAll 16 *Pythia* models were evaluated using the [LM Evaluation \nHarness](https://github.com/EleutherAI/lm-evaluation-harness). You can access \nthe results by model and step at `results/json/*` in the [GitHub \nrepository](https://github.com/EleutherAI/pythia/tree/main/results/json/).<br>\nExpand the sections below to see plots of evaluation results for all \nPythia and Pythia-deduped models compared with OPT and BLOOM.\n\n<details>\n  <summary>LAMBADA \u2013 OpenAI</summary>\n  <img src=\"/EleutherAI/pythia-12b/resolve/main/eval_plots/lambada_openai_v1.png\" style=\"width:auto\"/>\n</details>\n\n<details>\n  <summary>Physical Interaction: Question Answering (PIQA)</summary>\n  <img src=\"/EleutherAI/pythia-12b/resolve/main/eval_plots/piqa_v1.png\" style=\"width:auto\"/>\n</details>\n\n<details>\n  <summary>WinoGrande</summary>\n  <img src=\"/EleutherAI/pythia-12b/resolve/main/eval_plots/winogrande_v1.png\" style=\"width:auto\"/>\n</details>\n\n<details>\n  <summary>AI2 Reasoning Challenge\u2014Easy Set</summary>\n  <img src=\"/EleutherAI/pythia-12b/resolve/main/eval_plots/arc_easy_v1.png\" style=\"width:auto\"/>\n</details>\n\n<details>\n  <summary>SciQ</summary>\n  <img src=\"/EleutherAI/pythia-12b/resolve/main/eval_plots/sciq_v1.png\" style=\"width:auto\"/>\n</details>\n\n## Changelog\n\nThis section compares differences between previously released \n[Pythia v0](https://huggingface.co/models?other=pythia_v0) and the current \nmodels. See Appendix B of the Pythia paper for further discussion of these \nchanges and the motivation behind them. We found that retraining Pythia had no \nimpact on benchmark performance.\n\n- All model sizes are now trained with uniform batch size of 2M tokens. \nPreviously, the models of size 160M, 410M, and 1.4B parameters were trained \nwith batch sizes of 4M tokens.\n- We added checkpoints at initialization (step 0) and steps {1,2,4,8,16,32,64,\n128,256,512} in addition to every 1000 training steps.\n- Flash Attention was used in the new retrained suite.\n- We remedied a minor inconsistency that existed in the original suite: all \nmodels of size 2.8B parameters or smaller had a learning rate (LR) schedule \nwhich decayed to a minimum LR of 10% the starting LR rate, but the 6.9B and \n12B models all used an LR schedule which decayed to a minimum LR of 0. In \nthe redone training runs, we rectified this inconsistency: all models now were \ntrained with LR decaying to a minimum of 0.1\u00d7 their maximum LR.\n\n### Naming convention and parameter count\n\n*Pythia* models were renamed in January 2023. It is possible that the old \nnaming convention still persists in some documentation by accident. The \ncurrent naming convention (70M, 160M, etc.) is based on total parameter count. \n\n<figure style=\"width:32em\">\n  \n| current Pythia suffix | old suffix | total params   | non-embedding params |\n| --------------------: | ---------: | -------------: | -------------------: |\n| 70M                   | 19M        | 70,426,624     | 18,915,328           |\n| 160M                  | 125M       | 162,322,944    | 85,056,000           |\n| 410M                  | 350M       | 405,334,016    | 302,311,424          |\n| 1B                    | 800M       | 1,011,781,632  | 805,736,448          |\n| 1.4B                  | 1.3B       | 1,414,647,808  | 1,208,602,624        |\n| 2.8B                  | 2.7B       | 2,775,208,960  | 2,517,652,480        |\n| 6.9B                  | 6.7B       | 6,857,302,016  | 6,444,163,072        |\n| 12B                   | 13B        | 11,846,072,320 | 11,327,027,200       |\n</figure>",
+  "fetched_at": "2026-09-19T15:00:11.819681+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "EleutherAI",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "safetensors",
+      "gpt_neox",
+      "text-generation",
+      "causal-lm",
+      "pythia",
+      "en",
+      "dataset:EleutherAI/pile",
+      "arxiv:2304.01373",
+      "arxiv:2101.00027",
+      "arxiv:2201.07311",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "EleutherAI__pythia-12b",
+  "ok": true,
+  "popularity": {
+    "downloads": 26432,
+    "downloadsAllTime": 1731200,
+    "likes": 145,
+    "trendingScore": 0
+  },
+  "repo_id": "EleutherAI/pythia-12b",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-02-28T18:48:12.000Z",
+    "lastModified": "2024-07-09T15:50:54.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

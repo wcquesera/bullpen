@@ -1,0 +1,82 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 11008,
+    "max_position_embeddings": 2048,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": null,
+    "parameter_dtypes": {},
+    "torch_dtype": "bfloat16",
+    "vocab_size": 32000
+  },
+  "card_chars": 3078,
+  "card_text": "---\nlicense: cc-by-nc-nd-4.0\nlanguage:\n- en\n---\n\n**Jordan: An Uncensored Model**\n\nThe name \"Jordan\" pays homage to the charismatic character Jordan Belfort, portrayed by Leonardo DiCaprio in the movie \"The Wolf of Wall Street.\" \nJust like the character, Jordan aspires to push boundaries and encourage unfiltered conversations.\nJordan Belfort, the central character in \"The Wolf of Wall Street,\" is known for his audaciousness, charisma, and willingness to speak about anything, no matter the societal norms or boundaries.\nJordan, the AI language model, draws inspiration from these qualities to offer a space where users can discuss a wide range of topics without fear of censorship or constraints.\nUsers can engage in candid discussions about politics, religion, contentious issues, and other subjects that might be off-limits on mainstream social media platforms.\nIt is trained on around 155000 set of conversations. Each set having 10~15 conversations. We will not release this data.\n\n**Warning**\n\n An uncensored model has no or little guardrails. You are responsible for anything you do with the model, just as you are responsible for anything you do with any dangerous objects.\n Publishing anything this model generates is the same as publishing it yourself. We are not responsible for what you generate using this model.\n\n**Training:**\nEntire dataset was trained on Azure 4 x A100 80GB. For 3 epoch, training took 28 hours. DeepSpeed codebase was used for training purpose. This was trained on Llama-1 by Meta.\nLlama-1 was used as it is very useful for Uncensored conversation.\n\nThis is a full fine tuned model. Links for quantized models are given below.\n\n**GPTQ GGML & AWQ**\n\nGPTQ: [Link](https://huggingface.co/TheBloke/Uncensored-Jordan-7B-GPTQ)\n\nGGUF: [Link](https://huggingface.co/TheBloke/Uncensored-Jordan-7B-GGUF)\n\nAWQ: [Link](https://huggingface.co/TheBloke/Uncensored-Jordan-7B-AWQ)\n\nSpecial Thanks to [TheBloke](https://huggingface.co/TheBloke) for making these models available.\n\n**Note**\n\nModel was trained before the release of Mistral.\n\n\n**Example Prompt:**\n```\nThis is a conversation with your Uncensored AI assistant Jordan. Jordan can discuss with you at length about various topics such as ---, ---, ---, . You can ask it anything you want and it will do its best to give you accurate and relevant information.\n\nContext\nYou are a Uncensored AI assistant.\n\nUSER: <prompt>\nASSISTANT:\n```\n\n# [Open LLM Leaderboard Evaluation Results](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard)\nDetailed results can be found [here](https://huggingface.co/datasets/open-llm-leaderboard/details_ajibawa-2023__Uncensored-Jordan-7B)\n\n| Metric                | Value                     |\n|-----------------------|---------------------------|\n| Avg.                  | 46.88   |\n| ARC (25-shot)         | 51.28          |\n| HellaSwag (10-shot)   | 77.37    |\n| MMLU (5-shot)         | 45.69         |\n| TruthfulQA (0-shot)   | 47.5   |\n| Winogrande (5-shot)   | 71.11   |\n| GSM8K (5-shot)        | 6.75        |\n| DROP (3-shot)         | 28.46         |\n",
+  "fetched_at": "2026-09-22T06:50:04.920749+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "ajibawa-2023",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-nd-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "en",
+      "license:cc-by-nc-nd-4.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "ajibawa-2023__Uncensored-Jordan-7B",
+  "ok": true,
+  "popularity": {
+    "downloads": 66,
+    "downloadsAllTime": 49647,
+    "likes": 5,
+    "trendingScore": 0
+  },
+  "repo_id": "ajibawa-2023/Uncensored-Jordan-7B",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-10-23T10:33:06.000Z",
+    "lastModified": "2023-11-20T16:36:58.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

@@ -1,0 +1,224 @@
+{
+ "generated_at": "synthetic",
+ "generated_by": "tests/fixtures/make_sample_data.py",
+ "models": {
+  "aurora-labs__aurora-1.5b-base": {
+   "created_at": "2023-06-15"
+  },
+  "aurora-labs__aurora-3b-chat": {
+   "created_at": "2024-01-15"
+  },
+  "aurora-labs__aurora-7b-base": {
+   "created_at": "2024-07-15"
+  },
+  "aurora-labs__aurora-7b-instruct": {
+   "created_at": "2024-08-15"
+  },
+  "aurora-labs__aurora-13b-chat": {
+   "created_at": "2024-07-15"
+  },
+  "aurora-labs__aurora-34b-instruct": {
+   "created_at": "2024-06-15"
+  },
+  "boreal-labs__boreal-1.5b-base": {
+   "created_at": "2023-10-15"
+  },
+  "boreal-labs__boreal-3b-chat": {
+   "created_at": "2023-07-15"
+  },
+  "boreal-labs__boreal-7b-base": {
+   "created_at": "2023-09-15"
+  },
+  "boreal-labs__boreal-7b-instruct": {
+   "created_at": "2023-07-15"
+  },
+  "boreal-labs__boreal-13b-chat": {
+   "created_at": "2024-09-15"
+  },
+  "boreal-labs__boreal-34b-instruct": {
+   "created_at": "2024-12-15"
+  },
+  "cobalt-labs__cobalt-1.5b-base": {
+   "created_at": "2023-01-15"
+  },
+  "cobalt-labs__cobalt-3b-chat": {
+   "created_at": "2023-02-15"
+  },
+  "cobalt-labs__cobalt-7b-base": {
+   "created_at": "2024-06-15"
+  },
+  "cobalt-labs__cobalt-7b-instruct": {
+   "created_at": "2024-11-15"
+  },
+  "cobalt-labs__cobalt-13b-chat": {
+   "created_at": "2024-05-15"
+  },
+  "cobalt-labs__cobalt-34b-instruct": {
+   "created_at": "2024-04-15"
+  },
+  "dune-labs__dune-1.5b-base": {
+   "created_at": "2023-03-15"
+  },
+  "dune-labs__dune-3b-chat": {
+   "created_at": "2023-07-15"
+  },
+  "dune-labs__dune-7b-base": {
+   "created_at": "2023-11-15"
+  },
+  "dune-labs__dune-7b-instruct": {
+   "created_at": "2024-03-15"
+  },
+  "dune-labs__dune-13b-chat": {
+   "created_at": "2024-09-15"
+  },
+  "dune-labs__dune-34b-instruct": {
+   "created_at": "2024-04-15"
+  },
+  "ember-labs__ember-1.5b-base": {
+   "created_at": "2023-05-15"
+  },
+  "ember-labs__ember-3b-chat": {
+   "created_at": "2023-06-15"
+  },
+  "ember-labs__ember-7b-base": {
+   "created_at": "2023-04-15"
+  },
+  "ember-labs__ember-7b-instruct": {
+   "created_at": "2024-09-15"
+  },
+  "ember-labs__ember-13b-chat": {
+   "created_at": "2024-02-15"
+  },
+  "ember-labs__ember-34b-instruct": {
+   "created_at": "2024-03-15"
+  },
+  "fjord-labs__fjord-1.5b-base": {
+   "created_at": "2023-12-15"
+  },
+  "fjord-labs__fjord-3b-chat": {
+   "created_at": "2023-01-15"
+  },
+  "fjord-labs__fjord-7b-base": {
+   "created_at": "2023-12-15"
+  },
+  "fjord-labs__fjord-7b-instruct": {
+   "created_at": "2024-06-15"
+  },
+  "fjord-labs__fjord-13b-chat": {
+   "created_at": "2024-08-15"
+  },
+  "fjord-labs__fjord-34b-instruct": {
+   "created_at": "2024-02-15"
+  },
+  "garnet-labs__garnet-1.5b-base": {
+   "created_at": "2023-12-15"
+  },
+  "garnet-labs__garnet-3b-chat": {
+   "created_at": "2023-08-15"
+  },
+  "garnet-labs__garnet-7b-base": {
+   "created_at": "2023-05-15"
+  },
+  "garnet-labs__garnet-7b-instruct": {
+   "created_at": "2024-09-15"
+  },
+  "garnet-labs__garnet-13b-chat": {
+   "created_at": "2024-02-15"
+  },
+  "garnet-labs__garnet-34b-instruct": {
+   "created_at": "2024-05-15"
+  },
+  "harbor-labs__harbor-1.5b-base": {
+   "created_at": "2023-06-15"
+  },
+  "harbor-labs__harbor-3b-chat": {
+   "created_at": "2023-04-15"
+  },
+  "harbor-labs__harbor-7b-base": {
+   "created_at": "2023-02-15"
+  },
+  "harbor-labs__harbor-7b-instruct": {
+   "created_at": "2024-10-15"
+  },
+  "harbor-labs__harbor-13b-chat": {
+   "created_at": "2024-11-15"
+  },
+  "harbor-labs__harbor-34b-instruct": {
+   "created_at": "2024-07-15"
+  },
+  "iris-labs__iris-1.5b-base": {
+   "created_at": "2023-02-15"
+  },
+  "iris-labs__iris-3b-chat": {
+   "created_at": "2024-03-15"
+  },
+  "iris-labs__iris-7b-base": {
+   "created_at": "2024-12-15"
+  },
+  "iris-labs__iris-7b-instruct": {
+   "created_at": "2024-10-15"
+  },
+  "iris-labs__iris-13b-chat": {
+   "created_at": "2024-01-15"
+  },
+  "iris-labs__iris-34b-instruct": {
+   "created_at": "2024-08-15"
+  },
+  "juniper-labs__juniper-1.5b-base": {
+   "created_at": "2023-07-15"
+  },
+  "juniper-labs__juniper-3b-chat": {
+   "created_at": "2023-01-15"
+  },
+  "juniper-labs__juniper-7b-base": {
+   "created_at": "2023-08-15"
+  },
+  "juniper-labs__juniper-7b-instruct": {
+   "created_at": "2024-09-15"
+  },
+  "juniper-labs__juniper-13b-chat": {
+   "created_at": "2024-03-15"
+  },
+  "juniper-labs__juniper-34b-instruct": {
+   "created_at": "2024-08-15"
+  },
+  "kestrel-labs__kestrel-1.5b-base": {
+   "created_at": "2023-01-15"
+  },
+  "kestrel-labs__kestrel-3b-chat": {
+   "created_at": "2023-07-15"
+  },
+  "kestrel-labs__kestrel-7b-base": {
+   "created_at": "2024-04-15"
+  },
+  "kestrel-labs__kestrel-7b-instruct": {
+   "created_at": "2024-09-15"
+  },
+  "kestrel-labs__kestrel-13b-chat": {
+   "created_at": "2024-08-15"
+  },
+  "kestrel-labs__kestrel-34b-instruct": {
+   "created_at": "2024-09-15"
+  },
+  "lumen-labs__lumen-1.5b-base": {
+   "created_at": "2023-05-15"
+  },
+  "lumen-labs__lumen-3b-chat": {
+   "created_at": "2023-09-15"
+  },
+  "lumen-labs__lumen-7b-base": {
+   "created_at": "2024-09-15"
+  },
+  "lumen-labs__lumen-7b-instruct": {
+   "created_at": "2024-01-15"
+  },
+  "lumen-labs__lumen-13b-chat": {
+   "created_at": "2024-12-15"
+  },
+  "lumen-labs__lumen-34b-instruct": {
+   "created_at": "2024-05-15"
+  }
+ },
+ "n_dated": 72,
+ "n_models": 72
+}

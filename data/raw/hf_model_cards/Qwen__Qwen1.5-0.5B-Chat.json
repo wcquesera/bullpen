@@ -1,0 +1,88 @@
+{
+  "architecture": {
+    "architectures": [
+      "Qwen2ForCausalLM"
+    ],
+    "hidden_size": 1024,
+    "intermediate_size": 2816,
+    "max_position_embeddings": 32768,
+    "model_type": "qwen2",
+    "n_parameters": 619570176,
+    "num_attention_heads": 16,
+    "num_hidden_layers": 24,
+    "num_key_value_heads": 16,
+    "parameter_dtypes": {
+      "BF16": 619570176
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 151936
+  },
+  "card_chars": 4284,
+  "card_text": "---\nlicense: other\nlicense_name: tongyi-qianwen-research\nlicense_link: >-\n  https://huggingface.co/Qwen/Qwen1.5-0.5B-Chat/blob/main/LICENSE\nlanguage:\n- en\npipeline_tag: text-generation\ntags:\n- chat\n---\n\n# Qwen1.5-0.5B-Chat\n\n\n## Introduction\n\nQwen1.5 is the beta version of Qwen2, a transformer-based decoder-only language model pretrained on a large amount of data. In comparison with the previous released Qwen, the improvements include: \n\n* 8 model sizes, including 0.5B, 1.8B, 4B, 7B, 14B, 32B and 72B dense models, and an MoE model of 14B with 2.7B activated;\n* Significant performance improvement in human preference for chat models;\n* Multilingual support of both base and chat models;\n* Stable support of 32K context length for models of all sizes\n* No need of `trust_remote_code`.\n\nFor more details, please refer to our [blog post](https://qwenlm.github.io/blog/qwen1.5/) and [GitHub repo](https://github.com/QwenLM/Qwen1.5).\n<br>\n\n## Model Details\nQwen1.5 is a language model series including decoder language models of different model sizes. For each size, we release the base language model and the aligned chat model. It is based on the Transformer architecture with SwiGLU activation, attention QKV bias, group query attention, mixture of sliding window attention and full attention, etc. Additionally, we have an improved tokenizer adaptive to multiple natural languages and codes. For the beta version, temporarily we did not include GQA (except for 32B) and the mixture of SWA and full attention.\n\n## Training details\nWe pretrained the models with a large amount of data, and we post-trained the models with both supervised finetuning and direct preference optimization. \n\n## Requirements\nThe code of Qwen1.5 has been in the latest Hugging face transformers and we advise you to install `transformers>=4.37.0`, or you might encounter the following error:\n```\nKeyError: 'qwen2'\n```\n\n## Quickstart\n\nHere provides a code snippet with `apply_chat_template` to show you how to load the tokenizer and model and how to generate contents.\n\n```python\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\ndevice = \"cuda\" # the device to load the model onto\n\nmodel = AutoModelForCausalLM.from_pretrained(\n    \"Qwen/Qwen1.5-0.5B-Chat\",\n    torch_dtype=\"auto\",\n    device_map=\"auto\"\n)\ntokenizer = AutoTokenizer.from_pretrained(\"Qwen/Qwen1.5-0.5B-Chat\")\n\nprompt = \"Give me a short introduction to large language model.\"\nmessages = [\n    {\"role\": \"system\", \"content\": \"You are a helpful assistant.\"},\n    {\"role\": \"user\", \"content\": prompt}\n]\ntext = tokenizer.apply_chat_template(\n    messages,\n    tokenize=False,\n    add_generation_prompt=True\n)\nmodel_inputs = tokenizer([text], return_tensors=\"pt\").to(device)\n\ngenerated_ids = model.generate(\n    model_inputs.input_ids,\n    max_new_tokens=512\n)\ngenerated_ids = [\n    output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)\n]\n\nresponse = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]\n```\n\nFor quantized models, we advise you to use the GPTQ, AWQ, and GGUF correspondents, namely `Qwen1.5-0.5B-Chat-GPTQ-Int4`, `Qwen1.5-0.5B-Chat-GPTQ-Int8`, `Qwen1.5-0.5B-Chat-AWQ`, and `Qwen1.5-0.5B-Chat-GGUF`.\n\n\n## Tips\n\n* If you encounter code switching or other bad cases, we advise you to use our provided hyper-parameters in `generation_config.json`.\n\n\n## Citation\n\nIf you find our work helpful, feel free to give us a cite.\n\n```\n@article{qwen,\n  title={Qwen Technical Report},\n  author={Jinze Bai and Shuai Bai and Yunfei Chu and Zeyu Cui and Kai Dang and Xiaodong Deng and Yang Fan and Wenbin Ge and Yu Han and Fei Huang and Binyuan Hui and Luo Ji and Mei Li and Junyang Lin and Runji Lin and Dayiheng Liu and Gao Liu and Chengqiang Lu and Keming Lu and Jianxin Ma and Rui Men and Xingzhang Ren and Xuancheng Ren and Chuanqi Tan and Sinan Tan and Jianhong Tu and Peng Wang and Shijie Wang and Wei Wang and Shengguang Wu and Benfeng Xu and Jin Xu and An Yang and Hao Yang and Jian Yang and Shusheng Yang and Yang Yao and Bowen Yu and Hongyi Yuan and Zheng Yuan and Jianwei Zhang and Xingxuan Zhang and Yichang Zhang and Zhenru Zhang and Chang Zhou and Jingren Zhou and Xiaohuan Zhou and Tianhang Zhu},\n  journal={arXiv preprint arXiv:2309.16609},\n  year={2023}\n}\n```",
+  "fetched_at": "2026-09-19T15:00:40.922001+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "Qwen",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "other",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "qwen2",
+      "text-generation",
+      "chat",
+      "conversational",
+      "en",
+      "arxiv:2309.16609",
+      "license:other",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "Qwen__Qwen1.5-0.5B-Chat",
+  "ok": true,
+  "popularity": {
+    "downloads": 66219,
+    "downloadsAllTime": 8041667,
+    "likes": 103,
+    "trendingScore": 1
+  },
+  "repo_id": "Qwen/Qwen1.5-0.5B-Chat",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2024-01-31T07:08:48.000Z",
+    "lastModified": "2024-04-30T07:19:52.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

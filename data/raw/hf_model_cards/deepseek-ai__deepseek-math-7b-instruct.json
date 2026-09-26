@@ -1,0 +1,84 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 11008,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 30,
+    "num_key_value_heads": 32,
+    "parameter_dtypes": {},
+    "torch_dtype": "bfloat16",
+    "vocab_size": 102400
+  },
+  "card_chars": 3147,
+  "card_text": "---\nlicense: other\nlicense_name: deepseek\nlicense_link: https://github.com/deepseek-ai/DeepSeek-Math/blob/main/LICENSE-MODEL\n---\n\n\n<p align=\"center\">\n<img width=\"500px\" alt=\"DeepSeek Chat\" src=\"https://github.com/deepseek-ai/DeepSeek-LLM/blob/main/images/logo.png?raw=true\">\n</p>\n<p align=\"center\"><a href=\"https://www.deepseek.com/\">[\ud83c\udfe0Homepage]</a>  |  <a href=\"https://chat.deepseek.com/\">[\ud83e\udd16 Chat with DeepSeek LLM]</a>  |  <a href=\"https://discord.gg/Tc7c45Zzu5\">[Discord]</a>  |  <a href=\"https://github.com/deepseek-ai/DeepSeek-LLM/blob/main/images/qr.jpeg\">[Wechat(\u5fae\u4fe1)]</a> </p>\n\n<p align=\"center\">\n  <a href=\"https://arxiv.org/pdf/2402.03300.pdf\"><b>Paper Link</b>\ud83d\udc41\ufe0f</a>\n</p>\n\n<hr>\n\n\n\n\n\n### 1. Introduction to DeepSeekMath\nSee the [Introduction](https://github.com/deepseek-ai/DeepSeek-Math) for more details.\n\n### 2. How to Use\nHere give some examples of how to use our model.\n\n**Chat Completion**\n\n\u2757\u2757\u2757 **Please use chain-of-thought prompt to test DeepSeekMath-Instruct and DeepSeekMath-RL:**\n\n- English questions: **{question}\\nPlease reason step by step, and put your final answer within \\\\boxed{}.**\n\n- Chinese questions: **{question}\\n\u8bf7\u901a\u8fc7\u9010\u6b65\u63a8\u7406\u6765\u89e3\u7b54\u95ee\u9898\uff0c\u5e76\u628a\u6700\u7ec8\u7b54\u6848\u653e\u7f6e\u4e8e\\\\boxed{}\u4e2d\u3002**\n\n```python\nimport torch\nfrom transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig\n\nmodel_name = \"deepseek-ai/deepseek-math-7b-instruct\"\ntokenizer = AutoTokenizer.from_pretrained(model_name)\nmodel = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.bfloat16, device_map=\"auto\")\nmodel.generation_config = GenerationConfig.from_pretrained(model_name)\nmodel.generation_config.pad_token_id = model.generation_config.eos_token_id\n\nmessages = [\n    {\"role\": \"user\", \"content\": \"what is the integral of x^2 from 0 to 2?\\nPlease reason step by step, and put your final answer within \\\\boxed{}.\"}\n]\ninput_tensor = tokenizer.apply_chat_template(messages, add_generation_prompt=True, return_tensors=\"pt\")\noutputs = model.generate(input_tensor.to(model.device), max_new_tokens=100)\n\nresult = tokenizer.decode(outputs[0][input_tensor.shape[1]:], skip_special_tokens=True)\nprint(result)\n```\n\nAvoiding the use of the provided function `apply_chat_template`, you can also interact with our model following the sample template. Note that `messages` should be replaced by your input.\n\n```\nUser: {messages[0]['content']}\n\nAssistant: {messages[1]['content']}<\uff5cend\u2581of\u2581sentence\uff5c>User: {messages[2]['content']}\n\nAssistant:\n```\n\n**Note:** By default (`add_special_tokens=True`), our tokenizer automatically adds a `bos_token` (`<\uff5cbegin\u2581of\u2581sentence\uff5c>`) before the input text. Additionally, since the system prompt is not compatible with this version of our models, we DO NOT RECOMMEND including the system prompt in your input.\n\n### 3. License\nThis code repository is licensed under the MIT License. The use of DeepSeekMath models is subject to the Model License. DeepSeekMath supports commercial use.\n\nSee the [LICENSE-MODEL](https://github.com/deepseek-ai/DeepSeek-Math/blob/main/LICENSE-MODEL) for more details.\n\n### 4. Contact\n\nIf you have any questions, please raise an issue or contact us at [service@deepseek.com](mailto:service@deepseek.com).\n\n",
+  "fetched_at": "2026-09-19T15:01:06.901124+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "deepseek-ai",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "other",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "conversational",
+      "arxiv:2402.03300",
+      "license:other",
+      "eval-results",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "deepseek-ai__deepseek-math-7b-instruct",
+  "ok": true,
+  "popularity": {
+    "downloads": 8253,
+    "downloadsAllTime": 608340,
+    "likes": 156,
+    "trendingScore": 0
+  },
+  "repo_id": "deepseek-ai/deepseek-math-7b-instruct",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2024-02-05T08:14:00.000Z",
+    "lastModified": "2024-02-06T10:38:24.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": 13015864320,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {
+      "BF16": 12688184320,
+      "F32": 327680000
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 32000
+  },
+  "card_chars": 2059,
+  "card_text": "---\nlicense: cc-by-nc-4.0\n---\nReMM-Lion is a merge of ReMM (SLERP) with Pygmalion-2.\n\nThis merge use SLERP method to merge Re:MM and Pygmalion-2.\n\nCommand useds and explaination :\n```shell\nDue to hardware limitation, some merge was done in 2 part.\n\n- Recreate ReML : Mythologic (v2) (Chronos/Hermes/Airboros)\n=> Replacing Chronos by The-Face-Of-Goonery/Chronos-Beluga-v2-13bfp16 (0.30)\n=> Replacing Airoboros by jondurbin/airoboros-l2-13b-2.1 (last version) (0.40)\n=> Keeping NousResearch/Nous-Hermes-Llama2-13b (0.30)\n\nPart 1: python ties_merge.py TheBloke/Llama-2-13B-fp16 ./ReML-L2-13B-part1  --merge The-Face-Of-Goonery/Chronos-Beluga-v2-13bfp16 --density 0.42 --merge jondurbin/airoboros-l2-13b-2.1 --density 0.56 --cuda\n\nPart 2: python ties_merge.py TheBloke/Llama-2-13B-fp16 ./ReML-L2-13B --merge NousResearch/Nous-Hermes-Llama2-13b --density 0.30 --merge Undi95/ReML-L2-13B-part1 --density 0.70 --cuda\n\nWith that :\n- Recreate ReMM : MythoMax (v2) (Mythologic/Huginn v1)\n=> Replacing Mythologic by the one above (0.5)\n=> Replacing Huginn by The-Face-Of-Goonery/Huginn-13b-v1.2 (hottest) (0.5)\n\nPart 3: python slerpmergelm.py \"The-Face-Of-Goonery_Huginn-13b-v1.2\" \"Undi95_ReML-L2-13B\" \"result\"\n\nWith that :\n- ReMM-Lion-13B\n\nPart 4: python slerpmergelm.py \"The-Face-Of-Goonery_Huginn-13b-v1.2\" \"Undi95_ReMM-S-Light\" \"result\"\n```\n\n<!-- description start -->\n## Description\n\nThis repo contains fp16 files of ReMM-Lion-13B.\n<!-- description end -->\n<!-- description start -->\n## Models used\n\n\n- TheBloke/Llama-2-13B-fp16 (base)\n- The-Face-Of-Goonery/Chronos-Beluga-v2-13bfp16\n- jondurbin/airoboros-l2-13b-2.1\n- NousResearch/Nous-Hermes-Llama2-13b\n- The-Face-Of-Goonery/Huginn-13b-v1.2\n- ReML-L2-13B (Private recreation trial of an updated Mythologic-L2-13B)\n- PygmalionAI/pygmalion-2-13b\n<!-- description end -->\n<!-- prompt-template start -->\n## Prompt template: Alpaca\n\n```\nBelow is an instruction that describes a task. Write a response that appropriately completes the request.\n\n### Instruction:\n{prompt}\n\n### Response:\n\n```\n\nSpecial thanks to Sushi kek",
+  "fetched_at": "2026-09-22T08:00:48.731598+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "Undi95",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "license:cc-by-nc-4.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "Undi95__ReMM-Lion-13B",
+  "ok": true,
+  "popularity": {
+    "downloads": 21,
+    "downloadsAllTime": 311,
+    "likes": 0,
+    "trendingScore": 0
+  },
+  "repo_id": "Undi95/ReMM-Lion-13B",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-06T11:24:05.000Z",
+    "lastModified": "2023-09-09T21:14:50.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

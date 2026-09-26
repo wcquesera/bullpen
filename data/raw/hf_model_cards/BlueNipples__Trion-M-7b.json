@@ -1,0 +1,83 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 417,
+  "card_text": "---\nlicense: apache-2.0\nlanguage:\n- en\ntags:\n- Mistral\n---\n\nThis is a gradient blockmerge (0.8,0.2) of two Mistral models. \n\nThe logic model is a SLERP merge of https://huggingface.co/teknium/OpenHermes-2.5-Mistral-7B and https://huggingface.co/openchat/openchat_3.5\n\nThe prose model is a SLERP merge of https://huggingface.co/NousResearch/Nous-Capybara-7B-V1.9 and https://huggingface.co/HuggingFaceH4/zephyr-7b-beta",
+  "fetched_at": "2026-09-22T06:43:30.449501+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "BlueNipples",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "mistral",
+      "text-generation",
+      "Mistral",
+      "en",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "BlueNipples__Trion-M-7b",
+  "ok": true,
+  "popularity": {
+    "downloads": 24,
+    "downloadsAllTime": 546,
+    "likes": 4,
+    "trendingScore": 0
+  },
+  "repo_id": "BlueNipples/Trion-M-7b",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-11-07T05:55:38.000Z",
+    "lastModified": "2023-11-07T12:12:56.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

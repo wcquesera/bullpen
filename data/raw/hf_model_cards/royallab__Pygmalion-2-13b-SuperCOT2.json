@@ -1,0 +1,85 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": 13015864320,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {
+      "F16": 13015864320
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 1636,
+  "card_text": "---\nlanguage:\n- en\nlibrary_name: transformers\npipeline_tag: text-generation\ntags:\n- llama\n- llama-2\nlicense: llama2\n---\n\n# Model Card: Pygmalion-2-13b-SuperCOT2\n\nThis is a merge between:\n- [Pygmalion 2 13b](https://huggingface.co/PygmalionAI/pygmalion-2-13b)\n- [Ausboss's Llama2 SuperCOT2 loras](https://huggingface.co/ausboss/llama2-13b-supercot-loras2) at a weight of 1.00.\n\nThe merge was performed by a commandline version of [EzTrainer](https://github.com/CoffeeVampir3/ez-trainer) by CoffeeVampire/Blackroot via [zaraki-tools](https://github.com/zarakiquemparte/zaraki-tools) by Zaraki.\n\nThis merge differs from the previous Pyg-2-SuperCOT merge. According to AusBoss, this version was trained closer to SuperCOT llama1. The intended objective is the same, which is to make Pygmalion smarter.\n\nThe SuperCOT2 lora was merged at a weight of 1.\n\n## Usage:\n\nSince this is a merge between Pygmalion-2 and SuperCOT2, the following instruction formats should work:\n\nMetharme:\n\n```\n<|system|>This is a text adventure game. Describe the scenario to the user and give him three options to pick from on each turn.<|user|>Start!<|model|>\n```\n\nAlpaca:\n\n```\n### Instruction:\nYour instruction or question here.\n### Response:\n```\n\n## Bias, Risks, and Limitations\n\nThe model will show biases similar to those observed in niche roleplaying forums on the Internet, besides those exhibited by the base model. It is not intended for supplying factual information or advice in any form.\n\n## Training Details\n\nThis model is merged and can be reproduced using the tools mentioned above. Please refer to all provided links for extra model-specific details.",
+  "fetched_at": "2026-09-22T06:46:49.436038+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "royallab",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "llama2",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "llama-2",
+      "en",
+      "license:llama2",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "royallab__Pygmalion-2-13b-SuperCOT2",
+  "ok": true,
+  "popularity": {
+    "downloads": 34,
+    "downloadsAllTime": 389,
+    "likes": 2,
+    "trendingScore": 0
+  },
+  "repo_id": "royallab/Pygmalion-2-13b-SuperCOT2",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-14T02:29:33.000Z",
+    "lastModified": "2023-09-14T04:54:14.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": null,
+    "intermediate_size": null,
+    "max_position_embeddings": null,
+    "model_type": "llama",
+    "n_parameters": 8030261248,
+    "num_attention_heads": null,
+    "num_hidden_layers": null,
+    "num_key_value_heads": null,
+    "parameter_dtypes": {
+      "BF16": 8030261248
+    },
+    "torch_dtype": null,
+    "vocab_size": null
+  },
+  "card_chars": 0,
+  "card_text": null,
+  "fetched_at": "2026-09-19T15:02:29.035513+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 401,
+    "readme": 401
+  },
+  "lineage": {
+    "base_model": [
+      "meta-llama/Meta-Llama-3.1-8B",
+      "meta-llama/Llama-3.1-8B"
+    ],
+    "card_base_models": [
+      "meta-llama/Meta-Llama-3.1-8B"
+    ],
+    "merge_tags": [],
+    "n_base_models": 2,
+    "relations": {
+      "": [
+        "meta-llama/Llama-3.1-8B"
+      ],
+      "finetune": [
+        "meta-llama/Llama-3.1-8B"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "meta-llama",
+    "gated": "manual",
+    "library_name": "transformers",
+    "license": "llama3.1",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "facebook",
+      "meta",
+      "pytorch",
+      "llama-3",
+      "conversational",
+      "en",
+      "de",
+      "fr",
+      "it",
+      "pt",
+      "hi",
+      "es",
+      "th",
+      "arxiv:2204.05149",
+      "base_model:meta-llama/Llama-3.1-8B",
+      "base_model:finetune:meta-llama/Llama-3.1-8B",
+      "license:llama3.1",
+      "eval-results",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:sagemaker",
+      "region:us"
+    ]
+  },
+  "model_key": "llama-3.1-8b-instruct",
+  "ok": true,
+  "popularity": {
+    "downloads": 5919746,
+    "downloadsAllTime": 184905701,
+    "likes": 7736,
+    "trendingScore": 222
+  },
+  "repo_id": "meta-llama/Llama-3.1-8B-Instruct",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2024-07-18T08:56:00.000Z",
+    "lastModified": "2024-09-25T17:00:57.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 2048,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": null,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 1597,
+  "card_text": "---\nlicense: other\nlanguage:\n- en\n---\n**UPDATE:** There's a Llama 2 sequel now! [Check it out here!](https://huggingface.co/Gryphe/MythoLogic-L2-13b)\n\nAn experiment with gradient merges using [the following script](https://github.com/TehVenomm/LM_Transformers_BlockMerge), with [Chronos](https://huggingface.co/elinas/chronos-13b) as its primary model, augmented by [Hermes](https://huggingface.co/NousResearch/Nous-Hermes-13b) and [Wizard-Vicuna Uncensored](https://huggingface.co/TheBloke/Wizard-Vicuna-13B-Uncensored-HF).\n\nQuantized models are available from TheBloke: [GGML](https://huggingface.co/TheBloke/MythoLogic-13B-GGML) - [GPTQ](https://huggingface.co/TheBloke/MythoLogic-13B-GPTQ) (You're the best!)\n\n## Model details\n\nChronos is a wonderfully verbose model, though it definitely seems to lack in the logic department. Hermes and WizardLM have been merged gradually, primarily in the higher layers (10+) in an attempt to rectify some of this behaviour.\n\nThe main objective was to create an all-round model with improved story generation and roleplaying capabilities.\n\nBelow is an illustration to showcase a rough approximation of the gradients I used to create MythoLogic:\n\n![](approximation.png)\n\n## Prompt Format\n\nThis model primarily uses Alpaca formatting, so for optimal model performance, use:\n```\n<System prompt/Character Card>\n\n### Instruction:\nYour instruction or question here.\nFor roleplay purposes, I suggest the following - Write <CHAR NAME>'s next reply in a chat between <YOUR NAME> and <CHAR NAME>. Write a single reply only.\n\n### Response:\n```\n\n---\nlicense: other\n---",
+  "fetched_at": "2026-09-22T06:43:39.889459+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "Gryphe",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "other",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "en",
+      "license:other",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "Gryphe__MythoLogic-13b",
+  "ok": true,
+  "popularity": {
+    "downloads": 70,
+    "downloadsAllTime": 56472,
+    "likes": 17,
+    "trendingScore": 0
+  },
+  "repo_id": "Gryphe/MythoLogic-13b",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-07-12T15:28:34.000Z",
+    "lastModified": "2023-08-04T09:55:45.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

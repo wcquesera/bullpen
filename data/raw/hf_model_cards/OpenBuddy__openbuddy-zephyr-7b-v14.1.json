@@ -1,0 +1,89 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {},
+    "torch_dtype": "bfloat16",
+    "vocab_size": 36608
+  },
+  "card_chars": 2333,
+  "card_text": "---\nlanguage:\n- zh\n- en\n- fr\n- de\n- ja\n- ko\n- it\n- ru\npipeline_tag: text-generation\ninference: false\nlibrary_name: transformers\nlicense: apache-2.0\n---\n\n\n# OpenBuddy - Open Multilingual Chatbot\n\nGitHub and Usage Guide: [https://github.com/OpenBuddy/OpenBuddy](https://github.com/OpenBuddy/OpenBuddy)\n\nWebsite and Demo: [https://openbuddy.ai](https://openbuddy.ai)\n\nEvaluation result of this model: [Evaluation.txt](Evaluation.txt)\n\n![Demo](https://raw.githubusercontent.com/OpenBuddy/OpenBuddy/main/media/demo.png)\n\n# Copyright Notice\n\nBase model: https://huggingface.co/HuggingFaceH4/zephyr-7b-beta\n\nLicense: Apache 2.0\n\n## Disclaimer\n\nAll OpenBuddy models have inherent limitations and may potentially produce outputs that are erroneous, harmful, offensive, or otherwise undesirable. Users should not use these models in critical or high-stakes situations that may lead to personal injury, property damage, or significant losses. Examples of such scenarios include, but are not limited to, the medical field, controlling software and hardware systems that may cause harm, and making important financial or legal decisions.\n\nOpenBuddy is provided \"as-is\" without any warranty of any kind, either express or implied, including, but not limited to, the implied warranties of merchantability, fitness for a particular purpose, and non-infringement. In no event shall the authors, contributors, or copyright holders be liable for any claim, damages, or other liabilities, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the software or the use or other dealings in the software.\n\nBy using OpenBuddy, you agree to these terms and conditions, and acknowledge that you understand the potential risks associated with its use. You also agree to indemnify and hold harmless the authors, contributors, and copyright holders from any claims, damages, or liabilities arising from your use of OpenBuddy.\n\n\n## \u514d\u8d23\u58f0\u660e\n\n\u6240\u6709OpenBuddy\u6a21\u578b\u5747\u5b58\u5728\u56fa\u6709\u7684\u5c40\u9650\u6027\uff0c\u53ef\u80fd\u4ea7\u751f\u9519\u8bef\u7684\u3001\u6709\u5bb3\u7684\u3001\u5192\u72af\u6027\u7684\u6216\u5176\u4ed6\u4e0d\u826f\u7684\u8f93\u51fa\u3002\u7528\u6237\u5728\u5173\u952e\u6216\u9ad8\u98ce\u9669\u573a\u666f\u4e2d\u5e94\u8c28\u614e\u884c\u4e8b\uff0c\u4e0d\u8981\u4f7f\u7528\u8fd9\u4e9b\u6a21\u578b\uff0c\u4ee5\u514d\u5bfc\u81f4\u4eba\u8eab\u4f24\u5bb3\u3001\u8d22\u4ea7\u635f\u5931\u6216\u91cd\u5927\u635f\u5931\u3002\u6b64\u7c7b\u573a\u666f\u7684\u4f8b\u5b50\u5305\u62ec\u4f46\u4e0d\u9650\u4e8e\u533b\u7597\u9886\u57df\u3001\u53ef\u80fd\u5bfc\u81f4\u4f24\u5bb3\u7684\u8f6f\u786c\u4ef6\u7cfb\u7edf\u7684\u63a7\u5236\u4ee5\u53ca\u8fdb\u884c\u91cd\u8981\u7684\u8d22\u52a1\u6216\u6cd5\u5f8b\u51b3\u7b56\u3002\n\nOpenBuddy\u6309\u201c\u539f\u6837\u201d\u63d0\u4f9b\uff0c\u4e0d\u9644\u5e26\u4efb\u4f55\u79cd\u7c7b\u7684\u660e\u793a\u6216\u6697\u793a\u7684\u4fdd\u8bc1\uff0c\u5305\u62ec\u4f46\u4e0d\u9650\u4e8e\u9002\u9500\u6027\u3001\u7279\u5b9a\u76ee\u7684\u7684\u9002\u7528\u6027\u548c\u975e\u4fb5\u6743\u7684\u6697\u793a\u4fdd\u8bc1\u3002\u5728\u4efb\u4f55\u60c5\u51b5\u4e0b\uff0c\u4f5c\u8005\u3001\u8d21\u732e\u8005\u6216\u7248\u6743\u6240\u6709\u8005\u5747\u4e0d\u5bf9\u56e0\u8f6f\u4ef6\u6216\u4f7f\u7528\u6216\u5176\u4ed6\u8f6f\u4ef6\u4ea4\u6613\u800c\u4ea7\u751f\u7684\u4efb\u4f55\u7d22\u8d54\u3001\u635f\u5bb3\u8d54\u507f\u6216\u5176\u4ed6\u8d23\u4efb\uff08\u65e0\u8bba\u662f\u5408\u540c\u3001\u4fb5\u6743\u8fd8\u662f\u5176\u4ed6\u539f\u56e0\uff09\u627f\u62c5\u8d23\u4efb\u3002\n\n\u4f7f\u7528OpenBuddy\u5373\u8868\u793a\u60a8\u540c\u610f\u8fd9\u4e9b\u6761\u6b3e\u548c\u6761\u4ef6\uff0c\u5e76\u627f\u8ba4\u60a8\u4e86\u89e3\u5176\u4f7f\u7528\u53ef\u80fd\u5e26\u6765\u7684\u6f5c\u5728\u98ce\u9669\u3002\u60a8\u8fd8\u540c\u610f\u8d54\u507f\u5e76\u4f7f\u4f5c\u8005\u3001\u8d21\u732e\u8005\u548c\u7248\u6743\u6240\u6709\u8005\u514d\u53d7\u56e0\u60a8\u4f7f\u7528OpenBuddy\u800c\u4ea7\u751f\u7684\u4efb\u4f55\u7d22\u8d54\u3001\u635f\u5bb3\u8d54\u507f\u6216\u8d23\u4efb\u7684\u5f71\u54cd\u3002",
+  "fetched_at": "2026-09-22T06:44:18.251112+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "OpenBuddy",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "mistral",
+      "text-generation",
+      "zh",
+      "en",
+      "fr",
+      "de",
+      "ja",
+      "ko",
+      "it",
+      "ru",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "OpenBuddy__openbuddy-zephyr-7b-v14.1",
+  "ok": true,
+  "popularity": {
+    "downloads": 170,
+    "downloadsAllTime": 97074,
+    "likes": 50,
+    "trendingScore": 0
+  },
+  "repo_id": "OpenBuddy/openbuddy-zephyr-7b-v14.1",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-11-06T00:37:45.000Z",
+    "lastModified": "2023-11-07T10:03:09.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

@@ -1,0 +1,36 @@
+# The shuffled-text control: each text-reading encoder beside a twin whose text is
+# deranged across MODELS (model_shuffled: a model reads another model's answers) or, for
+# the question-text channel, across QUESTIONS (question_shuffled). Same strict protocol as
+# strict.yaml; a text channel that carries model-specific signal loses it in the twin.
+name: shuffled_text
+data:
+  slice: data/paper_ckpt/slice.npz
+  answers: data/paper_ckpt/answers.npz
+  view: core
+  raw_dir: data/raw
+protocol:
+  fold_scheme: grouped_all
+  k_folds: 5
+  seeds: [0, 1, 2]
+train:
+  dim: 32
+  interview_k: 400
+  interview_selector: fisher
+  arms:
+    - text_mean768
+    - text_mean768_model_shuffled
+    - pls_svd_fusion32
+    - pls_svd_fusion32_model_shuffled
+    - pls_svd_tri32
+    - pls_svd_tri32_model_shuffled
+    - pls_svd_bitsqtext32
+    - pls_svd_bitsqtext32_question_shuffled
+    - pls_svd_tri32_question_shuffled
+    - null_random32
+    - null_random768
+floor:
+  arms: [null_random32, null_random768]
+  draws: 10
+eval:
+  battery: config/battery.yaml
+out: results/shuffled_text

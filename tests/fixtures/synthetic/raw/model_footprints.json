@@ -1,0 +1,728 @@
+{
+ "generated_at": "synthetic",
+ "generated_by": "tests/fixtures/make_sample_data.py",
+ "models": {
+  "aurora-labs__aurora-1.5b-base": {
+   "dir": "aurora-labs__aurora-1.5b-base",
+   "hf_id": "aurora-labs/aurora-1.5b-base",
+   "family": "aurora",
+   "params_b": 1.5,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 3.03,
+   "weight_bytes": 3030000000
+  },
+  "aurora-labs__aurora-3b-chat": {
+   "dir": "aurora-labs__aurora-3b-chat",
+   "hf_id": "aurora-labs/aurora-3b-chat",
+   "family": "aurora",
+   "params_b": 3.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 6.06,
+   "weight_bytes": 6060000000
+  },
+  "aurora-labs__aurora-7b-base": {
+   "dir": "aurora-labs__aurora-7b-base",
+   "hf_id": "aurora-labs/aurora-7b-base",
+   "family": "aurora",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "aurora-labs__aurora-7b-instruct": {
+   "dir": "aurora-labs__aurora-7b-instruct",
+   "hf_id": "aurora-labs/aurora-7b-instruct",
+   "family": "aurora",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "aurora-labs__aurora-13b-chat": {
+   "dir": "aurora-labs__aurora-13b-chat",
+   "hf_id": "aurora-labs/aurora-13b-chat",
+   "family": "aurora",
+   "params_b": 13.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 26.26,
+   "weight_bytes": 26260000000
+  },
+  "aurora-labs__aurora-34b-instruct": {
+   "dir": "aurora-labs__aurora-34b-instruct",
+   "hf_id": "aurora-labs/aurora-34b-instruct",
+   "family": "aurora",
+   "params_b": 34.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 68.68,
+   "weight_bytes": 68680000000
+  },
+  "boreal-labs__boreal-1.5b-base": {
+   "dir": "boreal-labs__boreal-1.5b-base",
+   "hf_id": "boreal-labs/boreal-1.5b-base",
+   "family": "boreal",
+   "params_b": 1.5,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 3.03,
+   "weight_bytes": 3030000000
+  },
+  "boreal-labs__boreal-3b-chat": {
+   "dir": "boreal-labs__boreal-3b-chat",
+   "hf_id": "boreal-labs/boreal-3b-chat",
+   "family": "boreal",
+   "params_b": 3.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 6.06,
+   "weight_bytes": 6060000000
+  },
+  "boreal-labs__boreal-7b-base": {
+   "dir": "boreal-labs__boreal-7b-base",
+   "hf_id": "boreal-labs/boreal-7b-base",
+   "family": "boreal",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "boreal-labs__boreal-7b-instruct": {
+   "dir": "boreal-labs__boreal-7b-instruct",
+   "hf_id": "boreal-labs/boreal-7b-instruct",
+   "family": "boreal",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "boreal-labs__boreal-13b-chat": {
+   "dir": "boreal-labs__boreal-13b-chat",
+   "hf_id": "boreal-labs/boreal-13b-chat",
+   "family": "boreal",
+   "params_b": 13.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 26.26,
+   "weight_bytes": 26260000000
+  },
+  "boreal-labs__boreal-34b-instruct": {
+   "dir": "boreal-labs__boreal-34b-instruct",
+   "hf_id": "boreal-labs/boreal-34b-instruct",
+   "family": "boreal",
+   "params_b": 34.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 68.68,
+   "weight_bytes": 68680000000
+  },
+  "cobalt-labs__cobalt-1.5b-base": {
+   "dir": "cobalt-labs__cobalt-1.5b-base",
+   "hf_id": "cobalt-labs/cobalt-1.5b-base",
+   "family": "cobalt",
+   "params_b": 1.5,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 3.03,
+   "weight_bytes": 3030000000
+  },
+  "cobalt-labs__cobalt-3b-chat": {
+   "dir": "cobalt-labs__cobalt-3b-chat",
+   "hf_id": "cobalt-labs/cobalt-3b-chat",
+   "family": "cobalt",
+   "params_b": 3.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 6.06,
+   "weight_bytes": 6060000000
+  },
+  "cobalt-labs__cobalt-7b-base": {
+   "dir": "cobalt-labs__cobalt-7b-base",
+   "hf_id": "cobalt-labs/cobalt-7b-base",
+   "family": "cobalt",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "cobalt-labs__cobalt-7b-instruct": {
+   "dir": "cobalt-labs__cobalt-7b-instruct",
+   "hf_id": "cobalt-labs/cobalt-7b-instruct",
+   "family": "cobalt",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "cobalt-labs__cobalt-13b-chat": {
+   "dir": "cobalt-labs__cobalt-13b-chat",
+   "hf_id": "cobalt-labs/cobalt-13b-chat",
+   "family": "cobalt",
+   "params_b": 13.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 26.26,
+   "weight_bytes": 26260000000
+  },
+  "cobalt-labs__cobalt-34b-instruct": {
+   "dir": "cobalt-labs__cobalt-34b-instruct",
+   "hf_id": "cobalt-labs/cobalt-34b-instruct",
+   "family": "cobalt",
+   "params_b": 34.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 68.68,
+   "weight_bytes": 68680000000
+  },
+  "dune-labs__dune-1.5b-base": {
+   "dir": "dune-labs__dune-1.5b-base",
+   "hf_id": "dune-labs/dune-1.5b-base",
+   "family": "dune",
+   "params_b": 1.5,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 3.03,
+   "weight_bytes": 3030000000
+  },
+  "dune-labs__dune-3b-chat": {
+   "dir": "dune-labs__dune-3b-chat",
+   "hf_id": "dune-labs/dune-3b-chat",
+   "family": "dune",
+   "params_b": 3.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 6.06,
+   "weight_bytes": 6060000000
+  },
+  "dune-labs__dune-7b-base": {
+   "dir": "dune-labs__dune-7b-base",
+   "hf_id": "dune-labs/dune-7b-base",
+   "family": "dune",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "dune-labs__dune-7b-instruct": {
+   "dir": "dune-labs__dune-7b-instruct",
+   "hf_id": "dune-labs/dune-7b-instruct",
+   "family": "dune",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "dune-labs__dune-13b-chat": {
+   "dir": "dune-labs__dune-13b-chat",
+   "hf_id": "dune-labs/dune-13b-chat",
+   "family": "dune",
+   "params_b": 13.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 26.26,
+   "weight_bytes": 26260000000
+  },
+  "dune-labs__dune-34b-instruct": {
+   "dir": "dune-labs__dune-34b-instruct",
+   "hf_id": "dune-labs/dune-34b-instruct",
+   "family": "dune",
+   "params_b": 34.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 68.68,
+   "weight_bytes": 68680000000
+  },
+  "ember-labs__ember-1.5b-base": {
+   "dir": "ember-labs__ember-1.5b-base",
+   "hf_id": "ember-labs/ember-1.5b-base",
+   "family": "ember",
+   "params_b": 1.5,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 3.03,
+   "weight_bytes": 3030000000
+  },
+  "ember-labs__ember-3b-chat": {
+   "dir": "ember-labs__ember-3b-chat",
+   "hf_id": "ember-labs/ember-3b-chat",
+   "family": "ember",
+   "params_b": 3.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 6.06,
+   "weight_bytes": 6060000000
+  },
+  "ember-labs__ember-7b-base": {
+   "dir": "ember-labs__ember-7b-base",
+   "hf_id": "ember-labs/ember-7b-base",
+   "family": "ember",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "ember-labs__ember-7b-instruct": {
+   "dir": "ember-labs__ember-7b-instruct",
+   "hf_id": "ember-labs/ember-7b-instruct",
+   "family": "ember",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "ember-labs__ember-13b-chat": {
+   "dir": "ember-labs__ember-13b-chat",
+   "hf_id": "ember-labs/ember-13b-chat",
+   "family": "ember",
+   "params_b": 13.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 26.26,
+   "weight_bytes": 26260000000
+  },
+  "ember-labs__ember-34b-instruct": {
+   "dir": "ember-labs__ember-34b-instruct",
+   "hf_id": "ember-labs/ember-34b-instruct",
+   "family": "ember",
+   "params_b": 34.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 68.68,
+   "weight_bytes": 68680000000
+  },
+  "fjord-labs__fjord-1.5b-base": {
+   "dir": "fjord-labs__fjord-1.5b-base",
+   "hf_id": "fjord-labs/fjord-1.5b-base",
+   "family": "fjord",
+   "params_b": 1.5,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 3.03,
+   "weight_bytes": 3030000000
+  },
+  "fjord-labs__fjord-3b-chat": {
+   "dir": "fjord-labs__fjord-3b-chat",
+   "hf_id": "fjord-labs/fjord-3b-chat",
+   "family": "fjord",
+   "params_b": 3.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 6.06,
+   "weight_bytes": 6060000000
+  },
+  "fjord-labs__fjord-7b-base": {
+   "dir": "fjord-labs__fjord-7b-base",
+   "hf_id": "fjord-labs/fjord-7b-base",
+   "family": "fjord",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "fjord-labs__fjord-7b-instruct": {
+   "dir": "fjord-labs__fjord-7b-instruct",
+   "hf_id": "fjord-labs/fjord-7b-instruct",
+   "family": "fjord",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "fjord-labs__fjord-13b-chat": {
+   "dir": "fjord-labs__fjord-13b-chat",
+   "hf_id": "fjord-labs/fjord-13b-chat",
+   "family": "fjord",
+   "params_b": 13.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 26.26,
+   "weight_bytes": 26260000000
+  },
+  "fjord-labs__fjord-34b-instruct": {
+   "dir": "fjord-labs__fjord-34b-instruct",
+   "hf_id": "fjord-labs/fjord-34b-instruct",
+   "family": "fjord",
+   "params_b": 34.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 68.68,
+   "weight_bytes": 68680000000
+  },
+  "garnet-labs__garnet-1.5b-base": {
+   "dir": "garnet-labs__garnet-1.5b-base",
+   "hf_id": "garnet-labs/garnet-1.5b-base",
+   "family": "garnet",
+   "params_b": 1.5,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 3.03,
+   "weight_bytes": 3030000000
+  },
+  "garnet-labs__garnet-3b-chat": {
+   "dir": "garnet-labs__garnet-3b-chat",
+   "hf_id": "garnet-labs/garnet-3b-chat",
+   "family": "garnet",
+   "params_b": 3.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 6.06,
+   "weight_bytes": 6060000000
+  },
+  "garnet-labs__garnet-7b-base": {
+   "dir": "garnet-labs__garnet-7b-base",
+   "hf_id": "garnet-labs/garnet-7b-base",
+   "family": "garnet",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "garnet-labs__garnet-7b-instruct": {
+   "dir": "garnet-labs__garnet-7b-instruct",
+   "hf_id": "garnet-labs/garnet-7b-instruct",
+   "family": "garnet",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "garnet-labs__garnet-13b-chat": {
+   "dir": "garnet-labs__garnet-13b-chat",
+   "hf_id": "garnet-labs/garnet-13b-chat",
+   "family": "garnet",
+   "params_b": 13.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 26.26,
+   "weight_bytes": 26260000000
+  },
+  "garnet-labs__garnet-34b-instruct": {
+   "dir": "garnet-labs__garnet-34b-instruct",
+   "hf_id": "garnet-labs/garnet-34b-instruct",
+   "family": "garnet",
+   "params_b": 34.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 68.68,
+   "weight_bytes": 68680000000
+  },
+  "harbor-labs__harbor-1.5b-base": {
+   "dir": "harbor-labs__harbor-1.5b-base",
+   "hf_id": "harbor-labs/harbor-1.5b-base",
+   "family": "harbor",
+   "params_b": 1.5,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 3.03,
+   "weight_bytes": 3030000000
+  },
+  "harbor-labs__harbor-3b-chat": {
+   "dir": "harbor-labs__harbor-3b-chat",
+   "hf_id": "harbor-labs/harbor-3b-chat",
+   "family": "harbor",
+   "params_b": 3.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 6.06,
+   "weight_bytes": 6060000000
+  },
+  "harbor-labs__harbor-7b-base": {
+   "dir": "harbor-labs__harbor-7b-base",
+   "hf_id": "harbor-labs/harbor-7b-base",
+   "family": "harbor",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "harbor-labs__harbor-7b-instruct": {
+   "dir": "harbor-labs__harbor-7b-instruct",
+   "hf_id": "harbor-labs/harbor-7b-instruct",
+   "family": "harbor",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "harbor-labs__harbor-13b-chat": {
+   "dir": "harbor-labs__harbor-13b-chat",
+   "hf_id": "harbor-labs/harbor-13b-chat",
+   "family": "harbor",
+   "params_b": 13.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 26.26,
+   "weight_bytes": 26260000000
+  },
+  "harbor-labs__harbor-34b-instruct": {
+   "dir": "harbor-labs__harbor-34b-instruct",
+   "hf_id": "harbor-labs/harbor-34b-instruct",
+   "family": "harbor",
+   "params_b": 34.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 68.68,
+   "weight_bytes": 68680000000
+  },
+  "iris-labs__iris-1.5b-base": {
+   "dir": "iris-labs__iris-1.5b-base",
+   "hf_id": "iris-labs/iris-1.5b-base",
+   "family": "iris",
+   "params_b": 1.5,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 3.03,
+   "weight_bytes": 3030000000
+  },
+  "iris-labs__iris-3b-chat": {
+   "dir": "iris-labs__iris-3b-chat",
+   "hf_id": "iris-labs/iris-3b-chat",
+   "family": "iris",
+   "params_b": 3.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 6.06,
+   "weight_bytes": 6060000000
+  },
+  "iris-labs__iris-7b-base": {
+   "dir": "iris-labs__iris-7b-base",
+   "hf_id": "iris-labs/iris-7b-base",
+   "family": "iris",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "iris-labs__iris-7b-instruct": {
+   "dir": "iris-labs__iris-7b-instruct",
+   "hf_id": "iris-labs/iris-7b-instruct",
+   "family": "iris",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "iris-labs__iris-13b-chat": {
+   "dir": "iris-labs__iris-13b-chat",
+   "hf_id": "iris-labs/iris-13b-chat",
+   "family": "iris",
+   "params_b": 13.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 26.26,
+   "weight_bytes": 26260000000
+  },
+  "iris-labs__iris-34b-instruct": {
+   "dir": "iris-labs__iris-34b-instruct",
+   "hf_id": "iris-labs/iris-34b-instruct",
+   "family": "iris",
+   "params_b": 34.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 68.68,
+   "weight_bytes": 68680000000
+  },
+  "juniper-labs__juniper-1.5b-base": {
+   "dir": "juniper-labs__juniper-1.5b-base",
+   "hf_id": "juniper-labs/juniper-1.5b-base",
+   "family": "juniper",
+   "params_b": 1.5,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 3.03,
+   "weight_bytes": 3030000000
+  },
+  "juniper-labs__juniper-3b-chat": {
+   "dir": "juniper-labs__juniper-3b-chat",
+   "hf_id": "juniper-labs/juniper-3b-chat",
+   "family": "juniper",
+   "params_b": 3.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 6.06,
+   "weight_bytes": 6060000000
+  },
+  "juniper-labs__juniper-7b-base": {
+   "dir": "juniper-labs__juniper-7b-base",
+   "hf_id": "juniper-labs/juniper-7b-base",
+   "family": "juniper",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "juniper-labs__juniper-7b-instruct": {
+   "dir": "juniper-labs__juniper-7b-instruct",
+   "hf_id": "juniper-labs/juniper-7b-instruct",
+   "family": "juniper",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "juniper-labs__juniper-13b-chat": {
+   "dir": "juniper-labs__juniper-13b-chat",
+   "hf_id": "juniper-labs/juniper-13b-chat",
+   "family": "juniper",
+   "params_b": 13.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 26.26,
+   "weight_bytes": 26260000000
+  },
+  "juniper-labs__juniper-34b-instruct": {
+   "dir": "juniper-labs__juniper-34b-instruct",
+   "hf_id": "juniper-labs/juniper-34b-instruct",
+   "family": "juniper",
+   "params_b": 34.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 68.68,
+   "weight_bytes": 68680000000
+  },
+  "kestrel-labs__kestrel-1.5b-base": {
+   "dir": "kestrel-labs__kestrel-1.5b-base",
+   "hf_id": "kestrel-labs/kestrel-1.5b-base",
+   "family": "kestrel",
+   "params_b": 1.5,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 3.03,
+   "weight_bytes": 3030000000
+  },
+  "kestrel-labs__kestrel-3b-chat": {
+   "dir": "kestrel-labs__kestrel-3b-chat",
+   "hf_id": "kestrel-labs/kestrel-3b-chat",
+   "family": "kestrel",
+   "params_b": 3.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 6.06,
+   "weight_bytes": 6060000000
+  },
+  "kestrel-labs__kestrel-7b-base": {
+   "dir": "kestrel-labs__kestrel-7b-base",
+   "hf_id": "kestrel-labs/kestrel-7b-base",
+   "family": "kestrel",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "kestrel-labs__kestrel-7b-instruct": {
+   "dir": "kestrel-labs__kestrel-7b-instruct",
+   "hf_id": "kestrel-labs/kestrel-7b-instruct",
+   "family": "kestrel",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "kestrel-labs__kestrel-13b-chat": {
+   "dir": "kestrel-labs__kestrel-13b-chat",
+   "hf_id": "kestrel-labs/kestrel-13b-chat",
+   "family": "kestrel",
+   "params_b": 13.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 26.26,
+   "weight_bytes": 26260000000
+  },
+  "kestrel-labs__kestrel-34b-instruct": {
+   "dir": "kestrel-labs__kestrel-34b-instruct",
+   "hf_id": "kestrel-labs/kestrel-34b-instruct",
+   "family": "kestrel",
+   "params_b": 34.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 68.68,
+   "weight_bytes": 68680000000
+  },
+  "lumen-labs__lumen-1.5b-base": {
+   "dir": "lumen-labs__lumen-1.5b-base",
+   "hf_id": "lumen-labs/lumen-1.5b-base",
+   "family": "lumen",
+   "params_b": 1.5,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 3.03,
+   "weight_bytes": 3030000000
+  },
+  "lumen-labs__lumen-3b-chat": {
+   "dir": "lumen-labs__lumen-3b-chat",
+   "hf_id": "lumen-labs/lumen-3b-chat",
+   "family": "lumen",
+   "params_b": 3.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 6.06,
+   "weight_bytes": 6060000000
+  },
+  "lumen-labs__lumen-7b-base": {
+   "dir": "lumen-labs__lumen-7b-base",
+   "hf_id": "lumen-labs/lumen-7b-base",
+   "family": "lumen",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "lumen-labs__lumen-7b-instruct": {
+   "dir": "lumen-labs__lumen-7b-instruct",
+   "hf_id": "lumen-labs/lumen-7b-instruct",
+   "family": "lumen",
+   "params_b": 7.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 14.14,
+   "weight_bytes": 14140000000
+  },
+  "lumen-labs__lumen-13b-chat": {
+   "dir": "lumen-labs__lumen-13b-chat",
+   "hf_id": "lumen-labs/lumen-13b-chat",
+   "family": "lumen",
+   "params_b": 13.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 26.26,
+   "weight_bytes": 26260000000
+  },
+  "lumen-labs__lumen-34b-instruct": {
+   "dir": "lumen-labs__lumen-34b-instruct",
+   "hf_id": "lumen-labs/lumen-34b-instruct",
+   "family": "lumen",
+   "params_b": 34.0,
+   "quant": "fp16",
+   "serve_quant": "bf16",
+   "vram_gb": 68.68,
+   "weight_bytes": 68680000000
+  }
+ },
+ "n_matched": 72,
+ "n_models": 72
+}

@@ -1,0 +1,90 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": 10731524096,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 48,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "F16": 10731524096
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 5415,
+  "card_text": "---\nlanguage:\n- en\nlicense: cc-by-nc-sa-4.0\ndatasets:\n- Intel/orca_dpo_pairs\n- argilla/distilabel-math-preference-dpo\n- kyujinpy/orca_math_dpo\npipeline_tag: text-generation\nmodel-index:\n- name: Sakura-SOLRCA-Math-Instruct-DPO-v1\n  results:\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: AI2 Reasoning Challenge (25-Shot)\n      type: ai2_arc\n      config: ARC-Challenge\n      split: test\n      args:\n        num_few_shot: 25\n    metrics:\n    - type: acc_norm\n      value: 71.25\n      name: normalized accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=kyujinpy/Sakura-SOLRCA-Math-Instruct-DPO-v1\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: HellaSwag (10-Shot)\n      type: hellaswag\n      split: validation\n      args:\n        num_few_shot: 10\n    metrics:\n    - type: acc_norm\n      value: 88.48\n      name: normalized accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=kyujinpy/Sakura-SOLRCA-Math-Instruct-DPO-v1\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: MMLU (5-Shot)\n      type: cais/mmlu\n      config: all\n      split: test\n      args:\n        num_few_shot: 5\n    metrics:\n    - type: acc\n      value: 66.21\n      name: accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=kyujinpy/Sakura-SOLRCA-Math-Instruct-DPO-v1\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: TruthfulQA (0-shot)\n      type: truthful_qa\n      config: multiple_choice\n      split: validation\n      args:\n        num_few_shot: 0\n    metrics:\n    - type: mc2\n      value: 72.12\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=kyujinpy/Sakura-SOLRCA-Math-Instruct-DPO-v1\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: Winogrande (5-shot)\n      type: winogrande\n      config: winogrande_xl\n      split: validation\n      args:\n        num_few_shot: 5\n    metrics:\n    - type: acc\n      value: 82.87\n      name: accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=kyujinpy/Sakura-SOLRCA-Math-Instruct-DPO-v1\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: GSM8k (5-shot)\n      type: gsm8k\n      config: main\n      split: test\n      args:\n        num_few_shot: 5\n    metrics:\n    - type: acc\n      value: 63.84\n      name: accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=kyujinpy/Sakura-SOLRCA-Math-Instruct-DPO-v1\n      name: Open LLM Leaderboard\n---\n\n# **Sakura-SOLRCA-Math-Instruct-DPO-v1**  \n<img src='./sakura.png' width=512>\n\n## Model Details\n\n**Model Developers** Kyujin Han (kyujinpy)\n\n**Method**  \nUsing DPO method.  \nWith [Intel/orca_dpo_pairs](https://huggingface.co/datasets/Intel/orca_dpo_pairs) and [argilla/distilabel-math-preference-dpo](https://huggingface.co/datasets/argilla/distilabel-math-preference-dpo).  \n\nI shared the merge version [kyujinpy/orca_math_dpo](https://huggingface.co/datasets/kyujinpy/orca_math_dpo).  \n     \nI will share the information about my model. (training and code)  \nPlease see: \u2b50[Sakura-SOLAR](https://github.com/KyujinHan/Sakura-SOLAR-DPO).  \n\n# **Model Benchmark**  \n\n## Open leaderboard\n- Follow up as [link](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard).  \n\n| Model | Average | ARC | HellaSwag | MMLU | TruthfulQA | Winogrande | GSM8K |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| Sakura-SOLRCA-Math-Instruct-DPO-v2 | 74.17 | 71.25 | 88.52 | 66.13 | 72.16 | 83.03 | 63.91 |\n| Sakura-SOLRCA-Math-Instruct-DPO-v1 | 74.13 | 71.25 | 88.48 | 66.21 | 72.12 | 82.87 | 63.84 |\n| Sakura-SOLRCA-Instruct-DPO | 74.05 | 71.16 | 88.49 | 66.17 | 72.10 | 82.95 | 63.46 |\n| Sakura-SOLAR-Instruct-DPO-v2 | 74.14 | 70.90 | 88.41 | 66.48 | 71.86 | 83.43 | 63.76 |\n| [kyujinpy/Sakura-SOLAR-Instruct](https://huggingface.co/kyujinpy/Sakura-SOLAR-Instruct) | 74.40 | 70.99 | 88.42 | 66.33 | 71.79 | 83.66 | 65.20 |\n\n   \n# Implementation Code\n```python\n### KO-Platypus\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\nimport torch\n\nrepo = \"kyujinpy/Sakura-SOLRCA-Math-Instruct-DPO-v1\"\nOpenOrca = AutoModelForCausalLM.from_pretrained(\n        repo,\n        return_dict=True,\n        torch_dtype=torch.float16,\n        device_map='auto'\n)\nOpenOrca_tokenizer = AutoTokenizer.from_pretrained(repo)\n```\n\n---\n# [Open LLM Leaderboard Evaluation Results](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard)\nDetailed results can be found [here](https://huggingface.co/datasets/open-llm-leaderboard/details_kyujinpy__Sakura-SOLRCA-Math-Instruct-DPO-v1)\n\n|             Metric              |Value|\n|---------------------------------|----:|\n|Avg.                             |74.13|\n|AI2 Reasoning Challenge (25-Shot)|71.25|\n|HellaSwag (10-Shot)              |88.48|\n|MMLU (5-Shot)                    |66.21|\n|TruthfulQA (0-shot)              |72.12|\n|Winogrande (5-shot)              |82.87|\n|GSM8k (5-shot)                   |63.84|\n \n",
+  "fetched_at": "2026-09-19T15:01:19.335011+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "kyujinpy",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-sa-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "conversational",
+      "en",
+      "dataset:Intel/orca_dpo_pairs",
+      "dataset:argilla/distilabel-math-preference-dpo",
+      "dataset:kyujinpy/orca_math_dpo",
+      "license:cc-by-nc-sa-4.0",
+      "model-index",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "kyujinpy__Sakura-SOLRCA-Math-Instruct-DPO-v1",
+  "ok": true,
+  "popularity": {
+    "downloads": 78,
+    "downloadsAllTime": 72248,
+    "likes": 0,
+    "trendingScore": 0
+  },
+  "repo_id": "kyujinpy/Sakura-SOLRCA-Math-Instruct-DPO-v1",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-12-25T11:16:37.000Z",
+    "lastModified": "2024-03-04T12:15:30.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": true,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 2113,
+  "card_text": "---\nlicense: cc-by-nc-4.0\n---\n\nRe:MythoMax-Mistral (ReMM-Mistral) is a recreation trial of the original [MythoMax-L2-B13](https://huggingface.co/Gryphe/MythoMax-L2-13b) with updated models and data of Mistral.\n\nThis merge use Gradient merging method to merge ReML-Mistral v2.2 and Huginn.\n\nExplaination :\n```shell\n- ReML-Mistral-v2.2: (Chronos-Beluga v2/Hermes/Airboros 2.2.1 + LoRA)\n=> The-Face-Of-Goonery/Chronos-Beluga-v2-13bfp16\n=> jondurbin/airoboros-l2-13b-2.2 by jondurbin/airoboros-l2-13b-2.2.1\n=> NousResearch/Nous-Hermes-Llama2-13b\n\n=> Applying Undi95/llama2-to-mistral-diff at 1.0 at the end\n\nWith that :\n- ReMM-Mistral: (ReML-Mistral-v2.2/Huginn)\n=> ReMM by the one above\n=> The-Face-Of-Goonery/Huginn-13b-FP16\n```\n\n<!-- description start -->\n## Description\n\nThis repo contains fp16 files of ReMM-Mistral, a recreation of the original MythoMax, but updated and merged with Gradient method and Mistral data.\n<!-- description end -->\n<!-- description start -->\n## Models used\n\n\n- [The-Face-Of-Goonery/Chronos-Beluga-v2-13bfp16](https://huggingface.co/The-Face-Of-Goonery/Chronos-Beluga-v2-13bfp16=)\n- [jondurbin/airoboros-l2-13b-2.2.1](https://huggingface.co/jondurbin/airoboros-l2-13b-2.2.1)\n- [NousResearch/Nous-Hermes-Llama2-13b](https://huggingface.co/NousResearch/Nous-Hermes-Llama2-13b)\n- [The-Face-Of-Goonery/Huginn-13b-FP16](https://huggingface.co/The-Face-Of-Goonery/Huginn-13b-FP16)\n- [Undi95/ReML-Mistral-v2.2-13B](https://huggingface.co/Undi95/ReML-Mistral-v2.2-13B) (Private recreation trial of an updated Mythologic-L2-13B with Mistral data)\n- [Undi95/llama2-to-mistral-diff](https://huggingface.co/Undi95/llama2-to-mistral-diff)\n\n<!-- description end -->\n<!-- prompt-template start -->\n## Prompt template: Alpaca\n\n```\nBelow is an instruction that describes a task. Write a response that appropriately completes the request.\n\n### Instruction:\n{prompt}\n\n### Response:\n\n```\n\nA big thanks to [KoboldAI](https://github.com/KoboldAI/KoboldAI-Client) dev' Henky for giving me a machine powerfull enough to do some of my work!\n\nIf you want to support me, you can [here](https://ko-fi.com/undiai).",
+  "fetched_at": "2026-09-22T06:46:02.795903+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "itspat",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "license:cc-by-nc-4.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "itspat__RemmMistral13b",
+  "ok": true,
+  "popularity": {
+    "downloads": 14,
+    "downloadsAllTime": 64,
+    "likes": 0,
+    "trendingScore": 0
+  },
+  "repo_id": "itspat/RemmMistral13b",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-11-13T19:36:08.000Z",
+    "lastModified": "2023-11-13T19:52:34.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

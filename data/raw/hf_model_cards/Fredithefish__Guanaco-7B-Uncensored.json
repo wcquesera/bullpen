@@ -1,0 +1,83 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 11008,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 32,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 1079,
+  "card_text": "---\nlicense: apache-2.0\ndatasets:\n- Fredithefish/openassistant-guanaco-unfiltered\nlanguage:\n- en\nlibrary_name: transformers\npipeline_tag: conversational\ninference: false\n---\n\n<img src=\"https://huggingface.co/Fredithefish/Guanaco-3B-Uncensored/resolve/main/Guanaco-Uncensored.jpg\" alt=\"Alt Text\" width=\"295\"/>\n\n# \u2728 Guanaco - 7B - Uncensored \u2728\n\n\nGuanaco-7B-Uncensored has been fine-tuned for 4 epochs on the [Unfiltered Guanaco Dataset.](https://huggingface.co/datasets/Fredithefish/openassistant-guanaco-unfiltered) using [Llama-2-7b](https://hf.co/meta-llama/Llama-2-7b-hf) as the base model.\n<br>The model does not perform well with languages other than English.\n<br>Please note: This model is designed to provide responses without content filtering or censorship. It generates answers without denials.\n\n## Special thanks\nI would like to thank AutoMeta for providing me with the computing power necessary to train this model.\n\n\n### Prompt Template\n```\n### Human: {prompt} ### Assistant:\n```\n\n### Dataset\nThe model has been fine-tuned on the V2 of the Guanaco unfiltered dataset.",
+  "fetched_at": "2026-09-22T08:00:45.875568+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "Fredithefish",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "conversational",
+      "en",
+      "dataset:Fredithefish/openassistant-guanaco-unfiltered",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "region:us"
+    ]
+  },
+  "model_key": "Fredithefish__Guanaco-7B-Uncensored",
+  "ok": true,
+  "popularity": {
+    "downloads": 64,
+    "downloadsAllTime": 54086,
+    "likes": 7,
+    "trendingScore": 0
+  },
+  "repo_id": "Fredithefish/Guanaco-7B-Uncensored",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-04T17:03:32.000Z",
+    "lastModified": "2023-09-04T17:09:27.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

@@ -1,0 +1,117 @@
+# Collection settings read by collect.py / process.py (bullpen.config.CollectConfig).
+# generation: the per-answer budget (greedy for standard models, sampled for the
+#   reasoning models named by thinking_markers); assembly: the gates that turn the
+#   per-model answer files into one cut (process.py build).
+
+generation: the per-answer budget (greedy for standard models, sampled for the
+#   reasoning models named by thinking_markers); assembly: the gates that turn the
+#   per-model answer files into one cut (process.py build).
+# The remaining keys locate the label-building inputs of the original collection and are
+# not read by the four entry points.
+
+probe: data/raw/probe_set.jsonl
+
+weights_dir: data/raw/weights
+
+external_labels_dir: data/raw/external_labels_src
+
+generation:
+  standard_max_new_tokens: 3072
+  thinking_max_new_tokens: 12288
+  standard_temperature: 0.0
+  thinking_temperature: 0.6
+  top_p: 0.95
+  top_k: 20
+  draws: 1
+  batch_size: 8
+  chunk_size: 50
+  thinking_markers:
+  - R1-Distill
+  - Qwen3
+  - QwQ
+  - reasoning
+  - Nemotron
+  - Magistral
+  - openthinker
+  - sky-t1
+  - skywork-or1
+  - mimo
+  - s1.1
+
+assembly: the gates that turn the
+#   per-model answer files into one cut (process.py build).
+# The remaining keys locate the label-building inputs of the original collection and are
+# not read by the four entry points.
+
+probe: data/raw/probe_set.jsonl
+
+weights_dir: data/raw/weights
+
+external_labels_dir: data/raw/external_labels_src
+
+generation:
+  standard_max_new_tokens: 3072
+  thinking_max_new_tokens: 12288
+  standard_temperature: 0.0
+  thinking_temperature: 0.6
+  top_p: 0.95
+  top_k: 20
+  draws: 1
+  batch_size: 8
+  chunk_size: 50
+  thinking_markers:
+  - R1-Distill
+  - Qwen3
+  - QwQ
+  - reasoning
+  - Nemotron
+  - Magistral
+  - openthinker
+  - sky-t1
+  - skywork-or1
+  - mimo
+  - s1.1
+
+hf_repos:
+  deepseek-r1-distill-llama-8b: deepseek-ai/DeepSeek-R1-Distill-Llama-8B
+  deepseek-r1-distill-qwen-1.5b: deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B
+  exaone-3.5-7.8b-instruct: LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct
+  falcon3-10b-instruct: tiiuae/Falcon3-10B-Instruct
+  falcon3-7b-instruct: tiiuae/Falcon3-7B-Instruct
+  gemma-2-2b-it: google/gemma-2-2b-it
+  gemma-2-9b-it: google/gemma-2-9b-it
+  gemma-3-12b-it: google/gemma-3-12b-it
+  gemma-3-1b-it: google/gemma-3-1b-it
+  gemma-3-4b-it: google/gemma-3-4b-it
+  glm-4-9b-chat: THUDM/GLM-4-9B-Chat
+  Granite-3.1-8B-Instruct: ibm-granite/Granite-3.1-8B-Instruct
+  internlm3-8b-instruct: internlm/InternLM3-8B-Instruct
+  mimo-7b-rl: XiaomiMiMo/MiMo-7B-RL
+  mistral-7b-instruct-v0.3: mistralai/Mistral-7B-Instruct-v0.3
+  olmo-2-1124-7b-instruct: allenai/OLMo-2-1124-7B-Instruct
+  phi-4-mini-instruct: microsoft/Phi-4-mini-instruct
+  phi-4-mini-reasoning: microsoft/Phi-4-mini-reasoning
+  qwen2.5-1.5b-instruct: Qwen/Qwen2.5-1.5B-Instruct
+  qwen2.5-3b-instruct: Qwen/Qwen2.5-3B-Instruct
+  qwen2.5-coder-7b-instruct: Qwen/Qwen2.5-Coder-7B-Instruct
+  qwen2.5-math-7b-instruct: Qwen/Qwen2.5-Math-7B-Instruct
+  qwen3-4b: Qwen/Qwen3-4B
+  Sailor2-8B-Chat: sail/Sailor2-8B-Chat
+  smollm2-1.7b-instruct: HuggingFaceTB/SmolLM2-1.7B-Instruct
+  codellama__CodeLlama-7b-hf: codellama/CodeLlama-7b-hf
+  google__gemma-7b-it: google/gemma-7b-it
+  lmsys__vicuna-7b-v1.5: lmsys/vicuna-7b-v1.5
+  meta-llama__Llama-2-13b-chat-hf: meta-llama/Llama-2-13b-chat-hf
+  meta-llama__Llama-2-7b-chat-hf: meta-llama/Llama-2-7b-chat-hf
+  microsoft__phi-2: microsoft/phi-2
+  mistralai__Mistral-7B-Instruct-v0.1: mistralai/Mistral-7B-Instruct-v0.1
+  THUDM__chatglm2-6b: THUDM/chatglm2-6b
+
+assembly:
+  min_coverage: 0.99
+  dup_agreement: 0.95
+  bad_slug_patterns:
+  - qwenvergence
+  - qwestion
+  - -tainted
+  - smoke-test

@@ -1,0 +1,87 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 2048,
+    "intermediate_size": 5632,
+    "max_position_embeddings": 2048,
+    "model_type": "llama",
+    "n_parameters": 1100061376,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 22,
+    "num_key_value_heads": 4,
+    "parameter_dtypes": {
+      "F16": 1100060672,
+      "F32": 704
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32003
+  },
+  "card_chars": 1551,
+  "card_text": "---\ndatasets:\n- jondurbin/airoboros-2.2.1\ntags:\n- airoboros\n- tinyllama\n---\n\nThis model is a fine-tuned version of PY007/TinyLlama-1.1B-Chat-v0.3 (finetuned on 15k rows of airoboros-2.2.1 dataset)\n\n## lm-eval\n\n```\n|    Task     |Version| Metric |Value |   |Stderr|\n|-------------|------:|--------|-----:|---|-----:|\n|arc_challenge|      0|acc     |0.2671|\u00b1  |0.0129|\n|             |       |acc_norm|0.2850|\u00b1  |0.0132|\n|arc_easy     |      0|acc     |0.5673|\u00b1  |0.0102|\n|             |       |acc_norm|0.5109|\u00b1  |0.0103|\n|boolq        |      1|acc     |0.6040|\u00b1  |0.0086|\n|hellaswag    |      0|acc     |0.4155|\u00b1  |0.0049|\n|             |       |acc_norm|0.5420|\u00b1  |0.0050|\n|openbookqa   |      0|acc     |0.2200|\u00b1  |0.0185|\n|             |       |acc_norm|0.3420|\u00b1  |0.0212|\n|piqa         |      0|acc     |0.7057|\u00b1  |0.0106|\n|             |       |acc_norm|0.6970|\u00b1  |0.0107|\n|winogrande   |      0|acc     |0.5714|\u00b1  |0.0139|\n\n```\n## Usage:\n\n```\nfrom transformers import AutoTokenizer\nimport transformers\nimport torch\n\nmodel = \"aloobun/TinyAiroboros-2.2.1\"\n\ntokenizer = AutoTokenizer.from_pretrained(model)\npipeline = transformers.pipeline(\n    \"text-generation\",\n    model=model,\n    torch_dtype=torch.float16,\n    device_map=\"auto\",\n)\n\nprompt = \"Write a short story about a dystopian society.\"\n\nsequences = pipeline(\n    f'[INST] {prompt} [/INST]',\n    do_sample=True,\n    top_k=10,\n    num_return_sequences=1,\n    eos_token_id=tokenizer.eos_token_id,\n    max_length=1024,\n)\nfor seq in sequences:\n    print(f\"Result: {seq['generated_text']}\")\n```\n",
+  "fetched_at": "2026-09-22T06:45:28.165242+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "aloobun",
+    "gated": false,
+    "library_name": "transformers",
+    "license": null,
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "airoboros",
+      "tinyllama",
+      "dataset:jondurbin/airoboros-2.2.1",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "aloobun__TinyAiroboros-2.2.1",
+  "ok": true,
+  "popularity": {
+    "downloads": 19,
+    "downloadsAllTime": 571,
+    "likes": 1,
+    "trendingScore": 0
+  },
+  "repo_id": "aloobun/TinyAiroboros-2.2.1",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-10-19T20:14:47.000Z",
+    "lastModified": "2023-11-19T17:00:18.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

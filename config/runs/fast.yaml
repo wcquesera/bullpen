@@ -1,0 +1,25 @@
+# The fast protocol: one fullfit run (the encoder sees every model; the heads are out of
+# fold over models, and every score is on questions no encoder was fitted on), seed 0,
+# floor averaged over 20 draws. Minutes rather than hours; the paper quotes strict.
+name: fast
+data:
+  slice: data/paper_ckpt/slice.npz
+  answers: data/paper_ckpt/answers.npz
+  view: core
+  raw_dir: data/raw
+protocol:
+  split: fullfit
+  seeds: [0]
+train:
+  dim: 32
+  interview_k: 400
+  interview_selector: fisher
+  arms: [pca_bits32, pls_svd_bitsqtext32, text_mean768, pls_svd_fusion32, pls_svd_tri32,
+         pca_bits32__interview, pls_svd_bitsqtext32__interview, text_mean768__itext,
+         pls_svd_fusion32__itext, pls_svd_tri32__itext, null_random32, null_random768]
+floor:
+  arms: [null_random32, null_random768]
+  draws: 20
+eval:
+  battery: config/battery.yaml
+out: results/fast

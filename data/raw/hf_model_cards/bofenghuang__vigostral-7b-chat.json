@@ -1,0 +1,86 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 7653,
+  "card_text": "---\nlicense: apache-2.0\nlanguage: fr\npipeline_tag: text-generation\ninference:\n  parameters:\n    temperature: 0.7\ntags:\n- LLM\n- finetuned\n---\n\n# Vigostral-7B-Chat: A French chat LLM\n\n***Preview*** of Vigostral-7B-Chat, a new addition to the Vigogne LLMs family, fine-tuned on [Mistral-7B-v0.1](https://huggingface.co/mistralai/Mistral-7B-v0.1).\n\nFor more information, please visit the [Github repository](https://github.com/bofenghuang/vigogne).\n\n**License**: A significant portion of the training data is distilled from GPT-3.5-Turbo and GPT-4, kindly use it cautiously to avoid any violations of OpenAI's [terms of use](https://openai.com/policies/terms-of-use).\n\n## Prompt Template\n\nWe used a prompt template adapted from the chat format of Llama-2.\n\nYou can apply this formatting using the [chat template](https://huggingface.co/docs/transformers/main/chat_templating) through the `apply_chat_template()` method.\n\n```python\nfrom transformers import AutoTokenizer\n\ntokenizer = AutoTokenizer.from_pretrained(\"bofenghuang/vigostral-7b-chat\")\n\nconversation = [\n    {\"role\": \"user\", \"content\": \"Bonjour ! Comment \u00e7a va aujourd'hui ?\"},\n    {\"role\": \"assistant\", \"content\": \"Bonjour ! Je suis une IA, donc je n'ai pas de sentiments, mais je suis pr\u00eat \u00e0 vous aider. Comment puis-je vous assister aujourd'hui ?\"},\n    {\"role\": \"user\", \"content\": \"Quelle est la hauteur de la Tour Eiffel ?\"},\n    {\"role\": \"assistant\", \"content\": \"La Tour Eiffel mesure environ 330 m\u00e8tres de hauteur.\"},\n    {\"role\": \"user\", \"content\": \"Comment monter en haut ?\"},\n]\n\nprint(tokenizer.apply_chat_template(conversation, tokenize=False, add_generation_prompt=True))\n```\n\nYou will get\n\n```\n<s>[INST] <<SYS>>\nVous \u00eates Vigogne, un assistant IA cr\u00e9\u00e9 par Zaion Lab. Vous suivez extr\u00eamement bien les instructions. Aidez autant que vous le pouvez.\n<</SYS>>\n\nBonjour ! Comment \u00e7a va aujourd'hui ? [/INST] Bonjour ! Je suis une IA, donc je n'ai pas de sentiments, mais je suis pr\u00eat \u00e0 vous aider. Comment puis-je vous assister aujourd'hui ? </s>[INST] Quelle est la hauteur de la Tour Eiffel ? [/INST] La Tour Eiffel mesure environ 330 m\u00e8tres de hauteur. </s>[INST] Comment monter en haut ? [/INST]\n```\n\n## Usage\n\n### Inference using the quantized versions\n\nThe quantized versions of this model are generously provided by [TheBloke](https://huggingface.co/TheBloke)!\n\n- AWQ for GPU inference: [TheBloke/Vigostral-7B-Chat-AWQ](https://huggingface.co/TheBloke/Vigostral-7B-Chat-AWQ)\n- GTPQ for GPU inference: [TheBloke/Vigostral-7B-Chat-GPTQ](https://huggingface.co/TheBloke/Vigostral-7B-Chat-GPTQ)\n- GGUF for CPU+GPU inference: [TheBloke/Vigostral-7B-Chat-GGUF](https://huggingface.co/TheBloke/Vigostral-7B-Chat-GGUF)\n\nThese versions facilitate testing and development with various popular frameworks, including [AutoAWQ](https://github.com/casper-hansen/AutoAWQ), [vLLM](https://github.com/vllm-project/vllm), [AutoGPTQ](https://github.com/PanQiWei/AutoGPTQ), [GPTQ-for-LLaMa](https://github.com/qwopqwop200/GPTQ-for-LLaMa), [llama.cpp](https://github.com/ggerganov/llama.cpp), [text-generation-webui](https://github.com/oobabooga/text-generation-webui), and more.\n\n### Inference using the unquantized model with \ud83e\udd17 Transformers\n\n```python\nfrom typing import Dict, List, Optional\nimport torch\nfrom transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfig, TextStreamer\n\nmodel_name_or_path = \"bofenghuang/vigostral-7b-chat\"\ntokenizer = AutoTokenizer.from_pretrained(model_name_or_path, padding_side=\"right\", use_fast=False)\nmodel = AutoModelForCausalLM.from_pretrained(model_name_or_path, torch_dtype=torch.float16, device_map=\"auto\")\n\nstreamer = TextStreamer(tokenizer, timeout=10.0, skip_prompt=True, skip_special_tokens=True)\n\n\ndef chat(\n    query: str,\n    history: Optional[List[Dict]] = None,\n    temperature: float = 0.7,\n    top_p: float = 1.0,\n    top_k: float = 0,\n    repetition_penalty: float = 1.1,\n    max_new_tokens: int = 1024,\n    **kwargs,\n):\n    if history is None:\n        history = []\n\n    history.append({\"role\": \"user\", \"content\": query})\n\n    input_ids = tokenizer.apply_chat_template(history, return_tensors=\"pt\").to(model.device)\n    input_length = input_ids.shape[1]\n\n    generated_outputs = model.generate(\n        input_ids=input_ids,\n        generation_config=GenerationConfig(\n            temperature=temperature,\n            do_sample=temperature > 0.0,\n            top_p=top_p,\n            top_k=top_k,\n            repetition_penalty=repetition_penalty,\n            max_new_tokens=max_new_tokens,\n            pad_token_id=tokenizer.eos_token_id,\n            **kwargs,\n        ),\n        streamer=streamer,\n        return_dict_in_generate=True,\n    )\n\n    generated_tokens = generated_outputs.sequences[0, input_length:]\n    generated_text = tokenizer.decode(generated_tokens, skip_special_tokens=True)\n\n    history.append({\"role\": \"assistant\", \"content\": generated_text})\n\n    return generated_text, history\n\n\n# 1st round\nresponse, history = chat(\"Un escargot parcourt 100 m\u00e8tres en 5 heures. Quelle est sa vitesse ?\", history=None)\n\n# 2nd round\nresponse, history = chat(\"Quand il peut d\u00e9passer le lapin ?\", history=history)\n\n# 3rd round\nresponse, history = chat(\"\u00c9cris une histoire imaginative qui met en sc\u00e8ne une comp\u00e9tition de course entre un escargot et un lapin.\", history=history)\n```\n\nYou can also use the Google Colab Notebook provided below.\n\n<a href=\"https://colab.research.google.com/github/bofenghuang/vigogne/blob/main/notebooks/infer_chat.ipynb\" target=\"_blank\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>\n\n### Inference using the unquantized model with vLLM\n\nSet up an OpenAI-compatible server with the following command:\n\n```bash\n# Install vLLM\n# This may take 5-10 minutes.\n# pip install vllm\n\n# Start server for Vigostral-Chat models\npython -m vllm.entrypoints.openai.api_server --model bofenghuang/vigostral-7b-chat\n\n# List models\n# curl http://localhost:8000/v1/models\n```\n\nYou can also use the docker image provided below.\n\n```bash\n# Launch inference engine\ndocker run --gpus '\"device=0\"' \\\n    -e HF_TOKEN=$HF_TOKEN -p 8000:8000 \\\n    ghcr.io/bofenghuang/vigogne/vllm:latest \\\n    --host 0.0.0.0 \\\n    --model bofenghuang/vigostral-7b-chat\n\n# Launch inference engine on mutli-GPUs (4 here)\ndocker run --gpus all \\\n    -e HF_TOKEN=$HF_TOKEN -p 8000:8000 \\\n    ghcr.io/bofenghuang/vigogne/vllm:latest \\\n    --host 0.0.0.0 \\\n    --tensor-parallel-size 4 \\\n    --model bofenghuang/vigostral-7b-chat\n\n# Launch inference engine using the quantized AWQ version\n# Note only supports Ampere or newer GPUs\ndocker run --gpus '\"device=0\"' \\\n    -e HF_TOKEN=$HF_TOKEN -p 8000:8000 \\\n    ghcr.io/bofenghuang/vigogne/vllm:latest \\\n    --host 0.0.0.0 \\\n    --quantization awq \\\n    --model TheBloke/Vigostral-7B-Chat-AWQ\n```\n\nAfterward, you can query the model using the openai Python package.\n\n```python\nimport openai\n\n# Modify OpenAI's API key and API base to use vLLM's API server.\nopenai.api_key = \"EMPTY\"\nopenai.api_base = \"http://localhost:8000/v1\"\n\n# First model\nmodels = openai.Model.list()\nmodel = models[\"data\"][0][\"id\"]\n\nquery_message = \"Parle-moi de toi-m\u00eame.\"\n\n# Chat completion API\nchat_completion = openai.ChatCompletion.create(\n    model=model,\n    messages=[\n        {\"role\": \"user\", \"content\": query_message},\n    ],\n    max_tokens=1024,\n    temperature=0.7,\n)\nprint(\"Chat completion results:\", chat_completion)\n```\n\n## Limitations\n\nVigogne is still under development, and there are many limitations that have to be addressed. Please note that it is possible that the model generates harmful or biased content, incorrect information or generally unhelpful answers.\n",
+  "fetched_at": "2026-09-22T06:45:32.519265+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "bofenghuang",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "mistral",
+      "text-generation",
+      "LLM",
+      "finetuned",
+      "conversational",
+      "fr",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "bofenghuang__vigostral-7b-chat",
+  "ok": true,
+  "popularity": {
+    "downloads": 89,
+    "downloadsAllTime": 82235,
+    "likes": 28,
+    "trendingScore": 0
+  },
+  "repo_id": "bofenghuang/vigostral-7b-chat",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-29T15:04:09.000Z",
+    "lastModified": "2023-10-25T13:00:06.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

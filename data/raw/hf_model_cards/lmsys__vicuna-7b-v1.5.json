@@ -1,0 +1,82 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 11008,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 32,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 1965,
+  "card_text": "---\ninference: false\nlicense: llama2\n---\n\n# Vicuna Model Card\n\n## Model Details\n\nVicuna is a chat assistant trained by fine-tuning Llama 2 on user-shared conversations collected from ShareGPT.\n\n- **Developed by:** [LMSYS](https://lmsys.org/)\n- **Model type:** An auto-regressive language model based on the transformer architecture\n- **License:** Llama 2 Community License Agreement\t\n- **Finetuned from model:** [Llama 2](https://arxiv.org/abs/2307.09288)\n\n### Model Sources\n\n- **Repository:** https://github.com/lm-sys/FastChat\n- **Blog:** https://lmsys.org/blog/2023-03-30-vicuna/\n- **Paper:** https://arxiv.org/abs/2306.05685\n- **Demo:** https://chat.lmsys.org/\n\n## Uses\n\nThe primary use of Vicuna is research on large language models and chatbots.\nThe primary intended users of the model are researchers and hobbyists in natural language processing, machine learning, and artificial intelligence.\n\n## How to Get Started with the Model\n\n- Command line interface: https://github.com/lm-sys/FastChat#vicuna-weights\n- APIs (OpenAI API, Huggingface API): https://github.com/lm-sys/FastChat/tree/main#api  \n\n## Training Details\n\nVicuna v1.5 is fine-tuned from Llama 2 with supervised instruction fine-tuning.\nThe training data is around 125K conversations collected from ShareGPT.com.\nSee more details in the \"Training Details of Vicuna Models\" section in the appendix of this [paper](https://arxiv.org/pdf/2306.05685.pdf).\n\n## Evaluation\n\n![Evaluation Results](https://github.com/lm-sys/lm-sys.github.io/blob/main/public/images/webdata/vicuna_v1.5_eval.png?raw=true)\n\nVicuna is evaluated with standard benchmarks, human preference, and LLM-as-a-judge. See more details in this [paper](https://arxiv.org/pdf/2306.05685.pdf) and [leaderboard](https://huggingface.co/spaces/lmsys/chatbot-arena-leaderboard).\n\n## Difference between different versions of Vicuna\n\nSee [vicuna_weights_version.md](https://github.com/lm-sys/FastChat/blob/main/docs/vicuna_weights_version.md)",
+  "fetched_at": "2026-09-19T15:01:21.967645+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "lmsys",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "llama2",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "arxiv:2307.09288",
+      "arxiv:2306.05685",
+      "license:llama2",
+      "text-generation-inference",
+      "region:us"
+    ]
+  },
+  "model_key": "lmsys__vicuna-7b-v1.5",
+  "ok": true,
+  "popularity": {
+    "downloads": 43822,
+    "downloadsAllTime": 15234780,
+    "likes": 403,
+    "trendingScore": 1
+  },
+  "repo_id": "lmsys/vicuna-7b-v1.5",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-07-29T04:42:33.000Z",
+    "lastModified": "2024-03-13T02:01:41.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

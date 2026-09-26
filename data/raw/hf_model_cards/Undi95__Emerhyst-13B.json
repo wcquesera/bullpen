@@ -1,0 +1,86 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": 13015864320,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {
+      "BF16": 12688184320,
+      "F32": 327680000
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 1733,
+  "card_text": "---\nlicense: cc-by-nc-4.0\ntags:\n- not-for-all-audiences\n- nsfw\n---\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/63ab1241ad514ca8d1430003/mdCpFg1OoiN063ubR9Xxs.png)\n\n13B version of [Undi95/Emerhyst-20B](https://huggingface.co/Undi95/Emerhyst-20B), consider using the 20B if you have the power to. This one should be a downgrade but usable on lower spec.\n\nMerge of [Amethyst 13B](https://huggingface.co/Undi95/Amethyst-13B) and [Emerald 13B](https://huggingface.co/Undi95/Emerald-13B).\n\nIn addition, [LimaRP v3](https://huggingface.co/lemonilia/LimaRP-Llama2-13B-v3-EXPERIMENT) was used, is it recommanded to read the documentation.\n\n<!-- description start -->\n## Description\n\nThis repo contains fp16 files of Emerhyst-13B.\n\n<!-- description end -->\n<!-- description start -->\n## Models and loras used\n\n- PygmalionAI/pygmalion-2-13b\n- Xwin-LM/Xwin-LM-13B-V0.1\n- The-Face-Of-Goonery/Huginn-13b-FP16\n- zattio770/120-Days-of-LORA-v2-13B\n- lemonilia/LimaRP-Llama2-13B-v3-EXPERIMENT\n\n<!-- description end -->\n<!-- prompt-template start -->\n## Prompt template: Alpaca\n\n```\nBelow is an instruction that describes a task. Write a response that appropriately completes the request.\n\n### Instruction:\n{prompt}\n\n### Response:\n\n```\n\n## LimaRP v3 usage and suggested settings\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/63ab1241ad514ca8d1430003/ZC_iP2KkcEcRdgG_iyxYE.png)\n\nYou can follow these instruction format settings in SillyTavern. Replace tiny with your desired response length:\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/63ab1241ad514ca8d1430003/PIn8_HSPTJEMdSEpNVSdm.png)\n\nSpecial thanks to Sushi.\n\nIf you want to support me, you can [here](https://ko-fi.com/undiai).",
+  "fetched_at": "2026-09-22T06:44:48.030794+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "Undi95",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "not-for-all-audiences",
+      "nsfw",
+      "license:cc-by-nc-4.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "Undi95__Emerhyst-13B",
+  "ok": true,
+  "popularity": {
+    "downloads": 31,
+    "downloadsAllTime": 65527,
+    "likes": 18,
+    "trendingScore": 0
+  },
+  "repo_id": "Undi95/Emerhyst-13B",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-27T14:24:50.000Z",
+    "lastModified": "2023-09-27T15:23:59.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

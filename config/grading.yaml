@@ -1,0 +1,34 @@
+# How collect.py grades generated answers: the code sandbox and the reasoning-model
+# markers. These are the settings the paper's probe was graded under.
+# Grading a `code` benchmark (humaneval, mbpp) executes model-generated Python; see
+# bullpen/grading/sandbox.py.
+sandbox:
+  # auto: bubblewrap if usable, else the restricted subprocess (rlimits, `python -I`,
+  # scrubbed environment, in-process guard); bwrap: require bubblewrap; none: the
+  # restricted subprocess only
+  backend: auto
+  # false grades every code cell as incorrect without running it
+  execute: true
+  timeout_seconds: 15
+  memory_gb: 4
+  max_file_mb: 32
+
+# Substrings of a model id (case-insensitive) that route grading to the think-first
+# extractors, so an answer is not read out of discarded <think> reasoning. Not the same
+# list as collect.yaml's generation.thinking_markers, which picks the decode budget.
+reasoning_markers:
+- r1-distill
+- deepseek-r1
+- qwen3
+- qwq
+- reasoning
+- nemotron
+- magistral
+- openthinker
+- sky-t1
+- skywork-or1
+- mimo
+- s1.1
+- exaone-deep
+- glm-z1
+- marco-o1

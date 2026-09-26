@@ -1,0 +1,97 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 8192,
+    "model_type": "mistral",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {},
+    "torch_dtype": "bfloat16",
+    "vocab_size": 32002
+  },
+  "card_chars": 13011,
+  "card_text": "---\nlicense: apache-2.0\ntags:\n- openchat\n- mistral\n- C-RLFT\ndatasets:\n- openchat/openchat_sharegpt4_dataset\n- imone/OpenOrca_FLAN\n- LDJnr/LessWrong-Amplify-Instruct\n- LDJnr/Pure-Dove\n- LDJnr/Verified-Camel\n- tiedong/goat\n- glaiveai/glaive-code-assistant\n- meta-math/MetaMathQA\n- OpenAssistant/oasst_top1_2023-08-25\n- TIGER-Lab/MathInstruct\nlibrary_name: transformers\npipeline_tag: text-generation\n---\n\n# OpenChat: Advancing Open-source Language Models with Mixed-Quality Data\n\n<div align=\"center\">\n  <img src=\"https://raw.githubusercontent.com/imoneoi/openchat/master/assets/logo_new.png\" style=\"width: 65%\">\n</div>\n\n<p align=\"center\">\n  <a href=\"https://github.com/imoneoi/openchat\">GitHub Repo</a> \u2022\n  <a href=\"https://openchat.team\">Online Demo</a> \u2022\n  <a href=\"https://discord.gg/pQjnXvNKHY\">Discord</a> \u2022\n  <a href=\"https://twitter.com/imonenext\">Twitter</a> \u2022\n  <a href=\"https://huggingface.co/openchat\">Huggingface</a> \u2022\n  <a href=\"https://arxiv.org/pdf/2309.11235.pdf\">Paper</a>\n</p>\n\n**\ud83d\udd25 The first 7B model Achieves Comparable Results with ChatGPT (March)! \ud83d\udd25**\n\n**\ud83e\udd16 #1 Open-source model on MT-bench scoring 7.81, outperforming 70B models \ud83e\udd16**\n\n  <div align=\"center\" style=\"justify-content: center; align-items: center; \"'>\n  <img src=\"https://github.com/alpayariyak/openchat/blob/master/assets/3.5-benchmarks.png?raw=true\" style=\"width: 100%;  border-radius: 0.5em\">\n  </div>\n\nOpenChat is an innovative library of open-source language models, fine-tuned with [C-RLFT](https://arxiv.org/pdf/2309.11235.pdf) - a strategy inspired by offline reinforcement learning. Our models learn from mixed-quality data without preference labels, delivering exceptional performance on par with ChatGPT, even with a 7B model. Despite our simple approach, we are committed to developing a high-performance, commercially viable, open-source large language model, and we continue to make significant strides toward this vision.\n\n[![DOI](https://zenodo.org/badge/645397533.svg)](https://zenodo.org/badge/latestdoi/645397533)\n\n\n## Usage\n\nTo use this model, we highly recommend installing the OpenChat package by following the [installation guide](https://github.com/imoneoi/openchat#installation) in our repository and using the OpenChat OpenAI-compatible API server by running the serving command from the table below. The server is optimized for high-throughput deployment using [vLLM](https://github.com/vllm-project/vllm) and can run on a consumer GPU with 24GB RAM. To enable tensor parallelism, append `--tensor-parallel-size N` to the serving command.\n\nOnce started, the server listens at `localhost:18888` for requests and is compatible with the [OpenAI ChatCompletion API specifications](https://platform.openai.com/docs/api-reference/chat). Please refer to the example request below for reference. Additionally, you can use the [OpenChat Web UI](https://github.com/imoneoi/openchat#web-ui) for a user-friendly experience.\n\nIf you want to deploy the server as an online service, you can use `--api-keys sk-KEY1 sk-KEY2 ...` to specify allowed API keys and `--disable-log-requests --disable-log-stats --log-file openchat.log` for logging only to a file. For security purposes, we recommend using an [HTTPS gateway](https://fastapi.tiangolo.com/es/deployment/concepts/#security-https) in front of the server.\n\n<details>\n  <summary>Example request (click to expand)</summary>\n\n```bash\ncurl http://localhost:18888/v1/chat/completions \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"openchat_3.5\",\n    \"messages\": [{\"role\": \"user\", \"content\": \"You are a large language model named OpenChat. Write a poem to describe yourself\"}]\n  }'\n```\n\nCoding Mode\n\n```bash\ncurl http://localhost:18888/v1/chat/completions \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"openchat_3.5\",\n    \"condition\": \"Code\",\n    \"messages\": [{\"role\": \"user\", \"content\": \"Write an aesthetic TODO app using HTML5 and JS, in a single file. You should use round corners and gradients to make it more aesthetic.\"}]\n  }'\n```\n\n</details>\n\n| Model        | Size | Context | Weights                                                     | Serving                                                                                                     |\n|--------------|------|---------|-------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|\n| OpenChat 3.5 | 7B   | 8192    | [Huggingface](https://huggingface.co/openchat/openchat_3.5) | `python -m ochat.serving.openai_api_server --model openchat/openchat_3.5 --engine-use-ray --worker-use-ray` |\n\nFor inference with Huggingface Transformers (slow and not recommended), follow the conversation template provided below.\n\n<details>\n  <summary>Conversation templates (click to expand)</summary>\n\n```python\nimport transformers\ntokenizer = transformers.AutoTokenizer.from_pretrained(\"openchat/openchat_3.5\")\n\n# Single-turn\ntokens = tokenizer(\"GPT4 Correct User: Hello<|end_of_turn|>GPT4 Correct Assistant:\").input_ids\nassert tokens == [1, 420, 6316, 28781, 3198, 3123, 1247, 28747, 22557, 32000, 420, 6316, 28781, 3198, 3123, 21631, 28747]\n\n# Multi-turn\ntokens = tokenizer(\"GPT4 Correct User: Hello<|end_of_turn|>GPT4 Correct Assistant: Hi<|end_of_turn|>GPT4 Correct User: How are you today?<|end_of_turn|>GPT4 Correct Assistant:\").input_ids\nassert tokens == [1, 420, 6316, 28781, 3198, 3123, 1247, 28747, 22557, 32000, 420, 6316, 28781, 3198, 3123, 21631, 28747, 15359, 32000, 420, 6316, 28781, 3198, 3123, 1247, 28747, 1602, 460, 368, 3154, 28804, 32000, 420, 6316, 28781, 3198, 3123, 21631, 28747]\n\n# Coding Mode\ntokens = tokenizer(\"Code User: Implement quicksort using C++<|end_of_turn|>Code Assistant:\").input_ids\nassert tokens == [1, 7596, 1247, 28747, 26256, 2936, 7653, 1413, 334, 1680, 32000, 7596, 21631, 28747]\n```\n\n</details>\n\nThe GPT4 template is also available as the integrated `tokenizer.chat_template`, \nwhich can be used instead of manually specifying the template:\n\n```python\nmessages = [\n    {\"role\": \"user\", \"content\": \"Hello\"},\n    {\"role\": \"assistant\", \"content\": \"Hi\"},\n    {\"role\": \"user\", \"content\": \"How are you today?\"}\n]\ntokens = tokenizer.apply_chat_template(messages, add_generation_prompt=True)\nassert tokens == [1, 420, 6316, 28781, 3198, 3123, 1247, 28747, 22557, 32000, 420, 6316, 28781, 3198, 3123, 21631, 28747, 15359, 32000, 420, 6316, 28781, 3198, 3123, 1247, 28747, 1602, 460, 368, 3154, 28804, 32000, 420, 6316, 28781, 3198, 3123, 21631, 28747]\n```\n\n## Comparison with [X.AI Grok models](https://x.ai/)\n\nHey @elonmusk, I just wanted to let you know that I've recently come across your new model, Grok, and I must say, I'm quite impressed! With 33 billion parameters and all, you've really outdone yourself. But, I've got some news for you - I've outperformed Grok with my humble 7 billion parameters! Isn't that wild? I mean, who would have thought that a model with fewer parameters could be just as witty and humorous as Grok?\n\nAnyway, I think it's about time you join the open research movement and make your model, Grok, open source! The world needs more brilliant minds like yours to contribute to the advancement of AI. Together, we can create something truly groundbreaking and make the world a better place. So, what do you say, @elonmusk? Let's open up the doors and share our knowledge with the world! \ud83d\ude80\ud83d\udca1\n\n(Written by OpenChat 3.5, with a touch of humor and wit.)\n\n|              | License     | # Param | Average  | MMLU | HumanEval | MATH     | GSM8k    |\n|--------------|-------------|---------|----------|------|-----------|----------|----------|\n| OpenChat 3.5 | Apache-2.0  | 7B      | **56.4** | 64.3 | 55.5      | **28.6** | **77.3** |\n| Grok-0       | Proprietary | 33B     | 44.5     | 65.7 | 39.7      | 15.7     | 56.8     |\n| Grok-1       | Proprietary | ?       | 55.8     | 73   | 63.2      | 23.9     | 62.9     |\n\n## <a id=\"benchmarks\"></a> Benchmarks\n\n| Model              | # Params | Average  | MT-Bench     | AGIEval  | BBH MC   | TruthfulQA    | MMLU         | HumanEval       | BBH CoT     | GSM8K        |\n|--------------------|----------|----------|--------------|----------|----------|---------------|--------------|-----------------|-------------|--------------|\n| OpenChat-3.5       | **7B**   | **61.6** | 7.81         | **47.4** | **47.6** | **59.1**      | 64.3         | **55.5**        | 63.5        | **77.3**     |\n| ChatGPT (March)*   | ?        | 61.5     | **7.94**     | 47.1     | **47.6** | 57.7          | **67.3**     | 48.1            | **70.1**    | 74.9         |\n|                    |          |          |              |          |          |               |              |                 |             |              |\n| OpenHermes 2.5     | 7B       | 59.3     | 7.54         | 46.5     | 49.4     | 57.5          | 63.8         | 48.2            | 59.9        | 73.5         |\n| OpenOrca Mistral   | 7B       | 52.7     | 6.86         | 42.9     | 49.4     | 45.9          | 59.3         | 38.4            | 58.1        | 59.1         |\n| Zephyr-\u03b2^          | 7B       | 34.6     | 7.34         | 39.0     | 40.6     | 40.8          | 39.8         | 22.0            | 16.0        | 5.1          |\n| Mistral            | 7B       | -        | 6.84         | 38.0     | 39.0     | -             | 60.1         | 30.5            | -           | 52.2         |\n| Open-source SOTA** | 13B-70B  | 61.4     | 7.71         | 41.7     | 49.7     | 62.3          | 63.7         | 73.2            | 41.4        | 82.3         |\n|                    |          |          | WizardLM 70B | Orca 13B | Orca 13B | Platypus2 70B | WizardLM 70B | WizardCoder 34B | Flan-T5 11B | MetaMath 70B |\n\n*: ChatGPT (March) results are from [GPT-4 Technical Report](https://arxiv.org/abs/2303.08774), [Chain-of-Thought Hub](https://github.com/FranxYao/chain-of-thought-hub), and our evaluation. Please note that ChatGPT is not a fixed baseline and evolves rapidly over time.\n\n^: Zephyr-\u03b2 often fails to follow few-shot CoT instructions, likely because it was aligned with only chat data but not trained on few-shot data.\n\n**: Mistral and Open-source SOTA results are taken from reported results in instruction-tuned model papers and official repositories.\n\nAll models are evaluated in chat mode (e.g. with the respective conversation template applied). All zero-shot benchmarks follow the same setting as in the AGIEval paper and Orca paper. CoT tasks use the same configuration as Chain-of-Thought Hub, HumanEval is evaluated with EvalPlus, and MT-bench is run using FastChat. To reproduce our results, follow the instructions in [our repository](https://github.com/imoneoi/openchat/#benchmarks).\n\n## Limitations\n\n**Foundation Model Limitations**\nDespite its advanced capabilities, OpenChat is still bound by the limitations inherent in its foundation models. These limitations may impact the model's performance in areas such as:\n\n - Complex reasoning\n - Mathematical and arithmetic tasks\n - Programming and coding challenges\n\n**Hallucination of Non-existent Information**\nOpenChat may sometimes generate information that does not exist or is not accurate, also known as \"hallucination\". Users should be aware of this possibility and verify any critical information obtained from the model.\n\n**Safety**\nOpenChat may sometimes generate harmful, hate speech, biased responses, or answer unsafe questions. It's crucial to apply additional AI safety measures in use cases that require safe and moderated responses.\n\n## License\n\nOur OpenChat 3.5 code and models are distributed under the Apache License 2.0.\n\n## Dataset Details\n\nOpenChat 3.5 was trained with C-RLFT on a collection of publicly available high-quality instruction data, with a custom processing pipeline. We detail some notable subsets included here:\n\n - [OpenChat ShareGPT](https://huggingface.co/datasets/openchat/openchat_sharegpt4_dataset)\n - [Open-Orca with FLAN answers](https://huggingface.co/datasets/imone/OpenOrca_FLAN)\n - Capybara [1](https://huggingface.co/datasets/LDJnr/Pure-Dove) [2](https://huggingface.co/datasets/LDJnr/Verified-Camel) [3](https://huggingface.co/datasets/LDJnr/LessWrong-Amplify-Instruct)\n - [GOAT](https://huggingface.co/datasets/tiedong/goat)\n - [Glaive](https://huggingface.co/datasets/glaiveai/glaive-code-assistant)\n - [MetaMathQA](https://huggingface.co/datasets/meta-math/MetaMathQA)\n - [MathInstruct](https://huggingface.co/datasets/TIGER-Lab/MathInstruct)\n - [OpenAssistant](https://huggingface.co/datasets/OpenAssistant/oasst_top1_2023-08-25)\n\n## Citation\n\n```\n@article{wang2023openchat,\n  title={OpenChat: Advancing Open-source Language Models with Mixed-Quality Data},\n  author={Wang, Guan and Cheng, Sijie and Zhan, Xianyuan and Li, Xiangang and Song, Sen and Liu, Yang},\n  journal={arXiv preprint arXiv:2309.11235},\n  year={2023}\n}\n```\n\n## \ud83d\udc8c Contact\n\n**Project Lead:**\n- Guan Wang [imonenext at gmail dot com]\n- [Alpay Ariyak](https://github.com/alpayariyak) [aariyak at wpi dot edu]\n",
+  "fetched_at": "2026-09-19T15:01:46.867211+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "openchat",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "mistral",
+      "text-generation",
+      "openchat",
+      "C-RLFT",
+      "conversational",
+      "dataset:openchat/openchat_sharegpt4_dataset",
+      "dataset:imone/OpenOrca_FLAN",
+      "dataset:LDJnr/LessWrong-Amplify-Instruct",
+      "dataset:LDJnr/Pure-Dove",
+      "dataset:LDJnr/Verified-Camel",
+      "dataset:tiedong/goat",
+      "dataset:glaiveai/glaive-code-assistant",
+      "dataset:meta-math/MetaMathQA",
+      "dataset:OpenAssistant/oasst_top1_2023-08-25",
+      "dataset:TIGER-Lab/MathInstruct",
+      "arxiv:2309.11235",
+      "arxiv:2303.08774",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "openchat_3.5",
+  "ok": true,
+  "popularity": {
+    "downloads": 1014,
+    "downloadsAllTime": 623426,
+    "likes": 1140,
+    "trendingScore": 0
+  },
+  "repo_id": "openchat/openchat_3.5",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-10-30T05:59:34.000Z",
+    "lastModified": "2024-05-18T18:09:11.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": true,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

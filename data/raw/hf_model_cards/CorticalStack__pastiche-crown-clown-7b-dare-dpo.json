@@ -1,0 +1,100 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": 7241732096,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "F16": 7241732096
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 922,
+  "card_text": "---\nlicense: apache-2.0\ntags:\n- dpo\nbase_model:\n- CorticalStack/pastiche-crown-clown-7b-dare\ndataset:\n- jondurbin/truthy-dpo-v0.1\n---\n\n<img src=\"pastiche-crown-clown.png\" alt=\"Pastiche crown clown logo\" width=\"800\" style=\"margin-left:'auto' margin-right:'auto' display:'block'\"/>\n\n# CorticalStack/pastiche-crown-clown-7b-dare-dpo\n\nCorticalStack/pastiche-crown-clown-7b-dare-dpo is a DPO fine-tuned version of [CorticalStack/pastiche-crown-clown-7b-dare](https://huggingface.co/CorticalStack/pastiche-crown-clown-7b-dare) using the [jondurbin/truthy-dpo-v0.1](https://huggingface.co/datasets/jondurbin/truthy-dpo-v0.1) dataset.\n\n### LoRA\n- r: 16\n- LoRA alpha: 16\n- LoRA dropout: 0.05\n\n### Training arguments\n- Batch size: 4\n- Gradient accumulation steps: 4\n- Optimizer: paged_adamw_32bit\n- Max steps: 200\n- Learning rate: 5e-05\n- Learning rate scheduler type: cosine\n- Beta: 0.1\n- Max prompt length: 1024\n- Max length: 1536",
+  "fetched_at": "2026-09-19T15:00:10.510324+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "CorticalStack/pastiche-crown-clown-7b-dare"
+    ],
+    "card_base_models": [
+      "CorticalStack/pastiche-crown-clown-7b-dare"
+    ],
+    "merge_tags": [
+      "base_model:CorticalStack/pastiche-crown-clown-7b-dare",
+      "base_model:finetune:CorticalStack/pastiche-crown-clown-7b-dare"
+    ],
+    "n_base_models": 1,
+    "relations": {
+      "": [
+        "CorticalStack/pastiche-crown-clown-7b-dare"
+      ],
+      "finetune": [
+        "CorticalStack/pastiche-crown-clown-7b-dare"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "CorticalStack",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "mistral",
+      "text-generation",
+      "dpo",
+      "base_model:CorticalStack/pastiche-crown-clown-7b-dare",
+      "base_model:finetune:CorticalStack/pastiche-crown-clown-7b-dare",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "CorticalStack__pastiche-crown-clown-7b-dare-dpo",
+  "ok": true,
+  "popularity": {
+    "downloads": 72,
+    "downloadsAllTime": 11699,
+    "likes": 0,
+    "trendingScore": 0
+  },
+  "repo_id": "CorticalStack/pastiche-crown-clown-7b-dare-dpo",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2024-03-02T09:12:45.000Z",
+    "lastModified": "2024-03-03T10:48:35.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": true,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

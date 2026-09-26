@@ -1,0 +1,504 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 3072,
+    "intermediate_size": 23040,
+    "max_position_embeddings": 32768,
+    "model_type": "llama",
+    "n_parameters": 7455550464,
+    "num_attention_heads": 12,
+    "num_hidden_layers": 28,
+    "num_key_value_heads": 4,
+    "parameter_dtypes": {
+      "BF16": 7455550464
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 131072
+  },
+  "card_chars": 8702,
+  "card_text": "---\nlanguage:\n- en\n- fr\n- es\n- pt\ntags:\n- falcon3\nbase_model: tiiuae/Falcon3-7B-Base\nlicense: other\nlicense_name: falcon-llm-license\nlicense_link: https://falconllm.tii.ae/falcon-terms-and-conditions.html\nlibrary_name: transformers\n---\n\n<div align=\"center\">\n    <img src=\"https://huggingface.co/datasets/tiiuae/documentation-images/resolve/main/general/falco3-logo.png\" alt=\"drawing\" width=\"500\"/>\n</div>\n\n# Falcon3-7B-Instruct\n\n**Falcon3** family of Open Foundation Models is a set of pretrained and instruct LLMs ranging from 1B to 10B.\n\nThis repository contains the **Falcon3-7B-Instruct**. It achieves state of art results (at the time of release) on reasoning, language understanding, instruction following, code and mathematics tasks.\nFalcon3-7B-Instruct supports 4 languages (english, french, spanish, portuguese) and a context length up to 32K.\n\n## Model Details\n- Architecture\n  - Transformer based causal decoder only architecture\n  - 28 decoder blocks\n  - Grouped query attention (GQA) for faster inference: 12 query heads and 4 key value heads\n  - Wider head dimension: 256\n  - High RoPE value to support long context understanding: 1000042\n  - Uses SwiGLU and RMSNorm\n  - 32K context length\n  - 131K vocab size\n- Pretrained on 14 Teratokens of datasets comprising of web, code, STEM, high quality and mutlilingual data using 1024 H100 GPU chips\n- Postrained on 1.2 million samples of STEM, conversations, code, safety and function call data\n- Supports EN, FR, ES, PT\n- Developed by [Technology Innovation Institute](https://www.tii.ae)\n- License: TII Falcon-LLM License 2.0\n- Model Release Date: December 2024\n\n\n## Getting started\n\n<details>\n<summary> Click to expand </summary>\n\n```python\n\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\nmodel_name = \"tiiuae/Falcon3-7B-Instruct\"\n\nmodel = AutoModelForCausalLM.from_pretrained(\n    model_name,\n    torch_dtype=\"auto\",\n    device_map=\"auto\"\n)\ntokenizer = AutoTokenizer.from_pretrained(model_name)\n\nprompt = \"How many hours in one day?\"\nmessages = [\n    {\"role\": \"system\", \"content\": \"You are a helpful friendly assistant Falcon3 from TII, try to follow instructions as much as possible.\"},\n    {\"role\": \"user\", \"content\": prompt}\n]\ntext = tokenizer.apply_chat_template(\n    messages,\n    tokenize=False,\n    add_generation_prompt=True\n)\nmodel_inputs = tokenizer([text], return_tensors=\"pt\").to(model.device)\n\ngenerated_ids = model.generate(\n    **model_inputs,\n    max_new_tokens=1024\n)\ngenerated_ids = [\n    output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)\n]\n\nresponse = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]\nprint(response)\n```\n\n</details>\n\n<br>\n\n## Benchmarks\nWe report the official HuggingFace leaderboard normalized evaluations [Open LLM Leaderboard Evaluation Results](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard) in the following table.\n<table border=\"1\" style=\"width: 100%; text-align: center; border-collapse: collapse;\">\n    <colgroup>\n        <col style=\"width: 10%;\">\n        <col style=\"width: 7%;\">\n        <col style=\"width: 7%;\">\n        <col style=\"background-color: rgba(80, 15, 213, 0.5); width: 7%;\">\n    </colgroup>\n    <thead>\n        <tr>\n            <th>Benchmark</th>\n            <th>Llama-3.1-8B-Instruct</th>\n            <th>Qwen2.5-7B-Instruct</th>\n            <th>Falcon3-7B-Instruct</th>\n        </tr>\n    </thead>\n    <tbody>\n        <tr>\n            <td>IFEval</td>\n            <td><b>78.56</b></td>\n            <td>75.85</td>\n            <td>76.12</td>\n        </tr>\n        <tr>\n            <td>BBH (3-shot)</td>\n            <td>29.89</td>\n            <td>34.89</td>\n            <td><b>37.92</b></td>\n        </tr>\n        <tr>\n            <td>MATH Lvl-5 (4-shot)</td>\n            <td>19.34</td>\n            <td>0.00</td>\n            <td><b>31.87</b></td>\n        </tr>              \n        <tr>\n            <td>GPQA (0-shot)</td>\n            <td>2.35</td>\n            <td>5.48</td>\n            <td><b>8.05</b></td>\n        </tr>\n        <tr>\n            <td>MUSR (0-shot)</td>\n            <td>8.41</td>\n            <td>8.45</td>\n            <td><b>21.17</b></td>\n        </tr>\n        <tr>\n            <td>MMLU-PRO (5-shot)</td>\n            <td>30.68</td>\n            <td><b>36.52</b></td>\n            <td>34.30</td>\n        </tr>        \n    </tbody>\n</table>\n\nAlso, we report in the following table our internal pipeline benchmarks.\n - We use [lm-evaluation harness](https://github.com/EleutherAI/lm-evaluation-harness).\n - We report **raw scores** obtained by applying chat template and fewshot_as_multiturn.\n - We use same batch-size across all models.\n\n<table border=\"1\" style=\"width: 100%; text-align: center; border-collapse: collapse;\">\n    <colgroup>\n        <col style=\"width: 10%;\">\n        <col style=\"width: 10%;\">\n        <col style=\"width: 7%;\">\n        <col style=\"width: 7%;\">\n        <col style=\"background-color: rgba(80, 15, 213, 0.5); width: 7%;\">\n    </colgroup>\n    <thead>\n        <tr>\n            <th>Category</th>\n            <th>Benchmark</th>\n            <th>Llama-3.1-8B-Instruct</th>\n            <th>Qwen2.5-7B-Instruct</th>\n            <th>Falcon3-7B-Instruct</th>\n        </tr>\n    </thead>\n    <tbody>\n        <tr>\n            <td rowspan=\"3\">General</td>\n            <td>MMLU (5-shot)</td>\n            <td>68.2</td>\n            <td><b>73.5</b></td>\n            <td>70.5</td>\n        </tr>\n        <tr>\n            <td>MMLU-PRO (5-shot)</td>\n            <td>36.4</td>\n            <td><b>43.1</b></td>\n            <td>40.7</td>\n        </tr>\n        <tr>\n            <td>IFEval</td>\n            <td><b>78.8</b></td>\n            <td>74.7</td>\n            <td>76.5</td>\n        </tr>\n        <tr>\n            <td rowspan=\"3\">Math</td>\n            <td>GSM8K (5-shot)</td>\n            <td><b>82.6</b></td>\n            <td>72.0</td>\n            <td>81.4</td>\n        </tr>\n        <tr>\n            <td>GSM8K (8-shot, COT)</td>\n            <td><b>85.4</b></td>\n            <td>76.6</td>\n            <td>79.7</td>\n        </tr>\n        <tr>\n            <td>MATH Lvl-5 (4-shot)</td>\n            <td>15.4</td>\n            <td>-</td>\n            <td><b>29.4</b></td>\n        </tr>\n        <tr>\n            <td rowspan=\"5\">Reasoning</td>\n            <td>Arc Challenge (25-shot)</td>\n            <td>58.6</td>\n            <td>57.8</td>\n            <td><b>62.6</b></td>\n        </tr>\n        <tr>\n            <td>GPQA (0-shot)</td>\n            <td><b>33.5</b></td>\n            <td>32</td>\n            <td>31.9</td>\n        </tr>\n        <tr>\n            <td>GPQA (0-shot, COT)</td>\n            <td>9.6</td>\n            <td>13.8</td>\n            <td><b>22.3</b></td>\n        </tr>\n        <tr>\n            <td>MUSR (0-shot)</td>\n            <td>38.6</td>\n            <td>41</td>\n            <td><b>46.4</b></td>\n        </tr>\n        <tr>\n            <td>BBH (3-shot)</td>\n            <td>48.6</td>\n            <td><b>54.1</b></td>\n            <td>52.4</td>\n        </tr>\n        <tr>\n            <td rowspan=\"4\">CommonSense Understanding</td>\n            <td>PIQA (0-shot)</td>\n            <td><b>78.9</b></td>\n            <td>73.7</td>\n            <td>78.8</td>\n        </tr>\n        <tr>\n            <td>SciQ (0-shot)</td>\n            <td>80.2</td>\n            <td>50.9</td>\n            <td><b>94.7</b></td>\n        </tr>\n        <tr>\n            <td>Winogrande (0-shot)</td>\n            <td>-</td>\n            <td>-</td>\n            <td>70.4</td>\n        </tr>\n        <tr>\n            <td>OpenbookQA (0-shot)</td>\n            <td><b>46.2</b></td>\n            <td>42.4</td>\n            <td>45.8</td>\n        </tr>\n        <tr>\n            <td rowspan=\"2\">Instructions following</td>\n            <td>MT-Bench (avg)</td>\n            <td>7.9</td>\n            <td><b>8.5</b></td>\n            <td>8.4</td>\n        </tr>\n        <tr>\n            <td>Alpaca (WC)</td>\n            <td>26.6</td>\n            <td><b>31.5</b></td>\n            <td>26.1</td>\n        </tr>\n        <tr>\n            <td>Tool use</td>\n            <td>BFCL AST (avg)</td>\n            <td>90.6</td>\n            <td><b>91.4</b></td>\n            <td>89.5</td>\n        </tr>\n    </tbody>\n</table>\n\n## Useful links\n- View our [release blogpost](https://huggingface.co/blog/falcon3).\n- Feel free to join [our discord server](https://discord.gg/fwXpMyGc) if you have any questions or to interact with our researchers and developers.\n\n## Technical Report\nComing soon....\n\n## Citation\nIf Falcon3 family were helpful to your work, feel free to give us a cite.\n\n```\n@misc{Falcon3,\n    title = {The Falcon 3 family of Open Models},\n    author = {TII Team},\n    month = {December},\n    year = {2024}\n}\n```\n",
+  "fetched_at": "2026-09-19T15:02:16.975694+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "tiiuae/Falcon3-7B-Base"
+    ],
+    "card_base_models": [
+      "tiiuae/Falcon3-7B-Base"
+    ],
+    "merge_tags": [],
+    "n_base_models": 1,
+    "relations": {
+      "": [
+        "tiiuae/Falcon3-7B-Base"
+      ],
+      "finetune": [
+        "tiiuae/Falcon3-7B-Base"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "tiiuae",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "other",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "falcon3",
+      "conversational",
+      "en",
+      "fr",
+      "es",
+      "pt",
+      "base_model:tiiuae/Falcon3-7B-Base",
+      "base_model:finetune:tiiuae/Falcon3-7B-Base",
+      "license:other",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:sagemaker",
+      "region:us"
+    ]
+  },
+  "model_key": "falcon3-7b-instruct",
+  "ok": true,
+  "popularity": {
+    "downloads": 11801,
+    "downloadsAllTime": 533779,
+    "likes": 80,
+    "trendingScore": 0
+  },
+  "repo_id": "tiiuae/Falcon3-7B-Instruct",
+  "resolved_via": "search",
+  "search_candidates": [
+    [
+      "tiiuae/Falcon3-7B-Instruct-1.58bit",
+      826
+    ],
+    [
+      "tiiuae/Falcon3-7B-Instruct",
+      11801
+    ],
+    [
+      "tiiuae/Falcon3-Mamba-7B-Instruct",
+      1967
+    ],
+    [
+      "tiiuae/Falcon3-7B-Instruct-GPTQ-Int8",
+      253
+    ],
+    [
+      "tiiuae/Falcon3-7B-Instruct-GPTQ-Int4",
+      150
+    ],
+    [
+      "tiiuae/Falcon3-7B-Instruct-AWQ",
+      167
+    ],
+    [
+      "tiiuae/Falcon3-7B-Instruct-GGUF",
+      371
+    ],
+    [
+      "tiiuae/Falcon3-Mamba-7B-Instruct-GGUF",
+      391
+    ],
+    [
+      "mlx-community/Falcon3-7B-Instruct-4bit",
+      392
+    ],
+    [
+      "DevQuasar-6/tiiuae.Falcon3-7B-Instruct-GGUF",
+      115
+    ],
+    [
+      "mlx-community/Falcon3-7B-Instruct-3bit",
+      23
+    ],
+    [
+      "mradermacher/Falcon3-7B-Instruct-GGUF",
+      264
+    ],
+    [
+      "lmstudio-community/Falcon3-7B-Instruct-GGUF",
+      181
+    ],
+    [
+      "bartowski/Falcon3-7B-Instruct-GGUF",
+      3616
+    ],
+    [
+      "mradermacher/Falcon3-7B-Instruct-i1-GGUF",
+      1274
+    ],
+    [
+      "mlx-community/Falcon3-7B-Instruct-6bit",
+      30
+    ],
+    [
+      "jncraton/Falcon3-7B-Instruct-ct2-int8",
+      3
+    ],
+    [
+      "mradermacher/Falcon3-Mamba-7B-Instruct-GGUF",
+      727
+    ],
+    [
+      "mlx-community/Falcon3-7B-Instruct-8bit",
+      18
+    ],
+    [
+      "mradermacher/Falcon3-Mamba-7B-Instruct-i1-GGUF",
+      1533
+    ],
+    [
+      "lucyknada/tiiuae_Falcon3-7B-Instruct-exl2",
+      0
+    ],
+    [
+      "mlx-community/Falcon3-Mamba-7B-Instruct-8bits",
+      48
+    ],
+    [
+      "mlx-community/Falcon3-Mamba-7B-Instruct-4bits",
+      49
+    ],
+    [
+      "NikolayKozloff/Falcon3-7B-Instruct-chatllm.cpp-Q8_0-GGML",
+      0
+    ],
+    [
+      "kaitchup/Falcon3-7B-Instruct-AutoRound-GPTQ-4bit",
+      15
+    ],
+    [
+      "tiiuae/Falcon3-7B-Instruct-1.58bit-GGUF",
+      537
+    ],
+    [
+      "TheBlueObserver/Falcon3-7B-Instruct-MLX",
+      9
+    ],
+    [
+      "TheBlueObserver/Falcon3-7B-Instruct-MLX-0cb1b",
+      13
+    ],
+    [
+      "TheBlueObserver/Falcon3-7B-Instruct-MLX-104ce",
+      12
+    ],
+    [
+      "TheBlueObserver/Falcon3-7B-Instruct-MLX-196c8",
+      10
+    ],
+    [
+      "mlx-community/Falcon3-Mamba-7B-Instruct",
+      33
+    ],
+    [
+      "TheBlueObserver/Falcon3-7B-Instruct-MLX-8777b",
+      9
+    ],
+    [
+      "mradermacher/Falcon3-7B-Instruct-abliterated-GGUF",
+      98
+    ],
+    [
+      "mradermacher/Falcon3-7B-Instruct-abliterated-i1-GGUF",
+      318
+    ],
+    [
+      "second-state/Falcon3-7B-Instruct-GGUF",
+      575
+    ],
+    [
+      "gaianet/Falcon3-7B-Instruct-GGUF",
+      234
+    ],
+    [
+      "TheBlueObserver/Falcon3-7B-Instruct-MLX-393a7",
+      8
+    ],
+    [
+      "sonjatapio/Falcon3-7B-Instruct",
+      0
+    ],
+    [
+      "bartowski/Falcon3-7B-Instruct-abliterated-GGUF",
+      3547
+    ],
+    [
+      "duyntnet/Falcon3-7B-Instruct-imatrix-GGUF",
+      144
+    ],
+    [
+      "SujanKarki/Falcon3-7B-Instruct_text_to_sql_qlora_newdataset",
+      7
+    ],
+    [
+      "AIFunOver/Falcon3-7B-Instruct-openvino-fp16",
+      11
+    ],
+    [
+      "AIFunOver/Falcon3-7B-Instruct-openvino-8bit",
+      8
+    ],
+    [
+      "AIFunOver/Falcon3-7B-Instruct-openvino-4bit",
+      11
+    ],
+    [
+      "SujanKarki/Falcon3-7B-Instruct_text_to_sql_lora_newdataset",
+      0
+    ],
+    [
+      "alexander583/Falcon3-7B-Instruct-Q4-mlx",
+      8
+    ],
+    [
+      "nebuxcloud/Falcon3-7B-Instruct-1.58bit-GGUF",
+      48
+    ],
+    [
+      "tensorblock/Falcon3-Mamba-7B-Instruct-GGUF",
+      153
+    ],
+    [
+      "TheMelonGod/Falcon3-7B-Instruct-exl2",
+      29
+    ],
+    [
+      "itlwas/Falcon3-7B-Instruct-abliterated-Q4_K_M-GGUF",
+      24
+    ],
+    [
+      "houghtob123/Falcon3-7B-Instruct-Abliterated-Q4_0",
+      10
+    ],
+    [
+      "neopolita/jessi-v0.2-falcon3-7b-instruct",
+      17
+    ],
+    [
+      "neopolita/jessi-v0.3-falcon3-7b-instruct",
+      17
+    ],
+    [
+      "Melvin56/Falcon3-7B-Instruct-abliterated-Q2_K-GGUF",
+      19
+    ],
+    [
+      "neopolita/jessi-v0.5-falcon3-7b-instruct",
+      27
+    ],
+    [
+      "aithal1/Qlora-Falcon3-7B-Instruct-3",
+      0
+    ],
+    [
+      "msyukorai/Falcon3-7B-Instruct-Q4_0-GGUF",
+      5
+    ],
+    [
+      "aithal1/Qlora-Falcon3-7B-Instruct-5",
+      0
+    ],
+    [
+      "viraatdas/Falcon3-7B-Instruct-1.58bit",
+      0
+    ],
+    [
+      "neopolita/jessi-v0.4-falcon3-7b-instruct",
+      26
+    ],
+    [
+      "neopolita/jessi-v0.6-falcon3-7b-instruct",
+      27
+    ],
+    [
+      "fbaldassarri/tiiuae_Falcon3-7B-Instruct-autoround-int4-gs128-asym",
+      8
+    ],
+    [
+      "fbaldassarri/tiiuae_Falcon3-7B-Instruct-autoround-int4-gs128-sym",
+      11
+    ],
+    [
+      "fbaldassarri/tiiuae_Falcon3-7B-Instruct-autogptq-int4-gs128-asym",
+      10
+    ],
+    [
+      "fbaldassarri/tiiuae_Falcon3-7B-Instruct-autogptq-int4-gs128-sym",
+      7
+    ],
+    [
+      "fbaldassarri/tiiuae_Falcon3-7B-Instruct-autoawq-int4-gs128-asym",
+      8
+    ],
+    [
+      "fbaldassarri/tiiuae_Falcon3-7B-Instruct-autoawq-int4-gs128-sym",
+      8
+    ],
+    [
+      "RedaAlami/Falcon3-7B-Instruct-Distill-DS-v1",
+      123
+    ],
+    [
+      "fbaldassarri/tiiuae_Falcon3-7B-Instruct-autoround-int8-gs128-asym",
+      6
+    ],
+    [
+      "fbaldassarri/tiiuae_Falcon3-7B-Instruct-autoround-int8-gs128-sym",
+      7
+    ],
+    [
+      "fbaldassarri/tiiuae_Falcon3-7B-Instruct-autogptq-int8-gs128-asym",
+      14
+    ],
+    [
+      "fbaldassarri/tiiuae_Falcon3-7B-Instruct-autogptq-int8-gs128-sym",
+      7
+    ],
+    [
+      "mradermacher/jessi-v0.5-falcon3-7b-instruct-GGUF",
+      232
+    ],
+    [
+      "mradermacher/jessi-v0.4-falcon3-7b-instruct-GGUF",
+      360
+    ],
+    [
+      "RedaAlami/Falcon3-7B-Instruct-OpenR1-Math",
+      14
+    ],
+    [
+      "mradermacher/jessi-v0.4-falcon3-7b-instruct-i1-GGUF",
+      1213
+    ],
+    [
+      "saarah-a/falcon37binstruct_medical-chatbot",
+      0
+    ],
+    [
+      "rpanchum/falcon3-7b-instruct-int4-sym-ov",
+      5
+    ],
+    [
+      "Koutouzov1973/Falcon3-Mamba-7B-Instruct-2bits_generex",
+      9
+    ],
+    [
+      "saarah-a/falcon37binstruct_medicalchatbot",
+      0
+    ],
+    [
+      "mradermacher/jessi-v0.6-falcon3-7b-instruct-GGUF",
+      192
+    ],
+    [
+      "mradermacher/jessi-v0.6-falcon3-7b-instruct-i1-GGUF",
+      1097
+    ],
+    [
+      "mradermacher/jessi-v0.2-falcon3-7b-instruct-GGUF",
+      233
+    ],
+    [
+      "mradermacher/jessi-v0.3-falcon3-7b-instruct-GGUF",
+      264
+    ],
+    [
+      "RichardErkhov/TheBlueObserver_-_Falcon3-7B-Instruct-MLX-gguf",
+      804
+    ],
+    [
+      "alekgomez/Falcon3-7B-Instruct-4bit-GPTQ",
+      9
+    ],
+    [
+      "anishreddy91/Quantized-Falcon3-7B-Instruct",
+      15
+    ],
+    [
+      "anishreddy91/Finetuned_model_falcon3_7b_instruct",
+      11
+    ],
+    [
+      "mlx-community/Falcon3-7B-Instruct-1.58bit",
+      20
+    ],
+    [
+      "mlx-community/Falcon3-7B-Instruct-1.58bit-4bit",
+      119
+    ],
+    [
+      "mlx-community/Falcon3-7B-Instruct-1.58bit-6bit",
+      18
+    ],
+    [
+      "mlx-community/Falcon3-7B-Instruct-1.58bit-8bit",
+      12
+    ],
+    [
+      "jahyungu/Falcon3-7B-Instruct_gsm8k",
+      14
+    ],
+    [
+      "jahyungu/Falcon3-7B-Instruct_hendrycks_math",
+      6
+    ],
+    [
+      "jahyungu/Falcon3-7B-Instruct_LeetCodeDataset",
+      9
+    ],
+    [
+      "jahyungu/Falcon3-7B-Instruct_mbpp",
+      32
+    ],
+    [
+      "jahyungu/Falcon3-7B-Instruct_coqa",
+      5
+    ],
+    [
+      "jahyungu/Falcon3-7B-Instruct_openbookqa",
+      12
+    ],
+    [
+      "mradermacher/Falcon3-7B-Instruct_openbookqa-GGUF",
+      314
+    ],
+    [
+      "jahyungu/Falcon3-7B-Instruct_arc",
+      25
+    ]
+  ],
+  "timestamps": {
+    "createdAt": "2024-11-29T10:12:15.000Z",
+    "lastModified": "2025-05-31T08:24:41.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

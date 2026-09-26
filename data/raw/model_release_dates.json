@@ -1,0 +1,1370 @@
+{
+  "generated_at": "2026-09-22T11:31:49.403996+00:00",
+  "generated_by": "collect.py --enrich",
+  "models": {
+    "01-ai__Yi-6B": {
+      "created_at": "2023-11-01",
+      "source": "hf_hub_created_at"
+    },
+    "01-ai__Yi-6B-200K": {
+      "created_at": "2023-11-06",
+      "source": "hf_hub_created_at"
+    },
+    "01-ai__Yi-6B-Chat": {
+      "created_at": "2023-11-22",
+      "repo_id": "01-ai/Yi-6B-Chat",
+      "source": "huggingface:hf_id"
+    },
+    "10prymmal-3b-slerp": {
+      "created_at": "2024-09-23",
+      "repo_id": "LilRg/10PRYMMAL-3B-slerp",
+      "source": "huggingface:hf_id"
+    },
+    "2-prymmal-ece-7b-slerp": {
+      "created_at": "2024-11-04",
+      "repo_id": "Lil-R/2_PRYMMAL-ECE-7B-SLERP",
+      "source": "huggingface:hf_id"
+    },
+    "ATH-MaaS__Marco-o1": {
+      "created_at": "2024-11-13",
+      "repo_id": "ATH-MaaS/Marco-o1",
+      "source": "huggingface:name-search"
+    },
+    "AdaptLLM__medicine-LLM": {
+      "created_at": "2023-09-18",
+      "source": "hf_hub_created_at"
+    },
+    "AdaptLLM__medicine-LLM-13B": {
+      "created_at": "2023-12-19",
+      "source": "hf_hub_created_at"
+    },
+    "AdaptLLM__medicine-chat": {
+      "created_at": "2023-12-09",
+      "source": "hf_hub_created_at"
+    },
+    "Alchan__mpt-7b-chat": {
+      "created_at": "2024-03-29",
+      "repo_id": "Alchan/mpt-7b-chat",
+      "source": "huggingface:hf_id"
+    },
+    "Austism__chronos-hermes-13b-v2": {
+      "created_at": "2023-08-02",
+      "repo_id": "Austism/chronos-hermes-13b-v2",
+      "source": "huggingface:name-search"
+    },
+    "BioMistral__BioMistral-7B": {
+      "created_at": "2024-02-14",
+      "source": "hf_hub_created_at"
+    },
+    "BioMistral__BioMistral-7B-DARE": {
+      "created_at": "2024-02-05",
+      "source": "hf_hub_created_at"
+    },
+    "Biomimicry-AI__ANIMA-Nectar-v2": {
+      "created_at": "2023-12-04",
+      "source": "hf_hub_created_at"
+    },
+    "BlueNipples__Trion-M-7b": {
+      "created_at": "2023-11-07",
+      "repo_id": "BlueNipples/Trion-M-7b",
+      "source": "huggingface:name-search"
+    },
+    "Brouz__Slerpeno": {
+      "created_at": "2023-09-08",
+      "repo_id": "Brouz/Slerpeno",
+      "source": "huggingface:hf_id"
+    },
+    "CalderaAI__Naberius-7B": {
+      "created_at": "2023-11-03",
+      "repo_id": "CalderaAI/Naberius-7B",
+      "source": "huggingface:hf_id"
+    },
+    "CorticalStack__pastiche-crown-clown-7b-dare-dpo": {
+      "created_at": "2024-03-02",
+      "source": "hf_hub_created_at"
+    },
+    "Danielbrdz__Barcenas-Mistral-7b": {
+      "created_at": "2023-10-20",
+      "repo_id": "Danielbrdz/Barcenas-Mistral-7b",
+      "source": "huggingface:name-search"
+    },
+    "Dans-Archive__Dans-AdventurousWinds-Mk2-7b": {
+      "created_at": "2023-10-15",
+      "repo_id": "Dans-Archive/Dans-AdventurousWinds-Mk2-7b",
+      "source": "huggingface:hf_id"
+    },
+    "Dans-Archive__Dans-TotSirocco-7b": {
+      "created_at": "2023-10-03",
+      "repo_id": "Dans-Archive/Dans-TotSirocco-7b",
+      "source": "huggingface:hf_id"
+    },
+    "Dans-DiscountModels__Dans-AdventurousWinds-7b": {
+      "created_at": "2023-10-04",
+      "repo_id": "Dans-DiscountModels/Dans-AdventurousWinds-7b",
+      "source": "huggingface:hf_id"
+    },
+    "EleutherAI__pythia-12b": {
+      "created_at": "2023-02-28",
+      "source": "hf_hub_created_at"
+    },
+    "EssentialAI__rnj-1-instruct": {
+      "created_at": "2025-12-04",
+      "repo_id": "EssentialAI/rnj-1-instruct",
+      "source": "huggingface:hf_id"
+    },
+    "FPHam__Free_Sydney_V2_13b_HF": {
+      "created_at": "2023-10-27",
+      "repo_id": "FPHam/Free_Sydney_V2_13b_HF",
+      "source": "huggingface:hf_id"
+    },
+    "FelixChao__Scorpio-7B": {
+      "created_at": "2024-02-14",
+      "source": "hf_hub_created_at"
+    },
+    "FelixChao__llama2-13b-math1.2": {
+      "created_at": "2023-08-15",
+      "source": "hf_hub_created_at"
+    },
+    "FelixChao__vicuna-7B-chemical": {
+      "created_at": "2023-08-09",
+      "source": "hf_hub_created_at"
+    },
+    "FelixChao__vicuna-7B-physics": {
+      "created_at": "2023-08-11",
+      "source": "hf_hub_created_at"
+    },
+    "Fredithefish__Guanaco-7B-Uncensored": {
+      "created_at": "2023-09-04",
+      "repo_id": "Fredithefish/Guanaco-7B-Uncensored",
+      "source": "huggingface:name-search"
+    },
+    "Granite-3.1-8B-Instruct": {
+      "created_at": "2024-12-06",
+      "source": "hf_hub_created_at"
+    },
+    "Gryphe__MythoLogic-13b": {
+      "created_at": "2023-07-12",
+      "repo_id": "Gryphe/MythoLogic-13b",
+      "source": "huggingface:name-search"
+    },
+    "Gryphe__MythoMax-L2-13b": {
+      "created_at": "2023-08-10",
+      "repo_id": "Gryphe/MythoMax-L2-13b",
+      "source": "huggingface:name-search"
+    },
+    "Harshvir__Llama-2-7B-physics": {
+      "created_at": "2023-08-17",
+      "source": "hf_hub_created_at"
+    },
+    "Heralax__Augmental-13b": {
+      "created_at": "2023-10-23",
+      "repo_id": "Heralax/Augmental-13b",
+      "source": "huggingface:name-search"
+    },
+    "Heralax__Augmental-13b-v1.50_A": {
+      "created_at": "2023-10-29",
+      "repo_id": "Heralax/Augmental-13b-v1.50_A",
+      "source": "huggingface:hf_id"
+    },
+    "Heralax__Augmental-13b-v1.50_B": {
+      "created_at": "2023-10-29",
+      "repo_id": "Heralax/Augmental-13b-v1.50_B",
+      "source": "huggingface:hf_id"
+    },
+    "Heralax__MistralMakise-Merged-13b": {
+      "created_at": "2023-10-11",
+      "repo_id": "Heralax/MistralMakise-Merged-13b",
+      "source": "huggingface:hf_id"
+    },
+    "Heralax__MythoMakiseMerged-13b": {
+      "created_at": "2023-09-30",
+      "repo_id": "Heralax/MythoMakiseMerged-13b",
+      "source": "huggingface:hf_id"
+    },
+    "HuggingFaceH4__zephyr-7b-alpha": {
+      "created_at": "2023-10-09",
+      "repo_id": "HuggingFaceH4/zephyr-7b-alpha",
+      "source": "huggingface:hf_id"
+    },
+    "HuggingFaceH4__zephyr-7b-beta": {
+      "created_at": "2023-10-26",
+      "source": "hf_hub_created_at"
+    },
+    "IkariDev__Athena-v1": {
+      "created_at": "2023-08-30",
+      "repo_id": "IkariDev/Athena-v1",
+      "source": "huggingface:hf_id"
+    },
+    "IkariDev__Athena-v2": {
+      "created_at": "2023-09-23",
+      "repo_id": "IkariDev/Athena-v2",
+      "source": "huggingface:hf_id"
+    },
+    "IkariDev__Athena-v3": {
+      "created_at": "2023-09-26",
+      "repo_id": "IkariDev/Athena-v3",
+      "source": "huggingface:name-search"
+    },
+    "IkariDev__Athena-v4": {
+      "created_at": "2023-10-07",
+      "repo_id": "IkariDev/Athena-v4",
+      "source": "huggingface:hf_id"
+    },
+    "IkariDev__Athnete-13B": {
+      "created_at": "2023-10-29",
+      "repo_id": "IkariDev/Athnete-13B",
+      "source": "huggingface:hf_id"
+    },
+    "Intel__neural-chat-7b-v3-3": {
+      "created_at": "2023-12-09",
+      "source": "hf_hub_created_at"
+    },
+    "LeoLM__leo-hessianai-7b-chat": {
+      "created_at": "2023-09-10",
+      "repo_id": "LeoLM/leo-hessianai-7b-chat",
+      "source": "huggingface:name-search"
+    },
+    "LeoLM__leo-mistral-hessianai-7b-chat": {
+      "created_at": "2023-10-06",
+      "repo_id": "LeoLM/leo-mistral-hessianai-7b-chat",
+      "source": "huggingface:name-search"
+    },
+    "Llama-2-70b-chat-hf-AWQ": {
+      "created_at": "2023-09-19",
+      "repo_id": "TheBloke/Llama-2-70B-Chat-AWQ",
+      "source": "huggingface:hf_id"
+    },
+    "Mistral-Nemo-Base-2407-chatml": {
+      "created_at": "2024-07-27",
+      "repo_id": "IntervitensInc/Mistral-Nemo-Base-2407-chatml",
+      "source": "huggingface:name-search"
+    },
+    "Mistral-Small-24B-Instruct-2501": {
+      "created_at": "2025-01-28",
+      "repo_id": "mistralai/Mistral-Small-24B-Instruct-2501",
+      "source": "huggingface:name-search"
+    },
+    "Mixtral_11Bx2_MoE_19B": {
+      "created_at": "2023-12-31",
+      "source": "hf_hub_created_at"
+    },
+    "Neko-Institute-of-Science__metharme-7b": {
+      "created_at": "2023-04-30",
+      "source": "hf_hub_created_at"
+    },
+    "Neko-Institute-of-Science__pygmalion-7b": {
+      "created_at": "2023-04-30",
+      "source": "hf_hub_created_at"
+    },
+    "NeuralTrix-bf16": {
+      "created_at": "2024-02-14",
+      "source": "hf_hub_created_at"
+    },
+    "NeverSleep__Echidna-13b-v0.1": {
+      "created_at": "2023-10-21",
+      "repo_id": "NeverSleep/Echidna-13b-v0.1",
+      "source": "huggingface:hf_id"
+    },
+    "NeverSleep__Echidna-13b-v0.2": {
+      "created_at": "2023-10-26",
+      "repo_id": "NeverSleep/Echidna-13b-v0.2",
+      "source": "huggingface:name-search"
+    },
+    "NeverSleep__Echidna-13b-v0.3": {
+      "created_at": "2023-10-27",
+      "repo_id": "NeverSleep/Echidna-13b-v0.3",
+      "source": "huggingface:name-search"
+    },
+    "NeverSleep__HornyEchidna-13b-v0.1": {
+      "created_at": "2023-10-22",
+      "repo_id": "NeverSleep/HornyEchidna-13b-v0.1",
+      "source": "huggingface:hf_id"
+    },
+    "NeverSleep__Mistral-11B-SynthIAirOmniMix": {
+      "created_at": "2023-10-14",
+      "repo_id": "NeverSleep/Mistral-11B-SynthIAirOmniMix",
+      "source": "huggingface:hf_id"
+    },
+    "NeverSleep__Nethena-13B": {
+      "created_at": "2023-10-29",
+      "repo_id": "NeverSleep/Nethena-13B",
+      "source": "huggingface:hf_id"
+    },
+    "Nexusflow__Starling-LM-7B-beta": {
+      "created_at": "2024-03-19",
+      "source": "hf_hub_created_at"
+    },
+    "Norquinal__Mistral-7B-claude-chat": {
+      "created_at": "2023-09-27",
+      "repo_id": "Norquinal/Mistral-7B-claude-chat",
+      "source": "huggingface:name-search"
+    },
+    "Norquinal__PetrolLM": {
+      "created_at": "2023-09-27",
+      "repo_id": "Norquinal/PetrolLM",
+      "source": "huggingface:name-search"
+    },
+    "NousResearch__Nous-Capybara-7B-V1.9": {
+      "created_at": "2023-10-10",
+      "repo_id": "NousResearch/Nous-Capybara-7B-V1.9",
+      "source": "huggingface:name-search"
+    },
+    "NousResearch__Nous-Hermes-13b": {
+      "created_at": "2023-06-03",
+      "source": "hf_hub_created_at"
+    },
+    "NousResearch__Nous-Hermes-Llama2-13b": {
+      "created_at": "2023-07-20",
+      "repo_id": "NousResearch/Nous-Hermes-Llama2-13b",
+      "source": "huggingface:hf_id"
+    },
+    "NousResearch__Yarn-Mistral-7b-64k": {
+      "created_at": "2023-10-31",
+      "repo_id": "NousResearch/Yarn-Mistral-7b-64k",
+      "source": "huggingface:name-search"
+    },
+    "Open-Orca__Mistral-7B-OpenOrca": {
+      "created_at": "2023-09-29",
+      "repo_id": "Open-Orca/Mistral-7B-OpenOrca",
+      "source": "huggingface:name-search"
+    },
+    "OpenAssistant__oasst-sft-4-pythia-12b-epoch-3.5": {
+      "created_at": "2023-04-03",
+      "source": "hf_hub_created_at"
+    },
+    "OpenBuddy__openbuddy-codellama2-34b-v11.1-bf16": {
+      "created_at": "2023-09-08",
+      "source": "hf_hub_created_at"
+    },
+    "OpenBuddy__openbuddy-mistral-7b-v13": {
+      "created_at": "2023-10-10",
+      "repo_id": "OpenBuddy/openbuddy-mistral-7b-v13",
+      "source": "huggingface:name-search"
+    },
+    "OpenBuddy__openbuddy-zephyr-7b-v14.1": {
+      "created_at": "2023-11-06",
+      "repo_id": "OpenBuddy/openbuddy-zephyr-7b-v14.1",
+      "source": "huggingface:name-search"
+    },
+    "PharMolix__BioMedGPT-LM-7B": {
+      "created_at": "2023-08-11",
+      "source": "hf_hub_created_at"
+    },
+    "PygmalionAI__mythalion-13b": {
+      "created_at": "2023-09-05",
+      "repo_id": "PygmalionAI/mythalion-13b",
+      "source": "huggingface:hf_id"
+    },
+    "PygmalionAI__pygmalion-2-13b": {
+      "created_at": "2023-09-04",
+      "repo_id": "PygmalionAI/pygmalion-2-13b",
+      "source": "huggingface:hf_id"
+    },
+    "Q-bert__Optimus-7B": {
+      "created_at": "2023-12-03",
+      "source": "hf_hub_created_at"
+    },
+    "QuixiAI__Wizard-Vicuna-13B-Uncensored": {
+      "created_at": "2023-05-11",
+      "repo_id": "QuixiAI/Wizard-Vicuna-13B-Uncensored",
+      "source": "huggingface:name-search"
+    },
+    "QuixiAI__Wizard-Vicuna-7B-Uncensored": {
+      "created_at": "2023-05-18",
+      "repo_id": "QuixiAI/Wizard-Vicuna-7B-Uncensored",
+      "source": "huggingface:name-search"
+    },
+    "QuixiAI__WizardLM-7B-Uncensored": {
+      "created_at": "2023-05-04",
+      "repo_id": "QuixiAI/WizardLM-7B-Uncensored",
+      "source": "huggingface:name-search"
+    },
+    "QuixiAI__based-7b": {
+      "created_at": "2023-06-03",
+      "repo_id": "QuixiAI/based-7b",
+      "source": "huggingface:name-search"
+    },
+    "QuixiAI__samantha-mistral-7b": {
+      "created_at": "2023-09-30",
+      "repo_id": "QuixiAI/samantha-mistral-7b",
+      "source": "huggingface:hf_id"
+    },
+    "QuixiAI__samantha-mistral-instruct-7b": {
+      "created_at": "2023-09-30",
+      "repo_id": "QuixiAI/samantha-mistral-instruct-7b",
+      "source": "huggingface:name-search"
+    },
+    "Qwen__Qwen-7B-Chat": {
+      "created_at": "2023-08-03",
+      "repo_id": "Qwen/Qwen-7B-Chat",
+      "source": "huggingface:hf_id"
+    },
+    "Qwen__Qwen1.5-0.5B-Chat": {
+      "created_at": "2024-01-31",
+      "source": "hf_hub_created_at"
+    },
+    "Qwen__Qwen1.5-4B-Chat": {
+      "created_at": "2024-01-30",
+      "source": "hf_hub_created_at"
+    },
+    "Qwen__Qwen1.5-7B-Chat": {
+      "created_at": "2024-01-30",
+      "source": "hf_hub_created_at"
+    },
+    "Qwen__Qwen2-0.5B-Instruct": {
+      "created_at": "2024-06-03",
+      "repo_id": "Qwen/Qwen2-0.5B-Instruct",
+      "source": "huggingface:hf_id"
+    },
+    "Qwen__Qwen2-1.5B-Instruct": {
+      "created_at": "2024-06-03",
+      "repo_id": "Qwen/Qwen2-1.5B-Instruct",
+      "source": "huggingface:hf_id"
+    },
+    "Qwen__Qwen2-7B-Instruct": {
+      "created_at": "2024-06-04",
+      "repo_id": "Qwen/Qwen2-7B-Instruct",
+      "source": "huggingface:hf_id"
+    },
+    "Qwen__Qwen2.5-7B-Instruct": {
+      "created_at": "2024-09-16",
+      "repo_id": "Qwen/Qwen2.5-7B-Instruct",
+      "source": "huggingface:name-search"
+    },
+    "Qwen__Qwen3-8B": {
+      "created_at": "2025-04-27",
+      "repo_id": "Qwen/Qwen3-8B",
+      "source": "huggingface:name-search"
+    },
+    "Riiid__sheep-duck-llama-2-13b": {
+      "created_at": "2023-10-04",
+      "repo_id": "Riiid/sheep-duck-llama-2-13b",
+      "source": "huggingface:name-search"
+    },
+    "Sailor2-8B-Chat": {
+      "created_at": "2024-12-03",
+      "source": "hf_hub_created_at"
+    },
+    "SciPhi__SciPhi-Mistral-7B-32k": {
+      "created_at": "2023-10-16",
+      "source": "hf_hub_created_at"
+    },
+    "SciPhi__SciPhi-Self-RAG-Mistral-7B-32k": {
+      "created_at": "2023-10-27",
+      "source": "hf_hub_created_at"
+    },
+    "SkunkworksAI__Mistralic-7B-1": {
+      "created_at": "2023-09-29",
+      "repo_id": "SkunkworksAI/Mistralic-7B-1",
+      "source": "huggingface:name-search"
+    },
+    "TIGER-Lab__MAmmoTH-7B": {
+      "created_at": "2023-09-10",
+      "repo_id": "TIGER-Lab/MAmmoTH-7B",
+      "source": "huggingface:name-search"
+    },
+    "TheBloke__guanaco-7B-HF": {
+      "created_at": "2023-05-25",
+      "repo_id": "TheBloke/guanaco-7B-HF",
+      "source": "huggingface:name-search"
+    },
+    "TheBloke__koala-13B-HF": {
+      "created_at": "2023-04-07",
+      "source": "hf_hub_created_at"
+    },
+    "TheBloke__koala-7B-HF": {
+      "created_at": "2023-04-07",
+      "repo_id": "TheBloke/koala-7B-HF",
+      "source": "huggingface:name-search"
+    },
+    "TheBloke__wizardLM-7B-HF": {
+      "created_at": "2023-04-26",
+      "repo_id": "TheBloke/wizardLM-7B-HF",
+      "source": "huggingface:name-search"
+    },
+    "TigerResearch__tigerbot-13b-base": {
+      "created_at": "2023-08-24",
+      "source": "hf_hub_created_at"
+    },
+    "TinyLlama-1.1B-Chat-v1.0": {
+      "created_at": "2023-12-30",
+      "repo_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+      "source": "huggingface:hf_id"
+    },
+    "Tostino__Inkbot-13b-4k": {
+      "created_at": "2023-09-21",
+      "repo_id": "Tostino/Inkbot-13b-4k",
+      "source": "huggingface:name-search"
+    },
+    "Undi95__Amethyst-13B": {
+      "created_at": "2023-09-24",
+      "repo_id": "Undi95/Amethyst-13B",
+      "source": "huggingface:name-search"
+    },
+    "Undi95__Emerhyst-13B": {
+      "created_at": "2023-09-27",
+      "repo_id": "Undi95/Emerhyst-13B",
+      "source": "huggingface:hf_id"
+    },
+    "Undi95__MLewdBoros-LRPSGPT-2Char-13B": {
+      "created_at": "2023-09-13",
+      "repo_id": "Undi95/MLewdBoros-LRPSGPT-2Char-13B",
+      "source": "huggingface:name-search"
+    },
+    "Undi95__MistRP-Airoboros-7B": {
+      "created_at": "2023-10-03",
+      "repo_id": "Undi95/MistRP-Airoboros-7B",
+      "source": "huggingface:name-search"
+    },
+    "Undi95__Mistral-11B-Airoboros-RP-v1": {
+      "created_at": "2023-10-09",
+      "repo_id": "Undi95/Mistral-11B-Airoboros-RP-v1",
+      "source": "huggingface:name-search"
+    },
+    "Undi95__Mistral-ClaudeLimaRP-v3-7B": {
+      "created_at": "2023-09-28",
+      "repo_id": "Undi95/Mistral-ClaudeLimaRP-v3-7B",
+      "source": "huggingface:name-search"
+    },
+    "Undi95__Mistral-PetroLimaRP-v3-12B": {
+      "created_at": "2023-09-28",
+      "repo_id": "Undi95/Mistral-PetroLimaRP-v3-12B",
+      "source": "huggingface:hf_id"
+    },
+    "Undi95__Mistral-RP-0.1-7B": {
+      "created_at": "2023-09-29",
+      "repo_id": "Undi95/Mistral-RP-0.1-7B",
+      "source": "huggingface:hf_id"
+    },
+    "Undi95__Nete-13B": {
+      "created_at": "2023-10-25",
+      "repo_id": "Undi95/Nete-13B",
+      "source": "huggingface:name-search"
+    },
+    "Undi95__OpenRP-13B": {
+      "created_at": "2023-09-11",
+      "repo_id": "Undi95/OpenRP-13B",
+      "source": "huggingface:name-search"
+    },
+    "Undi95__OpenRP-13B-SuperCOT": {
+      "created_at": "2023-09-12",
+      "repo_id": "Undi95/OpenRP-13B-SuperCOT",
+      "source": "huggingface:name-search"
+    },
+    "Undi95__PsyMedRP-v1-13B": {
+      "created_at": "2023-10-05",
+      "repo_id": "Undi95/PsyMedRP-v1-13B",
+      "source": "huggingface:name-search"
+    },
+    "Undi95__ReMM-Lion-13B": {
+      "created_at": "2023-09-06",
+      "repo_id": "Undi95/ReMM-Lion-13B",
+      "source": "huggingface:hf_id"
+    },
+    "Undi95__ReMM-S-Kimiko-v2-13B": {
+      "created_at": "2023-09-07",
+      "repo_id": "Undi95/ReMM-S-Kimiko-v2-13B",
+      "source": "huggingface:name-search"
+    },
+    "Undi95__ReMM-v1-LRPSGPT-2Char-13B": {
+      "created_at": "2023-09-13",
+      "repo_id": "Undi95/ReMM-v1-LRPSGPT-2Char-13B",
+      "source": "huggingface:name-search"
+    },
+    "Undi95__ReMM-v2-Kimiko-v2-13B": {
+      "created_at": "2023-09-12",
+      "repo_id": "Undi95/ReMM-v2-Kimiko-v2-13B",
+      "source": "huggingface:name-search"
+    },
+    "Undi95__Toppy-M-7B": {
+      "created_at": "2023-11-03",
+      "repo_id": "Undi95/Toppy-M-7B",
+      "source": "huggingface:hf_id"
+    },
+    "Undi95__UndiMix-v1-13b": {
+      "created_at": "2023-08-31",
+      "repo_id": "Undi95/UndiMix-v1-13b",
+      "source": "huggingface:hf_id"
+    },
+    "Undi95__UndiMix-v2-13b": {
+      "created_at": "2023-09-01",
+      "repo_id": "Undi95/UndiMix-v2-13b",
+      "source": "huggingface:hf_id"
+    },
+    "Undi95__UndiMix-v3-13B": {
+      "created_at": "2023-09-07",
+      "repo_id": "Undi95/UndiMix-v3-13B",
+      "source": "huggingface:hf_id"
+    },
+    "Undi95__UndiMix-v4-13B": {
+      "created_at": "2023-09-12",
+      "repo_id": "Undi95/UndiMix-v4-13B",
+      "source": "huggingface:hf_id"
+    },
+    "Undi95__Unholy-v1-10L-13B": {
+      "created_at": "2023-09-10",
+      "repo_id": "Undi95/Unholy-v1-10L-13B",
+      "source": "huggingface:hf_id"
+    },
+    "Undi95__Unholy-v1-12L-13B": {
+      "created_at": "2023-09-10",
+      "repo_id": "Undi95/Unholy-v1-12L-13B",
+      "source": "huggingface:hf_id"
+    },
+    "Undi95__Unholy-v1.1-13B": {
+      "created_at": "2023-09-13",
+      "repo_id": "Undi95/Unholy-v1.1-13B",
+      "source": "huggingface:name-search"
+    },
+    "Undi95__Utopia-13B": {
+      "created_at": "2023-11-01",
+      "repo_id": "Undi95/Utopia-13B",
+      "source": "huggingface:hf_id"
+    },
+    "Undi95__Xwin-MLewd-13B-V0.2": {
+      "created_at": "2023-10-14",
+      "repo_id": "Undi95/Xwin-MLewd-13B-V0.2",
+      "source": "huggingface:hf_id"
+    },
+    "Undi95__ZettaPi-13B": {
+      "created_at": "2023-09-21",
+      "repo_id": "Undi95/ZettaPi-13B",
+      "source": "huggingface:name-search"
+    },
+    "Weyaxi__SlimOpenOrca-Mistral-7B": {
+      "created_at": "2023-10-11",
+      "repo_id": "Weyaxi/SlimOpenOrca-Mistral-7B",
+      "source": "huggingface:hf_id"
+    },
+    "WizardLM__WizardLM-13B-V1.2": {
+      "created_at": "2023-07-25",
+      "repo_id": "WizardLMTeam/WizardLM-13B-V1.2",
+      "source": "huggingface:name-search"
+    },
+    "Xwin-LM__Xwin-LM-13B-V0.2": {
+      "created_at": "2023-10-13",
+      "repo_id": "Xwin-LM/Xwin-LM-13B-V0.2",
+      "source": "huggingface:name-search"
+    },
+    "ajibawa-2023__Uncensored-Frank-13B": {
+      "created_at": "2023-09-14",
+      "repo_id": "ajibawa-2023/Uncensored-Frank-13B",
+      "source": "huggingface:name-search"
+    },
+    "ajibawa-2023__Uncensored-Frank-7B": {
+      "created_at": "2023-09-14",
+      "repo_id": "ajibawa-2023/Uncensored-Frank-7B",
+      "source": "huggingface:name-search"
+    },
+    "ajibawa-2023__Uncensored-Jordan-13B": {
+      "created_at": "2023-10-23",
+      "repo_id": "ajibawa-2023/Uncensored-Jordan-13B",
+      "source": "huggingface:hf_id"
+    },
+    "ajibawa-2023__Uncensored-Jordan-7B": {
+      "created_at": "2023-10-23",
+      "repo_id": "ajibawa-2023/Uncensored-Jordan-7B",
+      "source": "huggingface:name-search"
+    },
+    "akjindal53244__Arithmo-Mistral-7B": {
+      "created_at": "2023-10-14",
+      "repo_id": "akjindal53244/Arithmo-Mistral-7B",
+      "source": "huggingface:name-search"
+    },
+    "allenai__tulu-2-dpo-7b": {
+      "created_at": "2023-11-13",
+      "repo_id": "allenai/tulu-2-dpo-7b",
+      "source": "huggingface:name-search"
+    },
+    "aloobun__TinyAiroboros-2.2.1": {
+      "created_at": "2023-10-19",
+      "repo_id": "aloobun/TinyAiroboros-2.2.1",
+      "source": "huggingface:hf_id"
+    },
+    "amazon__MistralLite": {
+      "created_at": "2023-10-16",
+      "repo_id": "amazon/MistralLite",
+      "source": "huggingface:name-search"
+    },
+    "aspire-8b-model_stock": {
+      "created_at": "2024-09-16",
+      "repo_id": "DreadPoor/Aspire-8B-model_stock",
+      "source": "huggingface:name-search"
+    },
+    "augmxnt__shisa-base-7b-v1": {
+      "created_at": "2023-11-19",
+      "source": "hf_hub_created_at"
+    },
+    "baichuan-inc__Baichuan2-7B-Chat": {
+      "created_at": "2023-08-29",
+      "repo_id": "baichuan-inc/Baichuan2-7B-Chat",
+      "source": "huggingface:hf_id"
+    },
+    "bardsai__jaskier-7b-dpo-v5.6": {
+      "created_at": "2024-02-16",
+      "source": "hf_hub_created_at"
+    },
+    "berkeley-nest__Starling-LM-7B-alpha": {
+      "created_at": "2023-11-25",
+      "source": "hf_hub_created_at"
+    },
+    "bigscience__bloom-7b1": {
+      "created_at": "2022-05-19",
+      "source": "hf_hub_created_at"
+    },
+    "bofenghuang__vigostral-7b-chat": {
+      "created_at": "2023-09-29",
+      "repo_id": "bofenghuang/vigostral-7b-chat",
+      "source": "huggingface:name-search"
+    },
+    "cais__zephyr_7b_r2d2": {
+      "created_at": "2024-02-26",
+      "repo_id": "cais/zephyr_7b_r2d2",
+      "source": "huggingface:hf_id"
+    },
+    "cgato__Thespis-13b-v0.3": {
+      "created_at": "2023-10-17",
+      "repo_id": "cgato/Thespis-13b-v0.3",
+      "source": "huggingface:name-search"
+    },
+    "cgato__Thespis-13b-v0.4": {
+      "created_at": "2023-10-22",
+      "repo_id": "cgato/Thespis-13b-v0.4",
+      "source": "huggingface:name-search"
+    },
+    "cgato__Thespis-13b-v0.5": {
+      "created_at": "2023-10-30",
+      "repo_id": "cgato/Thespis-13b-v0.5",
+      "source": "huggingface:name-search"
+    },
+    "cgato__Thespis-13b-v0.6": {
+      "created_at": "2023-11-07",
+      "repo_id": "cgato/Thespis-13b-v0.6",
+      "source": "huggingface:hf_id"
+    },
+    "cgato__Thespis-Mistral-7b-v0.5": {
+      "created_at": "2023-11-02",
+      "repo_id": "cgato/Thespis-Mistral-7b-v0.5",
+      "source": "huggingface:hf_id"
+    },
+    "chocolatine-3b-instruct-dpo-revised": {
+      "created_at": "2024-07-17",
+      "repo_id": "jpacifico/Chocolatine-3B-Instruct-DPO-Revised",
+      "source": "huggingface:hf_id"
+    },
+    "codefuse-ai__CodeFuse-DeepSeek-33B": {
+      "created_at": "2024-01-12",
+      "source": "hf_hub_created_at"
+    },
+    "codellama__CodeLlama-13b-Instruct-hf": {
+      "created_at": "2023-08-24",
+      "source": "hf_hub_created_at"
+    },
+    "codellama__CodeLlama-7b-Instruct-hf": {
+      "created_at": "2023-08-24",
+      "repo_id": "codellama/CodeLlama-7b-Instruct-hf",
+      "source": "huggingface:hf_id"
+    },
+    "codellama__CodeLlama-7b-Python-hf": {
+      "created_at": "2023-08-24",
+      "repo_id": "codellama/CodeLlama-7b-Python-hf",
+      "source": "huggingface:hf_id"
+    },
+    "codellama__CodeLlama-7b-hf": {
+      "created_at": "2023-08-24",
+      "source": "hf_hub_created_at"
+    },
+    "creative-7b-nerd": {
+      "created_at": "2024-12-13",
+      "repo_id": "Aashraf995/Creative-7B-nerd",
+      "source": "huggingface:hf_id"
+    },
+    "cris177__llama-2-7b-Arguments": {
+      "created_at": "2023-10-04",
+      "repo_id": "cris177/llama-2-7b-Arguments",
+      "source": "huggingface:hf_id"
+    },
+    "deepseek-ai__deepseek-coder-1.3b-base": {
+      "created_at": "2023-10-28",
+      "source": "hf_hub_created_at"
+    },
+    "deepseek-ai__deepseek-coder-6.7b-instruct": {
+      "created_at": "2023-10-29",
+      "source": "hf_hub_created_at"
+    },
+    "deepseek-ai__deepseek-math-7b-instruct": {
+      "created_at": "2024-02-05",
+      "source": "hf_hub_created_at"
+    },
+    "deepseek-r1-distill-llama-8b": {
+      "created_at": "2025-01-20",
+      "source": "hf_hub_created_at"
+    },
+    "deepseek-r1-distill-qwen-1.5b": {
+      "created_at": "2025-01-20",
+      "source": "hf_hub_created_at"
+    },
+    "dphn__dolphin-2.1-mistral-7b": {
+      "created_at": "2023-10-11",
+      "repo_id": "dphn/dolphin-2.1-mistral-7b",
+      "source": "huggingface:hf_id"
+    },
+    "dphn__dolphin-2.2.1-mistral-7b": {
+      "created_at": "2023-10-30",
+      "repo_id": "dphn/dolphin-2.2.1-mistral-7b",
+      "source": "huggingface:hf_id"
+    },
+    "ece-prymmal-3b-slerp-v1": {
+      "created_at": "2024-10-28",
+      "repo_id": "lesubra/ECE-PRYMMAL-3B-SLERP-V1",
+      "source": "huggingface:hf_id"
+    },
+    "eren23__ogno-monarch-jaskier-merge-7b-OH-PREF-DPO": {
+      "created_at": "2024-02-27",
+      "source": "hf_hub_created_at"
+    },
+    "exaone-3.5-7.8b-instruct": {
+      "created_at": "2024-12-01",
+      "source": "hf_hub_created_at"
+    },
+    "falcon3-10b-instruct": {
+      "created_at": "2024-12-14",
+      "source": "hf_hub_created_at"
+    },
+    "falcon3-7b-instruct": {
+      "created_at": "2024-11-29",
+      "source": "hf_hub_created_at"
+    },
+    "fr-18-8b": {
+      "created_at": "2025-01-05",
+      "repo_id": "jaspionjader/fr-18-8b",
+      "source": "huggingface:name-search"
+    },
+    "gdupont__llama-2-7b-galleon": {
+      "created_at": "2023-09-08",
+      "repo_id": "gdupont/llama-2-7b-galleon",
+      "source": "huggingface:hf_id"
+    },
+    "gemma-2-2b-it": {
+      "created_at": "2024-07-16",
+      "source": "hf_hub_created_at"
+    },
+    "gemma-2-9b-it": {
+      "created_at": "2024-06-24",
+      "source": "hf_hub_created_at"
+    },
+    "gemma-3-12b-it": {
+      "created_at": "2025-03-01",
+      "source": "hf_hub_created_at"
+    },
+    "gemma-3-1b-it": {
+      "created_at": "2025-03-10",
+      "source": "hf_hub_created_at"
+    },
+    "gemma-3-4b-it": {
+      "created_at": "2025-02-20",
+      "source": "hf_hub_created_at"
+    },
+    "glm-4-9b-chat": {
+      "created_at": "2024-06-04",
+      "source": "hf_hub_created_at"
+    },
+    "golaxy__gowizardlm": {
+      "created_at": "2023-07-31",
+      "source": "hf_hub_created_at"
+    },
+    "google__gemma-1.1-2b-it": {
+      "created_at": "2024-03-26",
+      "repo_id": "google/gemma-1.1-2b-it",
+      "source": "huggingface:hf_id"
+    },
+    "google__gemma-2-9b": {
+      "created_at": "2024-06-24",
+      "repo_id": "google/gemma-2-9b",
+      "source": "huggingface:hf_id"
+    },
+    "google__gemma-2b-it": {
+      "created_at": "2024-02-08",
+      "source": "hf_hub_created_at"
+    },
+    "google__gemma-7b-it": {
+      "created_at": "2024-02-13",
+      "source": "hf_hub_created_at"
+    },
+    "haoranxu__ALMA-7B-Pretrain": {
+      "created_at": "2023-09-17",
+      "repo_id": "haoranxu/ALMA-7B-Pretrain",
+      "source": "huggingface:name-search"
+    },
+    "hfl__chinese-alpaca-2-7b": {
+      "created_at": "2023-07-31",
+      "repo_id": "hfl/chinese-alpaca-2-7b",
+      "source": "huggingface:name-search"
+    },
+    "huggyllama__llama-13b": {
+      "created_at": "2023-04-03",
+      "repo_id": "huggyllama/llama-13b",
+      "source": "huggingface:hf_id"
+    },
+    "ibm-granite__granite-3.0-2b-instruct": {
+      "created_at": "2024-10-02",
+      "repo_id": "ibm-granite/granite-3.0-2b-instruct",
+      "source": "huggingface:hf_id"
+    },
+    "ibm-granite__granite-3.1-2b-instruct": {
+      "created_at": "2024-12-06",
+      "repo_id": "ibm-granite/granite-3.1-2b-instruct",
+      "source": "huggingface:hf_id"
+    },
+    "internlm3-8b-instruct": {
+      "created_at": "2025-01-13",
+      "source": "hf_hub_created_at"
+    },
+    "internlm__internlm-chat-7b": {
+      "created_at": "2023-07-06",
+      "repo_id": "internlm/internlm-chat-7b",
+      "source": "huggingface:name-search"
+    },
+    "itspat__RemmMistral13b": {
+      "created_at": "2023-11-13",
+      "repo_id": "itspat/RemmMistral13b",
+      "source": "huggingface:name-search"
+    },
+    "jebcarter__Psyfighter-13B": {
+      "created_at": "2023-11-05",
+      "repo_id": "jebcarter/Psyfighter-13B",
+      "source": "huggingface:hf_id"
+    },
+    "jondurbin__airoboros-l2-13b-2.2.1": {
+      "created_at": "2023-09-20",
+      "repo_id": "jondurbin/airoboros-l2-13b-2.2.1",
+      "source": "huggingface:name-search"
+    },
+    "jondurbin__airoboros-l2-13b-3.0": {
+      "created_at": "2023-10-01",
+      "repo_id": "jondurbin/airoboros-l2-13b-3.0",
+      "source": "huggingface:hf_id"
+    },
+    "jondurbin__airoboros-l2-13b-3.1.1": {
+      "created_at": "2023-10-17",
+      "repo_id": "jondurbin/airoboros-l2-13b-3.1.1",
+      "source": "huggingface:hf_id"
+    },
+    "jondurbin__airoboros-l2-13b-gpt4-m2.0": {
+      "created_at": "2023-07-28",
+      "repo_id": "jondurbin/airoboros-l2-13b-gpt4-m2.0",
+      "source": "huggingface:name-search"
+    },
+    "jondurbin__airoboros-l2-7b-2.2": {
+      "created_at": "2023-09-10",
+      "repo_id": "jondurbin/airoboros-l2-7b-2.2",
+      "source": "huggingface:name-search"
+    },
+    "jondurbin__airoboros-l2-7b-2.2.1": {
+      "created_at": "2023-09-20",
+      "repo_id": "jondurbin/airoboros-l2-7b-2.2.1",
+      "source": "huggingface:name-search"
+    },
+    "jondurbin__airoboros-l2-7b-3.0": {
+      "created_at": "2023-10-01",
+      "repo_id": "jondurbin/airoboros-l2-7b-3.0",
+      "source": "huggingface:hf_id"
+    },
+    "jondurbin__airoboros-m-7b-3.0": {
+      "created_at": "2023-10-03",
+      "repo_id": "jondurbin/airoboros-m-7b-3.0",
+      "source": "huggingface:hf_id"
+    },
+    "jondurbin__airoboros-m-7b-3.1.2": {
+      "created_at": "2023-10-19",
+      "repo_id": "jondurbin/airoboros-m-7b-3.1.2",
+      "source": "huggingface:hf_id"
+    },
+    "jondurbin__spicyboros-13b-2.2": {
+      "created_at": "2023-09-09",
+      "repo_id": "jondurbin/spicyboros-13b-2.2",
+      "source": "huggingface:name-search"
+    },
+    "jondurbin__spicyboros-7b-2.2": {
+      "created_at": "2023-09-08",
+      "repo_id": "jondurbin/spicyboros-7b-2.2",
+      "source": "huggingface:name-search"
+    },
+    "jphme__em_german_13b_v01": {
+      "created_at": "2023-09-25",
+      "repo_id": "jphme/em_german_13b_v01",
+      "source": "huggingface:hf_id"
+    },
+    "kevin009__llamaRAGdrama": {
+      "created_at": "2024-02-04",
+      "source": "hf_hub_created_at"
+    },
+    "kfkas__Llama-2-ko-7b-Chat": {
+      "created_at": "2023-07-25",
+      "repo_id": "kfkas/Llama-2-ko-7b-Chat",
+      "source": "huggingface:name-search"
+    },
+    "kingbri__airolima-chronos-grad-l2-13B": {
+      "created_at": "2023-08-04",
+      "repo_id": "kingbri/airolima-chronos-grad-l2-13B",
+      "source": "huggingface:name-search"
+    },
+    "kingbri__chronolima-airo-grad-l2-13B": {
+      "created_at": "2023-08-04",
+      "repo_id": "kingbri/chronolima-airo-grad-l2-13B",
+      "source": "huggingface:name-search"
+    },
+    "kyujinpy__Sakura-SOLRCA-Math-Instruct-DPO-v1": {
+      "created_at": "2023-12-25",
+      "source": "hf_hub_created_at"
+    },
+    "llama-3.1-8b-instruct": {
+      "created_at": "2024-07-18",
+      "repo_id": "meta-llama/Llama-3.1-8B-Instruct",
+      "source": "huggingface:name-search"
+    },
+    "llama-3.2-1b-instruct": {
+      "created_at": "2024-09-18",
+      "repo_id": "meta-llama/Llama-3.2-1B-Instruct",
+      "source": "huggingface:name-search"
+    },
+    "llama-3.2-3b-instruct": {
+      "created_at": "2024-09-18",
+      "repo_id": "meta-llama/Llama-3.2-3B-Instruct",
+      "source": "huggingface:name-search"
+    },
+    "llemma_7b": {
+      "created_at": "2023-09-12",
+      "source": "hf_hub_created_at"
+    },
+    "lmsys__vicuna-13b-v1.3": {
+      "created_at": "2023-06-18",
+      "repo_id": "lmsys/vicuna-13b-v1.3",
+      "source": "huggingface:name-search"
+    },
+    "lmsys__vicuna-7b-v1.3": {
+      "created_at": "2023-06-18",
+      "repo_id": "lmsys/vicuna-7b-v1.3",
+      "source": "huggingface:name-search"
+    },
+    "lmsys__vicuna-7b-v1.5": {
+      "created_at": "2023-07-29",
+      "source": "hf_hub_created_at"
+    },
+    "lmsys__vicuna-7b-v1.5-16k": {
+      "created_at": "2023-07-31",
+      "source": "hf_hub_created_at"
+    },
+    "ludis__tsukasa-limarp-7b": {
+      "created_at": "2023-09-03",
+      "repo_id": "ludis/tsukasa-limarp-7b",
+      "source": "huggingface:name-search"
+    },
+    "maywell__Synatra-7B-v0.3-RP": {
+      "created_at": "2023-10-29",
+      "repo_id": "maywell/Synatra-7B-v0.3-RP",
+      "source": "huggingface:name-search"
+    },
+    "meta-llama__Llama-2-13b-chat-hf": {
+      "created_at": "2023-07-13",
+      "source": "hf_hub_created_at"
+    },
+    "meta-llama__Llama-2-7b-chat-hf": {
+      "created_at": "2023-07-13",
+      "source": "hf_hub_created_at"
+    },
+    "meta-llama__LlamaGuard-7b": {
+      "created_at": "2023-12-05",
+      "source": "hf_hub_created_at"
+    },
+    "meta-llama__Meta-Llama-3-8B": {
+      "created_at": "2024-04-17",
+      "source": "hf_hub_created_at"
+    },
+    "meta-llama__Meta-Llama-3-8B-Instruct": {
+      "created_at": "2024-04-17",
+      "source": "hf_hub_created_at"
+    },
+    "meta-llama__Meta-Llama-Guard-2-8B": {
+      "created_at": "2024-04-17",
+      "source": "hf_hub_created_at"
+    },
+    "meta-math__MetaMath-Llemma-7B": {
+      "created_at": "2023-11-19",
+      "source": "hf_hub_created_at"
+    },
+    "meta-math__MetaMath-Mistral-7B": {
+      "created_at": "2023-10-22",
+      "source": "hf_hub_created_at"
+    },
+    "microsoft__Orca-2-13b": {
+      "created_at": "2023-11-14",
+      "source": "hf_hub_created_at"
+    },
+    "microsoft__Orca-2-7b": {
+      "created_at": "2023-11-14",
+      "repo_id": "microsoft/Orca-2-7b",
+      "source": "huggingface:hf_id"
+    },
+    "microsoft__Phi-3-mini-4k-instruct": {
+      "created_at": "2024-04-22",
+      "repo_id": "microsoft/Phi-3-mini-4k-instruct",
+      "source": "huggingface:name-search"
+    },
+    "microsoft__Phi-3-small-8k-instruct": {
+      "created_at": "2024-05-07",
+      "repo_id": "microsoft/Phi-3-small-8k-instruct",
+      "source": "huggingface:name-search"
+    },
+    "microsoft__phi-2": {
+      "created_at": "2023-12-13",
+      "source": "hf_hub_created_at"
+    },
+    "migtissera__SynthIA-7B-v1.3": {
+      "created_at": "2023-09-28",
+      "repo_id": "migtissera/SynthIA-7B-v1.3",
+      "source": "huggingface:name-search"
+    },
+    "mimo-7b-rl": {
+      "created_at": "2025-04-29",
+      "source": "hf_hub_created_at"
+    },
+    "mistral-7b-instruct-v0.3": {
+      "created_at": "2024-05-22",
+      "source": "hf_hub_created_at"
+    },
+    "mistralai__Ministral-8B-Instruct-2410": {
+      "created_at": "2024-10-15",
+      "repo_id": "mistralai/Ministral-8B-Instruct-2410",
+      "source": "huggingface:hf_id"
+    },
+    "mistralai__Mistral-7B-Instruct-v0.1": {
+      "created_at": "2023-09-27",
+      "source": "hf_hub_created_at"
+    },
+    "mistralai__Mistral-7B-Instruct-v0.2": {
+      "created_at": "2023-12-11",
+      "repo_id": "mistralai/Mistral-7B-Instruct-v0.2",
+      "source": "huggingface:hf_id"
+    },
+    "mistralai__Mistral-7B-v0.1": {
+      "created_at": "2023-09-20",
+      "repo_id": "mistralai/Mistral-7B-v0.1",
+      "source": "huggingface:hf_id"
+    },
+    "mlabonne__AlphaMonarch-7B": {
+      "created_at": "2024-02-14",
+      "source": "hf_hub_created_at"
+    },
+    "nomic-ai__gpt4all-13b-snoozy": {
+      "created_at": "2023-04-24",
+      "source": "hf_hub_created_at"
+    },
+    "oh-yeontaek__llama-2-7B-LoRA-assemble": {
+      "created_at": "2023-09-13",
+      "repo_id": "oh-yeontaek/llama-2-7B-LoRA-assemble",
+      "source": "huggingface:name-search"
+    },
+    "olmo-2-1124-7b-instruct": {
+      "created_at": "2024-12-18",
+      "source": "hf_hub_created_at"
+    },
+    "openbmb__UltraLM-13b-v2.0": {
+      "created_at": "2023-09-22",
+      "repo_id": "openbmb/UltraLM-13b-v2.0",
+      "source": "huggingface:name-search"
+    },
+    "openchat_3.5": {
+      "created_at": "2023-10-30",
+      "source": "hf_hub_created_at"
+    },
+    "openchat__openchat-3.5-0106": {
+      "created_at": "2024-01-07",
+      "source": "hf_hub_created_at"
+    },
+    "openchat__openchat-3.5-1210": {
+      "created_at": "2023-12-12",
+      "repo_id": "openchat/openchat-3.5-1210",
+      "source": "huggingface:hf_id"
+    },
+    "openerotica__basilisk-7b-v0.2": {
+      "created_at": "2023-10-31",
+      "repo_id": "openerotica/basilisk-7b-v0.2",
+      "source": "huggingface:hf_id"
+    },
+    "phi-1_5": {
+      "created_at": "2023-09-10",
+      "source": "hf_hub_created_at"
+    },
+    "phi-4-mini-instruct": {
+      "created_at": "2025-02-19",
+      "source": "hf_hub_created_at"
+    },
+    "phi-4-mini-reasoning": {
+      "created_at": "2025-04-29",
+      "source": "hf_hub_created_at"
+    },
+    "pipizhao__Pandalyst-7B-V1.1": {
+      "created_at": "2023-09-30",
+      "repo_id": "pipizhao/Pandalyst-7B-V1.1",
+      "source": "huggingface:name-search"
+    },
+    "pipizhao__Pandalyst-7B-V1.2": {
+      "created_at": "2023-10-14",
+      "repo_id": "pipizhao/Pandalyst-7B-V1.2",
+      "source": "huggingface:name-search"
+    },
+    "posicube__Llama2-chat-AYB-13B": {
+      "created_at": "2023-10-03",
+      "repo_id": "posicube/Llama2-chat-AYB-13B",
+      "source": "huggingface:hf_id"
+    },
+    "posicube__Llama2-chat-AYT-13B": {
+      "created_at": "2023-09-07",
+      "repo_id": "posicube/Llama2-chat-AYT-13B",
+      "source": "huggingface:hf_id"
+    },
+    "princeton-nlp__gemma-2-9b-it-SimPO": {
+      "created_at": "2024-07-16",
+      "repo_id": "princeton-nlp/gemma-2-9b-it-SimPO",
+      "source": "huggingface:hf_id"
+    },
+    "project-baize__baize-v2-13b": {
+      "created_at": "2023-05-23",
+      "source": "hf_hub_created_at"
+    },
+    "qwen2.5-0.5b-instruct": {
+      "created_at": "2024-09-16",
+      "repo_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "source": "huggingface:name-search"
+    },
+    "qwen2.5-1.5b-instruct": {
+      "created_at": "2024-09-17",
+      "source": "hf_hub_created_at"
+    },
+    "qwen2.5-3b-instruct": {
+      "created_at": "2024-09-17",
+      "source": "hf_hub_created_at"
+    },
+    "qwen2.5-coder-7b-instruct": {
+      "created_at": "2024-09-17",
+      "source": "hf_hub_created_at"
+    },
+    "qwen2.5-math-7b-instruct": {
+      "created_at": "2024-09-19",
+      "source": "hf_hub_created_at"
+    },
+    "qwen3-4b": {
+      "created_at": "2025-04-27",
+      "source": "hf_hub_created_at"
+    },
+    "rishiraj__CatPPT-base": {
+      "created_at": "2023-12-17",
+      "source": "hf_hub_created_at"
+    },
+    "royallab__Pygmalion-2-13b-SuperCOT2": {
+      "created_at": "2023-09-14",
+      "repo_id": "royallab/Pygmalion-2-13b-SuperCOT2",
+      "source": "huggingface:hf_id"
+    },
+    "royallab__ZephRP-m7b": {
+      "created_at": "2023-10-11",
+      "repo_id": "royallab/ZephRP-m7b",
+      "source": "huggingface:hf_id"
+    },
+    "scb10x__typhoon-7b": {
+      "created_at": "2023-12-20",
+      "source": "hf_hub_created_at"
+    },
+    "shleeeee__mistral-ko-tech-science-v1": {
+      "created_at": "2023-12-10",
+      "source": "hf_hub_created_at"
+    },
+    "smollm2-1.7b-instruct": {
+      "created_at": "2024-10-31",
+      "source": "hf_hub_created_at"
+    },
+    "stabilityai__StableBeluga-13B": {
+      "created_at": "2023-07-27",
+      "repo_id": "stabilityai/StableBeluga-13B",
+      "source": "huggingface:hf_id"
+    },
+    "stabilityai__StableBeluga-7B": {
+      "created_at": "2023-07-27",
+      "repo_id": "stabilityai/StableBeluga-7B",
+      "source": "huggingface:hf_id"
+    },
+    "stabilityai__stablelm-tuned-alpha-7b": {
+      "created_at": "2023-04-19",
+      "source": "hf_hub_created_at"
+    },
+    "teknium__CollectiveCognition-v1.1-Mistral-7B": {
+      "created_at": "2023-10-04",
+      "repo_id": "teknium/CollectiveCognition-v1.1-Mistral-7B",
+      "source": "huggingface:name-search"
+    },
+    "teknium__Mistral-Trismegistus-7B": {
+      "created_at": "2023-10-07",
+      "repo_id": "teknium/Mistral-Trismegistus-7B",
+      "source": "huggingface:name-search"
+    },
+    "teknium__OpenHermes-2-Mistral-7B": {
+      "created_at": "2023-10-12",
+      "repo_id": "teknium/OpenHermes-2-Mistral-7B",
+      "source": "huggingface:name-search"
+    },
+    "teknium__OpenHermes-2.5-Mistral-7B": {
+      "created_at": "2023-10-29",
+      "repo_id": "teknium/OpenHermes-2.5-Mistral-7B",
+      "source": "huggingface:hf_id"
+    },
+    "teknium__airoboros-mistral2.2-7b": {
+      "created_at": "2023-10-03",
+      "repo_id": "teknium/airoboros-mistral2.2-7b",
+      "source": "huggingface:hf_id"
+    },
+    "tiiuae__falcon-40b-instruct": {
+      "created_at": "2023-05-25",
+      "source": "hf_hub_created_at"
+    },
+    "upstage__SOLAR-10.7B-Instruct-v1.0": {
+      "created_at": "2023-12-12",
+      "source": "hf_hub_created_at"
+    },
+    "vanillaOVO__WizardCoder-Python-7B-V1.0": {
+      "created_at": "2024-06-19",
+      "repo_id": "vanillaOVO/WizardCoder-Python-7B-V1.0",
+      "source": "huggingface:name-search"
+    },
+    "yam-peleg__Experiment26-7B": {
+      "created_at": "2024-02-27",
+      "source": "hf_hub_created_at"
+    },
+    "yi-1.5-9b-chat": {
+      "created_at": "2024-05-10",
+      "repo_id": "01-ai/Yi-1.5-9B-Chat",
+      "source": "huggingface:name-search"
+    },
+    "zai-org__agentlm-13b": {
+      "created_at": "2023-10-08",
+      "repo_id": "zai-org/agentlm-13b",
+      "source": "huggingface:hf_id"
+    },
+    "zai-org__agentlm-7b": {
+      "created_at": "2023-10-16",
+      "repo_id": "zai-org/agentlm-7b",
+      "source": "huggingface:hf_id"
+    },
+    "zai-org__chatglm3-6b": {
+      "created_at": "2023-10-25",
+      "repo_id": "zai-org/chatglm3-6b",
+      "source": "huggingface:hf_id"
+    }
+  },
+  "n_dated": 268,
+  "n_models": 269,
+  "source": "data/raw/model_release_dates.json",
+  "undated": [
+    "THUDM__chatglm2-6b"
+  ]
+}

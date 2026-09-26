@@ -1,0 +1,89 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {},
+    "torch_dtype": "bfloat16",
+    "vocab_size": 32000
+  },
+  "card_chars": 6187,
+  "card_text": "---\nlanguage:\n- eng\ntags:\n- sft\n- StableLM\nlicense:\n- mit\ndatasets:\n- LDJnr/Capybara\n- LDJnr/LessWrong-Amplify-Instruct\n- LDJnr/Pure-Dove\n- LDJnr/Verified-Camel\n---\n\n## **Nous-Capybara-7B V1.9**\n\n**This is currently the best 7B version of Capybara to use**\n\nWhat's new compared to V1?: *V1.9 now leverages novel unalignment techniques that lead to more consistent and dynamic control, we also worked on enhanced quality curation for training data and a significantly better foundation model(Mistral)!*\n \nThe Capybara series is the first Nous collection of dataset and models made by fine-tuning mostly on data created by Nous in-house. \n\nWe leverage our novel data synthesis technique called Amplify-instruct (Paper coming soon), the seed distribution and synthesis method are comprised of a synergistic combination of top performing existing data synthesis techniques and distributions used for SOTA models such as Airoboros, Evol-Instruct(WizardLM), Orca, Vicuna, Know_Logic, Lamini, FLASK and others, all into one lean holistically formed methodology for the dataset and model. The seed instructions used for the start of synthesized conversations are largely based on highly datasets like Airoboros, Know logic, EverythingLM, GPTeacher and even entirely new seed instructions derived from posts on the website LessWrong, as well as being supplemented with certain in-house multi-turn datasets like Dove(A successor to Puffin).\n\nWhile performing great in it's current state, the current dataset used for fine-tuning is entirely contained within 20K training examples, this is 10 times smaller than many similar performing current models, this is signficant when it comes to scaling implications for our next generation of models once we scale our novel syntheiss methods to significantly more examples.\n\n## Process of creation and special thank yous!\n\nThis model was fine-tuned by Nous Research as part of the Capybara/Amplify-Instruct project led by Luigi D.(LDJ) (Paper coming soon), as well as significant dataset formation contributions by J-Supha and general compute and experimentation management by Jeffrey Q. during ablations.\n\nSpecial thank you to **A16Z** for sponsoring our training, as well as **Yield Protocol** for their support in financially sponsoring resources during the R&D of this project.\n\n## Thank you to those of you that have indirectly contributed!\n\nWhile most of the tokens within Capybara are newly synthsized and part of datasets like Puffin/Dove, we would like to credit the single-turn datasets we leveraged as seeds that are used to generate the multi-turn data as part of the Amplify-Instruct synthesis.\n\nThe datasets shown in green below are datasets that we sampled from to curate seeds that are used during Amplify-Instruct synthesis for this project.\n\nDatasets in Blue are in-house curations that previously existed prior to Capybara.\n\n![Capybara](https://i.imgur.com/yB58OoD.jpeg)\n\n## Model Training\n\nNous-Capybara 7B V1.9 is a new model trained for multiple epochs on a dataset of roughly 20,000 carefully curated conversational examples, most of which are comprised of entirely new in-house synthesized tokens.\n\nAdditional data came from human curated CamelAI data, with the help of volunteers ranging from former Physics PhD's, Mathematicians, Biologists and more! \n\n## Prompt Format\n\nThe reccomended model usage is:\n\n```\nUSER:\n\nASSISTANT:\n```\n\n## Mutli-Modality!\n\n - We currently have a Multi-modal model based on Capybara V1.9! \nhttps://huggingface.co/NousResearch/Obsidian-3B-V0.5\nit is currently only available as a 3B sized model but larger versions coming!\n\n\n## Notable Features:\n\n - Over 60% of the dataset is comprised of multi-turn conversations.(Most models are still only trained for single-turn conversations and no back and forths!)\n\n - Over 1,000 tokens average per conversation example! (Most models are trained on conversation data that is less than 300 tokens per example.)\n\n - Able to effectively do complex summaries of advanced topics and studies. (trained on hundreds of advanced difficult summary tasks developed in-house)\n\n - Ability to recall information upto late 2022 without internet.\n\n - Includes a portion of conversational data synthesized from less wrong posts, discussing very in-depth details and philosophies about the nature of reality, reasoning, rationality, self-improvement and related concepts.\n\n## Example Outputs!:\n\n![Capybara](https://img001.prntscr.com/file/img001/T9yYxR1xQSaK_UGdy3t2Cw.png)\n\n![Capybara](https://img001.prntscr.com/file/img001/DQXqmKbsQQOIcgny1eoGNA.png)\n\n![Capybara](https://img001.prntscr.com/file/img001/85X3L9ZxTsOKo3fUQ7GRVA.png)\n\n## Benchmarks! (Coming soon!)\n \n## Future Changes\n\nThis is a relatively early build amongst the grand plans for the future of Capybara!  \n\n## Future model sizes\n\nCapybara V1.9 now currently has a 3B ad 7B size, and we plan to eventually have a 13B and 70B version in the future, as well as a potential 1B version based on phi-1.5 or Tiny Llama.\n\n## How you can help!\n\nIn the near future we plan on leveraging the help of domain specific expert volunteers to eliminate any mathematically/verifiably incorrect answers from our training curations. \n\nIf you have at-least a bachelors in mathematics, physics, biology or chemistry and would like to volunteer even just 30 minutes of your expertise time, please contact LDJ on discord!\n\n## Dataset contamination.\n\nWe have checked the capybara dataset for contamination for several of the most popular datasets and can confirm that there is no contaminaton found.\n\nWe leveraged minhash to check for 100%, 99%, 98% and 97% similarity matches between our data and the questions and answers in benchmarks, we found no exact matches, nor did we find any matches down to the 97% similarity level.\n\nThe following are benchmarks we checked for contamination against our dataset:\n\n- HumanEval\n\n- AGIEval\n\n- TruthfulQA\n\n- MMLU\n\n- GPT4All\n\n```\n@article{daniele2023amplify-instruct,\n  title={Amplify-Instruct: Synthetically Generated Diverse Multi-turn Conversations for Effecient LLM Training.},\n  author={Daniele, Luigi and Suphavadeeprasit},\n  journal={arXiv preprint arXiv:(comming soon)},\n  year={2023}\n}\n```",
+  "fetched_at": "2026-09-22T06:44:11.315371+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "NousResearch",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "['mit']",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "mistral",
+      "text-generation",
+      "sft",
+      "StableLM",
+      "eng",
+      "dataset:LDJnr/Capybara",
+      "dataset:LDJnr/LessWrong-Amplify-Instruct",
+      "dataset:LDJnr/Pure-Dove",
+      "dataset:LDJnr/Verified-Camel",
+      "license:mit",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "NousResearch__Nous-Capybara-7B-V1.9",
+  "ok": true,
+  "popularity": {
+    "downloads": 367,
+    "downloadsAllTime": 74631,
+    "likes": 53,
+    "trendingScore": 0
+  },
+  "repo_id": "NousResearch/Nous-Capybara-7B-V1.9",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-10-10T13:07:51.000Z",
+    "lastModified": "2023-12-28T12:56:24.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": true,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": true
+  }
+}

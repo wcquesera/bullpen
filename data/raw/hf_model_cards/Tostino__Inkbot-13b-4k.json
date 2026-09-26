@@ -1,0 +1,80 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 4990,
+  "card_text": "# Model Card for Inkbot\n\n## Model Details\nInkbot is a conversational AI model designed to interpret and respond to structured prompts with or without contextual information. Built on the latest advancements in natural language processing (NLP) and understanding (NLU), Inkbot provides users with accurate and meaningful interactions, addressing a wide range of queries and topics. Its unique feature lies in the structured prompt system, allowing users to engage in dynamic dialogues that can evolve based on context, metadata, and user input.\n\n### Performance\n- The model excels in RAG type queries, answering from context, and overriding memory when available.\n- It can handle very large contexts, but may sometimes enter a repeating text loop, especially during complex tasks.\n- The model is intended to be more functional and less chatty, avoiding the waste of tokens on superfluous language.\n\n## How to Use\nInkbot uses a structured prompt template system.\n\n\n### Prompt Template Structure\n\n#### With Context:\n```\n<#meta#>\n- Date: [DATE]\n- Task: [TASK TYPE]\n<#system#>\n[SYSTEM PROMPT/DESCRIPTION OF THE INTERACTION]\n<#chat#>\n<#user#>\n[USER QUESTION]\n<#bot#>\n[BOT RESPONSE]\n<#user#>\n[USER FOLLOW-UP QUESTION]\n<#user_context#>\n[ADDITIONAL CONTEXT FOR THE BOT]\n<#bot#>\n[BOT RESPONSE BASED ON CONTEXT]\n```\n\n#### Without Context:\n```\n<#meta#>\n- Date: [DATE]\n- Task: [TASK TYPE]\n<#system#>\n[SYSTEM PROMPT/DESCRIPTION OF THE INTERACTION]\n<#chat#>\n<#user#>\n[USER QUESTION]\n<#bot#>\n[BOT RESPONSE]\n<#user#>\n[USER FOLLOW-UP QUESTION]\n<#bot#>\n[BOT RESPONSE]\n```\n\n### Examples\n\n#### With Context:\n```\n<#meta#>\n- Date: 2023-07-20\n- Task: general\n<#system#>\nA dialogue focused on determining dates based on context clues.\n<#chat#>\n<#user#>\nWhat is today's date?\n<#bot#>\nThe date is: 2023-07-20\n<#user#>\nWhen did the event in the provided context take place?\n<#user_context#>\nIt's the day after new years eve, and I'm starting 2018 with a headache.\n<#bot#>\nThe event in the context took place on: 2018-01-01\n```\n\n#### Without Context:\n```\n<#meta#>\n- Date: 2023-07-20\n- Task: general\n<#system#>\nA simple dialogue about daily queries.\n<#chat#>\n<#user#>\nWill it rain today?\n<#bot#>\nI am not sure, without knowing your location I am unable to determine the weather.\n<#user#>\nCan you compose a haiku for me?\n<#bot#>\nWhispers of the breeze,\nNature's melodies unfold,\nDawn dispels the night.\n```\n\n## Task Options\n\nInkbot has been trained for a variety of tasks. Below are some of the key task options you can utilize, but feel free to try others to test the effect:\n\n1. **general**: This is the default task and is designed for a broad range of general questions and interactions.\n\n    - Usage: Suitable for most day-to-day interactions and queries.\n\n2. **knowledge_graph**: This task involves extracting, understanding, and representing information in a structured way.\n\n    - Usage: When you want to extract relationships between entities or desire structured representations of data.\n\n3. **question_answer**: Explicitly trained for answering questions in a straightforward manner.\n\n    - Usage: Best used when you have direct questions and expect concise answers.\n\n4. **reasoning**: Allows Inkbot to showcase its logical and deductive reasoning capabilities.\n\n    - Usage: Ideal for puzzles, riddles, or scenarios where logical analysis is required.\n\n5. **translation**: Use this for language translation tasks.\n\n    - Usage: Provide a sentence or paragraph in one language, and specify the desired target language for translation.\n\n6. **summarization**: Trained for condensing large texts into shorter, coherent summaries.\n\n    - Usage: When you have a lengthy text or article that you want to be summarized to its key points.\n\n7. **creative_writing**: Engage Inkbot in composing stories, poetry, and other creative content.\n\n    - Usage: For tasks that require imaginative and original content generation.\n\n\n## Limitations\n- Adhere to the prompt structure for best results.\n- When providing contextual details, clarity is essential for Inkbot to derive accurate and meaningful responses.\n- The overriding memory from user_context property generally only works for the next prompt or two, after which the model reverts to its original behavior.\n- On complex tasks, like creating a coherent story based on a set of facts from context, there's a potential for a repeating text loop as context fills.\n- Sometimes the model doesn't know when to end a knowledge graph, which can result in adding nodes and edges until it runs out of context.\n\n## Additional Notes\n- The 'date', 'task', and 'system' are crucial metadata components that need to be provided outside the core dialogue.\n- Use the 'user_context' when you want to offer supplementary context that guides Inkbot's response. You can interleave it in the chat log as necessary.\n- The specific tag format, such as `<#word#>`, is used to because there are filters in a lot of APIs for <|word|> and this makes interactions easier.\n\n\n---\nlicense: llama2\n---\n",
+  "fetched_at": "2026-09-22T06:44:45.363859+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "Tostino",
+    "gated": false,
+    "library_name": "transformers",
+    "license": null,
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "Tostino__Inkbot-13b-4k",
+  "ok": true,
+  "popularity": {
+    "downloads": 22,
+    "downloadsAllTime": 392,
+    "likes": 10,
+    "trendingScore": 0
+  },
+  "repo_id": "Tostino/Inkbot-13b-4k",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-21T05:56:48.000Z",
+    "lastModified": "2023-09-21T18:36:48.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

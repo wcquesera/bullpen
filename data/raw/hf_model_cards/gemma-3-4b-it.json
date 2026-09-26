@@ -1,0 +1,528 @@
+{
+  "architecture": {
+    "architectures": [
+      "Gemma3ForConditionalGeneration"
+    ],
+    "hidden_size": null,
+    "intermediate_size": null,
+    "max_position_embeddings": null,
+    "model_type": "gemma3",
+    "n_parameters": 4300079472,
+    "num_attention_heads": null,
+    "num_hidden_layers": null,
+    "num_key_value_heads": null,
+    "parameter_dtypes": {
+      "BF16": 4300079472
+    },
+    "torch_dtype": null,
+    "vocab_size": null
+  },
+  "card_chars": 0,
+  "card_text": null,
+  "fetched_at": "2026-09-19T15:02:25.938805+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 401,
+    "readme": 401
+  },
+  "lineage": {
+    "base_model": [
+      "google/gemma-3-4b-pt"
+    ],
+    "card_base_models": [
+      "google/gemma-3-4b-pt"
+    ],
+    "merge_tags": [],
+    "n_base_models": 1,
+    "relations": {
+      "": [
+        "google/gemma-3-4b-pt"
+      ],
+      "finetune": [
+        "google/gemma-3-4b-pt"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "google",
+    "gated": "manual",
+    "library_name": "transformers",
+    "license": "gemma",
+    "pipeline_tag": "image-text-to-text",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "gemma3",
+      "image-text-to-text",
+      "conversational",
+      "arxiv:1905.07830",
+      "arxiv:1905.10044",
+      "arxiv:1911.11641",
+      "arxiv:1904.09728",
+      "arxiv:1705.03551",
+      "arxiv:1911.01547",
+      "arxiv:1907.10641",
+      "arxiv:1903.00161",
+      "arxiv:2009.03300",
+      "arxiv:2304.06364",
+      "arxiv:2103.03874",
+      "arxiv:2110.14168",
+      "arxiv:2311.12022",
+      "arxiv:2108.07732",
+      "arxiv:2107.03374",
+      "arxiv:2210.03057",
+      "arxiv:2106.03193",
+      "arxiv:1910.11856",
+      "arxiv:2502.12404",
+      "arxiv:2502.21228",
+      "arxiv:2404.16816",
+      "arxiv:2104.12756",
+      "arxiv:2311.16502",
+      "arxiv:2203.10244",
+      "arxiv:2404.12390",
+      "arxiv:1810.12440",
+      "arxiv:1908.02660",
+      "arxiv:2312.11805",
+      "base_model:google/gemma-3-4b-pt",
+      "base_model:finetune:google/gemma-3-4b-pt",
+      "license:gemma",
+      "eval-results",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:sagemaker",
+      "region:us"
+    ]
+  },
+  "model_key": "gemma-3-4b-it",
+  "ok": true,
+  "popularity": {
+    "downloads": 1797138,
+    "downloadsAllTime": 26231291,
+    "likes": 1500,
+    "trendingScore": 5
+  },
+  "repo_id": "google/gemma-3-4b-it",
+  "resolved_via": "search",
+  "search_candidates": [
+    [
+      "google/gemma-3-4b-it",
+      1797138
+    ],
+    [
+      "google/gemma-3n-E4B-it-litert-lm",
+      13097
+    ],
+    [
+      "google/gemma-3-4b-it-qat-q4_0-gguf",
+      2465
+    ],
+    [
+      "mlx-community/gemma-4-31b-it-4bit",
+      42117
+    ],
+    [
+      "mlx-community/gemma-4-31B-it-qat-4bit",
+      1111
+    ],
+    [
+      "mlx-community/gemma-3-4b-it-4bit-DWQ",
+      172
+    ],
+    [
+      "litert-community/Gemma3-4B-IT",
+      0
+    ],
+    [
+      "CEIA-UFG/Gemma-3-Gaia-PT-BR-4b-it",
+      8055
+    ],
+    [
+      "google/gemma-3n-E4B-it",
+      18489
+    ],
+    [
+      "lmstudio-community/gemma-3n-E4B-it-text-GGUF",
+      6856
+    ],
+    [
+      "mradermacher/Huihui-gemma-3n-E4B-it-abliterated-GGUF",
+      1131
+    ],
+    [
+      "mradermacher/gemma-3-4b-it-heretic-uncensored-abliterated-Extreme-GGUF",
+      3273
+    ],
+    [
+      "mradermacher/gemma-3-4b-it-heretic-uncensored-abliterated-balanced-i1-GGUF",
+      1859
+    ],
+    [
+      "OpenVINO/gemma-3-4b-it-int4-cw-ov",
+      131
+    ],
+    [
+      "Andycurrent/gemma-3-4b-it-uncensored-v2-GGUF",
+      1252
+    ],
+    [
+      "cyankiwi/gemma-4-31B-it-AWQ-4bit",
+      245873
+    ],
+    [
+      "coder3101/gemma-4-E4B-it-heretic",
+      1558
+    ],
+    [
+      "unsloth/gemma-4-26b-a4b-it-UD-MLX-3bit",
+      820
+    ],
+    [
+      "turboderp/gemma-4-26B-A4B-it-exl3",
+      215
+    ],
+    [
+      "alphaedge-ai/gemma-3-4b-it-mya-16384",
+      67
+    ],
+    [
+      "RobustLoki/gemma-4-26B-A4B-it-exl3",
+      28
+    ],
+    [
+      "tirthfx/gemma-3-4b-it-ablated-GGUF",
+      333
+    ],
+    [
+      "DavidAU/Gemma-3-it-4B-Uncensored-DBL-X-GGUF",
+      3516
+    ],
+    [
+      "nishide-dev/gemma-2b-it-ja-poc-3-mlx-4bit",
+      0
+    ],
+    [
+      "RichardErkhov/DeepMount00_-_Gemma_QA_ITA_v3-4bits",
+      20
+    ],
+    [
+      "cyan2k/Gemma-2-9B-It-SPPO-Iter3-4bit-mlx",
+      86
+    ],
+    [
+      "chohtet/gemma2_9b_it_C_epoch3_4bit",
+      13
+    ],
+    [
+      "mlx-community/Gemma-2-9B-It-SPPO-Iter3-4bit",
+      40
+    ],
+    [
+      "tingting/test_gemma-2-9b-it-bnb-4bit_FTe3_sentence_None0Shot_NERNone",
+      0
+    ],
+    [
+      "chohtet/gemma2_9b_it_D_epoch3_4bit",
+      11
+    ],
+    [
+      "chohtet/gemma2_9b_it_D_epoch3_4bit_test",
+      0
+    ],
+    [
+      "tingting/test_gemma-1.1-2b-it-bnb-4bit_FTe3_sentence_None0Shot_NERNone",
+      0
+    ],
+    [
+      "tingting/test_gemma-1.1-7b-it-bnb-4bit_FTe3_sentence_None0Shot_NERNone",
+      0
+    ],
+    [
+      "tingting/test_gemma-2-9b-it-bnb-4bit_FTe3_paragraph_None0Shot_NERNone",
+      0
+    ],
+    [
+      "tingting/test_gemma-1.1-2b-it-bnb-4bit_FTe3_pair_None0Shot_NERNone",
+      0
+    ],
+    [
+      "tingting/test_gemma-1.1-2b-it-bnb-4bit_FTe3_extract_None0Shot_NERNone",
+      0
+    ],
+    [
+      "tingting/test_gemma-1.1-7b-it-bnb-4bit_FTe3_paragraph_None0Shot_NERNone",
+      0
+    ],
+    [
+      "tingting/test_gemma-2-27b-it-bnb-4bit_FTe3_sentence_None0Shot_NERNone",
+      0
+    ],
+    [
+      "tingting/test_gemma-2-9b-it-bnb-4bit_FTe3_pair_None0Shot_NERNone",
+      0
+    ],
+    [
+      "tingting/test_gemma-1.1-7b-it-bnb-4bit_FTe3_pair_None0Shot_NERNone",
+      0
+    ],
+    [
+      "tingting/test_gemma-1.1-7b-it-bnb-4bit_FTe3_extract_None0Shot_NERNone",
+      0
+    ],
+    [
+      "tingting/test_gemma-2-9b-it-bnb-4bit_FTe3_extract_None0Shot_NERNone",
+      0
+    ],
+    [
+      "tingting/test_gemma-1.1-2b-it-bnb-4bit_FTe3_paragraph_None0Shot_NERNone",
+      0
+    ],
+    [
+      "tingting/test_gemma-2-27b-it-bnb-4bit_FTe3_pair_None0Shot_NERNone",
+      0
+    ],
+    [
+      "tingting/test_gemma-2-2b-it-bnb-4bit_FTe3_sentence_None0Shot_NERNone",
+      0
+    ],
+    [
+      "tingting/test_gemma-2-2b-it-bnb-4bit_FTe3_pair_None0Shot_NERNone",
+      0
+    ],
+    [
+      "tingting/test_gemma-2-2b-it-bnb-4bit_FTe3_extract_None0Shot_NERNone",
+      0
+    ],
+    [
+      "tingting/test_gemma-2-2b-it-bnb-4bit_FTe3_paragraph_None0Shot_NERNone",
+      0
+    ],
+    [
+      "tingting/test_gemma-2-2b-it-bnb-4bit_FTe1_sentence_None0Shot_NER3",
+      0
+    ],
+    [
+      "tingting/test_gemma-1.1-2b-it-bnb-4bit_FTe2_sentence_None0Shot_NER3",
+      0
+    ],
+    [
+      "tingting/test_gemma-2-2b-it-bnb-4bit_FTe2_sentence_None0Shot_NER3",
+      0
+    ],
+    [
+      "tingting/test_gemma-1.1-2b-it-bnb-4bit_FTe3_sentence_None0Shot_NER3",
+      0
+    ],
+    [
+      "tingting/test_gemma-1.1-2b-it-bnb-4bit_FTe4_sentence_None0Shot_NER3",
+      0
+    ],
+    [
+      "tingting/test_gemma-2-9b-it-bnb-4bit_FTe2_sentence_None0Shot_NER3",
+      0
+    ],
+    [
+      "tingting/test_gemma-1.1-2b-it-bnb-4bit_FTe5_sentence_None0Shot_NER3",
+      0
+    ],
+    [
+      "tingting/test_gemma-2-2b-it-bnb-4bit_FTe3_sentence_None0Shot_NER3",
+      0
+    ],
+    [
+      "tingting/test_gemma-2-27b-it-bnb-4bit_FTe1_sentence_None0Shot_NER3",
+      0
+    ],
+    [
+      "tingting/test_gemma-1.1-2b-it-bnb-4bit_FTe3_sentence_None0Shot_NER5",
+      0
+    ],
+    [
+      "tingting/test_gemma-2-2b-it-bnb-4bit_FTe4_sentence_None0Shot_NER3",
+      0
+    ],
+    [
+      "tingting/test_gemma-1.1-7b-it-bnb-4bit_FTe2_sentence_None0Shot_NER3",
+      0
+    ],
+    [
+      "tingting/test_gemma-2-27b-it-bnb-4bit_FTe2_sentence_None0Shot_NER3",
+      0
+    ],
+    [
+      "tingting/test_gemma-1.1-2b-it-bnb-4bit_FTe1_sentence_None0Shot_NER3",
+      0
+    ],
+    [
+      "tingting/test_gemma-1.1-2b-it-bnb-4bit_FTe3_sentence_None0Shot_NER10",
+      0
+    ],
+    [
+      "3mei/gemma_2_9B_it_4bit_reflection_405_v2_8k_gsm8k_3e_qkvogud_mlab_instr_resp",
+      25
+    ],
+    [
+      "MaChangH/gemma-2b-it-bnb-4bit-NuhTube_3",
+      11
+    ],
+    [
+      "MaChangH/gemma-2b-it-bnb-4bit-NuhTube_3-gguf",
+      47
+    ],
+    [
+      "RichardErkhov/UCLA-AGI_-_Gemma-2-9B-It-SPPO-Iter3-4bits",
+      6
+    ],
+    [
+      "RichardErkhov/MaChangH_-_gemma-2b-it-bnb-4bit-NuhTube_3-gguf",
+      1462
+    ],
+    [
+      "Apurva3509/gemma-1.1-7b-it-bnb-4bit-medical",
+      92
+    ],
+    [
+      "rayonlabs/gemma-2-9b-it-databricks-dolly-15k-curated-en-cc7278c9-d348-4b16-9f13-824135b59812",
+      18
+    ],
+    [
+      "RichardErkhov/MR-Eder_-_Gemma-2B-IT-WIKI-30K-v7-16bit-4bits",
+      5
+    ],
+    [
+      "ggml-org/gemma-3-4b-it-GGUF",
+      58576
+    ],
+    [
+      "mlx-community/gemma-3-4b-it-4bit",
+      2627
+    ],
+    [
+      "brittlewis12/gemma-3-4b-it-GGUF",
+      809
+    ],
+    [
+      "mlx-community/gemma-3-4b-it-6bit",
+      30
+    ],
+    [
+      "mlx-community/gemma-3-4b-it-8bit",
+      31470
+    ],
+    [
+      "mlx-community/gemma-3-4b-it-bf16",
+      423
+    ],
+    [
+      "unsloth/gemma-3-4b-it",
+      80702
+    ],
+    [
+      "unsloth/gemma-3-4b-it-bnb-4bit",
+      4861
+    ],
+    [
+      "mlx-community/gemma-3-12b-it-4bit",
+      318651
+    ],
+    [
+      "mlx-community/gemma-3-1b-it-4bit",
+      4420
+    ],
+    [
+      "unsloth/gemma-3-4b-it-GGUF",
+      82981
+    ],
+    [
+      "second-state/gemma-3-4b-it-GGUF",
+      1077
+    ],
+    [
+      "gaianet/gemma-3-4b-it-GGUF",
+      495
+    ],
+    [
+      "mlx-community/gemma-3-27b-it-4bit",
+      725
+    ],
+    [
+      "unsloth/gemma-3-27b-it-bnb-4bit",
+      3400
+    ],
+    [
+      "unsloth/gemma-3-12b-it-bnb-4bit",
+      5025
+    ],
+    [
+      "MaoyueOUO/gemma-3-4b-it-GGUF",
+      102
+    ],
+    [
+      "unsloth/gemma-3-1b-it-bnb-4bit",
+      1647
+    ],
+    [
+      "yasserrmd/gemma-3-4b-it-GGUF",
+      134
+    ],
+    [
+      "bartowski/google_gemma-3-4b-it-GGUF",
+      48593
+    ],
+    [
+      "lmstudio-community/gemma-3-4b-it-GGUF",
+      63741
+    ],
+    [
+      "duyntnet/gemma-3-4b-it-imatrix-GGUF",
+      869
+    ],
+    [
+      "MaziyarPanahi/gemma-3-4b-it-GGUF",
+      160900
+    ],
+    [
+      "DevQuasar-10/google.gemma-3-4b-it-GGUF",
+      321
+    ],
+    [
+      "NikolayKozloff/gemma-3-4b-it-Q8_0-GGUF",
+      84
+    ],
+    [
+      "Mungert/gemma-3-4b-it-gguf",
+      1257
+    ],
+    [
+      "gsxrchris/gemma-3-4b-it-Q4_K_M-GGUF",
+      273
+    ],
+    [
+      "Koutouzov1973/gemma-3-1b-it-4bit_generex",
+      8
+    ],
+    [
+      "fernandoruiz/gemma-3-4b-it-Q4_0-GGUF",
+      63
+    ]
+  ],
+  "timestamps": {
+    "createdAt": "2025-02-20T21:20:07.000Z",
+    "lastModified": "2025-03-21T20:20:53.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

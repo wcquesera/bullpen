@@ -1,0 +1,84 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": 13015866880,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {
+      "BF16": 12688186880,
+      "F32": 327680000
+    },
+    "torch_dtype": "float32",
+    "vocab_size": 32000
+  },
+  "card_chars": 2381,
+  "card_text": "---\nlicense: cc-by-nc-4.0\n---\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/630dfb008df86f1e5becadc3/y9gdW2923RkORUxejcLVL.png)\n\nExperimental Athena v2 model. Use Alpaca format.\n\n<!-- description start -->\n## Description\n\n[Recommended settings - contributed by localfultonextractor](https://files.catbox.moe/ue0tja.json)\n\nThis repo contains fp16 files of Athena-V2.\n\n[GGUF - By TheBloke](https://huggingface.co/TheBloke/Athena-v2-GGUF)\n\n[GPTQ - By TheBloke](https://huggingface.co/TheBloke/Athena-v2-GPTQ)\n\n[exl2 - by AzureBlack](https://huggingface.co/AzureBlack/Athena-v2-6.0bit-exl2)\n\n[AWQ - By TheBloke](https://huggingface.co/TheBloke/Athena-v2-AWQ)\n\n\n[OLD(GGUF - by IkariDev+Undi95)](https://huggingface.co/IkariDev/Athena-v2-GGUF)\n\n## Ratings:\n\nNote: I have permission of all users to upload their ratings, i DONT screenshot random reviews without asking if i can put them here!\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/630dfb008df86f1e5becadc3/bqxK6tRyfiJNRakdj4qaD.png)\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/630dfb008df86f1e5becadc3/LRNRctxnN4BDskN8dPbmY.png)\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/630dfb008df86f1e5becadc3/TCPXp_IJm97TGgqgYgPsl.png)\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/630dfb008df86f1e5becadc3/5scjmDP1V2fofqCYNMmbT.png)\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/630dfb008df86f1e5becadc3/RysGRIOn2gZ1R4x4JoAlr.png)\n\n<!-- description end -->\n<!-- description start -->\n## Models and loras used\n\n- Xwin-LM/Xwin-LM-13B-V0.1\n- Undi95/ReMM-v2.2-L2-13B\n- Undi95/MLewd-L2-13B-v2-3\n- Brouz/Slerpeno\n- boomerchan/Magpie-13b\n```\n[Xwin (0.30) + ReMM v2.2 (0.70)](0.45) x [[Xwin (0.40) + MLewd v2-3 (0.60)](0.80) + [Slerpeno(0.50) + Magpie-13b(0.50)](0.20)](0.55)\n```\n<!-- description end -->\n<!-- prompt-template start -->\n## Prompt template: Alpaca\n\n```\nBelow is an instruction that describes a task. Write a response that appropriately completes the request.\n\n### Instruction:\n{prompt}\n\n### Response:\n\n```\n\nHUGE thanks to [Undi95](https://huggingface.co/Undi95) for doing the merging (Recipe was my idea, he merged)\n\nTo TheBloke: please if you quant this, please include [IkariDev](https://huggingface.co/IkariDev) + [Undi95](https://huggingface.co/Undi95) in all the credits/links to the creator.",
+  "fetched_at": "2026-09-22T06:43:52.089615+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "IkariDev",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "license:cc-by-nc-4.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "IkariDev__Athena-v2",
+  "ok": true,
+  "popularity": {
+    "downloads": 75,
+    "downloadsAllTime": 30909,
+    "likes": 7,
+    "trendingScore": 0
+  },
+  "repo_id": "IkariDev/Athena-v2",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-23T14:03:35.000Z",
+    "lastModified": "2023-09-25T13:11:14.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

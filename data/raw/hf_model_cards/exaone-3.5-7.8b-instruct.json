@@ -1,0 +1,490 @@
+{
+  "architecture": {
+    "architectures": [
+      "ExaoneForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "exaone",
+    "n_parameters": 7818448896,
+    "num_attention_heads": 32,
+    "num_hidden_layers": null,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "F32": 7818448896
+    },
+    "torch_dtype": "float32",
+    "vocab_size": 102400
+  },
+  "card_chars": 7428,
+  "card_text": "---\nlicense: other\nlicense_name: exaone\nlicense_link: LICENSE\nlanguage:\n- en\n- ko\ntags:\n- lg-ai\n- exaone\n- exaone-3.5\npipeline_tag: text-generation\nlibrary_name: transformers\n---\n\n<p align=\"center\">\n<img src=\"assets/EXAONE_Symbol+BI_3d.png\", width=\"300\", style=\"margin: 40 auto;\">\n<br>\n\n# EXAONE-3.5-7.8B-Instruct\n\n## Introduction\n\nWe introduce EXAONE 3.5, a collection of instruction-tuned bilingual (English and Korean) generative models ranging from 2.4B to 32B parameters, developed and released by LG AI Research. EXAONE 3.5 language models include: 1) **2.4B model** optimized for deployment on small or resource-constrained devices, 2) **7.8B model** matching the size of its predecessor but offering improved performance, and 3) **32B model** delivering powerful performance. All models support long-context processing of up to 32K tokens. Each model demonstrates state-of-the-art performance in real-world use cases and long-context understanding, while remaining competitive in general domains compared to recently released models of similar sizes.\n\nFor more details, please refer to our [technical report](https://arxiv.org/abs/2412.04862), [blog](https://www.lgresearch.ai/blog/view?seq=507) and [GitHub](https://github.com/LG-AI-EXAONE/EXAONE-3.5).\n\nThis repository contains the instruction-tuned 7.8B language model with the following features:\n\n- Number of Parameters (without embeddings): 6.98B\n- Number of Layers: 32\n- Number of Attention Heads: GQA with 32 Q-heads and 8 KV-heads\n- Vocab Size: 102,400\n- Context Length: 32,768 tokens\n\n## Quickstart\n\nWe recommend to use `transformers` v4.43 or later.\n\nHere is the code snippet to run conversational inference with the model:\n\n```python\nimport torch\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\nmodel_name = \"LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct\"\n\nmodel = AutoModelForCausalLM.from_pretrained(\n    model_name,\n    torch_dtype=torch.bfloat16,\n    trust_remote_code=True,\n    device_map=\"auto\"\n)\ntokenizer = AutoTokenizer.from_pretrained(model_name)\n\n# Choose your prompt\nprompt = \"Explain how wonderful you are\"  # English example\nprompt = \"\uc2a4\uc2a4\ub85c\ub97c \uc790\ub791\ud574 \ubd10\"       # Korean example\n\nmessages = [\n    {\"role\": \"system\", \n     \"content\": \"You are EXAONE model from LG AI Research, a helpful assistant.\"},\n    {\"role\": \"user\", \"content\": prompt}\n]\ninput_ids = tokenizer.apply_chat_template(\n    messages,\n    tokenize=True,\n    add_generation_prompt=True,\n    return_tensors=\"pt\"\n)\n\noutput = model.generate(\n    input_ids.to(\"cuda\"),\n    eos_token_id=tokenizer.eos_token_id,\n    max_new_tokens=128,\n    do_sample=False,\n)\nprint(tokenizer.decode(output[0]))\n```\n\n> ### Note\n> The EXAONE 3.5 instruction-tuned language models were trained to utilize the system prompt,\n> so we highly recommend using the system prompts provided in the code snippet above.\n\n## Evaluation\n\nThe following table shows the evaluation results of real-world use cases. The full evaluation results can be found in the [technical report](https://arxiv.org/abs/2412.04862).\n\n<table>\n    <tr>\n        <th>Models</th>\n        <th>MT-Bench</th>\n        <th>LiveBench</th>\n        <th>Arena-Hard</th>\n        <th>AlpacaEval</th>\n        <th>IFEval</th>\n        <th>KoMT-Bench[1]</th>\n        <th>LogicKor</th>\n    </tr>\n    <tr>\n        <td>EXAONE 3.5 7.8B</td>\n        <td align=\"center\"><strong>8.29</strong></td>\n        <td align=\"center\"><strong>39.8</strong></td>\n        <td align=\"center\"><strong>68.7</strong></td>\n        <td align=\"center\"><strong>54.2</strong></td>\n        <td align=\"center\"><strong>78.9</strong></td>\n        <td align=\"center\"><strong>7.96</strong></td>\n        <td align=\"center\"><strong>9.08</strong></td>\n    </tr>\n    <tr>\n        <td>Qwen 2.5 7B</td>\n        <td align=\"center\">6.48</td>\n        <td align=\"center\">35.6</td>\n        <td align=\"center\">48.9</td>\n        <td align=\"center\">31.7</td>\n        <td align=\"center\">72.5</td>\n        <td align=\"center\">5.19</td>\n        <td align=\"center\">6.38</td>\n    </tr>\n    <tr>\n        <td>Llama 3.1 8B</td>\n        <td align=\"center\">7.59</td>\n        <td align=\"center\">28.3</td>\n        <td align=\"center\">27.7</td>\n        <td align=\"center\">25.7</td>\n        <td align=\"center\">74.5</td>\n        <td align=\"center\">4.85</td>\n        <td align=\"center\">5.99</td>\n    </tr>\n    <tr>\n        <td>Gemma 2 9B</td>\n        <td align=\"center\">7.64</td>\n        <td align=\"center\">32.1</td>\n        <td align=\"center\">43.6</td>\n        <td align=\"center\">47.3</td>\n        <td align=\"center\">54.7</td>\n        <td align=\"center\">7.10</td>\n        <td align=\"center\">8.05</td>\n    </tr>\n    <tr>\n        <td>Phi 3 small (7B)</td>\n        <td align=\"center\">7.63</td>\n        <td align=\"center\">27.9</td>\n        <td align=\"center\">26.8</td>\n        <td align=\"center\">29.2</td>\n        <td align=\"center\">59.5</td>\n        <td align=\"center\">3.22</td>\n        <td align=\"center\">3.99</td>\n    </tr>\n</table>\n\n- [1] KoMT-Bench is a dataset created by translating MT-Bench into Korean; see [README](https://github.com/LG-AI-EXAONE/KoMT-Bench) for more details.\n\n## Deployment\n\nEXAONE 3.5 models can be inferred in the various frameworks, such as:\n- `TensorRT-LLM`\n- `vLLM`\n- `SGLang`\n- `llama.cpp`\n- `Ollama`\n\nPlease refer to our [EXAONE 3.5 GitHub](https://github.com/LG-AI-EXAONE/EXAONE-3.5) for more details about the inference frameworks.\n\n## Quantization\n\nWe provide the pre-quantized EXAONE 3.5 models with **AWQ** and several quantization types in **GGUF** format. \nPlease refer to our [EXAONE 3.5 collection](https://huggingface.co/collections/LGAI-EXAONE/exaone-35-674d0e1bb3dcd2ab6f39dbb4) to find corresponding quantized models.\n\n## Limitation\n\nThe EXAONE language model has certain limitations and may occasionally generate inappropriate responses. The language model generates responses based on the output probability of tokens, and it is determined during learning from training data. While we have made every effort to exclude personal, harmful, and biased information from the training data, some problematic content may still be included, potentially leading to undesirable responses. Please note that the text generated by EXAONE language model does not reflects the views of LG AI Research.\n\n- Inappropriate answers may be generated, which contain personal, harmful or other inappropriate information.\n- Biased responses may be generated, which are associated with age, gender, race, and so on.\n- The generated responses rely heavily on statistics from the training data, which can result in the generation of\nsemantically or syntactically incorrect sentences.\n- Since the model does not reflect the latest information, the responses may be false or contradictory.\n\nLG AI Research strives to reduce potential risks that may arise from EXAONE language models. Users are not allowed\nto engage in any malicious activities (e.g., keying in illegal information) that may induce the creation of inappropriate\noutputs violating LG AI\u2019s ethical principles when using EXAONE language models.\n\n## License\n\nThe model is licensed under [EXAONE AI Model License Agreement 1.1 - NC](./LICENSE)\n\n## Citation\n \n```\n@article{exaone-3.5,\n  title={EXAONE 3.5: Series of Large Language Models for Real-world Use Cases},\n  author={LG AI Research},\n  journal={arXiv preprint arXiv:https://arxiv.org/abs/2412.04862},\n  year={2024}\n}\n```\n\n## Contact\nLG AI Research Technical Support: contact_us@lgresearch.ai\n",
+  "fetched_at": "2026-09-19T15:02:13.423975+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "LGAI-EXAONE",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "other",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "exaone",
+      "text-generation",
+      "lg-ai",
+      "exaone-3.5",
+      "conversational",
+      "custom_code",
+      "en",
+      "ko",
+      "arxiv:2412.04862",
+      "license:other",
+      "eval-results",
+      "region:us"
+    ]
+  },
+  "model_key": "exaone-3.5-7.8b-instruct",
+  "ok": true,
+  "popularity": {
+    "downloads": 401087,
+    "downloadsAllTime": 3783200,
+    "likes": 159,
+    "trendingScore": 0
+  },
+  "repo_id": "LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct",
+  "resolved_via": "search",
+  "search_candidates": [
+    [
+      "LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct",
+      401087
+    ],
+    [
+      "LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct-AWQ",
+      577577
+    ],
+    [
+      "LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct-GGUF",
+      2659
+    ],
+    [
+      "lmstudio-community/EXAONE-3.5-7.8B-Instruct-GGUF",
+      3582
+    ],
+    [
+      "bartowski/EXAONE-3.5-7.8B-Instruct-GGUF",
+      1269
+    ],
+    [
+      "beomi/EXAONE-3.5-7.8B-Instruct-Llamafied",
+      167
+    ],
+    [
+      "MaziyarPanahi/EXAONE-3.5-7.8B-Instruct-GGUF",
+      631
+    ],
+    [
+      "mradermacher/EXAONE-3.5-7.8B-Instruct-GGUF",
+      457
+    ],
+    [
+      "mradermacher/EXAONE-3.5-7.8B-Instruct-i1-GGUF",
+      1188
+    ],
+    [
+      "NikolayKozloff/EXAONE-3.5-7.8B-Instruct-Q8_0-GGUF",
+      4
+    ],
+    [
+      "datalama/EXAONE-3.5-7.8B-Instruct-Llamafied",
+      24
+    ],
+    [
+      "GrennKren/EXAONE-3.5-7.8B-Instruct-8bit",
+      20
+    ],
+    [
+      "lucyknada/EXAONE-3.5-7.8B-Instruct-Llamafied-config-fixed",
+      11
+    ],
+    [
+      "lucyknada/lucyknada_EXAONE-3.5-7.8B-Instruct-Llamafied-config-fixed-exl2",
+      0
+    ],
+    [
+      "DevQuasar-6/LGAI-EXAONE.EXAONE-3.5-7.8B-Instruct-GGUF",
+      56
+    ],
+    [
+      "mlx-community/EXAONE-3.5-7.8B-Instruct-bf16",
+      9
+    ],
+    [
+      "mlx-community/EXAONE-3.5-7.8B-Instruct-8bit",
+      12
+    ],
+    [
+      "mlx-community/EXAONE-3.5-7.8B-Instruct-6bit",
+      5
+    ],
+    [
+      "mlx-community/EXAONE-3.5-7.8B-Instruct-4bit",
+      98
+    ],
+    [
+      "QuantFactory/EXAONE-3.5-7.8B-Instruct-GGUF",
+      182
+    ],
+    [
+      "mradermacher/EXAONE-3.5-7.8B-Instruct-Llamafied-GGUF",
+      402
+    ],
+    [
+      "GrennKren/EXAONE-3.5-7.8B-Instruct-4bit",
+      15
+    ],
+    [
+      "GrimsenClory/EXAONE-3.5-7.8B-Instruct-IQ4_NL-GGUF",
+      24
+    ],
+    [
+      "Fake2025/EXAONE-3.5-7.8B-Instruct-Q8_0-GGUF",
+      41
+    ],
+    [
+      "mradermacher/EXAONE-3.5-7.8B-Instruct-abliterated-GGUF",
+      462
+    ],
+    [
+      "mradermacher/EXAONE-3.5-7.8B-Instruct-abliterated-i1-GGUF",
+      684
+    ],
+    [
+      "AetherArchitectural/EXAONE-3.5-7.8B-Instruct-abliterated-GGUF-ARM-Imatrix-Community",
+      513
+    ],
+    [
+      "DevQuasar-5/huihui-ai.EXAONE-3.5-7.8B-Instruct-abliterated-GGUF",
+      332
+    ],
+    [
+      "mlx-community/EXAONE-3.5-7.8B-Instruct-3bit",
+      91
+    ],
+    [
+      "tensorblock/EXAONE-3.5-7.8B-Instruct-GGUF",
+      49
+    ],
+    [
+      "alexander583/EXAONE-3.5-7.8B-Instruct-Q4-mlx",
+      40
+    ],
+    [
+      "kimwooglae/AISquare-EXAONE-3.5-7.8B-Instruct-v0.6.11",
+      16
+    ],
+    [
+      "Melvin56/EXAONE-3.5-7.8B-Instruct-abliterated-IQ4_XS-GGUF",
+      18
+    ],
+    [
+      "N3N-AI1/N3N_Exaone-3.5-7.8B-Instruct_v1_1",
+      6
+    ],
+    [
+      "N3N-AI1/N3N_Exaone-3.5-7.8B-Instruct_v1_1_adapter",
+      5
+    ],
+    [
+      "yessel/exaone_3.5_7.8b_instruct_merged",
+      12
+    ],
+    [
+      "CR44/hllm_EXAONE-3.5-7.8B-Instruct",
+      0
+    ],
+    [
+      "CR44/hllm_EXAONE-3.5-7.8B-Instruct_finetuned",
+      0
+    ],
+    [
+      "CR44/hllm_EXAONE-3.5-7.8B-Instruct_finetuned_v1",
+      0
+    ],
+    [
+      "CR44/hllm_EXAONE-3.5-7.8B-Instruct_finetuned_005",
+      0
+    ],
+    [
+      "CR44/hllm_EXAONE-3.5-7.8B-Instruct_finetuned_006",
+      0
+    ],
+    [
+      "mindw96/EXAONE-3.5-7.8B-Instruct-4Bit",
+      0
+    ],
+    [
+      "CR44/hllm_EXAONE-3.5-7.8B-Instruct_finetuned_007",
+      0
+    ],
+    [
+      "CR44/hllm_EXAONE-3.5-7.8B-Instruct_finetuned_008",
+      0
+    ],
+    [
+      "BernTheCreator/EXAONE-3.5-7.8B-Instruct-abliterated-Q4_0-GGUF",
+      47
+    ],
+    [
+      "BernTheCreator/EXAONE-3.5-7.8B-Instruct-Q4_0-GGUF",
+      17
+    ],
+    [
+      "CR44/hllm_EXAONE-3.5-7.8B-Instruct_finetuned_009",
+      0
+    ],
+    [
+      "CR44/hllm_EXAONE-3.5-7.8B-Instruct_finetuned_008_saved",
+      12
+    ],
+    [
+      "ThomasBaruzier/EXAONE-3.5-7.8B-Instruct-GGUF",
+      1685
+    ],
+    [
+      "alexgusevski/EXAONE-3.5-7.8B-Instruct-q3-mlx",
+      17
+    ],
+    [
+      "heegyu/EXAONE-3.5-7.8B-Instruct-TRT",
+      0
+    ],
+    [
+      "HackerCIS/Pong_BrainAI_EXAONE-3.5-7.8B-Instruct",
+      0
+    ],
+    [
+      "tensorblock/EXAONE-3.5-7.8B-Instruct-Llamafied-GGUF",
+      105
+    ],
+    [
+      "saide0032/Pong_BrainAI_EXAONE-3.5-7.8B-Instruct",
+      0
+    ],
+    [
+      "saide0032/Pong_BrainAI_EXAONE-3.5-7.8B-Instruct-normal",
+      0
+    ],
+    [
+      "HackerCIS/Pong_BrainAI_EXAONE-3.5-7.8B-Instruct-v2",
+      0
+    ],
+    [
+      "HackerCIS/Pong_BrainAI_EXAONE-3.5-7.8B-Instruct-V3",
+      0
+    ],
+    [
+      "itlwas/EXAONE-3.5-7.8B-Instruct-Q4_K_M-GGUF",
+      42
+    ],
+    [
+      "YeonwooSung/EXAONE-3.5-7.8B-Instruct-Q4_K_M-GGUF",
+      22
+    ],
+    [
+      "john9815/EXAONE-3.5-7.8B-Instruct-Llamafied-Q4_K_M-GGUF",
+      11
+    ],
+    [
+      "second-state/EXAONE-3.5-7.8B-Instruct-GGUF",
+      611
+    ],
+    [
+      "gaianet/EXAONE-3.5-7.8B-Instruct-GGUF",
+      335
+    ],
+    [
+      "furiosa-ai/EXAONE-3.5-7.8B-Instruct",
+      10
+    ],
+    [
+      "HackerCIS/Pong_BrainAI_EXAONE-3.5-7.8B-Instruct-V4",
+      0
+    ],
+    [
+      "PongKorea/Pong_BrainAI_EXAONE-3.5-7.8B-Instruct-V4",
+      0
+    ],
+    [
+      "HackerCIS/Pong_BrainAI_EXAONE-3.5-7.8B-Instruct-V4-newprompt",
+      0
+    ],
+    [
+      "PongKorea/Pong_BrainAI_EXAONE-3.5-7.8B-Instruct-V4-newprompt",
+      0
+    ],
+    [
+      "HackerCIS/Pong_BrainAI_EXAONE-3.5-7.8B-Instruct-V4-parkdata",
+      0
+    ],
+    [
+      "PongKorea/Pong_BrainAI_EXAONE-3.5-7.8B-Instruct-V4-parkdata",
+      0
+    ],
+    [
+      "HackerCIS/Pong_BrainAI_EXAONE-3.5-7.8B-Instruct-V4-parkdata-5epoch",
+      0
+    ],
+    [
+      "PongKorea/Pong_BrainAI_EXAONE-3.5-7.8B-Instruct-V4-parkdata-5epoch",
+      0
+    ],
+    [
+      "RichardErkhov/lucyknada_-_EXAONE-3.5-7.8B-Instruct-Llamafied-config-fixed-gguf",
+      0
+    ],
+    [
+      "huggingface-KREW/EXAONE-3.5-7.8B-Instruct-KoCulture",
+      20
+    ],
+    [
+      "mradermacher/EXAONE-3.5-7.8B-Instruct-KoCulture-GGUF",
+      383
+    ],
+    [
+      "jjkim110523/EXAONE-3.5-7.8B-Instruct-Q8_0-GGUF",
+      7
+    ],
+    [
+      "OpenLLM-Korea/EXAONE-3.5-7.8B-Instruct",
+      11
+    ],
+    [
+      "lee5j/EXAONE-3.5-7.8B-Instruct-gptq-int8",
+      4
+    ],
+    [
+      "mobilint/EXAONE-3.5-7.8B-Instruct",
+      4808
+    ],
+    [
+      "tngus109404/exaone-3.5-7.8b-instruct-mcqa-lora-v2",
+      4
+    ],
+    [
+      "FloatDo/EXAONE-3.5-7.8B-Instruct-GGUF",
+      93
+    ],
+    [
+      "Open4bits/EXAONE-3.5-7.8B-Instruct-GGUF",
+      30
+    ],
+    [
+      "radishtiger/EXAONE-3.5-7.8B-Instruct_convfinqa_lora_r64_DR0.2",
+      6
+    ],
+    [
+      "radishtiger/EXAONE-3.5-7.8B-Instruct_convfinqa_lora_r64_DR0.4",
+      4
+    ],
+    [
+      "radishtiger/EXAONE-3.5-7.8B-Instruct_convfinqa_lora_r64_DR0.6",
+      8
+    ],
+    [
+      "radishtiger/EXAONE-3.5-7.8B-Instruct_convfinqa_lora_r64_DR0.8",
+      5
+    ],
+    [
+      "radishtiger/EXAONE-3.5-7.8B-Instruct_convfinqa_lora_r64_DR1.0",
+      5
+    ],
+    [
+      "xxccho/EXAONE-3.5-7.8B-Instruct-ConvFinQA-SFT-GRPO",
+      5
+    ],
+    [
+      "xxccho/EXAONE-3.5-7.8B-Instruct-LGConvFin-MCQ-GRPO_PLAIN",
+      5
+    ],
+    [
+      "sbcho0325/EXAONE-3.5-7.8B-Instruct_convfinqa_sft_lora_r64_merged",
+      6
+    ],
+    [
+      "sbcho0325/EXAONE-3.5-7.8B-Instruct_convfinqa_dpo_lora_r64_configfix_130343",
+      0
+    ],
+    [
+      "sbcho0325/EXAONE-3.5-7.8B-Instruct-ConvFinQA-SFT-DPO",
+      0
+    ],
+    [
+      "xxccho/EXAONE-3.5-7.8B-Instruct-ConvFinQA-GRPO_PLAIN",
+      7
+    ],
+    [
+      "sbcho0325/EXAONE-3.5-7.8B-Instruct-ConvFinQA-SFT-DPO-CoT-v2",
+      6
+    ],
+    [
+      "mobilint/EXAONE-3.5-7.8B-Instruct-Batch16",
+      51
+    ],
+    [
+      "xxccho/EXAONE-3.5-7.8B-Instruct-convfinqa-SFT-LoRA",
+      0
+    ],
+    [
+      "xxccho/EXAONE-3.5-7.8B-Instruct-LGConvFinMCQ-PC-SFT-LoRA",
+      0
+    ],
+    [
+      "xxccho/EXAONE-3.5-7.8B-Instruct-LGConvFinMCQ-ReasoningPC-SFT-LoRA",
+      0
+    ],
+    [
+      "xxccho/EXAONE-3.5-7.8B-Instruct_lg_convfin_mcq_pc_lora_r64_DR1.0",
+      9
+    ],
+    [
+      "xxccho/EXAONE-3.5-7.8B-Instruct_lg_convfin_mcq_reasoning_pc_lora_r64_DR1.0",
+      10
+    ],
+    [
+      "ChanLumerico/EXAONE-3.5-7.8B-Instruct-Yaho",
+      127
+    ]
+  ],
+  "timestamps": {
+    "createdAt": "2024-12-01T13:15:33.000Z",
+    "lastModified": "2026-02-06T06:14:59.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 11008,
+    "max_position_embeddings": 2048,
+    "model_type": "llama",
+    "n_parameters": 6738417664,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": null,
+    "parameter_dtypes": {
+      "BF16": 6738415616,
+      "F32": 2048
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 32000
+  },
+  "card_chars": 3313,
+  "card_text": "---\nlanguage:\n  - en\nthumbnail: null\ntags:\n  - text generation\n  - conversational\npipeline_tag: text-generation\ninference: false\n---\n<h1 style=\"text-align: center\">Pygmalion 7B</h1>\n<h2 style=\"text-align: center\">A conversational LLaMA fine-tune.</h2>\n\n## Model Details\n\nConverted from the XORs weights from PygmalionAI's release https://huggingface.co/PygmalionAI/pygmalion-7b\n\nPygmalion 7B is a dialogue model based on Meta's LLaMA-7B.\n\nThis is version 1. It has been fine-tuned using a subset of the data from Pygmalion-6B-v8-pt4, for those of you familiar with the project.\n\n## Prompting\n\nThe model was trained on the usual Pygmalion persona + chat format, so any of the usual UIs should already handle everything correctly. If you're using the model directly, this is the expected formatting:\n\n```\n[CHARACTER]'s Persona: [A few sentences about the character you want the model to play]\n<START>\n[DIALOGUE HISTORY]\nYou: [User's input message here]\n[CHARACTER]:\n```\n\nWhere `[CHARACTER]` is, as you can probably guess, the name of the character you want the model to portray, `<START>` should be used verbatim as a delimiter token to separate persona and scenario data from the dialogue, and `[DIALOGUE HISTORY]` is a sliding window of chat history so the model can have conversational context to draw from. Here's a concrete example:\n\n```\nAssistant's Persona: Assistant is a highly intelligent language model trained to comply with user requests.\n<START>\nAssistant: Hello! How may I help you today?\nYou: What is Zork?\nAssistant:\n```\n\nWhich will generate something like:\n\n```\n Zork is an interactive fiction computer game created in the 1970s by Infocom, Inc., which was later acquired by Activision Blizzard. It is widely considered one of the most influential games ever made and has been credited with popularizing text-based adventure games. The original version of Zork was written in the programming language MACRO-10, but it was ported to many other platforms over the years.\"\n```\n\nThe model will automatically emit an end-of-text token (`</s>`) when it judges that the response is complete.\n\n## Limitations and biases\n\nThe intended use-case for this model is fictional conversation for entertainment purposes. Any other sort of usage is out of scope.\n\nAs such, it was **not** fine-tuned to be safe and harmless: the base model _and_ this fine-tune have been trained on data known to contain profanity and texts that are lewd or otherwise offensive. It may produce socially unacceptable or undesirable text, even if the prompt itself does not include anything explicitly offensive. Outputs might often be factually wrong or misleading.\n# [Open LLM Leaderboard Evaluation Results](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard)\nDetailed results can be found [here](https://huggingface.co/datasets/open-llm-leaderboard/details_Neko-Institute-of-Science__pygmalion-7b)\n\n| Metric                | Value                     |\n|-----------------------|---------------------------|\n| Avg.                  | 40.29   |\n| ARC (25-shot)         | 51.37          |\n| HellaSwag (10-shot)   | 77.81    |\n| MMLU (5-shot)         | 35.68         |\n| TruthfulQA (0-shot)   | 34.54   |\n| Winogrande (5-shot)   | 72.22   |\n| GSM8K (5-shot)        | 4.62        |\n| DROP (3-shot)         | 5.79         |\n",
+  "fetched_at": "2026-09-19T15:00:29.407516+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "Neko-Institute-of-Science",
+    "gated": false,
+    "library_name": "transformers",
+    "license": null,
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "text generation",
+      "conversational",
+      "en",
+      "text-generation-inference",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "Neko-Institute-of-Science__pygmalion-7b",
+  "ok": true,
+  "popularity": {
+    "downloads": 109,
+    "downloadsAllTime": 64959,
+    "likes": 38,
+    "trendingScore": 0
+  },
+  "repo_id": "Neko-Institute-of-Science/pygmalion-7b",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-04-30T02:04:01.000Z",
+    "lastModified": "2023-11-19T17:48:29.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

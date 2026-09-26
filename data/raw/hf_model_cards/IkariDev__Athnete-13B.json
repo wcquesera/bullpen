@@ -1,0 +1,83 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": 13015864320,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {
+      "F16": 13015864320
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 1681,
+  "card_text": "---\nlicense: cc-by-nc-4.0\n---\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/630dfb008df86f1e5becadc3/UntR48TeeY7R0gvmByLdO.png)\n\nAthnete model. Use Alpaca format. Suitable for RP, ERP and general stuff.\n\nDespite the awful banner i made, this model could actually be better than raw Athena v3.\n\n<!-- description start -->\n## Description\n\n<!-- [Recommended settings - contributed by localfultonextractor](https://files.catbox.moe/ue0tja.json) -->\n\nThis repo contains fp16 files of Athnete.\n\n<!-- [GGUF - By TheBloke](https://huggingface.co/TheBloke/Athena-v3-GGUF) -->\n\n<!-- [GPTQ - By TheBloke](https://huggingface.co/TheBloke/Athena-v3-GPTQ) -->\n\n<!-- [exl2 - by AzureBlack](https://huggingface.co/AzureBlack/Athena-v2-6.0bit-exl2) -->\n\n<!-- [AWQ - By TheBloke](https://huggingface.co/TheBloke/Athena-v3-AWQ) -->\n\n[fp16 - by IkariDev](https://huggingface.co/IkariDev/Athnete-13B)\n\n[GGUF - by IkariDev](https://huggingface.co/IkariDev/Athnete-13B-GGUF)\n<!-- [OLD(GGUF - by IkariDev+Undi95)](https://huggingface.co/IkariDev/Athena-v3-GGUF) -->\n\n## Ratings:\n\nNote: I have permission of all users to upload their ratings, i DONT screenshot random reviews without asking if i can put them here!\n\n\n<!-- description end -->\n<!-- description start -->\n## Models and loras used\n\n- IkariDev/Athena-v3\n- Undi95/Nete-13B\n<!-- description end -->\n<!-- prompt-template start -->\n## Prompt template: Alpaca\n\n```\nBelow is an instruction that describes a task. Write a response that appropriately completes the request.\n\n### Instruction:\n{prompt}\n\n### Response:\n\n```\n\nHUGE thanks to [Undi95](https://huggingface.co/Undi95) for doing the merging (Recipe was my idea, he merged)",
+  "fetched_at": "2026-09-22T06:43:56.138800+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "IkariDev",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "license:cc-by-nc-4.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "IkariDev__Athnete-13B",
+  "ok": true,
+  "popularity": {
+    "downloads": 70,
+    "downloadsAllTime": 8862,
+    "likes": 3,
+    "trendingScore": 0
+  },
+  "repo_id": "IkariDev/Athnete-13B",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-10-29T01:00:24.000Z",
+    "lastModified": "2023-10-29T03:13:42.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

@@ -1,0 +1,23 @@
+# Task-level constants of the evaluation battery: every arm is scored at the same probe
+# sizes, neighbour count, budgets and head folds.
+
+neighbour_k: 5
+neighbour_metric: cosine
+probe_sizes:
+- 5
+- 10
+- 20
+- 50
+headline_probe_size: 50
+vram_budgets_gb:
+- 24
+- 48
+- 80
+- 160
+headline_budget_gb: 24
+knapsack_draws: 10
+half_split_draws: 5
+reliability_draws: 20
+ndcg_k: 10
+ece_bins: 10
+n_folds: 5

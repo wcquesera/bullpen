@@ -1,0 +1,85 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": 7241732096,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "F16": 7241732096
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 689,
+  "card_text": "---\nlicense: apache-2.0\nlanguage:\n- en\nlibrary_name: transformers\npipeline_tag: text-generation\ntags:\n- chat\n---\n**Experiment26-7B**\n\nAn experiment for testing and refining a specific training and evaluation pipeline research framework.\n\nThis experiment aims to identify potential optimizations, focusing on data engineering, architecture efficiency, and evaluation performance.\n\nThe goal is to evaluate the effectiveness of a new training / evaluation pipeline for LLMs.\n\nThe experiment will explore adjustments in data preprocessing, model training algorithms, and evaluation metrics to test methods for improvement.\n\nMore details in the future experiments.\n\n\n---\nlicense: apache-2.0\n---",
+  "fetched_at": "2026-09-19T15:02:00.532180+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "yam-peleg",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "mistral",
+      "text-generation",
+      "chat",
+      "en",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "yam-peleg__Experiment26-7B",
+  "ok": true,
+  "popularity": {
+    "downloads": 183,
+    "downloadsAllTime": 30718,
+    "likes": 81,
+    "trendingScore": 0
+  },
+  "repo_id": "yam-peleg/Experiment26-7B",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2024-02-27T17:49:50.000Z",
+    "lastModified": "2024-02-27T21:30:21.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

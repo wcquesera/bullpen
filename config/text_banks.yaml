@@ -1,0 +1,19 @@
+# The shared text policy for the answer and question embeddings (process.py embed --encoder hf):
+# a frozen BAAI/bge-base-en-v1.5, attention-mask mean pooling, left truncation to the last
+# 512 tokens, L2-normalised. Questions and answers go through the same encoder.
+
+answer_bank_dir: data/raw/embeddings/bge_base_en_v1_5
+answer_bank_slug: bge_base_en_v1_5
+
+question_source: data/raw/probe_set.jsonl
+
+encoder_hf_id: BAAI/bge-base-en-v1.5
+encoder_dim: 768
+encoder_prefix: ""
+encoder_pooling: mean
+max_seq_length: 512
+
+question_char_cap: 2000
+batch_size: 128
+
+coverage_warn_threshold: 0.5

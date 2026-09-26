@@ -1,0 +1,84 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 48,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 1213,
+  "card_text": "---\nlicense: cc-by-nc-4.0\ntags:\n- not-for-all-audiences\n- nsfw\n- mistral\n- pretrained\n---\n\nMistral-7B and airoboros-mistral2.2-7b glued together and finetuned with qlora of Pippa and LimaRPv3 dataset.\n\n<!-- description start -->\n## Description\n\nThis repo contains fp16 files of Mistral-11B-Airoboros-RP-v1.\n\n<!-- description end -->\n<!-- description start -->\n## Model used\n\n- [Mistral-7B-v0.1](https://huggingface.co/mistralai/Mistral-7B-v0.1/)\n- [airoboros-mistral2.2-7b](https://huggingface.co/teknium/airoboros-mistral2.2-7b/)\n- PIPPA dataset 11B qlora\n- LimaRPv3 dataset 11B qlora\n\n<!-- description end -->\n<!-- prompt-template start -->\n## Prompt template: Alpaca or default\n\n```\nBelow is an instruction that describes a task. Write a response that appropriately completes the request.\n\n### Instruction:\n{prompt}\n\n### Response:\n\n```\n\n```\nUSER: <prompt>\nASSISTANT:\n```\n\n## The secret sauce\n\n```\nslices:\n  - sources:\n    - model: mistralai/Mistral-7B-v0.1\n      layer_range: [0, 24]\n  - sources:\n    - model: teknium/airoboros-mistral2.2-7b\n      layer_range: [8, 32]\nmerge_method: passthrough\ndtype: float16\n```\n\n\nSpecial thanks to Sushi.\n\nIf you want to support me, you can [here](https://ko-fi.com/undiai).",
+  "fetched_at": "2026-09-22T06:44:52.011469+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "Undi95",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "mistral",
+      "text-generation",
+      "not-for-all-audiences",
+      "nsfw",
+      "pretrained",
+      "license:cc-by-nc-4.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "Undi95__Mistral-11B-Airoboros-RP-v1",
+  "ok": true,
+  "popularity": {
+    "downloads": 8,
+    "downloadsAllTime": 38,
+    "likes": 1,
+    "trendingScore": 0
+  },
+  "repo_id": "Undi95/Mistral-11B-Airoboros-RP-v1",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-10-09T02:19:36.000Z",
+    "lastModified": "2023-10-09T16:40:34.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

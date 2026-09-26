@@ -1,0 +1,84 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": 7241732096,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "BF16": 6979588096,
+      "F32": 262144000
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 32000
+  },
+  "card_chars": 1330,
+  "card_text": "---\nlicense: apache-2.0\n---\n\n<a href=\"https://www.buymeacoffee.com/PulsarAI\" target=\"_blank\"><img src=\"https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png\" alt=\"Buy Me A Coffee\" style=\"height: 60px !important;width: 217px !important;\" ></a>\n\nMerge of [Open-Orca/Mistral-7B-SlimOrca](https://huggingface.co/Open-Orca/Mistral-7B-SlimOrca) and [Open-Orca/Mistral-7B-OpenOrca](https://huggingface.co/Open-Orca/Mistral-7B-OpenOrca) using ties merge.\n\n### *Weights*\n\n- [Open-Orca/Mistral-7B-SlimOrca](https://huggingface.co/Open-Orca/Mistral-7B-SlimOrca): 0.5\n\n- [Open-Orca/Mistral-7B-OpenOrca](https://huggingface.co/Open-Orca/Mistral-7B-OpenOrca): 0.3\n\n### *Density*\n\n- [Open-Orca/Mistral-7B-SlimOrca](https://huggingface.co/Open-Orca/Mistral-7B-SlimOrca): 0.5\n\n- [Open-Orca/Mistral-7B-OpenOrca](https://huggingface.co/Open-Orca/Mistral-7B-OpenOrca): 0.5\n\n# Quantizationed versions\n\nQuantizationed versions of this model is available thanks to [TheBloke](https://hf.co/TheBloke).\n\n##### GPTQ\n\n- [TheBloke/SlimOpenOrca-Mistral-7B-GPTQ](https://huggingface.co/TheBloke/SlimOpenOrca-Mistral-7B-GPTQ)\n\n##### GGUF\n\n- [TheBloke/SlimOpenOrca-Mistral-7B-GGUF](https://huggingface.co/TheBloke/SlimOpenOrca-Mistral-7B-GGUF)\n\n##### AWQ\n\n- [TheBloke/SlimOpenOrca-Mistral-7B-AWQ](https://huggingface.co/TheBloke/SlimOpenOrca-Mistral-7B-AWQ)",
+  "fetched_at": "2026-09-22T08:00:50.078326+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "Weyaxi",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "mistral",
+      "text-generation",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "Weyaxi__SlimOpenOrca-Mistral-7B",
+  "ok": true,
+  "popularity": {
+    "downloads": 77,
+    "downloadsAllTime": 47451,
+    "likes": 18,
+    "trendingScore": 0
+  },
+  "repo_id": "Weyaxi/SlimOpenOrca-Mistral-7B",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-10-11T08:30:14.000Z",
+    "lastModified": "2023-11-17T21:09:12.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

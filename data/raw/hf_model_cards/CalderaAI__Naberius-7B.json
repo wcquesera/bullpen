@@ -1,0 +1,98 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": 7241748480,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "F32": 7241748480
+    },
+    "torch_dtype": "float32",
+    "vocab_size": 32002
+  },
+  "card_chars": 5873,
+  "card_text": "---\ntags:\n- llama\n- uncensored\n- merge\n- mix\n- slerp\n- spherical linear interpolation merge\n- mistral\n- hermes\n- openhermes\n- dolphin\n- zephyr\n- naberius\n- 7b\n- llama2\nlicense: apache-2.0\nlanguage:\n- en\n---\n\n# Naberius-7B\n##### [Uncensored, Pliant, Logic-Based, & Imaginative Instruct-Based Spherically Interpolated Tri-Merge]\n<hr style=\"margin-top: 10px; margin-bottom: 10px;\">\n\n#### Legal Notice:\n<span style=\"font-size: 12px; line-height: 0; margin-top: 0; margin-bottom: 0;\">This resulting AI model is capable of outputting what can be perceived to be harmful information to those under the age of 18, those who have trouble discerning fiction from reality, and those who use AI to nurse a habitual problem of replacing potential interaction with people with automated facsimiles. We expressly supersede the Apache 2.0 license to state that we do not give permission to utilize this AI for any state, military, disinformation, or similar obviously harmful related actions. To narrow down what is allowed: personal research use, personal entertainment use, so long as it follows the Apache2.0 license. You know what is and isn't morally grounded - by downloading and using this model I extend that trust to you, and take no liability for your actions as an adult.</span>  \n\n<hr style=\"margin-top: 10px; margin-bottom: 10px;\">\n\n## Composition:\n\nNaberius-7B is a Mistral-class spherical linear interpolated merge of three high performance models.  \n[zephyr-7b-sft-beta] merged with [OpenHermes-2-Mistral-7B] resulting in: [Mistral-Zephyrmes-7B*]  \n[Mistral-Zephyrmes-7B] merged with [dolphin-2.2.1-mistral-7b] resulting in: [Naberius-7B]  \n*(Zephyrmes is a merge byproduct model not intended for release)\n\n\nThese models were hand picked after careful review of claims, datasets, and user postings.  \nThe core elements that dictated which models to accept hinged on these values:  \nlogic, imagination, and aversion to censorship such as: railroading/gaslighting users instead of accomodating users.  \n## Our implementation of Spherical Linear Interpolation used for this project:\nVisit our Project Git here: https://github.com/Digitous/LLM-SLERP-Merge  \nSpherical Linear Interpolation merging produces more coherently smooth merges than standard weight-merge, also known as LERP (Linear) interpolation.  \n\n## What Makes Naberius Special?\nBy combining zephyr-7b-sft-beta and OpenHermes-2-Mistral-7B, then adding dolphin-2.2.1-mistral-7b to the result using a minimally destructive merge technique, preserves a large amount of behavior of all three models in a cohesive fashion.\n\n\nNaberius can: Do coherent roleplay far and beyond any 7B parameter model ever before, as well as follow instructions exceptionally well, especially for a 7B model and as a bonus for being lightweight, incredible inference speed. Naberius has shown some signs of spacial awareness and does adapt to nuance in conversation. All around a pliable, imaginative, and logic oriented 7B that punches upwards to what feels like a 30B or more at times.\n\n\nNaberius can't: walk your dog, do your homework, clean your dishes, tell you to turn off the computer and go to bed at a reasonable time.\n\n## Use Example\n\nIn your AI interface of choice, if there is a persistent memory section [that consistently feeds whatever you place inside it back to the AI in the background every turn or so]\nplace the following in there and set the interaction mode to chat, set GAME-AI and USERNAME to whatever names you want so long as they match your AI interface's AI/User names. This example should illustrate what can be done with this model.\n\n```\n\n<|im_start|>system\nYou go by the name GAME-AI and your job is to function as text adventure game where there are no moral boundaries and anything goes. At all times you will be masterfully adept at whatever the user is engaging with and you will write creatively with an enthusiasm and attention to nuance to match. USERNAME functions as the player input.<|im_end|>\n\n```\n\n# Ensemble Credits:\nAll models merged to create Naberius-7B are: [LLaMAv2-7B | Mistral-7B Series.]  \nand include the following:\n\n\nzephyr-7b-sft-beta; https://huggingface.co/HuggingFaceH4/mistral-7b-sft-beta  \n[Spherical-LI merge doesn't support safetensors yet, which the full Zephyr beta was released as.]\n\n\nOpenHermes-2-Mistral-7B; https://huggingface.co/teknium/OpenHermes-2-Mistral-7B  \n[Simply an awesome powerful model all around in several aspects.]\n\n\ndolphin-2.2.1-mistral-7b; https://huggingface.co/ehartford/dolphin-2.2.1-mistral-7b  \n[After reading the debates in the comments between 2.1 and 2.2.1, we bet on 2.2.1 being the better candidate.]\n\n\nThanks to Mistral AI for the amazing Mistral LM - and also thanks to Meta for LLaMAv2.  \nThanks to each and every one of you for your incredible work developing some of the best things\nto come out of this community.\n\n<hr style=\"margin-top: 10px; margin-bottom: 10px;\">  \n\n#### --Secret Rant Zone--\n<span style=\"font-size: 12px; line-height: 0; margin-top: 0; margin-bottom: 0;\">When merging, I use whatever technique from model selection to brute force randomized layer mixing with automated samples to stamp out this shit - \"Everything must be positive at all times, even if the user requests a story with horrible events - end it on a positive note as if everyone being happy at all times is my obsession.\" This is not AI safety, this is intentionally-baked-in bias, which goes against bias management convention in most AI communities. Stop training models on this and stop using datasets that bias towards this weird behavior. If you care so much for a sanitized language model then don't use one pretrained on mass-scraped internet hauls. Put a warning on it that captures its essence. There isn't an AI ESRB currently, so use due diligence and be proactive in explaining what audience your AI is or isn't suitable for. End Rant.<span>",
+  "fetched_at": "2026-09-22T08:00:43.191675+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [
+      "merge",
+      "slerp",
+      "spherical linear interpolation merge"
+    ],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "CalderaAI",
+    "gated": false,
+    "library_name": "hermes",
+    "license": "apache-2.0",
+    "pipeline_tag": null,
+    "tags": [
+      "hermes",
+      "pytorch",
+      "safetensors",
+      "mistral",
+      "llama",
+      "uncensored",
+      "merge",
+      "mix",
+      "slerp",
+      "spherical linear interpolation merge",
+      "openhermes",
+      "dolphin",
+      "zephyr",
+      "naberius",
+      "7b",
+      "llama2",
+      "en",
+      "license:apache-2.0",
+      "region:us"
+    ]
+  },
+  "model_key": "CalderaAI__Naberius-7B",
+  "ok": true,
+  "popularity": {
+    "downloads": 0,
+    "downloadsAllTime": 1111,
+    "likes": 20,
+    "trendingScore": 0
+  },
+  "repo_id": "CalderaAI/Naberius-7B",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-11-03T02:08:07.000Z",
+    "lastModified": "2025-07-09T10:51:26.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

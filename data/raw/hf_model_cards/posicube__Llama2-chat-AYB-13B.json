@@ -1,0 +1,85 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": 13015866880,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {
+      "BF16": 12688186880,
+      "F32": 327680000
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 3434,
+  "card_text": "---\nlicense: llama2\n---\n\nThis is a model diverged from Llama-2-13b-chat-hf. We hypotheize that if we find a method to ensemble the top rankers in each benchmark effectively, its performance maximizes as well. Following this intuition, we ensembled the top models in each benchmarks to create our model.\n\n# Model Details\n- **Developed by**: Posicube Inc. \n- **Backbone Model**: LLaMA-2-13b-chat\n- **Library**: HuggingFace Transformers\n- **Used Dataset Details**\n  Orca-style datasets, Alpaca-style datasets\n\n\n# Evaluation \nWe achieved the top ranker among 13B models with this model at Oct-3rd 2023.\n\n| Metric              |Scores on Leaderboard| Our results |\n|---------------------|---------------------|-------------|\n| ARC (25-shot)       | 63.4 | 63.48 |\n| HellaSwag (10-shot) | 84.79 | 84.87 |\n| MMLU (5-shot)       | 59.34 | 59.59 |\n| TruthfulQA (0-shot) | 55.62  | 55.22 |\n| Avg.                | 65.79 | 65.78 |\n\n# Limitations & Biases:\nLlama2 and fine-tuned variants are a new technology that carries risks with use. Testing conducted to date has been in English, and has not covered, nor could it cover all scenarios. For these reasons, as with all LLMs, Llama 2 and any fine-tuned varient's potential outputs cannot be predicted in advance, and the model may in some instances produce inaccurate, biased or other objectionable responses to user prompts. Therefore, before deploying any applications of Llama 2 variants, developers should perform safety testing and tuning tailored to their specific applications of the model.\n\nPlease see the Responsible Use Guide available at https://ai.meta.com/llama/responsible-use-guide/\n\n# License Disclaimer:\nThis model is bound by the license & usage restrictions of the original Llama-2 model. And comes with no warranty or gurantees of any kind.\n\n# Contact Us\n[Posicube](https://www.posicube.com/)\n\n# Citiation:\nPlease kindly cite using the following BibTeX:\n\n```bibtex\n@misc{mukherjee2023orca,\n      title={Orca: Progressive Learning from Complex Explanation Traces of GPT-4}, \n      author={Subhabrata Mukherjee and Arindam Mitra and Ganesh Jawahar and Sahaj Agarwal and Hamid Palangi and Ahmed Awadallah},\n      year={2023},\n      eprint={2306.02707},\n      archivePrefix={arXiv},\n      primaryClass={cs.CL}\n}\n```\n\n```bibtex\n@software{touvron2023llama2,\n  title={Llama 2: Open Foundation and Fine-Tuned Chat Models},\n  author={Hugo Touvron, Louis Martin, Kevin Stone, Peter Albert, Amjad Almahairi, Yasmine Babaei, Nikolay Bashlykov, Soumya Batra, Prajjwal Bhargava,\n Shruti Bhosale, Dan Bikel, Lukas Blecher, Cristian Canton Ferrer, Moya Chen, Guillem Cucurull, David Esiobu, Jude Fernandes, Jeremy Fu, Wenyin Fu, Brian Fuller,\nCynthia Gao, Vedanuj Goswami, Naman Goyal, Anthony Hartshorn, Saghar Hosseini, Rui Hou, Hakan Inan, Marcin Kardas, Viktor Kerkez Madian Khabsa, Isabel Kloumann,\nArtem Korenev, Punit Singh Koura, Marie-Anne Lachaux, Thibaut Lavril, Jenya Lee, Diana Liskovich, Yinghai Lu, Yuning Mao, Xavier Martinet, Todor Mihaylov,\nPushkar Mishra, Igor Molybog, Yixin Nie, Andrew Poulton, Jeremy Reizenstein, Rashi Rungta, Kalyan Saladi, Alan Schelten, Ruan Silva, Eric Michael Smith,\nRanjan Subramanian, Xiaoqing Ellen Tan, Binh Tang, Ross Taylor, Adina Williams, Jian Xiang Kuan, Puxin Xu , Zheng Yan, Iliyan Zarov, Yuchen Zhang, Angela Fan,\nMelanie Kambadur, Sharan Narang, Aurelien Rodriguez, Robert Stojnic, Sergey Edunov, Thomas Scialom},\n  year={2023}\n}\n```",
+  "fetched_at": "2026-09-22T06:46:46.681130+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "posicube",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "llama2",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "arxiv:2306.02707",
+      "license:llama2",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "posicube__Llama2-chat-AYB-13B",
+  "ok": true,
+  "popularity": {
+    "downloads": 76,
+    "downloadsAllTime": 47227,
+    "likes": 14,
+    "trendingScore": 0
+  },
+  "repo_id": "posicube/Llama2-chat-AYB-13B",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-10-03T03:06:14.000Z",
+    "lastModified": "2023-10-06T08:40:15.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

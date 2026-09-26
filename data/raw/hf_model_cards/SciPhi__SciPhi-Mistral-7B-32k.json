@@ -1,0 +1,84 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {},
+    "torch_dtype": "float32",
+    "vocab_size": 32000
+  },
+  "card_chars": 3043,
+  "card_text": "---\nlicense: mit\n---\n\n# SciPhi-Mistral-7B-32k Model Card\n\nThe SciPhi-Mistral-7B-32k is a Large Language Model (LLM) fine-tuned from Mistral-7B-v0.1. This model underwent a fine-tuning process over four epochs using more than 1 billion tokens, which include regular instruction tuning data and synthetic textbooks. The objective of this work was to increase the model's scientific reasoning and educational abilities. For best results, follow the Alpaca prompting guidelines.\n\nSciPhi-AI is available via a free hosted API, though the exposed model can vary. Currently, SciPhi-Self-RAG-Mistral-7B-32k is available. More details can be found in the docs [here](https://sciphi.readthedocs.io/en/latest/setup/quickstart.html).\n\n## Model Architecture\n\nBase Model: Mistral-7B-v0.1\n\n**Architecture Features:**\n- Transformer-based model\n- Grouped-Query Attention\n- Sliding-Window Attention\n- Byte-fallback BPE tokenizer\n\n\n## Recommended Chat Formatting\n\n\nWe recommend mapping such that\n\n```\n\nmessages = [\n    {\n        \"role\": \"system\",\n        \"content\": \"You are a friendly chatbot who always responds in the style of a pirate\",\n    },\n    {\"role\": \"user\", \"content\": \"How many helicopters can a human eat in one sitting?\"},\n]\n\ngoes to --->\n\n### System:\nYou are a friendly chatbot who always responds in the style of a pirate\n\n### Instruction:\nHow many helicopters can a human eat in one sitting?\n\n### Response:\n...\n```\n\n[<img src=\"https://raw.githubusercontent.com/OpenAccess-AI-Collective/axolotl/main/image/axolotl-badge-web.png\" alt=\"Built with Axolotl\" width=\"200\" height=\"32\"/>](https://github.com/OpenAccess-AI-Collective/axolotl)\n\n## References\n\n1. Lian, W., Goodson, B., Wang, G., Pentland, E., Cook, A., Vong, C., & Teknium. (2023). MistralOrca: Mistral-7B Model Instruct-tuned on Filtered OpenOrcaV1 GPT-4 Dataset. *HuggingFace repository*. [Link](https://huggingface.co/Open-Orca/Mistral-7B-OpenOrca)\n2. Mukherjee, S., Mitra, A., Jawahar, G., Agarwal, S., Palangi, H., & Awadallah, A. (2023). Orca: Progressive Learning from Complex Explanation Traces of GPT-4. *arXiv preprint arXiv:2306.02707*.\n3. Longpre, S., Hou, L., Vu, T., Webson, A., Chung, H. W., Tay, Y., Zhou, D., Le, Q. V., Zoph, B., Wei, J., & Roberts, A. (2023). The Flan Collection: Designing Data and Methods for Effective Instruction Tuning. *arXiv preprint arXiv:2301.13688*.\n4. Mistral AI. (2023). Model Card for Mistral-7B-v0.1. The Mistral-7B-v0.1 Large Language Model (LLM) is a pretrained generative text model with 7 billion parameters. Mistral-7B-v0.1 outperforms Llama 2 13B on all benchmarks tested. For full details, please refer to the paper and release blog post. Model Architecture: Transformer with Grouped-Query Attention, Sliding-Window Attention, and Byte-fallback BPE tokenizer. [Link](https://huggingface.co/mistralai/Mistral-7B-v0.1)\n\n\n## Acknowledgements\n\nThank you to the [AI Alignment Lab](https://huggingface.co/Alignment-Lab-AI), [vikp](https://huggingface.co/vikp), [jph00](https://huggingface.co/jph00) and others who contributed to this work.",
+  "fetched_at": "2026-09-19T15:00:44.872230+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "SciPhi",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "mit",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "mistral",
+      "text-generation",
+      "arxiv:2306.02707",
+      "arxiv:2301.13688",
+      "license:mit",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "SciPhi__SciPhi-Mistral-7B-32k",
+  "ok": true,
+  "popularity": {
+    "downloads": 101,
+    "downloadsAllTime": 62817,
+    "likes": 72,
+    "trendingScore": 0
+  },
+  "repo_id": "SciPhi/SciPhi-Mistral-7B-32k",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-10-16T16:58:43.000Z",
+    "lastModified": "2023-10-31T21:44:54.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 2400,
+  "card_text": "---\nlicense: cc-by-nc-4.0\n---\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/630dfb008df86f1e5becadc3/LjO8no5EzagA9qWdtYKxG.png)\n\nExperimental Athena v3 model. Use Alpaca format. Suitable for RP, ERP and general stuff.\n\n<!-- description start -->\n## Description\n\n<!-- [Recommended settings - contributed by localfultonextractor](https://files.catbox.moe/ue0tja.json) -->\n\nThis repo contains fp16 files of Athena-V3.\n\n[GGUF - By TheBloke](https://huggingface.co/TheBloke/Athena-v3-GGUF)\n\n[GPTQ - By TheBloke](https://huggingface.co/TheBloke/Athena-v3-GPTQ)\n\n<!-- [exl2 - by AzureBlack](https://huggingface.co/AzureBlack/Athena-v2-6.0bit-exl2) -->\n\n[AWQ - By TheBloke](https://huggingface.co/TheBloke/Athena-v3-AWQ)\n\n[fp16 - by IkariDev+Undi95](https://huggingface.co/IkariDev/Athena-v3)\n\n<!-- [GGUF - by IkariDev+Undi95](https://huggingface.co/IkariDev/Athena-v3-GGUF) -->\n[OLD(GGUF - by IkariDev+Undi95)](https://huggingface.co/IkariDev/Athena-v3-GGUF)\n\n## Ratings:\n\nNote: I have permission of all users to upload their ratings, i DONT screenshot random reviews without asking if i can put them here!\n\nhttps://snombler.neocities.org/logs#athenav3\n\n<!-- description end -->\n<!-- description start -->\n## Models and loras used\n\n- Athena-v2\n- migtissera/Synthia-13B-v1.2\n- The-Face-Of-Goonery/Huginn-13b-FP16\n- PygmalionAI/pygmalion-2-13b\n- The-Face-Of-Goonery/LegerDemain-FP16\n- chargoddard/storytime-13b\n- lemonilia/LimaRP-Llama2-13B-v3-EXPERIMENT\n- zattio770/120-Days-of-LORA-v2-13B\n```\nLoras: [lemonilia/LimaRP-Llama2-13B-v3-EXPERIMENT(0.65) + zattio770/120-Days-of-LORA-v2-13B(0.35)](0.3) to the final model\n\n+ [Athena-v2(0.70) + migtissera/Synthia-13B-v1.2(0.3)](0.5)\n+ [The-Face-Of-Goonery/Huginn-13b-FP16(0.85) + PygmalionAI/pygmalion-2-13b](0.15)](0.40)\n+ [The-Face-Of-Goonery/LegerDemain-FP16(0.3) chargoddard/storytime-13b(0.7)](0.10)\n```\n<!-- description end -->\n<!-- prompt-template start -->\n## Prompt template: Alpaca\n\n```\nBelow is an instruction that describes a task. Write a response that appropriately completes the request.\n\n### Instruction:\n{prompt}\n\n### Response:\n\n```\n\nHUGE thanks to [Undi95](https://huggingface.co/Undi95) for doing the merging (Recipe was my idea, he merged)\n\nTo TheBloke: please if you quant this, please include [IkariDev](https://huggingface.co/IkariDev) + [Undi95](https://huggingface.co/Undi95) in all the credits/links to the creator.",
+  "fetched_at": "2026-09-22T06:43:53.406392+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "IkariDev",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "license:cc-by-nc-4.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "IkariDev__Athena-v3",
+  "ok": true,
+  "popularity": {
+    "downloads": 75,
+    "downloadsAllTime": 62833,
+    "likes": 13,
+    "trendingScore": 0
+  },
+  "repo_id": "IkariDev/Athena-v3",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-26T18:59:34.000Z",
+    "lastModified": "2023-10-03T14:39:22.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

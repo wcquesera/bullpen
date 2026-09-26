@@ -1,0 +1,83 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 2953,
+  "card_text": "---\nlicense: apache-2.0\ntags:\n- not-for-all-audiences\n- nsfw\n---\n\n## Description\n\nThis repo contains fp16 files of [Norquinal/Mistral-7B-claude-chat](https://huggingface.co/Norquinal/Mistral-7B-claude-chat) with the LoRA [lemonilia/LimaRP-Mistral-7B-v0.1](https://huggingface.co/lemonilia/LimaRP-Mistral-7B-v0.1) applied at weight \"0.75\".\n\nAll credit go to [lemonilia](https://huggingface.co/lemonilia) and [Norquinal](https://huggingface.co/Norquinal)\n\n## Prompt format\nSame as before. It uses the [extended Alpaca format](https://github.com/tatsu-lab/stanford_alpaca),\nwith `### Input:` immediately preceding user inputs and `### Response:` immediately preceding\nmodel outputs. While Alpaca wasn't originally intended for multi-turn responses, in practice this\nis not a problem; the format follows a pattern already used by other models.\n\n```\n### Instruction:\nCharacter's Persona: {bot character description}\n\nUser's Persona: {user character description}\n\nScenario: {what happens in the story}\n\nPlay the role of Character. You must engage in a roleplaying chat with User below this line. Do not write dialogues and narration for User.\n\n### Input:\nUser: {utterance}\n\n### Response:\nCharacter: {utterance}\n\n### Input\nUser: {utterance}\n\n### Response:\nCharacter: {utterance}\n\n(etc.)\n```\n\nYou should:\n- Replace all text in curly braces (curly braces included) with your own text.\n- Replace `User` and `Character` with appropriate names.\n\n\n### Message length control\nInspired by the previously named \"Roleplay\" preset in SillyTavern, with this\nversion of LimaRP it is possible to append a length modifier to the response instruction\nsequence, like this:\n\n```\n### Input\nUser: {utterance}\n\n### Response: (length = medium)\nCharacter: {utterance}\n```\n\nThis has an immediately noticeable effect on bot responses. The available lengths are:\n`tiny`, `short`, `medium`, `long`, `huge`, `humongous`, `extreme`, `unlimited`. **The \nrecommended starting length is `medium`**. Keep in mind that the AI may ramble\nor impersonate the user with very long messages.\n\nThe length control effect is reproducible, but the messages will not necessarily follow\nlengths very precisely, rather follow certain ranges on average, as seen in this table\nwith data from tests made with one reply at the beginning of the conversation:\n\n![lengths](https://files.catbox.moe/dy39bt.png)\n\nResponse length control appears to work well also deep into the conversation.\n\n## Suggested settings\nYou can follow these instruction format settings in SillyTavern. Replace `tiny` with\nyour desired response length:\n\n![settings](https://files.catbox.moe/6lcz0u.png)\n\n## Text generation settings\nExtensive testing with Mistral has not been performed yet, but suggested starting text\ngeneration settings may be:\n\n- TFS = 0.90~0.95\n- Temperature = 0.70~0.85\n- Repetition penalty = 1.08~1.10\n- top-k = 0 (disabled)\n- top-p = 1 (disabled)\n\nIf you want to support me, you can [here](https://ko-fi.com/undiai).",
+  "fetched_at": "2026-09-22T08:00:47.415378+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "Undi95",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "mistral",
+      "text-generation",
+      "not-for-all-audiences",
+      "nsfw",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "Undi95__Mistral-ClaudeLimaRP-v3-7B",
+  "ok": true,
+  "popularity": {
+    "downloads": 29,
+    "downloadsAllTime": 990,
+    "likes": 11,
+    "trendingScore": 0
+  },
+  "repo_id": "Undi95/Mistral-ClaudeLimaRP-v3-7B",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-28T00:08:02.000Z",
+    "lastModified": "2023-09-28T00:56:42.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

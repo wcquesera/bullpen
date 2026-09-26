@@ -1,0 +1,81 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 174,
+  "card_text": "---\nlicense: cc-by-nc-4.0\n---\nLoRA merged to a Model.\n\nModel : https://huggingface.co/Undi95/ReMM-v2-L2-13B\n\nLoRA : https://huggingface.co/nRuaif/Kimiko-v2-13B\n\nWeight : 0.50",
+  "fetched_at": "2026-09-22T06:45:02.844617+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "Undi95",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "license:cc-by-nc-4.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "Undi95__ReMM-v2-Kimiko-v2-13B",
+  "ok": true,
+  "popularity": {
+    "downloads": 27,
+    "downloadsAllTime": 332,
+    "likes": 0,
+    "trendingScore": 0
+  },
+  "repo_id": "Undi95/ReMM-v2-Kimiko-v2-13B",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-12T21:47:31.000Z",
+    "lastModified": "2023-09-12T21:56:22.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

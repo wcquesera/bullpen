@@ -1,0 +1,91 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": 13016194560,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {
+      "BF16": 13016192000,
+      "F32": 2560
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 32032
+  },
+  "card_chars": 8300,
+  "card_text": "---\nlanguage:\n- en\ntags:\n- llama-2\n- self-instruct\n- distillation\n- synthetic instruction\nlicense:\n- mit\n---\n\n# Model Card: Nous-Hermes-Llama2-13b\n\nCompute provided by our project sponsor Redmond AI, thank you! Follow RedmondAI on Twitter @RedmondAI.\n\n## Model Description\n\nNous-Hermes-Llama2-13b is a state-of-the-art language model fine-tuned on over 300,000 instructions. This model was fine-tuned by Nous Research, with Teknium and Emozilla leading the fine tuning process and dataset curation, Redmond AI sponsoring the compute, and several other contributors.\n\nThis Hermes model uses the exact same dataset as Hermes on Llama-1. This is to ensure consistency between the old Hermes and new, for anyone who wanted to keep Hermes as similar to the old one, just more capable.\n\nThis model stands out for its long responses, lower hallucination rate, and absence of OpenAI censorship mechanisms. The fine-tuning process was performed with a 4096 sequence length on an 8x a100 80GB DGX machine.\n\n## Example Outputs:\n![Example4](https://huggingface.co/NousResearch/Nous-Hermes-Llama2-13b/resolve/main/example5.png \"Example 4\")\n![Example1](https://huggingface.co/NousResearch/Nous-Hermes-Llama2-13b/resolve/main/Example1.png \"Example 1\")\n![Example2](https://huggingface.co/NousResearch/Nous-Hermes-Llama2-13b/resolve/main/example2.png \"Example 2\")\n![Example3](https://huggingface.co/NousResearch/Nous-Hermes-Llama2-13b/resolve/main/example3.png \"Example 3\")\n\n## Model Training\n\nThe model was trained almost entirely on synthetic GPT-4 outputs. Curating high quality GPT-4 datasets enables incredibly high quality in knowledge, task completion, and style.\n\nThis includes data from diverse sources such as GPTeacher, the general, roleplay v1&2, code instruct datasets, Nous Instruct & PDACTL (unpublished), and several others, detailed further below\n\n## Collaborators\nThe model fine-tuning and the datasets were a collaboration of efforts and resources between Teknium, Karan4D, Emozilla, Huemin Art, and Redmond AI. \n  \nSpecial mention goes to @winglian for assisting in some of the training issues.\n\nHuge shoutout and acknowledgement is deserved for all the dataset creators who generously share their datasets openly. \n\nAmong the contributors of datasets:\n- GPTeacher was made available by Teknium\n- Wizard LM by nlpxucan\n- Nous Research Instruct Dataset was provided by Karan4D and HueminArt.  \n- GPT4-LLM and Unnatural Instructions were provided by Microsoft\n- Airoboros dataset by jondurbin\n- Camel-AI's domain expert datasets are from Camel-AI\n- CodeAlpaca dataset by Sahil 2801.\n\nIf anyone was left out, please open a thread in the community tab.\n\n## Prompt Format\n\nThe model follows the Alpaca prompt format:\n```\n### Instruction:\n<prompt>\n\n### Response:\n<leave a newline blank for model to respond>\n\n```\n\nor \n\n```\n### Instruction:\n<prompt>\n\n### Input:\n<additional context>\n\n### Response:\n<leave a newline blank for model to respond>\n\n```  \n\n## Benchmark Results\nAGI-Eval\n```\n|             Task             |Version| Metric |Value |   |Stderr|\n|agieval_aqua_rat              |      0|acc     |0.2362|\u00b1  |0.0267|\n|                              |       |acc_norm|0.2480|\u00b1  |0.0272|\n|agieval_logiqa_en             |      0|acc     |0.3425|\u00b1  |0.0186|\n|                              |       |acc_norm|0.3472|\u00b1  |0.0187|\n|agieval_lsat_ar               |      0|acc     |0.2522|\u00b1  |0.0287|\n|                              |       |acc_norm|0.2087|\u00b1  |0.0269|\n|agieval_lsat_lr               |      0|acc     |0.3510|\u00b1  |0.0212|\n|                              |       |acc_norm|0.3627|\u00b1  |0.0213|\n|agieval_lsat_rc               |      0|acc     |0.4647|\u00b1  |0.0305|\n|                              |       |acc_norm|0.4424|\u00b1  |0.0303|\n|agieval_sat_en                |      0|acc     |0.6602|\u00b1  |0.0331|\n|                              |       |acc_norm|0.6165|\u00b1  |0.0340|\n|agieval_sat_en_without_passage|      0|acc     |0.4320|\u00b1  |0.0346|\n|                              |       |acc_norm|0.4272|\u00b1  |0.0345|\n|agieval_sat_math              |      0|acc     |0.2909|\u00b1  |0.0307|\n|                              |       |acc_norm|0.2727|\u00b1  |0.0301|\n```\nGPT-4All Benchmark Set\n```\n|    Task     |Version| Metric |Value |   |Stderr|\n|arc_challenge|      0|acc     |0.5102|\u00b1  |0.0146|\n|             |       |acc_norm|0.5213|\u00b1  |0.0146|\n|arc_easy     |      0|acc     |0.7959|\u00b1  |0.0083|\n|             |       |acc_norm|0.7567|\u00b1  |0.0088|\n|boolq        |      1|acc     |0.8394|\u00b1  |0.0064|\n|hellaswag    |      0|acc     |0.6164|\u00b1  |0.0049|\n|             |       |acc_norm|0.8009|\u00b1  |0.0040|\n|openbookqa   |      0|acc     |0.3580|\u00b1  |0.0215|\n|             |       |acc_norm|0.4620|\u00b1  |0.0223|\n|piqa         |      0|acc     |0.7992|\u00b1  |0.0093|\n|             |       |acc_norm|0.8069|\u00b1  |0.0092|\n|winogrande   |      0|acc     |0.7127|\u00b1  |0.0127|\n```\nBigBench Reasoning Test\n```\n|                      Task                      |Version|       Metric        |Value |   |Stderr|\n\n|bigbench_causal_judgement                       |      0|multiple_choice_grade|0.5526|\u00b1  |0.0362|\n|bigbench_date_understanding                     |      0|multiple_choice_grade|0.7344|\u00b1  |0.0230|\n|bigbench_disambiguation_qa                      |      0|multiple_choice_grade|0.2636|\u00b1  |0.0275|\n|bigbench_geometric_shapes                       |      0|multiple_choice_grade|0.0195|\u00b1  |0.0073|\n|                                                |       |exact_str_match      |0.0000|\u00b1  |0.0000|\n|bigbench_logical_deduction_five_objects         |      0|multiple_choice_grade|0.2760|\u00b1  |0.0200|\n|bigbench_logical_deduction_seven_objects        |      0|multiple_choice_grade|0.2100|\u00b1  |0.0154|\n|bigbench_logical_deduction_three_objects        |      0|multiple_choice_grade|0.4400|\u00b1  |0.0287|\n|bigbench_movie_recommendation                   |      0|multiple_choice_grade|0.2440|\u00b1  |0.0192|\n|bigbench_navigate                               |      0|multiple_choice_grade|0.4950|\u00b1  |0.0158|\n|bigbench_reasoning_about_colored_objects        |      0|multiple_choice_grade|0.5570|\u00b1  |0.0111|\n|bigbench_ruin_names                             |      0|multiple_choice_grade|0.3728|\u00b1  |0.0229|\n|bigbench_salient_translation_error_detection    |      0|multiple_choice_grade|0.1854|\u00b1  |0.0123|\n|bigbench_snarks                                 |      0|multiple_choice_grade|0.6298|\u00b1  |0.0360|\n|bigbench_sports_understanding                   |      0|multiple_choice_grade|0.6156|\u00b1  |0.0155|\n|bigbench_temporal_sequences                     |      0|multiple_choice_grade|0.3140|\u00b1  |0.0147|\n|bigbench_tracking_shuffled_objects_five_objects |      0|multiple_choice_grade|0.2032|\u00b1  |0.0114|\n|bigbench_tracking_shuffled_objects_seven_objects|      0|multiple_choice_grade|0.1406|\u00b1  |0.0083|\n|bigbench_tracking_shuffled_objects_three_objects|      0|multiple_choice_grade|0.4400|\u00b1  |0.0287|\n```\n\nThese are the highest benchmarks Hermes has seen on every metric, achieving the following average scores:\n- GPT4All benchmark average is now 70.0 - from 68.8 in Hermes-Llama1\n- 0.3657 on BigBench, up from 0.328 on hermes-llama1\n- 0.372 on AGIEval, up from 0.354 on Hermes-llama1\n\nThese benchmarks currently have us at #1 on ARC-c, ARC-e, Hellaswag, and OpenBookQA, and 2nd place on Winogrande, comparing to GPT4all's benchmarking list, supplanting Hermes 1 for the new top position. \n\n## Resources for Applied Use Cases:\nCheck out LM Studio for a nice chatgpt style interface here: https://lmstudio.ai/\nFor an example of a back and forth chatbot using huggingface transformers and discord, check out: https://github.com/teknium1/alpaca-discord  \nFor an example of a roleplaying discord chatbot, check out this: https://github.com/teknium1/alpaca-roleplay-discordbot  \n\n## Future Plans\nWe plan to continue to iterate on both more high quality data, and new data filtering techniques to eliminate lower quality data going forward. \n\n## Model Usage\nThe model is available for download on Hugging Face. It is suitable for a wide range of language tasks, from generating creative text to understanding and following complex instructions.\n\n[<img src=\"https://raw.githubusercontent.com/OpenAccess-AI-Collective/axolotl/main/image/axolotl-badge-web.png\" alt=\"Built with Axolotl\" width=\"200\" height=\"32\"/>](https://github.com/OpenAccess-AI-Collective/axolotl)\n",
+  "fetched_at": "2026-09-22T06:44:12.641376+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "NousResearch",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "['mit']",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "llama-2",
+      "self-instruct",
+      "distillation",
+      "synthetic instruction",
+      "en",
+      "license:mit",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "NousResearch__Nous-Hermes-Llama2-13b",
+  "ok": true,
+  "popularity": {
+    "downloads": 1511,
+    "downloadsAllTime": 1276068,
+    "likes": 322,
+    "trendingScore": 0
+  },
+  "repo_id": "NousResearch/Nous-Hermes-Llama2-13b",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-07-20T23:25:25.000Z",
+    "lastModified": "2024-04-23T23:18:53.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": true,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

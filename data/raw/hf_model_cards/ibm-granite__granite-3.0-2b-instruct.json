@@ -1,0 +1,99 @@
+{
+  "architecture": {
+    "architectures": [
+      "GraniteForCausalLM"
+    ],
+    "hidden_size": 2048,
+    "intermediate_size": 8192,
+    "max_position_embeddings": 4096,
+    "model_type": "granite",
+    "n_parameters": 2634201088,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "BF16": 2634201088
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 49155
+  },
+  "card_chars": 11454,
+  "card_text": "---\npipeline_tag: text-generation\ninference: false\nlicense: apache-2.0\nlibrary_name: transformers\ntags:\n- language\n- granite-3.0\nmodel-index:\n- name: granite-3.0-2b-instruct\n  results:\n  - task:\n      type: text-generation\n    dataset:\n      type: instruction-following\n      name: IFEval\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 46.07\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: instruction-following\n      name: MT-Bench\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 7.66\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: human-exams\n      name: AGI-Eval\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 29.75\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: human-exams\n      name: MMLU\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 56.03\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: human-exams\n      name: MMLU-Pro\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 27.92\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: commonsense\n      name: OBQA\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 43.2\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: commonsense\n      name: SIQA\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 66.36\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: commonsense\n      name: Hellaswag\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 76.79\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: commonsense\n      name: WinoGrande\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 71.9\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: commonsense\n      name: TruthfulQA\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 53.37\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: reading-comprehension\n      name: BoolQ\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 84.89\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: reading-comprehension\n      name: SQuAD 2.0\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 19.73\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: reasoning\n      name: ARC-C\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 54.35\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: reasoning\n      name: GPQA\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 28.61\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: reasoning\n      name: BBH\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 43.74\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: code\n      name: HumanEvalSynthesis\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 50.61\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: code\n      name: HumanEvalExplain\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 45.58\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: code\n      name: HumanEvalFix\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 51.83\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: code\n      name: MBPP\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 41\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: math\n      name: GSM8K\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 59.66\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: math\n      name: MATH\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 23.66\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: multilingual\n      name: PAWS-X (7 langs)\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 61.42\n      veriefied: false\n  - task:\n      type: text-generation\n    dataset:\n      type: multilingual\n      name: MGSM (6 langs)\n    metrics:\n    - name: pass@1\n      type: pass@1\n      value: 37.13\n      veriefied: false\nbase_model:\n- ibm-granite/granite-3.0-2b-base\nnew_version: ibm-granite/granite-3.1-2b-instruct\n---\n\n<!-- ![image/png](https://cdn-uploads.huggingface.co/production/uploads/62cd5057674cdb524450093d/1hzxoPwqkBJXshKVVe6_9.png) -->\n<!-- ![image/png](granite-3_0-language-models_Group_1.png) -->\n\n# Granite-3.0-2B-Instruct\n\n<!-- **Note: We are continuously improving our models and recommend users to checkout our latest [Granite 3.1](https://huggingface.co/collections/ibm-granite/granite-31-language-models-6751dbbf2f3389bec5c6f02d) models.** -->\n\n**Model Summary:**\nGranite-3.0-2B-Instruct is a 2B parameter model finetuned from *Granite-3.0-2B-Base* using a combination of open source instruction datasets with permissive license and internally collected synthetic datasets. This model is developed using a diverse set of techniques with a structured chat format, including supervised finetuning, model alignment using reinforcement learning, and model merging.\n\n- **Developers:** Granite Team, IBM\n- **GitHub Repository:** [ibm-granite/granite-3.0-language-models](https://github.com/ibm-granite/granite-3.0-language-models)\n- **Website**: [Granite Docs](https://www.ibm.com/granite/docs/)\n- **Paper:** [Granite 3.0 Language Models](https://github.com/ibm-granite/granite-3.0-language-models/blob/main/paper.pdf)\n- **Release Date**: October 21st, 2024\n- **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)\n\n**Supported Languages:** \nEnglish, German, Spanish, French, Japanese, Portuguese, Arabic, Czech, Italian, Korean, Dutch, and Chinese. Users may finetune Granite 3.0 models for languages beyond these 12 languages.\n\n**Intended use:** \nThe model is designed to respond to general instructions and can be used to build AI assistants for multiple domains, including business applications.\n\n*Capabilities*\n* Summarization\n* Text classification\n* Text extraction\n* Question-answering\n* Retrieval Augmented Generation (RAG)\n* Code related tasks\n* Function-calling tasks\n* Multilingual dialog use cases\n\n**Generation:** \nThis is a simple example of how to use Granite-3.0-2B-Instruct model.\n\nInstall the following libraries:\n\n```shell\npip install torch torchvision torchaudio\npip install accelerate\npip install transformers\n```\nThen, copy the snippet from the section that is relevant for your use case.\n\n```python\nimport torch\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\ndevice = \"auto\"\nmodel_path = \"ibm-granite/granite-3.0-2b-instruct\"\ntokenizer = AutoTokenizer.from_pretrained(model_path)\n# drop device_map if running on CPU\nmodel = AutoModelForCausalLM.from_pretrained(model_path, device_map=device)\nmodel.eval()\n# change input text as desired\nchat = [\n    { \"role\": \"user\", \"content\": \"Please list one IBM Research laboratory located in the United States. You should only output its name and location.\" },\n]\nchat = tokenizer.apply_chat_template(chat, tokenize=False, add_generation_prompt=True)\n# tokenize the text\ninput_tokens = tokenizer(chat, return_tensors=\"pt\").to(device)\n# generate output tokens\noutput = model.generate(**input_tokens, \n                        max_new_tokens=100)\n# decode output tokens into text\noutput = tokenizer.batch_decode(output)\n# print output\nprint(output)\n```\n\n**Model Architecture:** \nGranite-3.0-2B-Instruct is based on a decoder-only dense transformer architecture. Core components of this architecture are: GQA and RoPE, MLP with SwiGLU, RMSNorm, and shared input/output embeddings.\n\n| Model                        | 2B Dense     | 8B Dense | 1B MoE   | 3B MoE   |\n| :--------                    | :--------    | :--------| :--------| :--------|\n| Embedding size               | **2048**     | 4096     | 1024     | 1536     |\n| Number of layers             | **40**       | 40       | 24       | 32       |\n| Attention head size          | **64**       | 128      | 64       | 64       |\n| Number of attention heads    | **32**       | 32       | 16       | 24       |\n| Number of KV heads           | **8**        | 8        | 8        | 8        |\n| MLP hidden size              | **8192**     | 12800    | 512      | 512      |\n| MLP activation               | **SwiGLU**   | SwiGLU   | SwiGLU   | SwiGLU   |\n| Number of Experts            | **\u2014**        | \u2014        | 32       | 40       |\n| MoE TopK                     | **\u2014**        | \u2014        | 8        | 8        |\n| Initialization std           | **0.1**      | 0.1      | 0.1      | 0.1      |\n| Sequence Length              | **4096**     | 4096     | 4096     | 4096     |\n| Position Embedding           | **RoPE**     | RoPE     | RoPE     | RoPE     |\n| # Parameters                 | **2.5B**     | 8.1B     | 1.3B     | 3.3B     |\n| # Active Parameters          | **2.5B**     | 8.1B     | 400M     | 800M     |\n| # Training tokens            | **12T**      | 12T      | 10T      | 10T      |\n\n**Training Data:** \nOverall, our SFT data is largely comprised of three key sources: (1) publicly available datasets with permissive license, (2) internal synthetic data targeting specific capabilities, and (3) very small amounts of human-curated data. A detailed attribution of datasets can be found in the [Granite Technical Report](https://github.com/ibm-granite/granite-3.0-language-models/blob/main/paper.pdf) and [Accompanying Author List](https://github.com/ibm-granite/granite-3.0-language-models/blob/main/author-ack.pdf).\n\n**Infrastructure:**\nWe train Granite 3.0 Language Models using IBM's super computing cluster, Blue Vela, which is outfitted with NVIDIA H100 GPUs. This cluster provides a scalable and efficient infrastructure for training our models over thousands of GPUs while minimizing environmental impact by utilizing 100% renewable energy sources.\n\n**Ethical Considerations and Limitations:** \nGranite 3.0 Instruct Models are primarily finetuned using instruction-response pairs mostly in English, but also multilingual data covering eleven languages. Although this model can handle multilingual dialog use cases, its performance might not be similar to English tasks. In such case, introducing a small number of examples (few-shot) can help the model in generating more accurate outputs. While this model has been aligned by keeping safety in consideration, the model may in some cases produce inaccurate, biased, or unsafe responses to user prompts. So we urge the community to use this model with proper safety testing and tuning tailored for their specific tasks.\n\n**Resources**\n- \u2b50\ufe0f Learn about the latest updates with Granite: https://www.ibm.com/granite\n- \ud83d\udcc4 Get started with tutorials, best practices, and prompt engineering advice: https://www.ibm.com/granite/docs/\n- \ud83d\udca1 Learn about the latest Granite learning resources: https://ibm.biz/granite-learning-resources\n\n<!-- ## Citation\n```\n@misc{granite-models,\n  author = {author 1, author2, ...},\n  title = {},\n  journal = {},\n  volume = {},\n  year = {2024},\n  url = {https://arxiv.org/abs/0000.00000},\n}\n``` -->",
+  "fetched_at": "2026-09-22T06:45:58.691205+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "ibm-granite/granite-3.0-2b-base"
+    ],
+    "card_base_models": [
+      "ibm-granite/granite-3.0-2b-base"
+    ],
+    "merge_tags": [],
+    "n_base_models": 1,
+    "relations": {
+      "": [
+        "ibm-granite/granite-3.0-2b-base"
+      ],
+      "finetune": [
+        "ibm-granite/granite-3.0-2b-base"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "ibm-granite",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "granite",
+      "text-generation",
+      "language",
+      "granite-3.0",
+      "conversational",
+      "arxiv:0000.00000",
+      "base_model:ibm-granite/granite-3.0-2b-base",
+      "base_model:finetune:ibm-granite/granite-3.0-2b-base",
+      "license:apache-2.0",
+      "model-index",
+      "region:us"
+    ]
+  },
+  "model_key": "ibm-granite__granite-3.0-2b-instruct",
+  "ok": true,
+  "popularity": {
+    "downloads": 5455,
+    "downloadsAllTime": 233906,
+    "likes": 48,
+    "trendingScore": 0
+  },
+  "repo_id": "ibm-granite/granite-3.0-2b-instruct",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2024-10-02T21:07:46.000Z",
+    "lastModified": "2024-12-19T19:45:46.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

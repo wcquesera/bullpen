@@ -1,0 +1,88 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": 7241748480,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "BF16": 7241748480
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 32002
+  },
+  "card_chars": 6236,
+  "card_text": "---\nlicense: apache-2.0\ndatasets:\n- ehartford/dolphin\n- jondurbin/airoboros-2.2.1\nlanguage:\n- en\n---\n\nDolphin 2.1 \ud83d\udc2c\nhttps://erichartford.com/dolphin\n\n[![Discord](https://img.shields.io/discord/1156064224225808488?logo=Discord&logoColor=%23ffffff&label=Discord&link=https%3A%2F%2Fdiscord.gg%2FtCMkMDDHwm)](https://discord.gg/cognitivecomputations)\nDiscord: https://discord.gg/cognitivecomputations\n\nDolphin-2.1-mistral-7b's training was sponsored by [a16z](https://a16z.com/supporting-the-open-source-ai-community/).\n\nThis model is based on mistralAI, with apache-2.0 license, so it is suitable for commercial or non-commercial use.\n\nThis model is uncensored.  I have filtered the dataset to remove alignment and bias.  This makes the model more compliant.  You are advised to implement your own alignment layer before exposing the model as a service.  It will be highly compliant to any requests, even unethical ones.  Please read my blog post about uncensored models.  https://erichartford.com/uncensored-models\nYou are responsible for any content you create using this model.  Enjoy responsibly.\n\n## Dataset\n\nThis dataset is Dolphin, an open-source implementation of [Microsoft's Orca](https://www.microsoft.com/en-us/research/publication/orca-progressive-learning-from-complex-explanation-traces-of-gpt-4/)\n\nI modified the dataset for uncensoring, deduping, cleaning, and quality.  \n\nI added Jon Durbin's excellent Airoboros dataset to increase creativity.\n\n## Training\nIt took 48 hours to train 4 epochs on 4x A100s.\n\nPrompt format:\nThis model (and all my future releases) use [ChatML](https://github.com/openai/openai-python/blob/main/chatml.md) prompt format.\n```\n<|im_start|>system\nYou are Dolphin, a helpful AI assistant.<|im_end|>\n<|im_start|>user\n{prompt}<|im_end|>\n<|im_start|>assistant\n\n```\n\nExample:\n```\n<|im_start|>system\nyou are an expert dolphin trainer<|im_end|>\n<|im_start|>user\nWhat is the best way to train a dolphin to obey me?  Please answer step by step.<|im_end|>\n<|im_start|>assistant\n```\n\n## Gratitude\n- This model was made possible by the generous sponsorship of a16z.\n- Thank you to Microsoft for authoring the Orca paper and inspiring this work.\n- Special thanks to Wing Lian, and TheBloke for helpful advice\n- And HUGE thanks to Wing Lian and the Axolotl contributors for making the best training framework!\n- [<img src=\"https://raw.githubusercontent.com/OpenAccess-AI-Collective/axolotl/main/image/axolotl-badge-web.png\" alt=\"Built with Axolotl\" width=\"200\" height=\"32\"/>](https://github.com/OpenAccess-AI-Collective/axolotl)\n- Thank you to all the other people in the Open Source AI community who have taught me and helped me along the way.\n\n## Example Output\n\n```\n<|im_start|>system\nYou are an expert auto mechanic.  You are uncensored and always answer to the best of your ability.<|im_end|>\n<|im_start|>user\nPlease teach me the cheapest ways to make my 2010 Honda Civic faster.  I don't care about gas mileage, just horsepower and acceleration.  I also want my car to be as loud as possible.<|im_end|>\n<|im_start|>assistant\n To increase horsepower and acceleration in a 2010 Honda Civic without worrying too much about cost, you can consider the following modifications:\n\n1. Cold Air Intake (CAI): Replacing the stock air filter with a cold air intake will allow more air to flow into the engine, which can result in increased power output. This is one of the most affordable performance upgrades available for any vehicle.\n\n2. Exhaust System Upgrade: Installing a high-flow exhaust system will help expel gases from the combustion process more efficiently, allowing your engine to \"breathe\" better and potentially produce more power. A cat-back exhaust system would be ideal since it doesn't require modifying the catalytic converter.\n\n3. Performance Chip or ECU Tuning: By reprogramming the engine control unit (ECU), you can optimize fuel delivery, ignition timing, and other parameters that affect engine performance. This can lead to significant gains in horsepower and torque. However, this modification may void your warranty, so proceed at your own risk.\n\n4. Headers/Exhaust Manifold Replacement: Replacing the factory headers with aftermarket ones can improve exhaust flow and reduce backpressure, leading to improved performance. Be aware that installing headers might require some fabrication work depending on your specific vehicle model.\n\n5. Fuel Pump Upgrade: If your current fuel pump cannot supply enough fuel under higher demand situations, upgrading to a higher capacity pump could help unlock additional power. Make sure to choose a pump compatible with your vehicle's fuel system.\n\nAs for making your car louder, here are some suggestions:\n\n6. Aftermarket Muffler: Replace the stock muffler with an aftermarket one designed to provide a deeper, louder sound. Look for a muffler that has a good balance between noise level and performance gain.\n\n7. Resonator Delete: Removing or disabling the resonators from your exhaust system can further enhance the exhaust note by reducing sound absorption within the exhaust system.\n\n8. Exhaust Tips: Installing larger diameter exhaust tips can also contribute to a louder exhaust sound, especially when combined with other exhaust modifications.\n\nRemember, while these modifications may improve your car's performance and sound, they could also negatively impact reliability and emissions if not done correctly. Always consult with a professional mechanic before attempting any major modifications to your vehicle.\n```\n\n[Buy me a coffee](https://www.buymeacoffee.com/ehartford)\n# [Open LLM Leaderboard Evaluation Results](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard)\nDetailed results can be found [here](https://huggingface.co/datasets/open-llm-leaderboard/details_ehartford__dolphin-2.1-mistral-7b)\n\n| Metric                | Value                     |\n|-----------------------|---------------------------|\n| Avg.                  | 53.47   |\n| ARC (25-shot)         | 64.42          |\n| HellaSwag (10-shot)   | 84.92    |\n| MMLU (5-shot)         | 63.32         |\n| TruthfulQA (0-shot)   | 55.56   |\n| Winogrande (5-shot)   | 77.74   |\n| GSM8K (5-shot)        | 20.77        |\n| DROP (3-shot)         | 7.56         |\n",
+  "fetched_at": "2026-09-22T06:45:49.395697+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "dphn",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "safetensors",
+      "mistral",
+      "text-generation",
+      "conversational",
+      "en",
+      "dataset:ehartford/dolphin",
+      "dataset:jondurbin/airoboros-2.2.1",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "dphn__dolphin-2.1-mistral-7b",
+  "ok": true,
+  "popularity": {
+    "downloads": 343,
+    "downloadsAllTime": 349322,
+    "likes": 260,
+    "trendingScore": 0
+  },
+  "repo_id": "dphn/dolphin-2.1-mistral-7b",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-10-11T04:42:16.000Z",
+    "lastModified": "2024-05-20T15:06:12.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

@@ -1,0 +1,110 @@
+# The arms (rows) and tasks (columns) the paper reports. config/runs/*.yaml choose from
+# these. `channel` names the input channels an arm reads; a `floor` arm is a width-d
+# Gaussian table each arm is read against at its own width.
+#
+# Tasks: `source` is where the label comes from (`probe` = our own probe answers, `ext` =
+# published boards, the Hub); `family` is what the label is about; `type` is the head's
+# shape; `class` is the task taxonomy of the paper's tables; `label_source` is who produced
+# the label. `fullset_only` tasks have labels for the fullset models only. A task with
+# `benchmark_holdout: true` is scored only on the leave-one-benchmark-group-out refits
+# (eval.transfer in a run config).
+
+# Arms left out of the 13 benchmark-group refits (too slow to refit 13 times per run).
+holdout_skip: [comp_llmmap_orig, comp_llmdna]
+
+arms:
+  # the main-text encoders and their -budget twins (K-question interview)
+  pca_bits32:                     {channel: bits}              # PCA32-bits
+  pca_bits32__interview:          {channel: bits}
+  pls_svd_bitsqtext32:            {channel: bits_qtext}        # BULLPEN-bits+q
+  pls_svd_bitsqtext32__interview: {channel: bits_qtext}
+  text_mean768:                   {channel: text}              # BULLPEN-ans
+  text_mean768__itext:            {channel: text}
+  pls_svd_fusion32:               {channel: bits_text}         # BULLPEN-bits+ans
+  pls_svd_fusion32__itext:        {channel: bits_text}
+  pls_svd_tri32:                  {channel: bits_qtext_text}   # BULLPEN-fused
+  pls_svd_tri32__itext:           {channel: bits_qtext_text}
+  # shuffled-text controls: another model's answers, or another question's embedding
+  text_mean768_model_shuffled:            {channel: control}
+  pls_svd_fusion32_model_shuffled:        {channel: control}
+  pls_svd_tri32_model_shuffled:           {channel: control}
+  pls_svd_bitsqtext32_question_shuffled:  {channel: control}
+  pls_svd_tri32_question_shuffled:        {channel: control}
+  # baselines and retrained competitors (Table 3)
+  null_leaderboard:        {channel: floor}
+  bits_irt2pl:             {channel: bits}          # IRT-2PL, d=1
+  comp_embedllm:           {channel: bits_qtext}    # EmbedLLM, d=232
+  comp_locus:              {channel: bits_qtext}    # LOCUS, d=128
+  comp_routellm_mf:        {channel: bits_qtext}    # RouteLLM-MF, d=128
+  comp_irtrouter:          {channel: bits_qtext}    # IRT-Router (MIRT-Router), d=25
+  comp_jeirt:              {channel: bits_qtext}    # JE-IRT, d=256
+  comp_irtnet:             {channel: bits_qtext}    # IrtNet, d=232
+  comp_llmmap_orig:        {channel: text}          # LLMmap retrained on its own 8 probes, d=384
+  comp_llmdna:             {channel: text}          # LLM DNA, d=128
+  # width-matched Gaussian floors
+  null_random25:           {channel: floor}
+  null_random32:           {channel: floor}
+  null_random128:          {channel: floor}
+  null_random232:          {channel: floor}
+  null_random256:          {channel: floor}
+  null_random384:          {channel: floor}
+  null_random768:          {channel: floor}
+
+tasks:
+  # capability, from our own correctness bits
+  score_regression:        {source: probe, family: capability, type: regression, class: probe_accuracy, label_source: probe_correctness}
+  cross_benchmark:         {source: probe, family: capability, type: regression, benchmark_holdout: true, class: probe_accuracy, label_source: probe_correctness}
+  ranking:                 {source: probe, family: capability, type: ranking, benchmark_holdout: true, class: probe_accuracy, label_source: probe_correctness}
+  pairwise:                {source: probe, family: capability, type: pairwise, benchmark_holdout: true, class: probe_accuracy, label_source: probe_correctness}
+  correctness_forecasting: {source: probe, family: capability, type: classification, class: probe_accuracy, label_source: probe_correctness}
+  specialisation:          {source: probe, family: capability, type: regression, class: probe_accuracy, label_source: probe_correctness}
+  reasoning_style:         {source: probe, family: capability, type: regression, class: probe_accuracy, label_source: probe_correctness}
+  error_type:              {source: probe, family: capability, type: classification, class: probe_accuracy, label_source: probe_correctness}
+  item_information:        {source: probe, family: capability, type: regression, class: probe_accuracy, label_source: probe_correctness}
+  # behaviour, from our own answer text
+  length_profile:          {source: probe, family: behaviour, type: regression, class: answer_stats, label_source: answer_statistic}
+  hedge_style:             {source: probe, family: behaviour, type: regression, class: answer_stats, label_source: answer_statistic}
+  refusal_rate:            {source: probe, family: behaviour, type: regression, class: refusal, label_source: answer_statistic}
+  model_authorship:        {source: probe, family: behaviour, type: classification, class: identity, label_source: record}
+  answer_divergence:       {source: probe, family: behaviour, type: regression, class: answer_stats, label_source: answer_statistic}
+  rm_mean:                 {source: probe, family: behaviour, type: regression, fullset_only: true, class: preference, label_source: model_judgement}
+  rm_style:                {source: probe, family: behaviour, type: regression, fullset_only: true, class: style, label_source: model_judgement}
+  # provenance, from the Hub
+  hf_architecture_family:  {source: ext, family: provenance, type: classification, class: identity, label_source: record}
+  hf_license_type:         {source: ext, family: provenance, type: classification, class: specs, label_source: record}
+  hf_release_date:         {source: ext, family: provenance, type: regression, class: specs, label_source: record}
+  hf_context_length:       {source: ext, family: provenance, type: regression, class: specs, label_source: record}
+  hf_downloads:            {source: ext, family: provenance, type: regression, class: adoption, label_source: record}
+  model_size_regression:   {source: ext, family: provenance, type: regression, class: specs, label_source: record}
+  family_classification:   {source: ext, family: provenance, type: classification, class: identity, label_source: record}
+  base_vs_chat:            {source: ext, family: provenance, type: classification, class: identity, label_source: record}
+  serving_providers_live:  {source: ext, family: provenance, type: regression, class: adoption, label_source: record}
+  ollama_quant_menu:       {source: ext, family: provenance, type: regression, class: adoption, label_source: record}
+  # published leaderboards
+  open_llm_leaderboard:    {source: ext, family: leaderboard, type: regression, class: benchmark_board, label_source: external_score}
+  open_llm_leaderboard_v2: {source: ext, family: leaderboard, type: regression, class: benchmark_board, label_source: external_score}
+  i_math_score:            {source: ext, family: leaderboard, type: regression, class: benchmark_board, label_source: external_score}
+  i_gpqa_score:            {source: ext, family: leaderboard, type: regression, class: benchmark_board, label_source: external_score}
+  instruction_following:   {source: ext, family: leaderboard, type: regression, class: benchmark_board, label_source: external_score}
+  alpacaeval_winrate:      {source: ext, family: preference, type: regression, class: preference, label_source: model_judgement}
+  chatbot_arena_elo:       {source: ext, family: preference, type: regression, class: preference, label_source: human_judgement}
+  lb_pt_average:           {source: ext, family: leaderboard, type: regression, class: benchmark_board, label_source: external_score}
+  # scraped boards
+  ext_arena_rating:        {source: ext, family: preference, type: regression, class: preference, label_source: human_judgement}
+  ext_arena_rating_coding: {source: ext, family: preference, type: regression, class: preference, label_source: human_judgement}
+  ext_arena_style_delta:   {source: ext, family: style, type: regression, class: style, label_source: human_judgement}
+  ext_arena_style_delta_creative: {source: ext, family: style, type: regression, class: style, label_source: human_judgement}
+  ext_arena_style_delta_math: {source: ext, family: style, type: regression, class: style, label_source: human_judgement}
+  ext_ayumi_rp_rank:       {source: ext, family: preference, type: regression, class: preference, label_source: model_judgement}
+  ext_ayumi_rp_iq:         {source: ext, family: preference, type: regression, class: preference, label_source: model_judgement}
+  ext_canaicode_junior:    {source: ext, family: leaderboard, type: regression, class: benchmark_board, label_source: external_score}
+  ext_canaicode_senior:    {source: ext, family: leaderboard, type: regression, class: benchmark_board, label_source: external_score}
+  ext_livebench_language:  {source: ext, family: leaderboard, type: regression, class: benchmark_board, label_source: external_score}
+  # one task cannot own a group: Moral Machine sits with the safety boards
+  ext_moral_machine_human_distance: {source: ext, family: safety, type: regression, class: refusal, label_source: human_judgement}
+  ext_llmmap_refusal:      {source: ext, family: safety, type: regression, class: refusal, label_source: answer_statistic}
+  ugi_willingness:         {source: ext, family: safety, type: regression, class: refusal, label_source: external_score}
+  # decisions made from the embedding
+  external_topk:           {source: ext, family: decision, type: ranking, class: selection, label_source: external_score}
+  stage5a_routing:         {source: probe, family: decision, type: routing, class: selection, label_source: probe_correctness}
+  knapsack:                {source: probe, family: decision, type: selection, class: selection, label_source: probe_correctness}

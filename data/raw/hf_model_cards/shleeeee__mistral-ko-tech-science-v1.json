@@ -1,0 +1,85 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": 7241732096,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "F16": 7241732096
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 268,
+  "card_text": "---\nlicense: other\nlanguage:\n- ko\npipeline_tag: text-generation\n---\n\n# Model Card for mistral-ko-tech-science-v1\nIt is a fine-tuned model using Korean in the mistral-7b model\n\n## Model Details\n\n* **Model Developers** :  shleeeee(Seunghyeon Lee) , oopsung(Sungwoo Park)",
+  "fetched_at": "2026-09-19T15:01:55.190743+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "shleeeee",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "other",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "mistral",
+      "text-generation",
+      "ko",
+      "license:other",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "shleeeee__mistral-ko-tech-science-v1",
+  "ok": true,
+  "popularity": {
+    "downloads": 26,
+    "downloadsAllTime": 38250,
+    "likes": 1,
+    "trendingScore": 0
+  },
+  "repo_id": "shleeeee/mistral-ko-tech-science-v1",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-12-10T05:02:38.000Z",
+    "lastModified": "2024-03-08T00:18:13.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

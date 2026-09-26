@@ -1,0 +1,85 @@
+{
+  "architecture": {
+    "architectures": [
+      "MixtralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 4096,
+    "model_type": "mixtral",
+    "n_parameters": 19187634176,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 48,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "F16": 19187634176
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 5605,
+  "card_text": "---\nlicense: cc-by-nc-4.0\nmodel-index:\n- name: Mixtral_11Bx2_MoE_19B\n  results:\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: AI2 Reasoning Challenge (25-Shot)\n      type: ai2_arc\n      config: ARC-Challenge\n      split: test\n      args:\n        num_few_shot: 25\n    metrics:\n    - type: acc_norm\n      value: 71.16\n      name: normalized accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=cloudyu/Mixtral_11Bx2_MoE_19B\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: HellaSwag (10-Shot)\n      type: hellaswag\n      split: validation\n      args:\n        num_few_shot: 10\n    metrics:\n    - type: acc_norm\n      value: 88.47\n      name: normalized accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=cloudyu/Mixtral_11Bx2_MoE_19B\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: MMLU (5-Shot)\n      type: cais/mmlu\n      config: all\n      split: test\n      args:\n        num_few_shot: 5\n    metrics:\n    - type: acc\n      value: 66.31\n      name: accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=cloudyu/Mixtral_11Bx2_MoE_19B\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: TruthfulQA (0-shot)\n      type: truthful_qa\n      config: multiple_choice\n      split: validation\n      args:\n        num_few_shot: 0\n    metrics:\n    - type: mc2\n      value: 72.0\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=cloudyu/Mixtral_11Bx2_MoE_19B\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: Winogrande (5-shot)\n      type: winogrande\n      config: winogrande_xl\n      split: validation\n      args:\n        num_few_shot: 5\n    metrics:\n    - type: acc\n      value: 83.27\n      name: accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=cloudyu/Mixtral_11Bx2_MoE_19B\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: GSM8k (5-shot)\n      type: gsm8k\n      config: main\n      split: test\n      args:\n        num_few_shot: 5\n    metrics:\n    - type: acc\n      value: 65.28\n      name: accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=cloudyu/Mixtral_11Bx2_MoE_19B\n      name: Open LLM Leaderboard\n---\n\n\n# Mixtral MOE 2x10.7B\n\n[One of Best MoE Model reviewd by reddit community](https://www.reddit.com/r/LocalLLaMA/comments/1916896/llm_comparisontest_confirm_leaderboard_big_news/)\n\nMoE  of the following models :\n\n\n* [kyujinpy/Sakura-SOLAR-Instruct](https://huggingface.co/kyujinpy/Sakura-SOLAR-Instruct)\n* [jeonsworld/CarbonVillain-en-10.7B-v1](https://huggingface.co/jeonsworld/CarbonVillain-en-10.7B-v1)\n\n\n* Local Test\n* hf (pretrained=cloudyu/Mixtral_11Bx2_MoE_19B), gen_kwargs: (None), limit: None, num_fewshot: 10, batch_size: auto (32)\n|  Tasks  |Version|Filter|n-shot| Metric |Value |   |Stderr|\n|---------|-------|------|-----:|--------|-----:|---|-----:|\n|hellaswag|Yaml   |none  |    10|acc     |0.7142|\u00b1  |0.0045|\n|         |       |none  |    10|acc_norm|0.8819|\u00b1  |0.0032|\n\n\ngpu code example\n\n```\nimport torch\nfrom transformers import AutoTokenizer, AutoModelForCausalLM\nimport math\n\n## v2 models\nmodel_path = \"cloudyu/Mixtral_11Bx2_MoE_19B\"\n\ntokenizer = AutoTokenizer.from_pretrained(model_path, use_default_system_prompt=False)\nmodel = AutoModelForCausalLM.from_pretrained(\n    model_path, torch_dtype=torch.float32, device_map='auto',local_files_only=False, load_in_4bit=True\n)\nprint(model)\nprompt = input(\"please input prompt:\")\nwhile len(prompt) > 0:\n  input_ids = tokenizer(prompt, return_tensors=\"pt\").input_ids.to(\"cuda\")\n\n  generation_output = model.generate(\n    input_ids=input_ids, max_new_tokens=500,repetition_penalty=1.2\n  )\n  print(tokenizer.decode(generation_output[0]))\n  prompt = input(\"please input prompt:\")\n```\n\nCPU example\n\n```\nimport torch\nfrom transformers import AutoTokenizer, AutoModelForCausalLM\nimport math\n\n## v2 models\nmodel_path = \"cloudyu/Mixtral_11Bx2_MoE_19B\"\n\ntokenizer = AutoTokenizer.from_pretrained(model_path, use_default_system_prompt=False)\nmodel = AutoModelForCausalLM.from_pretrained(\n    model_path, torch_dtype=torch.float32, device_map='cpu',local_files_only=False\n)\nprint(model)\nprompt = input(\"please input prompt:\")\nwhile len(prompt) > 0:\n  input_ids = tokenizer(prompt, return_tensors=\"pt\").input_ids\n\n  generation_output = model.generate(\n    input_ids=input_ids, max_new_tokens=500,repetition_penalty=1.2\n  )\n  print(tokenizer.decode(generation_output[0]))\n  prompt = input(\"please input prompt:\")\n\n```\n# [Open LLM Leaderboard Evaluation Results](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard)\nDetailed results can be found [here](https://huggingface.co/datasets/open-llm-leaderboard/details_cloudyu__Mixtral_11Bx2_MoE_19B)\n\n|             Metric              |Value|\n|---------------------------------|----:|\n|Avg.                             |74.41|\n|AI2 Reasoning Challenge (25-Shot)|71.16|\n|HellaSwag (10-Shot)              |88.47|\n|MMLU (5-Shot)                    |66.31|\n|TruthfulQA (0-shot)              |72.00|\n|Winogrande (5-shot)              |83.27|\n|GSM8k (5-shot)                   |65.28|\n\n",
+  "fetched_at": "2026-09-19T15:00:25.099495+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "cloudyu",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "mixtral",
+      "text-generation",
+      "conversational",
+      "license:cc-by-nc-4.0",
+      "model-index",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "Mixtral_11Bx2_MoE_19B",
+  "ok": true,
+  "popularity": {
+    "downloads": 572,
+    "downloadsAllTime": 53428,
+    "likes": 38,
+    "trendingScore": 0
+  },
+  "repo_id": "cloudyu/Mixtral_11Bx2_MoE_19B",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-12-31T00:36:49.000Z",
+    "lastModified": "2024-11-01T00:50:10.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

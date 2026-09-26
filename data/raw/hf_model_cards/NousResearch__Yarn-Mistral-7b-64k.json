@@ -1,0 +1,85 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {},
+    "torch_dtype": "bfloat16",
+    "vocab_size": 32000
+  },
+  "card_chars": 2777,
+  "card_text": "---\ndatasets:\n- emozilla/yarn-train-tokenized-16k-mistral\nmetrics:\n- perplexity\nlibrary_name: transformers\nlicense: apache-2.0\nlanguage:\n- en\n---\n\n# Model Card: Nous-Yarn-Mistral-7b-64k\n\n[Preprint (arXiv)](https://arxiv.org/abs/2309.00071)  \n[GitHub](https://github.com/jquesnelle/yarn)\n![yarn](https://raw.githubusercontent.com/jquesnelle/yarn/mistral/data/proofpile-long-small-mistral.csv.png)\n\n## Model Description\n\nNous-Yarn-Mistral-7b-64k is a state-of-the-art language model for long context, further pretrained on long context data for 1000 steps using the YaRN extension method.\nIt is an extension of [Mistral-7B-v0.1](https://huggingface.co/mistralai/Mistral-7B-v0.1) and supports a 64k token context window.\n\nTo use, pass `trust_remote_code=True` when loading the model, for example\n\n```python\nmodel = AutoModelForCausalLM.from_pretrained(\"NousResearch/Yarn-Mistral-7b-64k\",\n  use_flash_attention_2=True,\n  torch_dtype=torch.bfloat16,\n  device_map=\"auto\",\n  trust_remote_code=True)\n```\n\nIn addition you will need to use the latest version of `transformers` (until 4.35 comes out)\n```sh\npip install git+https://github.com/huggingface/transformers\n```\n\n## Benchmarks\n\nLong context benchmarks:\n| Model | Context Window | 8k PPL | 16k PPL | 32k PPL | 64k PPL | 128k PPL |\n|-------|---------------:|------:|----------:|-----:|-----:|------------:|\n| [Mistral-7B-v0.1](https://huggingface.co/mistralai/Mistral-7B-v0.1) | 8k | 2.96 | - | - | - | - |\n| [Yarn-Mistral-7b-64k](https://huggingface.co/NousResearch/Yarn-Mistral-7b-64k) | 64k | 3.04 | 2.65 | 2.44 | 2.20 | - |\n| [Yarn-Mistral-7b-128k](https://huggingface.co/NousResearch/Yarn-Mistral-7b-128k) | 128k | 3.08 | 2.68 | 2.47 | 2.24 | 2.19 |\n\nShort context benchmarks showing that quality degradation is minimal:\n| Model | Context Window | ARC-c | Hellaswag | MMLU | Truthful QA |\n|-------|---------------:|------:|----------:|-----:|------------:|\n| [Mistral-7B-v0.1](https://huggingface.co/mistralai/Mistral-7B-v0.1) | 8k | 59.98 | 83.31 | 64.16 | 42.15 |\n| [Yarn-Mistral-7b-64k](https://huggingface.co/NousResearch/Yarn-Mistral-7b-64k) | 64k | 59.38 | 81.21 | 61.32 | 42.50 |\n| [Yarn-Mistral-7b-128k](https://huggingface.co/NousResearch/Yarn-Mistral-7b-128k) | 128k | 58.87 | 80.58 | 60.64 | 42.46 |\n\n## Collaborators\n\n - [bloc97](https://github.com/bloc97): Methods, paper and evals\n - [@theemozilla](https://twitter.com/theemozilla): Methods, paper, model training, and evals\n - [@EnricoShippole](https://twitter.com/EnricoShippole): Model training\n - [honglu2875](https://github.com/honglu2875): Paper and evals\n\nThe authors would like to thank LAION AI for their support of compute for this model.\nIt was trained on the [JUWELS](https://www.fz-juelich.de/en/ias/jsc/systems/supercomputers/juwels) supercomputer.",
+  "fetched_at": "2026-09-22T06:44:13.963645+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "NousResearch",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "mistral",
+      "text-generation",
+      "custom_code",
+      "en",
+      "dataset:emozilla/yarn-train-tokenized-16k-mistral",
+      "arxiv:2309.00071",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "NousResearch__Yarn-Mistral-7b-64k",
+  "ok": true,
+  "popularity": {
+    "downloads": 351,
+    "downloadsAllTime": 118345,
+    "likes": 53,
+    "trendingScore": 0
+  },
+  "repo_id": "NousResearch/Yarn-Mistral-7b-64k",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-10-31T02:01:43.000Z",
+    "lastModified": "2023-11-02T19:00:04.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "architecture": {
+    "architectures": [
+      "Phi3ForCausalLM"
+    ],
+    "hidden_size": 3072,
+    "intermediate_size": 8192,
+    "max_position_embeddings": 4096,
+    "model_type": "phi3",
+    "n_parameters": 3821079552,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 32,
+    "parameter_dtypes": {
+      "BF16": 3821079552
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 32064
+  },
+  "card_chars": 1688,
+  "card_text": "---\nbase_model:\n- microsoft/Phi-3-mini-4k-instruct\n- microsoft/Phi-3.5-mini-instruct\ntags:\n- merge\n- mergekit\n- lazymergekit\n- microsoft/Phi-3-mini-4k-instruct\n- microsoft/Phi-3.5-mini-instruct\nlicense: apache-2.0\n---\n\n# 10PRYMMAL-3B-slerp\n\n10PRYMMAL-3B-slerp is a merge of the following models using [LazyMergekit](https://colab.research.google.com/drive/1obulZ1ROXHjYLn6PPZJwRR6GzgQogxxb?usp=sharing):\n* [microsoft/Phi-3-mini-4k-instruct](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct)\n* [microsoft/Phi-3.5-mini-instruct](https://huggingface.co/microsoft/Phi-3.5-mini-instruct)\n\n## \ud83e\udde9 Configuration\n\n```yaml\nslices:\n  - sources:\n      - model: microsoft/Phi-3-mini-4k-instruct\n        layer_range: [0, 32]\n      - model: microsoft/Phi-3.5-mini-instruct\n        layer_range: [0, 32]\nmerge_method: slerp\nbase_model: microsoft/Phi-3-mini-4k-instruct\nparameters:\n  t:\n    - filter: self_attn\n      value: [0, 0.5, 0.3, 0.7, 1]\n    - filter: mlp\n      value: [1, 0.5, 0.7, 0.3, 0]\n    - value: 0.5\ndtype: bfloat16\n```\n\n## \ud83d\udcbb Usage\n\n```python\n!pip install -qU transformers accelerate\n\nfrom transformers import AutoTokenizer\nimport transformers\nimport torch\n\nmodel = \"LilRg/10PRYMMAL-3B-slerp\"\nmessages = [{\"role\": \"user\", \"content\": \"What is a large language model?\"}]\n\ntokenizer = AutoTokenizer.from_pretrained(model)\nprompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)\npipeline = transformers.pipeline(\n    \"text-generation\",\n    model=model,\n    torch_dtype=torch.float16,\n    device_map=\"auto\",\n)\n\noutputs = pipeline(prompt, max_new_tokens=256, do_sample=True, temperature=0.7, top_k=50, top_p=0.95)\nprint(outputs[0][\"generated_text\"])\n```",
+  "fetched_at": "2026-09-19T14:59:59.809275+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "microsoft/Phi-3-mini-4k-instruct",
+      "microsoft/Phi-3.5-mini-instruct"
+    ],
+    "card_base_models": [
+      "microsoft/Phi-3-mini-4k-instruct",
+      "microsoft/Phi-3.5-mini-instruct"
+    ],
+    "merge_tags": [
+      "merge",
+      "mergekit",
+      "lazymergekit",
+      "base_model:merge:microsoft/Phi-3-mini-4k-instruct",
+      "base_model:merge:microsoft/Phi-3.5-mini-instruct"
+    ],
+    "n_base_models": 2,
+    "relations": {
+      "": [
+        "microsoft/Phi-3-mini-4k-instruct",
+        "microsoft/Phi-3.5-mini-instruct"
+      ],
+      "merge": [
+        "microsoft/Phi-3-mini-4k-instruct",
+        "microsoft/Phi-3.5-mini-instruct"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "LilRg",
+    "gated": false,
+    "library_name": null,
+    "license": "apache-2.0",
+    "pipeline_tag": null,
+    "tags": [
+      "safetensors",
+      "phi3",
+      "merge",
+      "mergekit",
+      "lazymergekit",
+      "microsoft/Phi-3-mini-4k-instruct",
+      "microsoft/Phi-3.5-mini-instruct",
+      "custom_code",
+      "base_model:microsoft/Phi-3-mini-4k-instruct",
+      "base_model:merge:microsoft/Phi-3-mini-4k-instruct",
+      "base_model:microsoft/Phi-3.5-mini-instruct",
+      "base_model:merge:microsoft/Phi-3.5-mini-instruct",
+      "license:apache-2.0",
+      "region:us"
+    ]
+  },
+  "model_key": "10prymmal-3b-slerp",
+  "ok": true,
+  "popularity": {
+    "downloads": 26,
+    "downloadsAllTime": 200,
+    "likes": 0,
+    "trendingScore": 0
+  },
+  "repo_id": "LilRg/10PRYMMAL-3B-slerp",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2024-09-23T16:58:59.000Z",
+    "lastModified": "2024-09-24T08:08:37.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": true,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

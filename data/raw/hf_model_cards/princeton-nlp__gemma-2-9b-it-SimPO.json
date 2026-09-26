@@ -1,0 +1,103 @@
+{
+  "architecture": {
+    "architectures": [
+      "Gemma2ForCausalLM"
+    ],
+    "hidden_size": 3584,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 8192,
+    "model_type": "gemma2",
+    "n_parameters": 9241705984,
+    "num_attention_heads": 16,
+    "num_hidden_layers": 42,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "BF16": 9241705984
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 256000
+  },
+  "card_chars": 5137,
+  "card_text": "---\nbase_model: google/gemma-2-9b-it\ntags:\n- alignment-handbook\n- generated_from_trainer\ndatasets:\n- princeton-nlp/gemma2-ultrafeedback-armorm\nmodel-index:\n- name: princeton-nlp/gemma-2-9b-it-SimPO \n  results: []\nlicense: mit\n---\n\n# gemma-2-9b-it-SimPO Model Card\n\nSimPO (Simple Preference Optimization) is an offline preference optimization algorithm designed to enhance the training of large language models (LLMs) with preference optimization datasets. SimPO aligns the reward function with the generation likelihood, eliminating the need for a reference model and incorporating a target reward margin to boost performance. Please refer to our [preprint](https://arxiv.org/pdf/2405.14734) and [github repo](https://github.com/princeton-nlp/SimPO) for more details.\n\n\n## Model Details\n\n### Model Description\n\nWe fine-tuned [google/gemma-2-9b-it](https://huggingface.co/google/gemma-2-9b-it) on [princeton-nlp/gemma2-ultrafeedback-armorm](https://huggingface.co/datasets/princeton-nlp/gemma2-ultrafeedback-armorm) with the SimPO objective.\n\n- **Developed by:** Yu Meng, Mengzhou Xia, Danqi Chen\n- **Model type:** Causal Language Model\n- **License:** gemma\n- **Finetuned from model:** [google/gemma-2-9b-it](https://huggingface.co/google/gemma-2-9b-it)\n\n### Model Sources\n\n<!-- Provide the basic links for the model. -->\n\n- **Repository:** https://github.com/princeton-nlp/SimPO\n- **Paper:** https://arxiv.org/pdf/2405.14734\n\n\n## How to Get Started with the Model\n```\nimport torch\nfrom transformers import pipeline\n\nmodel_id = \"princeton-nlp/gemma-2-9b-it-SimPO\"\n\ngenerator = pipeline(\n    \"text-generation\",\n    model=model_id,\n    model_kwargs={\"torch_dtype\": torch.bfloat16},\n    device=\"cuda\",\n)\noutputs = generator([{\"role\": \"user\", \"content\": \"What's the difference between llamas and alpacas?\"}],\n                      do_sample=False,\n                      eos_token_id=[generator.tokenizer.convert_tokens_to_ids(\"<end_of_turn>\"), generator.tokenizer.eos_token_id],\n                      max_new_tokens=200)\nprint(outputs[0]['generated_text'])\n```\n\n## Training Details\n\n### Training Data\n\nWe use [princeton-nlp/gemma2-ultrafeedback-armorm](https://huggingface.co/datasets/princeton-nlp/gemma2-ultrafeedback-armorm) as the preference optimization dataset.\n\n#### Training Hyperparameters\n\nThe hyperparameters used can be found in the [training script](https://github.com/princeton-nlp/SimPO/blob/main/training_configs/gemma-2-9b-it-simpo.yaml).\n\n#### Speeds, Sizes, Times\n\nFine-tuning the [google/gemma-2-9b-it](https://huggingface.co/google/gemma-2-9b-it) on [princeton-nlp/gemma2-ultrafeedback-armorm](https://huggingface.co/datasets/princeton-nlp/gemma2-ultrafeedback-armorm) takes around 100 mins to finish on 8xH100 GPUs.\n\n## Evaluation Results\n\n\n|               models                    | AE2 LC | AE2 WR | AE2 Length |  AH  | AH Length |  GSM | GSM Length | MMLU | MMLU Length |\n|-----------------------------------|:------:|:------:|:----------:|:----:|:---------:|:----:|:----------:|:----:|:-----------:|\n|        [google/gemma-2-9b-it](https://huggingface.co/google/gemma-2-9b-it)       |  51.1  |  38.1  |    1571    | 40.8 |    545    | 87.4 |     395    | 72.7 |     515     |\n|  [princeton-nlp/gemma-2-9b-it-DPO](https://huggingface.co/princeton-nlp/gemma-2-9b-it-DPO)  |  67.8  |  65.4  |    2016    | 58.9 |    717    | 88.5 |     392    | 72.2 |     624     |\n| [princeton-nlp/gemma-2-9b-it-SimPO](https://huggingface.co/princeton-nlp/gemma-2-9b-it-SimPO) |  72.4  |  65.9  |    1833    | 59.1 |    693    | 88.0 |     341    | 72.2 |     441     |\n\n\n## Technical Specifications\n\n### Model Architecture and Objective\n\nThe model architecture is based on [google/gemma-2-9b-it](https://huggingface.co/google/gemma-2-9b-it). We use the SimPO training objective proposed in our [preprint](https://arxiv.org/pdf/2405.14734).\n\n#### Hardware\n\nWe used 8xH100 GPUs for model training.\n\n#### Software\n\nTraining was done using the [alignment-handbook](https://github.com/huggingface/alignment-handbook) library.\n\n## Citation\n\ngemma model:\n```\n@article{gemma_2024,\n    title={Gemma},\n    url={https://www.kaggle.com/m/3301},\n    DOI={10.34740/KAGGLE/M/3301},\n    publisher={Kaggle},\n    author={Gemma Team},\n    year={2024}\n}\n```\n\nSimPO paper:\n```\n@article{meng2024simpo,\n  title={{SimPO}: Simple preference optimization with a reference-free reward},\n  author={Meng, Yu and Xia, Mengzhou and Chen, Danqi},\n  journal={arXiv preprint arXiv:2405.14734},\n  year={2024}\n}\n```\n\nUltraFeedback paper:\n```\n@article{cui2023ultrafeedback,\n  title={{UltraFeedback}: Boosting language models with high-quality feedback},\n  author={Cui, Ganqu and Yuan, Lifan and Ding, Ning and Yao, Guanming and Zhu, Wei and Ni, Yuan and Xie, Guotong and Liu, Zhiyuan and Sun, Maosong},\n  journal={arXiv preprint arXiv:2310.01377},\n  year={2023}\n}\n```\n\nArmoRM paper:\n```\n@article{wang2024interpretable,\n  title={Interpretable Preferences via Multi-Objective Reward Modeling and Mixture-of-Experts},\n  author={Wang, Haoxiang and Xiong, Wei and Xie, Tengyang and Zhao, Han and Zhang, Tong},\n  journal={arXiv preprint arXiv:2406.12845},\n  year={2024}\n}\n```",
+  "fetched_at": "2026-09-22T06:50:06.237920+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "google/gemma-2-9b-it"
+    ],
+    "card_base_models": [
+      "google/gemma-2-9b-it"
+    ],
+    "merge_tags": [],
+    "n_base_models": 1,
+    "relations": {
+      "": [
+        "google/gemma-2-9b-it"
+      ],
+      "finetune": [
+        "google/gemma-2-9b-it"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "princeton-nlp",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "mit",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "gemma2",
+      "text-generation",
+      "alignment-handbook",
+      "generated_from_trainer",
+      "conversational",
+      "dataset:princeton-nlp/gemma2-ultrafeedback-armorm",
+      "arxiv:2405.14734",
+      "arxiv:2310.01377",
+      "arxiv:2406.12845",
+      "base_model:google/gemma-2-9b-it",
+      "base_model:finetune:google/gemma-2-9b-it",
+      "license:mit",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "princeton-nlp__gemma-2-9b-it-SimPO",
+  "ok": true,
+  "popularity": {
+    "downloads": 403,
+    "downloadsAllTime": 515806,
+    "likes": 173,
+    "trendingScore": 0
+  },
+  "repo_id": "princeton-nlp/gemma-2-9b-it-SimPO",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2024-07-16T16:42:49.000Z",
+    "lastModified": "2024-08-02T22:04:11.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

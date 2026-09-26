@@ -1,0 +1,87 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": 7241732096,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "F16": 7241732096
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 1873,
+  "card_text": "---\nlibrary_name: transformers\ntags:\n- llm\n- 7b\nlicense: cc-by-4.0\nlanguage:\n- en\ndatasets:\n- argilla/distilabel-math-preference-dpo\n---\n\n# Jaskier-7b-dpo-v5.6\n\n**This is work-in-progress model, may not be ready for production use**\n\n<figure>\n\n![Jaskier](Bard.jpeg)\n\n</figure>\n\nModel based on `paulml/OGNO-7B` (downstream version of Mistral7B) finetuned using Direct Preference Optimization on argilla/distilabel-math-preference-dpo.\n\n## How to use\n\nYou can use this model directly with a Hugging Face pipeline:\n```python\n\nfrom transformers import pipeline, Conversation\nimport torch\n\nbase_model_name = \"bardsai/jaskier-7b-dpo-v5.6\"\nchatbot = pipeline(\"conversational\", model=base_model_name, torch_dtype=torch.float16, device_map=\"auto\")\nconversation = Conversation(\"Is bard an ML engineer?\")\nconversation = chatbot(conversation)\nprint(conversation.messages[-1][\"content\"])\n\n```\n\n## Output\n\n\"There is no direct personal connection between the concept of a \"bard\" and an \"ML engineer.\" A bard is a mythical or literary figure, often a storyteller or musician, while an ML engineer refers to a Machine Learning engineer, a professional in the tech industry. They are unrelated entities, one fictional and the other a real-world occupation.\"\n\nIf you still find any issues with \"INST\" character chain appearing in generated output, try our newest model: https://huggingface.co/bardsai/jaskier-7b-dpo-v6.1 . Re-tasking the prompt can also help. \n## Changelog\n\n- 2024-02-16: Initial release\n\n## About bards.ai\n\nAt bards.ai, we focus on providing machine learning expertise and skills to our partners, particularly in the areas of nlp, machine vision and time series analysis. Our team is located in Wroclaw, Poland. Please visit our website for more information: bards.ai\n\nLet us know if you use our model :). Also, if you need any help, feel free to contact us at info@bards.ai",
+  "fetched_at": "2026-09-19T15:00:54.763476+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "bardsai",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "mistral",
+      "text-generation",
+      "llm",
+      "7b",
+      "en",
+      "dataset:argilla/distilabel-math-preference-dpo",
+      "license:cc-by-4.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "bardsai__jaskier-7b-dpo-v5.6",
+  "ok": true,
+  "popularity": {
+    "downloads": 125,
+    "downloadsAllTime": 25888,
+    "likes": 27,
+    "trendingScore": 0
+  },
+  "repo_id": "bardsai/jaskier-7b-dpo-v5.6",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2024-02-16T15:21:46.000Z",
+    "lastModified": "2024-02-26T12:17:30.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": true,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

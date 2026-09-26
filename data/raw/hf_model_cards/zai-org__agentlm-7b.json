@@ -1,0 +1,85 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 11008,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": 6740514816,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 32,
+    "parameter_dtypes": {
+      "F16": 6740512768,
+      "F32": 2048
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32256
+  },
+  "card_chars": 1889,
+  "card_text": "---\ndatasets: \n- THUDM/AgentInstruct\n---\n\n## AgentLM-7B\n\n<p align=\"center\">\n  \ud83e\udd17 <a href=\"https://huggingface.co/datasets/THUDM/AgentInstruct\" target=\"_blank\">[Dataset] </a> \u2022 \ud83d\udcbb <a href=\"https://github.com/THUDM/AgentTuning\" target=\"_blank\">[Github Repo]</a> \u2022 \ud83d\udccc <a href=\"https://THUDM.github.io/AgentTuning/\" target=\"_blank\">[Project Page]</a> \u2022 \ud83d\udcc3 <a href=\"https://arxiv.org/abs/2310.12823\" target=\"_blank\">[Paper]</a> \n</p>\n\n**AgentTuning** represents the very first attempt to instruction-tune LLMs using interaction trajectories across multiple agent tasks. Evaluation results indicate that AgentTuning enables the agent capabilities of LLMs with robust generalization on unseen agent tasks while remaining good on general language abilities. We have open-sourced the AgentInstruct dataset and AgentLM.\n\n## Models\n\n**AgentLM** models are produced by mixed training on AgentInstruct dataset and ShareGPT dataset from Llama-2-chat models. \n\nThe models follow the conversation format of [Llama-2-chat](https://huggingface.co/blog/llama2#how-to-prompt-llama-2), with system prompt fixed as \n\n```\nYou are a helpful, respectful and honest assistant.\n```\n\n7B, 13B, and 70B models are available on Huggingface model hub.\n\n|Model|Huggingface Repo|\n|---|---|\n|AgentLM-7B| [\ud83e\udd17Huggingface Repo](https://huggingface.co/THUDM/agentlm-7b) |\n|AgentLM-13B| [\ud83e\udd17Huggingface Repo](https://huggingface.co/THUDM/agentlm-13b) |\n|AgentLM-70B| [\ud83e\udd17Huggingface Repo](https://huggingface.co/THUDM/agentlm-70b) |\n\n## Citation\n\nIf you find our work useful, please consider citing AgentTuning:\n\n```\n@misc{zeng2023agenttuning,\n      title={AgentTuning: Enabling Generalized Agent Abilities for LLMs}, \n      author={Aohan Zeng and Mingdao Liu and Rui Lu and Bowen Wang and Xiao Liu and Yuxiao Dong and Jie Tang},\n      year={2023},\n      eprint={2310.12823},\n      archivePrefix={arXiv},\n      primaryClass={cs.CL}\n}\n```\n",
+  "fetched_at": "2026-09-22T06:47:01.556606+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "zai-org",
+    "gated": false,
+    "library_name": "transformers",
+    "license": null,
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "dataset:THUDM/AgentInstruct",
+      "arxiv:2310.12823",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "zai-org__agentlm-7b",
+  "ok": true,
+  "popularity": {
+    "downloads": 562,
+    "downloadsAllTime": 17024,
+    "likes": 52,
+    "trendingScore": 0
+  },
+  "repo_id": "zai-org/agentlm-7b",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-10-16T08:36:28.000Z",
+    "lastModified": "2023-10-20T03:41:25.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

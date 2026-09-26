@@ -1,0 +1,52 @@
+{
+  "failed_models": [],
+  "fetched_window": {
+    "first": "2026-09-19T14:59:59.809275+00:00",
+    "last": "2026-09-22T11:31:37.859967+00:00"
+  },
+  "field_coverage": {
+    "architecture.architectures": 268,
+    "architecture.hidden_size": 253,
+    "architecture.intermediate_size": 248,
+    "architecture.max_position_embeddings": 248,
+    "architecture.model_type": 268,
+    "architecture.n_parameters": 160,
+    "architecture.num_attention_heads": 253,
+    "architecture.num_hidden_layers": 250,
+    "architecture.num_key_value_heads": 226,
+    "architecture.parameter_dtypes": 160,
+    "architecture.torch_dtype": 253,
+    "architecture.vocab_size": 251,
+    "lineage.base_model": 54,
+    "lineage.card_base_models": 54,
+    "lineage.merge_tags": 12,
+    "lineage.n_base_models": 269,
+    "lineage.relations": 53,
+    "metadata.author": 269,
+    "metadata.gated": 269,
+    "metadata.library_name": 266,
+    "metadata.license": 235,
+    "metadata.pipeline_tag": 259,
+    "metadata.tags": 269,
+    "popularity.downloads": 269,
+    "popularity.downloadsAllTime": 269,
+    "popularity.likes": 269,
+    "popularity.trendingScore": 269,
+    "timestamps.createdAt": 269,
+    "timestamps.lastModified": 269
+  },
+  "generated_at": "2026-09-22T11:31:37.876192+00:00",
+  "generated_by": "scripts/collect/scrape_hf_model_cards.py",
+  "missing_models": [],
+  "n_cards": 269,
+  "n_models": 269,
+  "n_ok": 269,
+  "n_with_card_text": 252,
+  "resolved_via": {
+    "footprint": 71,
+    "search": 25,
+    "slug": 173
+  },
+  "source": "https://huggingface.co/api/models",
+  "unresolved_models": []
+}

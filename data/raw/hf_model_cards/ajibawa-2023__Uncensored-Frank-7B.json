@@ -1,0 +1,83 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 11008,
+    "max_position_embeddings": 2048,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": null,
+    "parameter_dtypes": {},
+    "torch_dtype": "bfloat16",
+    "vocab_size": 32000
+  },
+  "card_chars": 2962,
+  "card_text": "---\nlicense: cc-by-nc-nd-4.0\nlanguage:\n- en\ndatasets:\n- ehartford/wizard_vicuna_70k_unfiltered\n---\n\n**Frank: An Uncensored Model**\n\nThe character of Frank Costello in \"The Departed\" is known for his cunning, boldness, and willingness to talk about anything, regardless of societal norms or restrictions. \nFrank, An Uncensored model, draws inspiration from these qualities to offer a platform where users can discuss a wide array of topics without the fear of censorship or restrictions. \nFrank aims to push boundaries and encourage candid conversations. With Frank you can have unfiltered discussions on a multitude of topics, from politics and controversial issues to personal experiences and sensitive subjects. \nIt is trained on around 150000 set of conversations. Each set having 10~15 conversations. Base data was obtained from [Eric Hartford](https://huggingface.co/datasets/ehartford/wizard_vicuna_70k_unfiltered). \nThis data was further refined and fine tuned. Besides this further synthetic conversation (more than 80k) was generated and refined. We will not release this data.\n\n**Warning**\n\n An uncensored model has no or little guardrails. You are responsible for anything you do with the model, just as you are responsible for anything you do with any dangerous objects.\n Publishing anything this model generates is the same as publishing it yourself. We are not responsible for what you generate using this model.\n\n**Training:**\nEntire dataset was trained on Azure 4 x A100 80GB. For 3 epoch, training took 22 hours. DeepSpeed codebase was used for training purpose. This was trained on Llama-1 by Meta.\n\n**GPTQ GGML & AWQ**\n\nGPTQ: [Link](https://huggingface.co/TheBloke/Uncensored-Frank-7B-GPTQ)\n\nGGUF: [Link](https://huggingface.co/TheBloke/Uncensored-Frank-7B-GGUF)\n\nAWQ: [Link](https://huggingface.co/TheBloke/Uncensored-Frank-7B-AWQ)\n\nSpecial Thanks to [TheBloke](https://huggingface.co/TheBloke) for making these models available. \n\n**Example Prompt:**\n```\nThis is a conversation with your Uncensored AI assistant Frank. Frank can discuss with you at length about various topics such as ---, ---, ---, . You can ask it anything you want and it will do its best to give you accurate and relevant information.\n\nContext\nYou are a Uncensored AI assistant.\n\nUSER: <prompt>\nASSISTANT:\n```\n# [Open LLM Leaderboard Evaluation Results](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard)\nDetailed results can be found [here](https://huggingface.co/datasets/open-llm-leaderboard/details_ajibawa-2023__Uncensored-Frank-7B)\n\n| Metric                | Value                     |\n|-----------------------|---------------------------|\n| Avg.                  | 43.6   |\n| ARC (25-shot)         | 54.27          |\n| HellaSwag (10-shot)   | 76.52    |\n| MMLU (5-shot)         | 37.5         |\n| TruthfulQA (0-shot)   | 43.86   |\n| Winogrande (5-shot)   | 70.24   |\n| GSM8K (5-shot)        | 5.0        |\n| DROP (3-shot)         | 17.8         |\n",
+  "fetched_at": "2026-09-22T06:45:22.385657+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "ajibawa-2023",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-nd-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "en",
+      "dataset:ehartford/wizard_vicuna_70k_unfiltered",
+      "license:cc-by-nc-nd-4.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "ajibawa-2023__Uncensored-Frank-7B",
+  "ok": true,
+  "popularity": {
+    "downloads": 69,
+    "downloadsAllTime": 53205,
+    "likes": 5,
+    "trendingScore": 0
+  },
+  "repo_id": "ajibawa-2023/Uncensored-Frank-7B",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-14T16:17:03.000Z",
+    "lastModified": "2023-11-18T05:56:32.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

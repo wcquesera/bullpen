@@ -1,0 +1,83 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 11008,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 32,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 55296
+  },
+  "card_chars": 2690,
+  "card_text": "---\nlicense: apache-2.0\nlanguage:\n- zh\n- en\n---\n\n# Chinese-Alpaca-2-7B\n\n**This is the full Chinese-Alpaca-2-7B model\uff0cwhich can be loaded directly for inference and full-parameter training.**\n\n**Related models\ud83d\udc47**\n* Long context base models\n  * [Chinese-LLaMA-2-7B-16K (full model)](https://huggingface.co/hfl/chinese-llama-2-7b-16k)\n  * [Chinese-LLaMA-2-LoRA-7B-16K (LoRA model)](https://huggingface.co/hfl/chinese-llama-2-lora-7b-16k)\n  * [Chinese-LLaMA-2-13B-16K (full model)](https://huggingface.co/hfl/chinese-llama-2-13b-16k)\n  * [Chinese-LLaMA-2-LoRA-13B-16K (LoRA model)](https://huggingface.co/hfl/chinese-llama-2-lora-13b-16k)\n* Base models\n  * [Chinese-LLaMA-2-7B (full model)](https://huggingface.co/hfl/chinese-llama-2-7b)\n  * [Chinese-LLaMA-2-LoRA-7B (LoRA model)](https://huggingface.co/hfl/chinese-llama-2-lora-7b)\n  * [Chinese-LLaMA-2-13B (full model)](https://huggingface.co/hfl/chinese-llama-2-13b)\n  * [Chinese-LLaMA-2-LoRA-13B (LoRA model)](https://huggingface.co/hfl/chinese-llama-2-lora-13b)\n* Instruction/Chat models\n  * [Chinese-Alpaca-2-7B (full model)](https://huggingface.co/hfl/chinese-alpaca-2-7b)\n  * [Chinese-Alpaca-2-LoRA-7B (LoRA model)](https://huggingface.co/hfl/chinese-alpaca-2-lora-7b)\n  * [Chinese-Alpaca-2-13B (full model)](https://huggingface.co/hfl/chinese-alpaca-2-13b)\n  * [Chinese-Alpaca-2-LoRA-13B (LoRA model)](https://huggingface.co/hfl/chinese-alpaca-2-lora-13b)\n\n\n# Description of Chinese-LLaMA-Alpaca-2 \nThis project is based on the Llama-2, released by Meta, and it is the second generation of the Chinese LLaMA & Alpaca LLM project. We open-source Chinese LLaMA-2 (foundation model) and Alpaca-2 (instruction-following model). These models have been expanded and optimized with Chinese vocabulary beyond the original Llama-2. We used large-scale Chinese data for incremental pre-training, which further improved the fundamental semantic understanding of the Chinese language, resulting in a significant performance improvement compared to the first-generation models. The relevant models support a 4K context and can be expanded up to 18K+ using the NTK method.\n\nThe main contents of this project include:\n\n* \ud83d\ude80 New extended Chinese vocabulary beyond Llama-2, open-sourcing the Chinese LLaMA-2 and Alpaca-2 LLMs.\n* \ud83d\ude80 Open-sourced the pre-training and instruction finetuning (SFT) scripts for further tuning on user's data\n* \ud83d\ude80 Quickly deploy and experience the quantized LLMs on CPU/GPU of personal PC\n* \ud83d\ude80 Support for LLaMA ecosystems like \ud83e\udd17transformers, llama.cpp, text-generation-webui, LangChain, vLLM etc.\n\nPlease refer to [https://github.com/ymcui/Chinese-LLaMA-Alpaca-2/](https://github.com/ymcui/Chinese-LLaMA-Alpaca-2/) for details.",
+  "fetched_at": "2026-09-22T06:45:56.059553+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "hfl",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "zh",
+      "en",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "hfl__chinese-alpaca-2-7b",
+  "ok": true,
+  "popularity": {
+    "downloads": 228,
+    "downloadsAllTime": 74012,
+    "likes": 160,
+    "trendingScore": 0
+  },
+  "repo_id": "hfl/chinese-alpaca-2-7b",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-07-31T03:53:55.000Z",
+    "lastModified": "2023-12-23T07:28:12.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

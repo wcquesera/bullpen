@@ -1,0 +1,56 @@
+[project]
+name = "bullpen"
+version = "0.1.0"
+description = "Sample-efficient LLM profiling via multi-channel model embeddings (anonymous submission code)"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.0",
+    "scipy>=1.14",
+    "scikit-learn>=1.5",
+    "pandas>=2.2",
+    "torch>=2.4",
+    "matplotlib>=3.11.1",
+    "loguru>=0.7",
+    "pyyaml>=6.0",
+    "tqdm>=4.66",
+    # the math grader falls back to symbolic equivalence when the normalised string
+    # match fails; without sympy it silently does not, and the grades differ
+    "sympy>=1.13",
+]
+
+[project.optional-dependencies]
+# Only needed to generate answers with a real model (collect.py without --recorded)
+# or to embed them with the paper's encoder (process.py embed --encoder hf).
+collect = [
+    "transformers>=4.44",
+    "accelerate>=0.33",
+    "huggingface-hub>=0.24",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "pytest-timeout>=2.3",
+    "ruff>=0.6",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["bullpen"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "RUF", "BLE", "PLW"]
+# U+2212 minus signs, en dashes and Greek letters in prose and labels are deliberate.
+ignore = ["RUF001", "RUF002", "RUF003"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::UserWarning", "ignore::FutureWarning"]

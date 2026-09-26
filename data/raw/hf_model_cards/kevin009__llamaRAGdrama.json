@@ -1,0 +1,84 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": 7241732096,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "F16": 7241732096
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 4903,
+  "card_text": "---\nlicense: apache-2.0\nmodel-index:\n- name: llamaRAGdrama\n  results:\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: AI2 Reasoning Challenge (25-Shot)\n      type: ai2_arc\n      config: ARC-Challenge\n      split: test\n      args:\n        num_few_shot: 25\n    metrics:\n    - type: acc_norm\n      value: 72.01\n      name: normalized accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=kevin009/llamaRAGdrama\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: HellaSwag (10-Shot)\n      type: hellaswag\n      split: validation\n      args:\n        num_few_shot: 10\n    metrics:\n    - type: acc_norm\n      value: 88.83\n      name: normalized accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=kevin009/llamaRAGdrama\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: MMLU (5-Shot)\n      type: cais/mmlu\n      config: all\n      split: test\n      args:\n        num_few_shot: 5\n    metrics:\n    - type: acc\n      value: 64.5\n      name: accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=kevin009/llamaRAGdrama\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: TruthfulQA (0-shot)\n      type: truthful_qa\n      config: multiple_choice\n      split: validation\n      args:\n        num_few_shot: 0\n    metrics:\n    - type: mc2\n      value: 70.24\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=kevin009/llamaRAGdrama\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: Winogrande (5-shot)\n      type: winogrande\n      config: winogrande_xl\n      split: validation\n      args:\n        num_few_shot: 5\n    metrics:\n    - type: acc\n      value: 86.66\n      name: accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=kevin009/llamaRAGdrama\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: GSM8k (5-shot)\n      type: gsm8k\n      config: main\n      split: test\n      args:\n        num_few_shot: 5\n    metrics:\n    - type: acc\n      value: 65.66\n      name: accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=kevin009/llamaRAGdrama\n      name: Open LLM Leaderboard\n---\nIt remain factual and reliable even in dramatic situations.\n\n---\n\n### Model Card for kevin009/llamaRAGdrama\n\n#### Model Details\n- **Model Name:** kevin009/llamaRAGdrama\n- **Model Type:** Fine-tuned for Q&A, RAG.\n- **Fine-tuning Objective:** Synthesis text content in Q&A, RAG scenarios.\n\n#### Intended Use\n- **Applications:** RAG, Q&A\n\n#### Training Data\n- **Sources:** Includes a diverse dataset of dramatic texts, enriched with factual databases and reliable sources to train the model on generating content that remains true to real-world facts.\n- **Preprocessing:** In addition to removing non-content text, data was annotated to distinguish between purely creative elements and those that require factual accuracy, ensuring a balanced training approach.\n\n#### How to Use\n```python\nfrom transformers import AutoTokenizer, AutoModelForCausalLM\n\ntokenizer = AutoTokenizer.from_pretrained(\"kevin009/llamaRAGdrama\")\nmodel = AutoModelForCausalLM.from_pretrained(\"kevin009/llamaRAGdrama\")\n\ninput_text = \"Enter your prompt here\"\ninput_tokens = tokenizer.encode(input_text, return_tensors='pt')\noutput_tokens = model.generate(input_tokens, max_length=100, num_return_sequences=1, temperature=0.9)\ngenerated_text = tokenizer.decode(output_tokens[0], skip_special_tokens=True)\n\nprint(generated_text)\n```\nReplace `\"Enter your prompt here\"` with your starting text. Adjust `temperature` for creativity level.\n\n#### Limitations and Biases\n- **Content Limitation:** While designed to be truthful, It may not be considered safe.\n- **Biases:** It may remain biases and inaccurate.\n\n#### Licensing and Attribution\n- **License:** Apache-2.0\n# [Open LLM Leaderboard Evaluation Results](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard)\nDetailed results can be found [here](https://huggingface.co/datasets/open-llm-leaderboard/details_kevin009__llamaRAGdrama)\n\n|             Metric              |Value|\n|---------------------------------|----:|\n|Avg.                             |74.65|\n|AI2 Reasoning Challenge (25-Shot)|72.01|\n|HellaSwag (10-Shot)              |88.83|\n|MMLU (5-Shot)                    |64.50|\n|TruthfulQA (0-shot)              |70.24|\n|Winogrande (5-shot)              |86.66|\n|GSM8k (5-shot)                   |65.66|\n\n",
+  "fetched_at": "2026-09-19T15:01:17.958951+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "kevin009",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "mistral",
+      "text-generation",
+      "license:apache-2.0",
+      "model-index",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "kevin009__llamaRAGdrama",
+  "ok": true,
+  "popularity": {
+    "downloads": 86,
+    "downloadsAllTime": 64708,
+    "likes": 7,
+    "trendingScore": 0
+  },
+  "repo_id": "kevin009/llamaRAGdrama",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2024-02-04T11:22:15.000Z",
+    "lastModified": "2024-03-04T21:38:02.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

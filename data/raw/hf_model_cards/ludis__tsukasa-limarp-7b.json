@@ -1,0 +1,82 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 11008,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 32,
+    "parameter_dtypes": {},
+    "torch_dtype": "bfloat16",
+    "vocab_size": 32003
+  },
+  "card_chars": 1000,
+  "card_text": "---\ndatasets:\n  - PygmalionAI/PIPPA\n  - lemonilia/LimaRP\n---\n\n## Prompting\n\nhttps://rentry.org/v43eo - reccomended prompts and gen settings\n\nThe current model version has been trained on prompts using three different roles, which are denoted by the following tokens: `<|system|>`, `<|user|>` and `<|model|>`.\n\nThe `<|system|>` prompt can be used to inject out-of-channel information behind the scenes, while the `<|user|>` prompt should be used to indicate user input. The `<|model|>` token should then be used to indicate that the model should generate a response. These tokens can happen multiple times and be chained up to form a conversation history.\n\n## Training\n\nbase model (llama-2-7b-hf)\n\ntuned on commit de693ac of the koishi dataset for 1 epoch as apart of ludis/tsukasa-7b\n\nthen tuned on commit 36fc235 of pippa metharme for 1 epoch as apart of ludis/tsukasa-7b\n\nthen tuned on Version 2023-09-03 of LimaRP (without ponyville, lolicit, all the fallen, and eka's portal subsets) for 2 epochs",
+  "fetched_at": "2026-09-22T08:00:54.340126+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "ludis",
+    "gated": false,
+    "library_name": "transformers",
+    "license": null,
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "dataset:PygmalionAI/PIPPA",
+      "dataset:lemonilia/LimaRP",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "ludis__tsukasa-limarp-7b",
+  "ok": true,
+  "popularity": {
+    "downloads": 13,
+    "downloadsAllTime": 323,
+    "likes": 1,
+    "trendingScore": 0
+  },
+  "repo_id": "ludis/tsukasa-limarp-7b",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-03T17:43:29.000Z",
+    "lastModified": "2024-01-06T17:56:49.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

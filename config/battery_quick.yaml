@@ -1,0 +1,24 @@
+# Quick-battery override of config/battery.yaml: fewer head folds and knapsack draws, for
+# the sample pipeline and the tests. Never quote a number scored under this file.
+# Every other key matches config/battery.yaml (the loader requires all of them).
+
+neighbour_k: 5
+neighbour_metric: cosine
+probe_sizes:
+- 5
+- 10
+- 20
+- 50
+headline_probe_size: 50
+vram_budgets_gb:
+- 24
+- 48
+- 80
+- 160
+headline_budget_gb: 24
+knapsack_draws: 2
+half_split_draws: 5
+reliability_draws: 20
+ndcg_k: 10
+ece_bins: 10
+n_folds: 3

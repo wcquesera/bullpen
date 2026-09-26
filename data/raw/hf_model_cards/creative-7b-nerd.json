@@ -1,0 +1,110 @@
+{
+  "architecture": {
+    "architectures": [
+      "Qwen2ForCausalLM"
+    ],
+    "hidden_size": 3584,
+    "intermediate_size": 18944,
+    "max_position_embeddings": 32768,
+    "model_type": "qwen2",
+    "n_parameters": 7615616512,
+    "num_attention_heads": 28,
+    "num_hidden_layers": 28,
+    "num_key_value_heads": 4,
+    "parameter_dtypes": {
+      "BF16": 7615616512
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 152064
+  },
+  "card_chars": 1229,
+  "card_text": "---\nbase_model:\n- suayptalha/HomerCreativeAnvita-Mix-Qw7B\n- jeffmeloy/Qwen2.5-7B-nerd-uncensored-v1.5\nlibrary_name: transformers\ntags:\n- mergekit\n- merge\nlicense: apache-2.0\n---\n# merge\n\nThis is a merge of pre-trained language models created using [mergekit](https://github.com/cg123/mergekit).\n\n## Merge Details\n### Merge Method\n\nThis model was merged using the SLERP merge method.\n\n### Models Merged\n\nThe following models were included in the merge:\n* [suayptalha/HomerCreativeAnvita-Mix-Qw7B](https://huggingface.co/suayptalha/HomerCreativeAnvita-Mix-Qw7B)\n* [jeffmeloy/Qwen2.5-7B-nerd-uncensored-v1.5](https://huggingface.co/jeffmeloy/Qwen2.5-7B-nerd-uncensored-v1.5)\n\n### Configuration\n\nThe following YAML configuration was used to produce this model:\n\n```yaml\nslices:\n- sources:\n  - model: suayptalha/HomerCreativeAnvita-Mix-Qw7B\n    layer_range:\n    - 0\n    - 28\n  - model: jeffmeloy/Qwen2.5-7B-nerd-uncensored-v1.5\n    layer_range:\n    - 0\n    - 28\nmerge_method: slerp\nbase_model: suayptalha/HomerCreativeAnvita-Mix-Qw7B\nparameters:\n  t:\n  - filter: self_attn\n    value:\n    - 0\n    - 0.5\n    - 0.3\n    - 0.7\n    - 1\n  - filter: mlp\n    value:\n    - 1\n    - 0.5\n    - 0.7\n    - 0.3\n    - 0\n  - value: 0.5\ndtype: bfloat16\n",
+  "fetched_at": "2026-09-19T15:01:02.964355+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "suayptalha/HomerCreativeAnvita-Mix-Qw7B",
+      "jeffmeloy/Qwen2.5-7B-nerd-uncensored-v1.5"
+    ],
+    "card_base_models": [
+      "suayptalha/HomerCreativeAnvita-Mix-Qw7B",
+      "jeffmeloy/Qwen2.5-7B-nerd-uncensored-v1.5"
+    ],
+    "merge_tags": [
+      "mergekit",
+      "merge",
+      "base_model:merge:jeffmeloy/Qwen2.5-7B-nerd-uncensored-v1.5",
+      "base_model:merge:suayptalha/HomerCreativeAnvita-Mix-Qw7B"
+    ],
+    "n_base_models": 2,
+    "relations": {
+      "": [
+        "jeffmeloy/Qwen2.5-7B-nerd-uncensored-v1.5",
+        "suayptalha/HomerCreativeAnvita-Mix-Qw7B"
+      ],
+      "merge": [
+        "jeffmeloy/Qwen2.5-7B-nerd-uncensored-v1.5",
+        "suayptalha/HomerCreativeAnvita-Mix-Qw7B"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "Aashraf995",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "qwen2",
+      "text-generation",
+      "mergekit",
+      "merge",
+      "conversational",
+      "base_model:jeffmeloy/Qwen2.5-7B-nerd-uncensored-v1.5",
+      "base_model:merge:jeffmeloy/Qwen2.5-7B-nerd-uncensored-v1.5",
+      "base_model:suayptalha/HomerCreativeAnvita-Mix-Qw7B",
+      "base_model:merge:suayptalha/HomerCreativeAnvita-Mix-Qw7B",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "creative-7b-nerd",
+  "ok": true,
+  "popularity": {
+    "downloads": 29,
+    "downloadsAllTime": 261,
+    "likes": 2,
+    "trendingScore": 0
+  },
+  "repo_id": "Aashraf995/Creative-7B-nerd",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2024-12-13T09:26:05.000Z",
+    "lastModified": "2024-12-13T09:40:45.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

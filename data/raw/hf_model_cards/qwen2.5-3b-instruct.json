@@ -1,0 +1,502 @@
+{
+  "architecture": {
+    "architectures": [
+      "Qwen2ForCausalLM"
+    ],
+    "hidden_size": 2048,
+    "intermediate_size": 11008,
+    "max_position_embeddings": 32768,
+    "model_type": "qwen2",
+    "n_parameters": 3085938688,
+    "num_attention_heads": 16,
+    "num_hidden_layers": 36,
+    "num_key_value_heads": 2,
+    "parameter_dtypes": {
+      "BF16": 3085938688
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 151936
+  },
+  "card_chars": 4927,
+  "card_text": "---\nlicense: other\nlicense_name: qwen-research\nlicense_link: https://huggingface.co/Qwen/Qwen2.5-3B-Instruct/blob/main/LICENSE\nlanguage:\n- en\npipeline_tag: text-generation\nbase_model: Qwen/Qwen2.5-3B\ntags:\n- chat\nlibrary_name: transformers\n---\n\n# Qwen2.5-3B-Instruct\n\n## Introduction\n\nQwen2.5 is the latest series of Qwen large language models. For Qwen2.5, we release a number of base language models and instruction-tuned language models ranging from 0.5 to 72 billion parameters. Qwen2.5 brings the following improvements upon Qwen2:\n\n- Significantly **more knowledge** and has greatly improved capabilities in **coding** and **mathematics**, thanks to our specialized expert models in these domains.\n- Significant improvements in **instruction following**, **generating long texts** (over 8K tokens), **understanding structured data** (e.g, tables), and **generating structured outputs** especially JSON. **More resilient to the diversity of system prompts**, enhancing role-play implementation and condition-setting for chatbots.\n- **Long-context Support** up to 128K tokens and can generate up to 8K tokens.\n- **Multilingual support** for over 29 languages, including Chinese, English, French, Spanish, Portuguese, German, Italian, Russian, Japanese, Korean, Vietnamese, Thai, Arabic, and more. \n\n**This repo contains the instruction-tuned 3B Qwen2.5 model**, which has the following features:\n- Type: Causal Language Models\n- Training Stage: Pretraining & Post-training\n- Architecture: transformers with RoPE, SwiGLU, RMSNorm, Attention QKV bias and tied word embeddings\n- Number of Parameters: 3.09B\n- Number of Paramaters (Non-Embedding): 2.77B\n- Number of Layers: 36\n- Number of Attention Heads (GQA): 16 for Q and 2 for KV\n- Context Length: Full 32,768 tokens and generation 8192 tokens\n\nFor more details, please refer to our [blog](https://qwenlm.github.io/blog/qwen2.5/), [GitHub](https://github.com/QwenLM/Qwen2.5), and [Documentation](https://qwen.readthedocs.io/en/latest/).\n\n## Requirements\n\nThe code of Qwen2.5 has been in the latest Hugging face `transformers` and we advise you to use the latest version of `transformers`.\n\nWith `transformers<4.37.0`, you will encounter the following error:\n```\nKeyError: 'qwen2'\n```\n\n## Quickstart\n\nHere provides a code snippet with `apply_chat_template` to show you how to load the tokenizer and model and how to generate contents.\n\n```python\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\nmodel_name = \"Qwen/Qwen2.5-3B-Instruct\"\n\nmodel = AutoModelForCausalLM.from_pretrained(\n    model_name,\n    torch_dtype=\"auto\",\n    device_map=\"auto\"\n)\ntokenizer = AutoTokenizer.from_pretrained(model_name)\n\nprompt = \"Give me a short introduction to large language model.\"\nmessages = [\n    {\"role\": \"system\", \"content\": \"You are Qwen, created by Alibaba Cloud. You are a helpful assistant.\"},\n    {\"role\": \"user\", \"content\": prompt}\n]\ntext = tokenizer.apply_chat_template(\n    messages,\n    tokenize=False,\n    add_generation_prompt=True\n)\nmodel_inputs = tokenizer([text], return_tensors=\"pt\").to(model.device)\n\ngenerated_ids = model.generate(\n    **model_inputs,\n    max_new_tokens=512\n)\ngenerated_ids = [\n    output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)\n]\n\nresponse = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]\n```\n\n\n## Evaluation & Performance\n\nDetailed evaluation results are reported in this [\ud83d\udcd1 blog](https://qwenlm.github.io/blog/qwen2.5/).\n\nFor requirements on GPU memory and the respective throughput, see results [here](https://qwen.readthedocs.io/en/latest/benchmark/speed_benchmark.html).\n\n## Citation\n\nIf you find our work helpful, feel free to give us a cite.\n\n```\n@misc{qwen2.5,\n    title = {Qwen2.5: A Party of Foundation Models},\n    url = {https://qwenlm.github.io/blog/qwen2.5/},\n    author = {Qwen Team},\n    month = {September},\n    year = {2024}\n}\n\n@article{qwen2,\n      title={Qwen2 Technical Report}, \n      author={An Yang and Baosong Yang and Binyuan Hui and Bo Zheng and Bowen Yu and Chang Zhou and Chengpeng Li and Chengyuan Li and Dayiheng Liu and Fei Huang and Guanting Dong and Haoran Wei and Huan Lin and Jialong Tang and Jialin Wang and Jian Yang and Jianhong Tu and Jianwei Zhang and Jianxin Ma and Jin Xu and Jingren Zhou and Jinze Bai and Jinzheng He and Junyang Lin and Kai Dang and Keming Lu and Keqin Chen and Kexin Yang and Mei Li and Mingfeng Xue and Na Ni and Pei Zhang and Peng Wang and Ru Peng and Rui Men and Ruize Gao and Runji Lin and Shijie Wang and Shuai Bai and Sinan Tan and Tianhang Zhu and Tianhao Li and Tianyu Liu and Wenbin Ge and Xiaodong Deng and Xiaohuan Zhou and Xingzhang Ren and Xinyu Zhang and Xipin Wei and Xuancheng Ren and Yang Fan and Yang Yao and Yichang Zhang and Yu Wan and Yunfei Chu and Yuqiong Liu and Zeyu Cui and Zhenru Zhang and Zhihao Fan},\n      journal={arXiv preprint arXiv:2407.10671},\n      year={2024}\n}\n```",
+  "fetched_at": "2026-09-19T15:02:47.046180+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "Qwen/Qwen2.5-3B"
+    ],
+    "card_base_models": [
+      "Qwen/Qwen2.5-3B"
+    ],
+    "merge_tags": [],
+    "n_base_models": 1,
+    "relations": {
+      "": [
+        "Qwen/Qwen2.5-3B"
+      ],
+      "finetune": [
+        "Qwen/Qwen2.5-3B"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "Qwen",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "other",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "qwen2",
+      "text-generation",
+      "chat",
+      "conversational",
+      "en",
+      "arxiv:2407.10671",
+      "base_model:Qwen/Qwen2.5-3B",
+      "base_model:finetune:Qwen/Qwen2.5-3B",
+      "license:other",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "qwen2.5-3b-instruct",
+  "ok": true,
+  "popularity": {
+    "downloads": 5090920,
+    "downloadsAllTime": 119796432,
+    "likes": 572,
+    "trendingScore": 2
+  },
+  "repo_id": "Qwen/Qwen2.5-3B-Instruct",
+  "resolved_via": "search",
+  "search_candidates": [
+    [
+      "bocalan/Qwen2.5-Coder-3B-Instruct-Q4_K_M-GGUF",
+      5651
+    ],
+    [
+      "Qwen/Qwen2.5-3B-Instruct",
+      5090920
+    ],
+    [
+      "Qwen/Qwen2.5-VL-3B-Instruct",
+      2492571
+    ],
+    [
+      "Qwen/Qwen2.5-3B-Instruct-AWQ",
+      422333
+    ],
+    [
+      "Qwen/Qwen2.5-3B-Instruct-GGUF",
+      300133
+    ],
+    [
+      "Qwen/Qwen2.5-Coder-3B-Instruct",
+      599149
+    ],
+    [
+      "Qwen/Qwen2.5-Coder-3B-Instruct-GGUF",
+      85038
+    ],
+    [
+      "unsloth/Qwen2.5-Coder-3B-Instruct-128K-GGUF",
+      4617
+    ],
+    [
+      "mlx-community/Qwen2.5-14B-Instruct-3bit",
+      131
+    ],
+    [
+      "Qwen/Qwen2.5-VL-3B-Instruct-AWQ",
+      253784
+    ],
+    [
+      "huihui-ai/Qwen2.5-VL-3B-Instruct-abliterated",
+      19276
+    ],
+    [
+      "ggml-org/Qwen2.5-Coder-3B-Instruct-Q8_0-GGUF",
+      1396
+    ],
+    [
+      "eggbiscuit/DeepSeek-R1-Distill-Qwen2.5-3B-Instruct-BS17K",
+      1123
+    ],
+    [
+      "ggml-org/Qwen2.5-VL-3B-Instruct-GGUF",
+      47704
+    ],
+    [
+      "mradermacher/Qwen2.5-Coder-3B-Instruct-Distill-Qwen3-Coder-Next-abliterated-GGUF",
+      698
+    ],
+    [
+      "mradermacher/Qwen2.5-Coder-3B-Instruct-heretic-GGUF",
+      1043
+    ],
+    [
+      "Renesas/Qwen2.5-VL-3B-Instruct-GGUF",
+      73
+    ],
+    [
+      "bartowski/Qwen2.5-3B-Instruct-GGUF",
+      69158
+    ],
+    [
+      "Qwen/Qwen2.5-3B-Instruct-GPTQ-Int4",
+      6110
+    ],
+    [
+      "Qwen/Qwen2.5-3B-Instruct-GPTQ-Int8",
+      2370
+    ],
+    [
+      "lmstudio-community/Qwen2.5-3B-Instruct-GGUF",
+      5922
+    ],
+    [
+      "MaziyarPanahi/Qwen2.5-3B-Instruct-GGUF",
+      1489
+    ],
+    [
+      "mlx-community/Qwen2.5-3B-Instruct-bf16",
+      488
+    ],
+    [
+      "mlx-community/Qwen2.5-3B-Instruct-8bit",
+      117
+    ],
+    [
+      "mlx-community/Qwen2.5-3B-Instruct-4bit",
+      13883
+    ],
+    [
+      "mlc-ai/Qwen2.5-3B-Instruct-q4f16_1-MLC",
+      2602
+    ],
+    [
+      "mlc-ai/Qwen2.5-3B-Instruct-q0f16-MLC",
+      4
+    ],
+    [
+      "mlc-ai/Qwen2.5-3B-Instruct-q4f32_1-MLC",
+      477
+    ],
+    [
+      "neopolita/qwen2.5-3b-instruct-gguf",
+      199
+    ],
+    [
+      "unsloth/Qwen2.5-3B-Instruct",
+      44946
+    ],
+    [
+      "CalamitousFelicitousness/Qwen2.5-3B-Instruct-fp8-dynamic",
+      1036
+    ],
+    [
+      "unsloth/Qwen2.5-3B-Instruct-bnb-4bit",
+      45300
+    ],
+    [
+      "second-state/Qwen2.5-3B-Instruct-GGUF",
+      993
+    ],
+    [
+      "gaianet/Qwen2.5-3B-Instruct-GGUF",
+      694
+    ],
+    [
+      "QuantFactory/Qwen2.5-3B-Instruct-GGUF",
+      1175
+    ],
+    [
+      "legraphista/Qwen2.5-3B-Instruct-IMat-GGUF",
+      3260
+    ],
+    [
+      "ThomasBaruzier/Qwen2.5-3B-Instruct-GGUF",
+      2238
+    ],
+    [
+      "flyfishstudio/Qwen2.5-3B-Instruct-Q4_0_4_4.gguf",
+      66
+    ],
+    [
+      "antoste/Qwen2.5-3B-Instruct-Q2_K-GGUF",
+      40
+    ],
+    [
+      "pablobutrong/Qwen2.5-3B-Instruct-q4f16_1",
+      0
+    ],
+    [
+      "flyfishstudio/Qwen2.5-3B-Instruct-Q4_0_4_8.gguf",
+      70
+    ],
+    [
+      "Agnuxo/Agente-GPT-Qwen2.5-3B-Instruct-Spanish_16bit",
+      17
+    ],
+    [
+      "Agnuxo/Agente-GPT-Qwen2.5-3B-Instruct-Asistant-16bit-v2",
+      30
+    ],
+    [
+      "Agnuxo/Agente-GPT-Qwen2.5-3B-Instruct-Spanish_English_GGUF_4bit",
+      302
+    ],
+    [
+      "Agnuxo/Agente-GPT-Qwen2.5-3B-Instruct-Spanish_English_GGUF_q5_k",
+      246
+    ],
+    [
+      "Agnuxo/Agente-GPT-Qwen2.5-3B-Instruct-Spanish_English_GGUF_q6_k",
+      321
+    ],
+    [
+      "Agnuxo/Agente-GPT-Qwen2.5-3B-Instruct-Spanish_8bit",
+      361
+    ],
+    [
+      "SujanKarki/Qwen2.5-3B-Instruct_text_to_sql_qlora",
+      8
+    ],
+    [
+      "duyntnet/Qwen2.5-3B-Instruct-imatrix-GGUF",
+      1575
+    ],
+    [
+      "RagnarokChan/Qwen2.5-3B-Instruct-Q4_K_M-GGUF",
+      1026
+    ],
+    [
+      "RagnarokChan/Qwen2.5-3B-Instruct-Q4_0-GGUF",
+      73
+    ],
+    [
+      "mukel/Qwen2.5-3B-Instruct-GGUF",
+      49
+    ],
+    [
+      "EmbeddedLLM/Qwen2.5-3B-Instruct-int4-sym-ov",
+      27
+    ],
+    [
+      "ijohn07/Qwen2.5-3B-Instruct-Q8_0-GGUF",
+      96
+    ],
+    [
+      "kechengcode/Qwen2.5-3B-Instruct-Distill",
+      7
+    ],
+    [
+      "ShynBui/Qwen2.5-3B-Instruct-quan-chatbot",
+      9
+    ],
+    [
+      "mradermacher/Qwen2.5-3B-Instruct-GGUF",
+      2188
+    ],
+    [
+      "mradermacher/Qwen2.5-3B-Instruct-i1-GGUF",
+      3795
+    ],
+    [
+      "taobao-mnn/Qwen2.5-3B-Instruct-MNN",
+      116
+    ],
+    [
+      "RichardErkhov/Qwen_-_Qwen2.5-3B-Instruct-gguf",
+      851
+    ],
+    [
+      "jfranklin-foundry/Qwen-Qwen2.5-3B-Instruct-1727456366",
+      6
+    ],
+    [
+      "POWERHACK/Qwen2.5-3B-Instruct-Q8_0-GGUF",
+      70
+    ],
+    [
+      "v8karlo/Qwen2.5-3B-Instruct-Q8_0-GGUF",
+      43
+    ],
+    [
+      "kxdw2580/Qwen2.5-3B-Instruct-Uncensored-Test",
+      38
+    ],
+    [
+      "sshetty/Qwen-Qwen2.5-3B-Instruct-1727799530",
+      8
+    ],
+    [
+      "sshetty/Qwen-Qwen2.5-3B-Instruct-1727803953",
+      6
+    ],
+    [
+      "sam-fd/Qwen-Qwen2.5-3B-Instruct-1727813664",
+      10
+    ],
+    [
+      "kxdw2580/Qwen2.5-3B-Instruct-Uncensored-Test-Q8_0-GGUF",
+      569
+    ],
+    [
+      "turingevo/Qwen2.5-3B-Instruct-Q4_K_M-GGUF",
+      109
+    ],
+    [
+      "llmware/qwen2.5-3b-instruct-ov",
+      11
+    ],
+    [
+      "RichardErkhov/Qwen_-_Qwen2.5-3B-Instruct-4bits",
+      18
+    ],
+    [
+      "RichardErkhov/Qwen_-_Qwen2.5-3B-Instruct-8bits",
+      8
+    ],
+    [
+      "RichardErkhov/unsloth_-_Qwen2.5-3B-Instruct-4bits",
+      5
+    ],
+    [
+      "RichardErkhov/unsloth_-_Qwen2.5-3B-Instruct-8bits",
+      4
+    ],
+    [
+      "Jeethu/Qwen2.5-3B-Instruct-PLLM",
+      5
+    ],
+    [
+      "reach-vb/Qwen2.5-3B-Instruct-AWQ",
+      11
+    ],
+    [
+      "RedHatAI/Qwen2.5-3B-Instruct-quantized.w8a8",
+      893
+    ],
+    [
+      "jaeyong2/Qwen2.5-3B-Instruct-Ja-SFT",
+      22
+    ],
+    [
+      "apto-as/Qwen2.5-3B-Instruct-Q4_K_M-GGUF",
+      83
+    ],
+    [
+      "srang992/Qwen-2.5-3B-Instruct-ov-INT8",
+      27
+    ],
+    [
+      "srrthk/task-13-Qwen-Qwen2.5-3B-Instruct",
+      18
+    ],
+    [
+      "apto-as/Qwen2.5-3B-Instruct-Q5_K_M-GGUF",
+      346
+    ],
+    [
+      "0xfaskety/task-13-Qwen-Qwen2.5-3B-Instruct",
+      6
+    ],
+    [
+      "RefalMachine/ruadapt_qwen2.5_3B_ext_u32_instruct_v3",
+      4
+    ],
+    [
+      "tahsinashrafee/nav_desc_Qwen2.5-3B-Instruct",
+      48
+    ],
+    [
+      "RedHatAI/Qwen2.5-3B-Instruct-quantized.w8a16",
+      1086
+    ],
+    [
+      "RefalMachine/ruadapt_qwen2.5_3B_ext_u48_instruct_v4",
+      642
+    ],
+    [
+      "RichardErkhov/jaeyong2_-_Qwen2.5-3B-Instruct-JaMagpie-Preview-gguf",
+      379
+    ],
+    [
+      "RefalMachine/ruadapt_qwen2.5_3B_ext_u48_instruct_v4_gguf",
+      622
+    ],
+    [
+      "RichardErkhov/kxdw2580_-_Qwen2.5-3B-Instruct-Uncensored-Test-gguf",
+      1639
+    ],
+    [
+      "HelloSun/Qwen2.5-3B-Instruct-openvino",
+      62
+    ],
+    [
+      "gerbyk/task-13-Qwen-Qwen2.5-3B-Instruct",
+      0
+    ],
+    [
+      "conferencesubmissionmodel/Qwen2.5-3B-Instruct-1_epoch_finetuned",
+      0
+    ],
+    [
+      "INo0121/qwen2.5_3b_instruction_tuning_241020",
+      0
+    ],
+    [
+      "Jellon/Qwen2.5-72B-Instruct-abliterated-exl2-3bpw",
+      13
+    ],
+    [
+      "yixuan-chia/Qwen2.5-3B-Instruct-gguf",
+      65
+    ],
+    [
+      "srang992/Qwen-2.5-3B-Instruct-ov-INT4",
+      28
+    ],
+    [
+      "dir00/task-13-Qwen-Qwen2.5-3B-Instruct",
+      5
+    ],
+    [
+      "ZeroWw/Qwen2.5-3B-Instruct-GGUF",
+      86
+    ],
+    [
+      "ZeroWw/Qwen2.5-3B-Instruct-SILLY",
+      27
+    ]
+  ],
+  "timestamps": {
+    "createdAt": "2024-09-17T14:08:52.000Z",
+    "lastModified": "2024-09-25T12:33:00.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

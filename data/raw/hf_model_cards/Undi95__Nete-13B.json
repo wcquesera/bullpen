@@ -1,0 +1,83 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {},
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 1314,
+  "card_text": "---\nlicense: cc-by-nc-4.0\ntags:\n- not-for-all-audiences\n- nsfw\n---\n\n*Insert picture of a hot woman [here](https://cdn-uploads.huggingface.co/production/uploads/63ab1241ad514ca8d1430003/aJIfY5W9CV095wzEH7uo1.png)*\n\nThis model is based on the Xwin-MLewd recipe, trying to get a better result.\n\n<!-- description start -->\n## Description\n\nThis repo contains fp16 files of Nete-13B, a powered up version of Xwin-MLewd-13B.\n\n<!-- description end -->\n<!-- description start -->\n## Models and loras used\n\n- [Undi95/Mlewd-v2.4-13B](https://huggingface.co/Undi95/MLewd-v2.4-13B)\n- [Xwin-LM/Xwin-LM-13B-V0.2](https://huggingface.co/Xwin-LM/Xwin-LM-13B-V0.2)\n- [cgato/Thespis-13b-v0.4](https://huggingface.co/cgato/Thespis-13b-v0.4)\n- [Undi95/PsyMedRP-v1-13B](https://huggingface.co/Undi95/PsyMedRP-v1-13B)\n- [Undi95/Storytelling-v2.1-13B-lora](https://huggingface.co/Undi95/Storytelling-v2.1-13B-lora)\n- [lemonilia/LimaRP-Llama2-13B-v3-EXPERIMENT](https://huggingface.co/lemonilia/LimaRP-Llama2-13B-v3-EXPERIMENT)\n\n<!-- description end -->\n<!-- prompt-template start -->\n## Prompt template: Alpaca\n\n```\nBelow is an instruction that describes a task. Write a response that appropriately completes the request.\n\n### Instruction:\n{prompt}\n\n### Response:\n\n```\n\nIf you want to support me, you can [here](https://ko-fi.com/undiai).",
+  "fetched_at": "2026-09-22T06:44:54.694022+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "Undi95",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "not-for-all-audiences",
+      "nsfw",
+      "license:cc-by-nc-4.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "Undi95__Nete-13B",
+  "ok": true,
+  "popularity": {
+    "downloads": 69,
+    "downloadsAllTime": 32933,
+    "likes": 7,
+    "trendingScore": 0
+  },
+  "repo_id": "Undi95/Nete-13B",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-10-25T23:13:11.000Z",
+    "lastModified": "2023-10-26T00:34:33.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

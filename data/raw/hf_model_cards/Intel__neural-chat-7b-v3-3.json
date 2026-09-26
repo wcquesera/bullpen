@@ -1,0 +1,104 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": 7241732096,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "F16": 7241732096
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 14890,
+  "card_text": "---\nlicense: apache-2.0\ntags:\n- LLMs\n- mistral\n- math\n- Intel\nbase_model: Intel/neural-chat-7b-v3-1\nmodel-index:\n- name: neural-chat-7b-v3-3\n  results:\n  - task:\n      type: Large Language Model\n      name: Large Language Model\n    dataset:\n      name: meta-math/MetaMathQA\n      type: meta-math/MetaMathQA\n    metrics:\n    - type: ARC (25-shot)\n      value: 66.89\n      name: ARC (25-shot)\n      verified: true\n    - type: HellaSwag (10-shot)\n      value: 85.26\n      name: HellaSwag (10-shot)\n      verified: true\n    - type: MMLU (5-shot)\n      value: 63.07\n      name: MMLU (5-shot)\n      verified: true\n    - type: TruthfulQA (0-shot)\n      value: 63.01\n      name: TruthfulQA (0-shot)\n      verified: true\n    - type: Winogrande (5-shot)\n      value: 79.64\n      name: Winogrande (5-shot)\n      verified: true\n    - type: GSM8K (5-shot)\n      value: 61.11\n      name: GSM8K (5-shot)\n      verified: true\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: AI2 Reasoning Challenge (25-Shot)\n      type: ai2_arc\n      config: ARC-Challenge\n      split: test\n      args:\n        num_few_shot: 25\n    metrics:\n    - type: acc_norm\n      value: 66.89\n      name: normalized accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=Intel/neural-chat-7b-v3-3\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: HellaSwag (10-Shot)\n      type: hellaswag\n      split: validation\n      args:\n        num_few_shot: 10\n    metrics:\n    - type: acc_norm\n      value: 85.26\n      name: normalized accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=Intel/neural-chat-7b-v3-3\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: MMLU (5-Shot)\n      type: cais/mmlu\n      config: all\n      split: test\n      args:\n        num_few_shot: 5\n    metrics:\n    - type: acc\n      value: 63.07\n      name: accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=Intel/neural-chat-7b-v3-3\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: TruthfulQA (0-shot)\n      type: truthful_qa\n      config: multiple_choice\n      split: validation\n      args:\n        num_few_shot: 0\n    metrics:\n    - type: mc2\n      value: 63.01\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=Intel/neural-chat-7b-v3-3\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: Winogrande (5-shot)\n      type: winogrande\n      config: winogrande_xl\n      split: validation\n      args:\n        num_few_shot: 5\n    metrics:\n    - type: acc\n      value: 79.64\n      name: accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=Intel/neural-chat-7b-v3-3\n      name: Open LLM Leaderboard\n  - task:\n      type: text-generation\n      name: Text Generation\n    dataset:\n      name: GSM8k (5-shot)\n      type: gsm8k\n      config: main\n      split: test\n      args:\n        num_few_shot: 5\n    metrics:\n    - type: acc\n      value: 61.11\n      name: accuracy\n    source:\n      url: https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard?query=Intel/neural-chat-7b-v3-3\n      name: Open LLM Leaderboard\n---\n\n## Model Details: Neural-Chat-v3-3\n\nThis model is a fine-tuned 7B parameter LLM on the Intel Gaudi 2 processor from the [Intel/neural-chat-7b-v3-1](https://huggingface.co/Intel/neural-chat-7b-v3-1) on the [meta-math/MetaMathQA](https://huggingface.co/datasets/meta-math/MetaMathQA) dataset. The model was aligned using the Direct Performance Optimization (DPO) method with [Intel/orca_dpo_pairs](https://huggingface.co/datasets/Intel/orca_dpo_pairs). The [Intel/neural-chat-7b-v3-1](https://huggingface.co/Intel/neural-chat-7b-v3-1) was originally fine-tuned from [mistralai/Mistral-7B-v-0.1](https://huggingface.co/mistralai/Mistral-7B-v0.1).  For more information, refer to the blog [The Practice of Supervised Fine-tuning and Direct Preference Optimization on Intel Gaudi2](https://medium.com/@NeuralCompressor/the-practice-of-supervised-finetuning-and-direct-preference-optimization-on-habana-gaudi2-a1197d8a3cd3).\n\n<p align=\"center\">\n  <img src=\"https://cdn-uploads.huggingface.co/production/uploads/6297f0e30bd2f58c647abb1d/ctASHUT5QYIxMsOFa-sHC.webp\" width=\"500\"/>\n  Photo by Google DeepMind on Unsplash\n</p>\n\n| Model Detail | Description |\n| ----------- | ----------- | \n| Model Authors - Company | Intel. The NeuralChat team with members from DCAI/AISE/AIPT. Core team members: Kaokao Lv, Liang Lv, Chang Wang, Wenxin Zhang, Xuhui Ren, and Haihao Shen.| \n| Date | December, 2023 | \n| Version | v3-3 | \n| Type | 7B Large Language Model | \n| Paper or Other Resources | [Medium Blog](https://medium.com/@NeuralCompressor/the-practice-of-supervised-finetuning-and-direct-preference-optimization-on-habana-gaudi2-a1197d8a3cd3) | \n| License | Apache 2.0 |\n| Questions or Comments | [Community Tab](https://huggingface.co/Intel/neural-chat-7b-v3-3/discussions) and [Intel Developers Discord](https://discord.gg/rv2Gp55UJQ)|\n\n| Intended Use | Description |\n| ----------- | ----------- | \n| Primary intended uses | You can use the fine-tuned model for several language-related tasks. Checkout the [LLM Leaderboard](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard) to see how this model is doing. | \n| Primary intended users | Anyone doing inference on language-related tasks. | \n| Out-of-scope uses | This model in most cases will need to be fine-tuned for your particular task.  The model should not be used to intentionally create hostile or alienating environments for people.|\n\n## How To Use\n\nContext length for this model: 8192 tokens (same as https://huggingface.co/mistralai/Mistral-7B-v0.1)\n\n### Reproduce the model\nHere is the sample code to reproduce the model: [GitHub sample code](https://github.com/intel/intel-extension-for-transformers/blob/main/intel_extension_for_transformers/neural_chat/examples/finetuning/finetune_neuralchat_v3). Here is the documentation to reproduce building the model:\n\n```bash\ngit clone https://github.com/intel/intel-extension-for-transformers.git\ncd intel-extension-for-transformers\n\ndocker build --no-cache ./ --target hpu --build-arg REPO=https://github.com/intel/intel-extension-for-transformers.git --build-arg ITREX_VER=main -f ./intel_extension_for_transformers/neural_chat/docker/Dockerfile -t chatbot_finetuning:latest\n\ndocker run -it --runtime=habana -e HABANA_VISIBLE_DEVICES=all -e OMPI_MCA_btl_vader_single_copy_mechanism=none --cap-add=sys_nice --net=host --ipc=host chatbot_finetuning:latest\n\n# after entering docker container\ncd examples/finetuning/finetune_neuralchat_v3\n\n```\nWe select the latest pretrained mistralai/Mistral-7B-v0.1 and the open source dataset Open-Orca/SlimOrca to conduct the experiment.\n\nThe below script use deepspeed zero2 to lanuch the training with 8 cards Gaudi2. In the `finetune_neuralchat_v3.py`, the default `use_habana=True, use_lazy_mode=True, device=\"hpu\"` for Gaudi2. And if you want to run it on NVIDIA GPU, you can set them `use_habana=False, use_lazy_mode=False, device=\"auto\"`.\n\n```python\ndeepspeed --include localhost:0,1,2,3,4,5,6,7 \\\n    --master_port 29501 \\\n    finetune_neuralchat_v3.py\n```\n\nMerge the LoRA weights:\n\n```python\npython apply_lora.py \\\n    --base-model-path mistralai/Mistral-7B-v0.1 \\\n    --lora-model-path finetuned_model/ \\\n    --output-path finetuned_model_lora\n```\n\n### Use the model\n\n### FP32 Inference with Transformers\n\n```python\nimport transformers\n\n\nmodel_name = 'Intel/neural-chat-7b-v3-3'\nmodel = transformers.AutoModelForCausalLM.from_pretrained(model_name)\ntokenizer = transformers.AutoTokenizer.from_pretrained(model_name)\n\ndef generate_response(system_input, user_input):\n\n    # Format the input using the provided template\n    prompt = f\"### System:\\n{system_input}\\n### User:\\n{user_input}\\n### Assistant:\\n\"\n\n    # Tokenize and encode the prompt\n    inputs = tokenizer.encode(prompt, return_tensors=\"pt\", add_special_tokens=False)\n\n    # Generate a response\n    outputs = model.generate(inputs, max_length=1000, num_return_sequences=1)\n    response = tokenizer.decode(outputs[0], skip_special_tokens=True)\n\n    # Extract only the assistant's response\n    return response.split(\"### Assistant:\\n\")[-1]\n\n\n# Example usage\nsystem_input = \"You are a math expert assistant. Your mission is to help users understand and solve various math problems. You should provide step-by-step solutions, explain reasonings and give the correct answer.\"\nuser_input = \"calculate 100 + 520 + 60\"\nresponse = generate_response(system_input, user_input)\nprint(response)\n\n# expected response\n\"\"\"\nTo calculate the sum of 100, 520, and 60, we will follow these steps:\n\n1. Add the first two numbers: 100 + 520\n2. Add the result from step 1 to the third number: (100 + 520) + 60\n\nStep 1: Add 100 and 520\n100 + 520 = 620\n\nStep 2: Add the result from step 1 to the third number (60)\n(620) + 60 = 680\n\nSo, the sum of 100, 520, and 60 is 680.\n\"\"\"\n```\n\n### BF16 Inference with Intel Extension for Transformers and Intel Extension for Pytorch\n```python\nfrom transformers import AutoTokenizer, TextStreamer\nimport torch\nfrom intel_extension_for_transformers.transformers import AutoModelForCausalLM\nimport intel_extension_for_pytorch as ipex\n\nmodel_name = \"Intel/neural-chat-7b-v3-3\"\nprompt = \"Once upon a time, there existed a little girl,\"\n\ntokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)\ninputs = tokenizer(prompt, return_tensors=\"pt\").input_ids\nstreamer = TextStreamer(tokenizer)\n\nmodel = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.bfloat16)\nmodel = ipex.optimize(model.eval(), dtype=torch.bfloat16, inplace=True, level=\"O1\", auto_kernel_selection=True)\n\noutputs = model.generate(inputs, streamer=streamer, max_new_tokens=300)\n```\n\n### INT4 Inference with Transformers and Intel Extension for Transformers\n```python\nfrom transformers import AutoTokenizer, TextStreamer\nfrom intel_extension_for_transformers.transformers import AutoModelForCausalLM, WeightOnlyQuantConfig\nmodel_name = \"Intel/neural-chat-7b-v3-3\"\n\n# for int8, should set weight_dtype=\"int8\"       \nconfig = WeightOnlyQuantConfig(compute_dtype=\"bf16\", weight_dtype=\"int4\")\nprompt = \"Once upon a time, there existed a little girl,\"\n\ntokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)\ninputs = tokenizer(prompt, return_tensors=\"pt\").input_ids\nstreamer = TextStreamer(tokenizer)\n\nmodel = AutoModelForCausalLM.from_pretrained(model_name, quantization_config=config)\noutputs = model.generate(inputs, streamer=streamer, max_new_tokens=300)\n\n```\n\n\n| Factors | Description | \n| ----------- | ----------- | \n| Groups | More details about the dataset and annotations can be found at [meta-math/MetaMathQA](https://huggingface.co/datasets/meta-math/MetaMathQA), the project page https://meta-math.github.io/, and the associated paper at https://arxiv.org/abs/2309.12284. | \n| Instrumentation | The performance of the model can vary depending on the inputs to the model. In this case, the prompts provided can drastically change the prediction of the language model. |\n| Environment | The model was trained on the Intel Gaudi 2 processor (8 cards).  |\n| Card Prompts | Model deployment on alternate hardware and software will change model performance. The model evaluation factors are from the Hugging Face LLM leaderboard: ARC, HellaSwag, MMLU, TruthfulQA, Winogrande, and GSM8K (see Quantitative Analyses below). |\n\n| Metrics | Description | \n| ----------- | ----------- | \n| Model performance measures | The model performance was evaluated against other LLMs according to the measures on the LLM leaderboard. These were selected as this has become the standard for LLM performance. |\n| Decision thresholds | No decision thresholds were used. | \n| Approaches to uncertainty and variability | - | \n\n| Training and Evaluation Data | Description | \n| ----------- | ----------- | \n| Datasets | The training data are from [meta-math/MetaMathQA](https://huggingface.co/datasets/meta-math/MetaMathQA), which is augmented from the GSM8k and MATH training sets. There is no contamination from the GSM8k test set, as this was left out during training.|\n| Motivation | - |\n| Preprocessing | - | \n\n## Quantitative Analyses \nThe Open LLM Leaderboard results can be found here: [https://huggingface.co/datasets/open-llm-leaderboard/details_Intel__neural-chat-7b-v3-3](https://huggingface.co/datasets/open-llm-leaderboard/details_Intel__neural-chat-7b-v3-3). The metrics came out to: \n\n| Metric                | Value                     |\n|-----------------------|---------------------------|\n| Avg.                  | 69.83 |\n| ARC (25-shot)         | 66.89 |\n| HellaSwag (10-shot)   | 85.26 |\n| MMLU (5-shot)         | 63.07 |\n| TruthfulQA (0-shot)   | 63.01 |\n| Winogrande (5-shot)   | 79.64 |\n| GSM8K (5-shot)        | 61.11 |\n\n## Ethical Considerations and Limitations\nNeural-chat-7b-v3-3 can produce factually incorrect output, and should not be relied on to produce factually accurate information. Because of the limitations of the pretrained model and the finetuning datasets, it is possible that this model could generate lewd, biased or otherwise offensive outputs.\n\nTherefore, before deploying any applications of neural-chat-7b-v3-3, developers should perform safety testing.\n\n## Caveats and Recommendations\n\nUsers (both direct and downstream) should be made aware of the risks, biases and limitations of the model.\n\nHere are a couple of useful links to learn more about Intel's AI software:\n* Intel Neural Compressor [link](https://github.com/intel/neural-compressor)\n* Intel Extension for Transformers [link](https://github.com/intel/intel-extension-for-transformers)\n\n## Disclaimer\n\nThe license on this model does not constitute legal advice. We are not responsible for the actions of third parties who use this model. Please cosult an attorney before using this model for commercial purposes.\n# [Open LLM Leaderboard Evaluation Results](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard)\nDetailed results can be found [here](https://huggingface.co/datasets/open-llm-leaderboard/details_Intel__neural-chat-7b-v3-3)\n\n|             Metric              |Value|\n|---------------------------------|----:|\n|Avg.                             |69.83|\n|AI2 Reasoning Challenge (25-Shot)|66.89|\n|HellaSwag (10-Shot)              |85.26|\n|MMLU (5-Shot)                    |63.07|\n|TruthfulQA (0-shot)              |63.01|\n|Winogrande (5-shot)              |79.64|\n|GSM8k (5-shot)                   |61.11|\n\n",
+  "fetched_at": "2026-09-19T15:00:21.152166+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "Intel/neural-chat-7b-v3-1"
+    ],
+    "card_base_models": [
+      "Intel/neural-chat-7b-v3-1"
+    ],
+    "merge_tags": [],
+    "n_base_models": 1,
+    "relations": {
+      "": [
+        "Intel/neural-chat-7b-v3-1"
+      ],
+      "finetune": [
+        "Intel/neural-chat-7b-v3-1"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "Intel",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "safetensors",
+      "mistral",
+      "text-generation",
+      "LLMs",
+      "math",
+      "Intel",
+      "conversational",
+      "arxiv:2309.12284",
+      "base_model:Intel/neural-chat-7b-v3-1",
+      "base_model:finetune:Intel/neural-chat-7b-v3-1",
+      "license:apache-2.0",
+      "model-index",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "Intel__neural-chat-7b-v3-3",
+  "ok": true,
+  "popularity": {
+    "downloads": 17950,
+    "downloadsAllTime": 1271655,
+    "likes": 83,
+    "trendingScore": 0
+  },
+  "repo_id": "Intel/neural-chat-7b-v3-3",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-12-09T16:25:05.000Z",
+    "lastModified": "2024-11-11T05:17:37.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

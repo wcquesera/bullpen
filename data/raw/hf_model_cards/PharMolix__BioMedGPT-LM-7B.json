@@ -1,0 +1,85 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 11008,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": null,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 32,
+    "parameter_dtypes": {},
+    "torch_dtype": "float32",
+    "vocab_size": 32000
+  },
+  "card_chars": 2544,
+  "card_text": "---\nlicense: apache-2.0\ntags:\n- medical\ndatasets:\n- biomed\n---\n# BioMedGPT-LM-7B\n\n**BioMedGPT-LM-7B** is the first large generative language model based on Llama2 in the biomedical domain.\nIt was fine-tuned from the Llama2-7B-Chat with millions of biomedical papers from the [S2ORC corpus](https://github.com/allenai/s2orc/blob/master/README.md). Through further fine-tuning, BioMedGPT-LM-7B outperforms or is on par with human and significantly larger general-purpose foundation models on several biomedical QA benchmarks.\n\n### Training Details\n\nThe model was trained with the following hyperparameters:\n\n* Epochs: 5\n* Batch size: 192\n* Context length: 2048\n* Learning rate: 2e-5\n\nBioMedGPT-LM-7B is fine-tuned on over 26 billion tokens highly pertinent to the field of biomedicine. The fine-tuning data are extracted from millions of biomedical papers in S2ORC data using PubMed Central (PMC)-ID and PubMed ID as criteria.\n\n### Model Developers\n\nPharMolix  \n\n### How to Use\n\nBioMedGPT-LM-7B is the generative language model of **[BioMedGPT-10B](https://github.com/PharMolix/OpenBioMed)**, an open-source version of BioMedGPT.\nBioMedGPT is an open multimodal generative pre-trained transformer (GPT) for biomedicine, which bridges the natural language modality and diverse biomedical data modalities via large generative language models.\n\n![The architecture of BioMedGPT-10B](BioMedGPT-10B.jpg)\n\n### Technical Report\n\nMore technical details of BioMedGPT-LM-7B, BioMedGPT-10B, and BioMedGPT can be found in the technical reprot: [\"BioMedGPT: Open Multimodal Generative Pre-trained Transformer for BioMedicine\"](https://arxiv.org/abs/2308.09442v2).\n\n### GitHub\n\n[https://github.com/PharMolix/OpenBioMed](https://github.com/PharMolix/OpenBioMed)\n\n### Limitations\n\nThis repository holds BioMedGPT-LM-7B, and we emphasize the responsible and ethical use of this model. BioMedGPT-LM-7B should NOT be used to provide services to the general public. Generating any content that violates applicable laws and regulations, such as inciting subversion of state power, endangering national security and interests, propagating terrorism, extremism, ethnic hatred and discrimination, violence, pornography, or false and harmful information, etc. is strictly prohibited. BioMedGPT-LM-7B is not liable for any consequences arising from any content, data, or information provided or published by users.\n\n### Licenses\n\nThis repository is licensed under the Apache-2.0. The use of BioMedGPT-LM-7B model is accompanied with [Acceptable Use Policy](USE_POLICY.md).\n",
+  "fetched_at": "2026-09-19T15:00:38.023350+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "PharMolix",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "llama",
+      "text-generation",
+      "medical",
+      "dataset:biomed",
+      "arxiv:2308.09442",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "PharMolix__BioMedGPT-LM-7B",
+  "ok": true,
+  "popularity": {
+    "downloads": 294,
+    "downloadsAllTime": 38183,
+    "likes": 84,
+    "trendingScore": 0
+  },
+  "repo_id": "PharMolix/BioMedGPT-LM-7B",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-08-11T11:28:35.000Z",
+    "lastModified": "2023-08-30T04:11:33.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

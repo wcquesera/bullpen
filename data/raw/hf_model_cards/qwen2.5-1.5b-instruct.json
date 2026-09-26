@@ -1,0 +1,502 @@
+{
+  "architecture": {
+    "architectures": [
+      "Qwen2ForCausalLM"
+    ],
+    "hidden_size": 1536,
+    "intermediate_size": 8960,
+    "max_position_embeddings": 32768,
+    "model_type": "qwen2",
+    "n_parameters": 1543714304,
+    "num_attention_heads": 12,
+    "num_hidden_layers": 28,
+    "num_key_value_heads": 2,
+    "parameter_dtypes": {
+      "BF16": 1543714304
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 151936
+  },
+  "card_chars": 4914,
+  "card_text": "---\nlicense: apache-2.0\nlicense_link: https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct/blob/main/LICENSE\nlanguage:\n- en\npipeline_tag: text-generation\nbase_model: Qwen/Qwen2.5-1.5B\ntags:\n- chat\nlibrary_name: transformers\n---\n\n# Qwen2.5-1.5B-Instruct\n\n## Introduction\n\nQwen2.5 is the latest series of Qwen large language models. For Qwen2.5, we release a number of base language models and instruction-tuned language models ranging from 0.5 to 72 billion parameters. Qwen2.5 brings the following improvements upon Qwen2:\n\n- Significantly **more knowledge** and has greatly improved capabilities in **coding** and **mathematics**, thanks to our specialized expert models in these domains.\n- Significant improvements in **instruction following**, **generating long texts** (over 8K tokens), **understanding structured data** (e.g, tables), and **generating structured outputs** especially JSON. **More resilient to the diversity of system prompts**, enhancing role-play implementation and condition-setting for chatbots.\n- **Long-context Support** up to 128K tokens and can generate up to 8K tokens.\n- **Multilingual support** for over 29 languages, including Chinese, English, French, Spanish, Portuguese, German, Italian, Russian, Japanese, Korean, Vietnamese, Thai, Arabic, and more. \n\n**This repo contains the instruction-tuned 1.5B Qwen2.5 model**, which has the following features:\n- Type: Causal Language Models\n- Training Stage: Pretraining & Post-training\n- Architecture: transformers with RoPE, SwiGLU, RMSNorm, Attention QKV bias and tied word embeddings\n- Number of Parameters: 1.54B\n- Number of Paramaters (Non-Embedding): 1.31B\n- Number of Layers: 28\n- Number of Attention Heads (GQA): 12 for Q and 2 for KV\n- Context Length: Full 32,768 tokens and generation 8192 tokens\n\nFor more details, please refer to our [blog](https://qwenlm.github.io/blog/qwen2.5/), [GitHub](https://github.com/QwenLM/Qwen2.5), and [Documentation](https://qwen.readthedocs.io/en/latest/).\n\n## Requirements\n\nThe code of Qwen2.5 has been in the latest Hugging face `transformers` and we advise you to use the latest version of `transformers`.\n\nWith `transformers<4.37.0`, you will encounter the following error:\n```\nKeyError: 'qwen2'\n```\n\n## Quickstart\n\nHere provides a code snippet with `apply_chat_template` to show you how to load the tokenizer and model and how to generate contents.\n\n```python\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\nmodel_name = \"Qwen/Qwen2.5-1.5B-Instruct\"\n\nmodel = AutoModelForCausalLM.from_pretrained(\n    model_name,\n    torch_dtype=\"auto\",\n    device_map=\"auto\"\n)\ntokenizer = AutoTokenizer.from_pretrained(model_name)\n\nprompt = \"Give me a short introduction to large language model.\"\nmessages = [\n    {\"role\": \"system\", \"content\": \"You are Qwen, created by Alibaba Cloud. You are a helpful assistant.\"},\n    {\"role\": \"user\", \"content\": prompt}\n]\ntext = tokenizer.apply_chat_template(\n    messages,\n    tokenize=False,\n    add_generation_prompt=True\n)\nmodel_inputs = tokenizer([text], return_tensors=\"pt\").to(model.device)\n\ngenerated_ids = model.generate(\n    **model_inputs,\n    max_new_tokens=512\n)\ngenerated_ids = [\n    output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)\n]\n\nresponse = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]\n```\n\n\n## Evaluation & Performance\n\nDetailed evaluation results are reported in this [\ud83d\udcd1 blog](https://qwenlm.github.io/blog/qwen2.5/).\n\nFor requirements on GPU memory and the respective throughput, see results [here](https://qwen.readthedocs.io/en/latest/benchmark/speed_benchmark.html).\n\n## Citation\n\nIf you find our work helpful, feel free to give us a cite.\n\n```\n@misc{qwen2.5,\n    title = {Qwen2.5: A Party of Foundation Models},\n    url = {https://qwenlm.github.io/blog/qwen2.5/},\n    author = {Qwen Team},\n    month = {September},\n    year = {2024}\n}\n\n@article{qwen2,\n      title={Qwen2 Technical Report}, \n      author={An Yang and Baosong Yang and Binyuan Hui and Bo Zheng and Bowen Yu and Chang Zhou and Chengpeng Li and Chengyuan Li and Dayiheng Liu and Fei Huang and Guanting Dong and Haoran Wei and Huan Lin and Jialong Tang and Jialin Wang and Jian Yang and Jianhong Tu and Jianwei Zhang and Jianxin Ma and Jin Xu and Jingren Zhou and Jinze Bai and Jinzheng He and Junyang Lin and Kai Dang and Keming Lu and Keqin Chen and Kexin Yang and Mei Li and Mingfeng Xue and Na Ni and Pei Zhang and Peng Wang and Ru Peng and Rui Men and Ruize Gao and Runji Lin and Shijie Wang and Shuai Bai and Sinan Tan and Tianhang Zhu and Tianhao Li and Tianyu Liu and Wenbin Ge and Xiaodong Deng and Xiaohuan Zhou and Xingzhang Ren and Xinyu Zhang and Xipin Wei and Xuancheng Ren and Yang Fan and Yang Yao and Yichang Zhang and Yu Wan and Yunfei Chu and Yuqiong Liu and Zeyu Cui and Zhenru Zhang and Zhihao Fan},\n      journal={arXiv preprint arXiv:2407.10671},\n      year={2024}\n}\n```",
+  "fetched_at": "2026-09-19T15:02:45.222537+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "Qwen/Qwen2.5-1.5B"
+    ],
+    "card_base_models": [
+      "Qwen/Qwen2.5-1.5B"
+    ],
+    "merge_tags": [],
+    "n_base_models": 1,
+    "relations": {
+      "": [
+        "Qwen/Qwen2.5-1.5B"
+      ],
+      "finetune": [
+        "Qwen/Qwen2.5-1.5B"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "Qwen",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "qwen2",
+      "text-generation",
+      "chat",
+      "conversational",
+      "en",
+      "arxiv:2407.10671",
+      "base_model:Qwen/Qwen2.5-1.5B",
+      "base_model:finetune:Qwen/Qwen2.5-1.5B",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "qwen2.5-1.5b-instruct",
+  "ok": true,
+  "popularity": {
+    "downloads": 7239606,
+    "downloadsAllTime": 218266167,
+    "likes": 837,
+    "trendingScore": 9
+  },
+  "repo_id": "Qwen/Qwen2.5-1.5B-Instruct",
+  "resolved_via": "search",
+  "search_candidates": [
+    [
+      "Qwen/Qwen2.5-1.5B-Instruct",
+      7239606
+    ],
+    [
+      "Qwen/Qwen2.5-1.5B-Instruct-GGUF",
+      213599
+    ],
+    [
+      "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      569628
+    ],
+    [
+      "Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+      109968
+    ],
+    [
+      "unsloth/Qwen2.5-1.5B-Instruct-bnb-4bit",
+      57803
+    ],
+    [
+      "mradermacher/Qwen2.5-1.5B-Instruct-uncensored-GGUF",
+      7046
+    ],
+    [
+      "OpenVINO/Qwen2.5-1.5B-Instruct-int4-ov",
+      2035
+    ],
+    [
+      "litert-community/Qwen2.5-1.5B-Instruct",
+      70496
+    ],
+    [
+      "Kempis/qwen-2.5-1.5b-instruct-Sarcasm-LoRA",
+      0
+    ],
+    [
+      "nosynx/Qwen2.5-1.5B-Instruct",
+      197
+    ],
+    [
+      "Qwen/Qwen2.5-Math-1.5B-Instruct",
+      298967
+    ],
+    [
+      "Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4",
+      2473
+    ],
+    [
+      "Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int8",
+      666
+    ],
+    [
+      "Qwen/Qwen2.5-1.5B-Instruct-AWQ",
+      152733
+    ],
+    [
+      "bartowski/Qwen2.5-1.5B-Instruct-GGUF",
+      66511
+    ],
+    [
+      "lmstudio-community/Qwen2.5-1.5B-Instruct-GGUF",
+      4436
+    ],
+    [
+      "MaziyarPanahi/Qwen2.5-1.5B-Instruct-GGUF",
+      154468
+    ],
+    [
+      "mlx-community/Qwen2.5-1.5B-Instruct-bf16",
+      355
+    ],
+    [
+      "mlx-community/Qwen2.5-1.5B-Instruct-8bit",
+      142
+    ],
+    [
+      "mlx-community/Qwen2.5-1.5B-Instruct-4bit",
+      23357
+    ],
+    [
+      "bartowski/Qwen2.5-Math-1.5B-Instruct-GGUF",
+      22788
+    ],
+    [
+      "lmstudio-community/Qwen2.5-Math-1.5B-Instruct-GGUF",
+      1114
+    ],
+    [
+      "bartowski/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+      38371
+    ],
+    [
+      "lmstudio-community/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+      6640
+    ],
+    [
+      "mlc-ai/Qwen2.5-1.5B-Instruct-q4f16_1-MLC",
+      17179
+    ],
+    [
+      "mlc-ai/Qwen2.5-1.5B-Instruct-q0f16-MLC",
+      2
+    ],
+    [
+      "mlc-ai/Qwen2.5-1.5B-Instruct-q4f32_1-MLC",
+      1081
+    ],
+    [
+      "neopolita/qwen2.5-1.5b-instruct-gguf",
+      332
+    ],
+    [
+      "mlc-ai/Qwen2.5-Coder-1.5B-Instruct-q4f16_1-MLC",
+      13796
+    ],
+    [
+      "mlc-ai/Qwen2.5-Coder-1.5B-Instruct-q0f16-MLC",
+      1
+    ],
+    [
+      "mlc-ai/Qwen2.5-Coder-1.5B-Instruct-q4f32_1-MLC",
+      167
+    ],
+    [
+      "unsloth/Qwen2.5-1.5B-Instruct",
+      32417
+    ],
+    [
+      "mlx-community/Qwen2.5-Math-1.5B-Instruct-4bit",
+      102
+    ],
+    [
+      "neopolita/qwen2.5-coder-1.5b-instruct-gguf",
+      253
+    ],
+    [
+      "CalamitousFelicitousness/Qwen2.5-1.5B-Instruct-fp8-dynamic",
+      20
+    ],
+    [
+      "neopolita/qwen2.5-math-1.5b-instruct-gguf",
+      226
+    ],
+    [
+      "mlx-community/Qwen2.5-Coder-1.5B-Instruct-bf16",
+      361
+    ],
+    [
+      "mlx-community/Qwen2.5-Coder-1.5B-Instruct-8bit",
+      135
+    ],
+    [
+      "mlx-community/Qwen2.5-Coder-1.5B-Instruct-4bit",
+      2545
+    ],
+    [
+      "mlx-community/Qwen2.5-Math-1.5B-Instruct-bf16",
+      33
+    ],
+    [
+      "mlx-community/Qwen2.5-Math-1.5B-Instruct-8bit",
+      36
+    ],
+    [
+      "second-state/Qwen2.5-1.5B-Instruct-GGUF",
+      959
+    ],
+    [
+      "gaianet/Qwen2.5-1.5B-Instruct-GGUF",
+      660
+    ],
+    [
+      "DevQuasar-3/Qwen2.5-Math-1.5B-Instruct-GGUF",
+      328
+    ],
+    [
+      "QuantFactory/Qwen2.5-1.5B-Instruct-GGUF",
+      1688
+    ],
+    [
+      "QuantFactory/Qwen2.5-Math-1.5B-Instruct-GGUF",
+      696
+    ],
+    [
+      "QuantFactory/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+      2034
+    ],
+    [
+      "legraphista/Qwen2.5-1.5B-Instruct-IMat-GGUF",
+      2177
+    ],
+    [
+      "ThomasBaruzier/Qwen2.5-1.5B-Instruct-GGUF",
+      2767
+    ],
+    [
+      "mlc-ai/Qwen2.5-Math-1.5B-Instruct-q4f16_1-MLC",
+      62
+    ],
+    [
+      "mlc-ai/Qwen2.5-Math-1.5B-Instruct-q0f16-MLC",
+      2
+    ],
+    [
+      "mlc-ai/Qwen2.5-Math-1.5B-Instruct-q4f32_1-MLC",
+      21
+    ],
+    [
+      "reponislam/qwen2.5_1.5B_instruct_finetuned_alpaca",
+      29
+    ],
+    [
+      "pablobutrong/Qwen2.5-1.5B-Instruct-q4f16_1",
+      0
+    ],
+    [
+      "legraphista/Qwen2.5-Coder-1.5B-Instruct-IMat-GGUF",
+      1160
+    ],
+    [
+      "legraphista/Qwen2.5-Math-1.5B-Instruct-IMat-GGUF",
+      1188
+    ],
+    [
+      "second-state/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+      991
+    ],
+    [
+      "gaianet/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+      697
+    ],
+    [
+      "second-state/Qwen2.5-Math-1.5B-Instruct-GGUF",
+      957
+    ],
+    [
+      "gaianet/Qwen2.5-Math-1.5B-Instruct-GGUF",
+      386
+    ],
+    [
+      "Qwen/Qwen2.5-Coder-1.5B-Instruct-GPTQ-Int4",
+      450
+    ],
+    [
+      "Qwen/Qwen2.5-Coder-1.5B-Instruct-GPTQ-Int8",
+      349
+    ],
+    [
+      "Qwen/Qwen2.5-Coder-1.5B-Instruct-AWQ",
+      4528
+    ],
+    [
+      "SujanKarki/Qwen2.5-Coder-1.5B-Instruct_text_to_sql_qlora",
+      0
+    ],
+    [
+      "Goekdeniz-Guelmez/Josiefied-Qwen2.5-1.5B-Instruct-abliterated-v1",
+      988
+    ],
+    [
+      "Goekdeniz-Guelmez/Josiefied-Qwen2.5-1.5B-Instruct-abliterated-v1-gguf",
+      1404
+    ],
+    [
+      "mlx-community/Josiefied-Qwen2.5-1.5B-Instruct-abliterated-v1-4bit",
+      119
+    ],
+    [
+      "mlx-community/Josiefied-Qwen2.5-1.5B-Instruct-abliterated-v1-8bit",
+      38
+    ],
+    [
+      "mlx-community/Josiefied-Qwen2.5-1.5B-Instruct-abliterated-v1-2bit",
+      71
+    ],
+    [
+      "mlx-community/Josiefied-Qwen2.5-1.5B-Instruct-abliterated-v1-f16",
+      73
+    ],
+    [
+      "mukel/Qwen2.5-1.5B-Instruct-GGUF",
+      106
+    ],
+    [
+      "mukel/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+      76
+    ],
+    [
+      "unsloth/Qwen2.5-Math-1.5B-Instruct-bnb-4bit",
+      469
+    ],
+    [
+      "unsloth/Qwen2.5-Math-1.5B-Instruct",
+      271
+    ],
+    [
+      "onnx-community/Qwen2.5-1.5B-Instruct",
+      3459
+    ],
+    [
+      "onnx-community/Qwen2.5-Coder-1.5B-Instruct",
+      448
+    ],
+    [
+      "onnx-community/Qwen2.5-Math-1.5B-Instruct",
+      26
+    ],
+    [
+      "unsloth/Qwen2.5-Coder-1.5B-Instruct-bnb-4bit",
+      21834
+    ],
+    [
+      "unsloth/Qwen2.5-Coder-1.5B-Instruct",
+      7009
+    ],
+    [
+      "EmbeddedLLM/Qwen2.5-1.5B-Instruct-int4-sym-ov",
+      10
+    ],
+    [
+      "mradermacher/Qwen2.5-Math-1.5B-Instruct-GGUF",
+      1630
+    ],
+    [
+      "mradermacher/Qwen2.5-1.5B-Instruct-GGUF",
+      2586
+    ],
+    [
+      "mradermacher/Qwen2.5-1.5B-Instruct-i1-GGUF",
+      3358
+    ],
+    [
+      "mradermacher/Qwen2.5-Math-1.5B-Instruct-i1-GGUF",
+      3801
+    ],
+    [
+      "jykim310/Qwen2.5-1.5B-Instruct-q4f16_2-MLC",
+      0
+    ],
+    [
+      "taobao-mnn/Qwen2.5-1.5B-Instruct-MNN",
+      235
+    ],
+    [
+      "taobao-mnn/Qwen2.5-Coder-1.5B-Instruct-MNN",
+      459
+    ],
+    [
+      "taobao-mnn/Qwen2.5-Math-1.5B-Instruct-MNN",
+      49
+    ],
+    [
+      "mukel/Qwen2.5-Math-1.5B-Instruct-GGUF",
+      53
+    ],
+    [
+      "RichardErkhov/unsloth_-_Qwen2.5-1.5B-Instruct-gguf",
+      782
+    ],
+    [
+      "RichardErkhov/Qwen_-_Qwen2.5-Coder-1.5B-Instruct-gguf",
+      876
+    ],
+    [
+      "RichardErkhov/Qwen_-_Qwen2.5-1.5B-Instruct-gguf",
+      598
+    ],
+    [
+      "DreamGallery/Qwen-Qwen2.5-1.5B-Instruct-1727452927",
+      7
+    ],
+    [
+      "robertvacareanu/instruct-rl-Qwen2.5-1.5B-databricks-dolly-15k",
+      15
+    ],
+    [
+      "jfranklin-foundry/Qwen-Qwen2.5-1.5B-Instruct-1727463626",
+      7
+    ],
+    [
+      "RichardErkhov/Qwen_-_Qwen2.5-Math-1.5B-Instruct-gguf",
+      2327
+    ],
+    [
+      "silent666/Qwen-Qwen2.5-1.5B-Instruct-1727478552",
+      8
+    ],
+    [
+      "silent666/Qwen-Qwen2.5-1.5B-Instruct-1727478816",
+      10
+    ],
+    [
+      "Goekdeniz-Guelmez/Josiefied-Qwen2.5-1.5B-Instruct-abliterated-v2",
+      71
+    ],
+    [
+      "Goekdeniz-Guelmez/Josiefied-Qwen2.5-1.5B-Instruct-abliterated-v3",
+      171
+    ]
+  ],
+  "timestamps": {
+    "createdAt": "2024-09-17T14:10:29.000Z",
+    "lastModified": "2024-09-25T12:32:50.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

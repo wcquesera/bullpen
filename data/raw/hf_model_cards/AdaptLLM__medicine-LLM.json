@@ -1,0 +1,95 @@
+{
+  "architecture": {
+    "architectures": [
+      "LLaMAForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 11008,
+    "max_position_embeddings": null,
+    "model_type": "llama",
+    "n_parameters": 6738425856,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": null,
+    "parameter_dtypes": {
+      "F16": 262420480,
+      "F32": 6476005376
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32001
+  },
+  "card_chars": 8911,
+  "card_text": "---\nlanguage:\n- en\ndatasets:\n- Open-Orca/OpenOrca\n- GAIR/lima\n- WizardLM/WizardLM_evol_instruct_V2_196k\n- EleutherAI/pile\nmetrics:\n- accuracy\npipeline_tag: text-generation\ntags:\n- biology\n- medical\n---\n\n# Adapting LLMs to Domains via Continual Pre-Training (ICLR 2024)\nThis repo contains the domain-specific base model developed from **LLaMA-1-7B**, using the method in our paper [Adapting Large Language Models via Reading Comprehension](https://huggingface.co/papers/2309.09530).\n\nWe explore **continued pre-training on domain-specific corpora** for large language models. While this approach enriches LLMs with domain knowledge, it significantly hurts their prompting ability for question answering. Inspired by human learning via reading comprehension, we propose a simple method to **transform large-scale pre-training corpora into reading comprehension texts**, consistently improving prompting performance across tasks in biomedicine, finance, and law domains. **Our 7B model competes with much larger domain-specific models like BloombergGPT-50B**. \n\n\n### [2024/11/29] \ud83e\udd17 Introduce the multimodal version of AdaptLLM at [AdaMLLM](https://huggingface.co/papers/2411.19930), for adapting MLLMs to domains \ud83e\udd17\n\n**************************** **Updates** ****************************\n* 2024/11/29: Released [AdaMLLM](https://huggingface.co/AdaptLLM/Adapt-MLLM-to-Domains) for adapting MLLMs to domains\n* 2024/9/20: Our [research paper for Instruction-Pretrain](https://huggingface.co/papers/2406.14491) has been accepted by EMNLP 2024\n* 2024/8/29: Updated [guidelines](https://huggingface.co/datasets/AdaptLLM/finance-tasks) on evaluating any \ud83e\udd17Huggingface models on the domain-specific tasks\n* 2024/6/22: Released the [benchmarking code](https://github.com/microsoft/LMOps/tree/main/adaptllm)\n* 2024/6/21: Released the general version of AdaptLLM at [Instruction-Pretrain](https://huggingface.co/instruction-pretrain)\n* 2024/4/2: Released the [raw data splits (train and test)](https://huggingface.co/datasets/AdaptLLM/ConvFinQA) of all the evaluation datasets\n* 2024/1/16: Our [research paper for AdaptLLM](https://huggingface.co/papers/2309.09530) has been accepted by ICLR 2024\n* 2023/12/19: Released our [13B base models](https://huggingface.co/AdaptLLM/law-LLM-13B) developed from LLaMA-1-13B\n* 2023/12/8: Released our [chat models](https://huggingface.co/AdaptLLM/law-chat) developed from LLaMA-2-Chat-7B\n* 2023/9/18: Released our [paper](https://huggingface.co/papers/2309.09530), [code](https://github.com/microsoft/LMOps), [data](https://huggingface.co/datasets/AdaptLLM/law-tasks), and [base models](https://huggingface.co/AdaptLLM/law-LLM) developed from LLaMA-1-7B\n\n\n## 1. Domain-Specific Models\n### LLaMA-1-7B\nIn our paper, we develop three domain-specific models from LLaMA-1-7B, which are also available in Huggingface: [Biomedicine-LLM](https://huggingface.co/AdaptLLM/medicine-LLM), [Finance-LLM](https://huggingface.co/AdaptLLM/finance-LLM) and [Law-LLM](https://huggingface.co/AdaptLLM/law-LLM), the performances of our AdaptLLM compared to other domain-specific LLMs are:\n\n<p align='center'>\n    <img src=\"https://cdn-uploads.huggingface.co/production/uploads/650801ced5578ef7e20b33d4/6efPwitFgy-pLTzvccdcP.png\" width=\"700\">\n</p>\n\n### LLaMA-1-13B\nMoreover, we scale up our base model to LLaMA-1-13B to see if **our method is similarly effective for larger-scale models**, and the results are consistently positive too: [Biomedicine-LLM-13B](https://huggingface.co/AdaptLLM/medicine-LLM-13B), [Finance-LLM-13B](https://huggingface.co/AdaptLLM/finance-LLM-13B) and [Law-LLM-13B](https://huggingface.co/AdaptLLM/law-LLM-13B).\n\n### LLaMA-2-Chat\nOur method is also effective for aligned models! LLaMA-2-Chat requires a [specific data format](https://huggingface.co/blog/llama2#how-to-prompt-llama-2), and our **reading comprehension can perfectly fit the data format** by transforming the reading comprehension into a multi-turn conversation. We have also open-sourced chat models in different domains: [Biomedicine-Chat](https://huggingface.co/AdaptLLM/medicine-chat), [Finance-Chat](https://huggingface.co/AdaptLLM/finance-chat) and [Law-Chat](https://huggingface.co/AdaptLLM/law-chat).\n\nFor example, to chat with the biomedicine base model (\ud83e\udd17we highly recommend switching to the [chat model](https://huggingface.co/AdaptLLM/medicine-chat) for better response quality):\n```python\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\nmodel = AutoModelForCausalLM.from_pretrained(\"AdaptLLM/medicine-LLM\")\ntokenizer = AutoTokenizer.from_pretrained(\"AdaptLLM/medicine-LLM\", use_fast=False)\n\n# Put your input here:\nuser_input = '''Question: Which of the following is an example of monosomy?\nOptions:\n- 46,XX\n- 47,XXX\n- 69,XYY\n- 45,X\n\nPlease provide your choice first and then provide explanations if possible.'''\n\n# Simply use your input as the prompt for base models\nprompt = user_input\n\ninputs = tokenizer(prompt, return_tensors=\"pt\", add_special_tokens=False).input_ids.to(model.device)\noutputs = model.generate(input_ids=inputs, max_length=2048)[0]\n\nanswer_start = int(inputs.shape[-1])\npred = tokenizer.decode(outputs[answer_start:], skip_special_tokens=True)\n\nprint(pred)\n```\n\n### LLaMA-3-8B (\ud83d\udca1New!)\nIn our recent research on [Instruction-Pretrain](https://huggingface.co/papers/2406.14491), we developed a context-based instruction synthesizer to augment the raw corpora with instruction-response pairs, **enabling Llama3-8B to be comparable to or even outperform Llama3-70B**: [Finance-Llama3-8B](https://huggingface.co/instruction-pretrain/finance-Llama3-8B), [Biomedicine-Llama3-8B](https://huggingface.co/instruction-pretrain/medicine-Llama3-8B).\n\n## 2. Domain-Specific Tasks\n\n### Pre-templatized Testing Splits\nTo easily reproduce our prompting results, we have uploaded the filled-in zero/few-shot input instructions and output completions of the test each domain-specific task: [biomedicine-tasks](https://huggingface.co/datasets/AdaptLLM/medicine-tasks), [finance-tasks](https://huggingface.co/datasets/AdaptLLM/finance-tasks), and [law-tasks](https://huggingface.co/datasets/AdaptLLM/law-tasks).\n\nNote: those filled-in instructions are specifically tailored for models before alignment and do NOT fit for the specific data format required for chat models.\n\n### Evaluating Any Huggingface LMs on Domain-Specific Tasks (\ud83d\udca1New!)\nYou can use the following script to reproduce our results and evaluate any other Huggingface models on domain-specific tasks. Note that the script is NOT applicable to models that require specific prompt templates (e.g., Llama2-chat, Llama3-Instruct).\n\n1). **Set Up Dependencies**\n   ```bash\n   git clone https://github.com/microsoft/LMOps\n   cd LMOps/adaptllm\n   pip install -r requirements.txt\n   ```\n\n2). **Evaluate the Model**\n   ```bash\n   # Select the domain from ['biomedicine', 'finance', 'law']\n   DOMAIN='biomedicine'\n  \n   # Specify any Huggingface model name (Not applicable to chat models)\n   MODEL='AdaptLLM/medicine-LLM'\n  \n   # Model parallelization:\n   # - Set MODEL_PARALLEL=False if the model fits on a single GPU. \n   #   We observe that LMs smaller than 10B always meet this requirement.\n   # - Set MODEL_PARALLEL=True if the model is too large and encounters OOM on a single GPU.\n   MODEL_PARALLEL=False\n  \n   # Choose the number of GPUs from [1, 2, 4, 8]\n   N_GPU=1\n  \n   # Whether to add a BOS token at the beginning of the prompt input:\n   # - Set to False for AdaptLLM.\n   # - Set to True for instruction-pretrain models.\n   # If unsure, we recommend setting it to False, as this is suitable for most LMs.\n   add_bos_token=False\n\n   # Run the evaluation script\n   bash scripts/inference.sh ${DOMAIN} ${MODEL} ${add_bos_token} ${MODEL_PARALLEL} ${N_GPU}\n   ```\n\n### Raw Datasets\nWe have also uploaded the raw training and testing splits, for facilitating fine-tuning or other usages: [ChemProt](https://huggingface.co/datasets/AdaptLLM/ChemProt), [RCT](https://huggingface.co/datasets/AdaptLLM/RCT), [ConvFinQA](https://huggingface.co/datasets/AdaptLLM/ConvFinQA), [FiQA_SA](https://huggingface.co/datasets/AdaptLLM/FiQA_SA), [Headline](https://huggingface.co/datasets/AdaptLLM/Headline), [NER](https://huggingface.co/datasets/AdaptLLM/NER), [FPB](https://huggingface.co/datasets/AdaptLLM/FPB)\n\n### Domain Knowledge Probing\nOur pre-processed knowledge probing datasets are available at: [med_knowledge_prob](https://huggingface.co/datasets/AdaptLLM/med_knowledge_prob) and [law_knowledge_prob](https://huggingface.co/datasets/AdaptLLM/law_knowledge_prob)\n\n## Citation\nIf you find our work helpful, please cite us:\n```bibtex\n@inproceedings{\ncheng2024adapting,\ntitle={Adapting Large Language Models via Reading Comprehension},\nauthor={Daixuan Cheng and Shaohan Huang and Furu Wei},\nbooktitle={The Twelfth International Conference on Learning Representations},\nyear={2024},\nurl={https://openreview.net/forum?id=y886UXPEZ0}\n}\n```",
+  "fetched_at": "2026-09-19T15:00:02.474439+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "AdaptLLM",
+    "gated": false,
+    "library_name": "transformers",
+    "license": null,
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "biology",
+      "medical",
+      "en",
+      "dataset:Open-Orca/OpenOrca",
+      "dataset:GAIR/lima",
+      "dataset:WizardLM/WizardLM_evol_instruct_V2_196k",
+      "dataset:EleutherAI/pile",
+      "arxiv:2309.09530",
+      "arxiv:2411.19930",
+      "arxiv:2406.14491",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "AdaptLLM__medicine-LLM",
+  "ok": true,
+  "popularity": {
+    "downloads": 98,
+    "downloadsAllTime": 17456,
+    "likes": 48,
+    "trendingScore": 0
+  },
+  "repo_id": "AdaptLLM/medicine-LLM",
+  "resolved_via": "footprint",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-18T07:59:28.000Z",
+    "lastModified": "2024-12-02T06:25:50.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": true,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

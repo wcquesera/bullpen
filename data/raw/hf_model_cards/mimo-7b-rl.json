@@ -1,0 +1,286 @@
+{
+  "architecture": {
+    "architectures": [
+      "MiMoForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 11008,
+    "max_position_embeddings": 32768,
+    "model_type": "mimo",
+    "n_parameters": 7833409536,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 36,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "BF16": 7833409536
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 151680
+  },
+  "card_chars": 15465,
+  "card_text": "---\nlicense: mit\nlibrary_name: transformers\n---\n<div align=\"center\">\n  <picture>\n    <source srcset=\"https://github.com/XiaomiMiMo/MiMo/raw/main/figures/Xiaomi_MiMo_darkmode.png?raw=true\" media=\"(prefers-color-scheme: dark)\">\n    <img src=\"https://github.com/XiaomiMiMo/MiMo/raw/main/figures/Xiaomi_MiMo.png?raw=true\" width=\"60%\" alt=\"Xiaomi-MiMo\" />\n  </picture>\n</div>\n\n<h3 align=\"center\">\n  <b>\n    <span>\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501</span>\n    <br/>\n    Unlocking the Reasoning Potential of Language Model<br/>From Pretraining to Posttraining\n    <br/>\n    <span>\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501</span>\n    <br/>\n  </b>\n</h3>\n\n<br/>\n\n<div align=\"center\" style=\"line-height: 1;\">\n  |\n  <a href=\"https://huggingface.co/XiaomiMiMo\" target=\"_blank\">\ud83e\udd17 HuggingFace</a>\n  &nbsp;|\n  <a href=\"https://www.modelscope.cn/organization/XiaomiMiMo\" target=\"_blank\">\ud83e\udd16\ufe0f ModelScope</a>\n  &nbsp;|\n  <a href=\"https://arxiv.org/abs/2505.07608\" target=\"_blank\">\ud83d\udcd4 Technical Report</a>\n  &nbsp;|\n  <br/>\n</div>\n\n<br/>\n\n---\n\n## Updates\n\n[2025.05.30] We scaled the SFT dataset from approximately 500K to 6M instances and continuously expanding the RL training window size from 32K to 48K, the performance of [MiMo-7B-RL-0530](https://huggingface.co/XiaomiMiMo/MiMo-7B-RL-0530) on AIME24 can be continuously improved and eventually surpass that of DeepSeek R1 (79.8).\n\n<table>\n  <thead>\n    <tr>\n      <th>Benchmark</th>\n      <th>MiMo-7B-RL</th>\n      <th>MiMo-7B-RL-0530</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td colspan=\"3\"><strong>Mathematics</strong></td>\n      <p align=\"center\">\n        <td rowspan=\"11\"><img width=\"80%\" src=\"https://github.com/XiaomiMiMo/MiMo/raw/main/figures/length.jpg?raw=true\"></td>\n      </p>\n    </tr>\n    <tr><td>MATH500<br/>(Pass@1)</td><td>95.8</td><td>97.2</td></tr>\n    <tr><td>AIME 2024<br/>(Pass@1)</td><td>68.2</td><td>80.1</td></tr>\n    <tr><td>AIME 2025<br/>(Pass@1)</td><td>55.4</td><td>70.2</td></tr>\n    <tr><td colspan=\"3\"><strong>Code</strong></td></tr>\n    <tr><td>LiveCodeBench v5<br/>(Pass@1)</td><td>57.8</td><td>60.9</td></tr>\n    <tr><td>LiveCodeBench v6<br/>(Pass@1)</td><td>49.3</td><td>52.2</td></tr>\n    <tr><td colspan=\"3\"><strong>STEM</strong></td></tr>\n    <tr><td>GPQA-Diamond<br/>(Pass@1)</td><td>54.4</td><td>60.6</td></tr>\n    <tr><td colspan=\"3\"><strong>General</strong></td></tr>\n    <tr><td>Alignbench1.1<br/>(Evaluated by GPT4.1)</td><td>6.9</td><td>7.4</td></tr>\n  </tbody>\n</table>\n\n---\n\n## I. Introduction\n\nCurrently, most successful RL works, including open-source research, rely on relatively large base models, e.g., 32B models, particularly for enhancing code reasoning capabilities. Moreover, it was widely considered that achieving uniform and simultaneous improvements in both mathematical and code capabilities within a small model is challenging. Nonetheless, we believe that the effectiveness of the RL trained reasoning model relies on the inherent reasoning potential of the base model. To fully unlock the reasoning potential of language models, efforts must focus not only on post-training but also on pre-training strategies tailored to reasoning.\n\nIn this work, we present MiMo-7B, a series of models trained from scratch and born for reasoning tasks. Our RL experiments from MiMo-7B-Base show that our model possesses extraordinary reasoning potential, even surpassing much larger 32B models. Additionally, we perform RL training on a cold-started SFT model, resulting in MiMo-7B-RL, which demonstrates superior performance on both mathematics and code reasoning tasks, matching the performance of OpenAI o1-mini.\n\n<p align=\"center\">\n  <img width=\"80%\" src=\"https://github.com/XiaomiMiMo/MiMo/raw/main/figures/curve.png?raw=true\">\n</p>\n\nWe open-source MiMo-7B series, including checkpoints of the base model, SFT model, RL model trained from base model, and RL model trained from the SFT model.\nWe believe this report along with the models will provide valuable insights to develop powerful reasoning LLMs that benefit the larger community.\n\n### \ud83c\udf1f Highlights\n\n- **Pre-Training: Base Model Born for Reasoning**\n  - We optimize the data preprocessing pipeline, enhancing text extraction toolkits and applying multi-dimensional data filtering to increase reasoning pattern density in pre-training data. We also employ multiple strategies to generate massive diverse synthetic reasoning data.\n  - We adopt a three-stage data mixture strategy for pre-training. Overall, MiMo-7B-Base is pre-trained on approximately 25 trillion tokens.\n  - We incorporate Multiple-Token Prediction as an additional training objective, which enhances model performance and accelerates inference.\n\n- **Post-Training Recipe: Pioneering Reasoning Model**\n    - We curate 130K mathematics and code problems as RL training data, which can be verified by rule-based verifiers. Each problem undergoes careful cleaning and difficulty assessment to ensure quality. We employ only rule-based accuracy rewards to avoid potential reward hacking.\n    - To mitigate the sparse reward issue for challenging code problems, we introduce a test difficulty driven code reward. By assigning fine-grained scores for test cases with varying difficulty levels, the policy can be more effectively optimized via dense reward signal.\n    - We implement a data re-sampling strategy for easy problems to enhance rollout sampling efficiency and stabilize policy updates, particularly in the later phases of RL training.\n\n- **RL Infrastructure**\n    - We develop a Seamless Rollout Engine to accelerate RL training and validation. Our design integrates continuous rollout, asynchronous reward computation, and early termination to minimize GPU idle time, achieving $2.29\\times$ faster training and $1.96\\times$ faster validation.\n    - We support MTP in vLLM and enhance the robustness of the inference engine in the RL system.\n\n## II. Model Details\n\nThe MTP layers of MiMo-7B is tuned during pretraining and SFT and freezed during RL. With one MTP layer for speculative decoding, the acceptance rate is about 90%.\n\n<p align=\"center\">\n  <img width=\"80%\" src=\"https://github.com/XiaomiMiMo/MiMo/raw/main/figures/architecture.png?raw=true\">\n</p>\n\n> Models are available at [https://huggingface.co/XiaomiMiMo](https://huggingface.co/XiaomiMiMo) and [https://www.modelscope.cn/organization/XiaomiMiMo](https://www.modelscope.cn/organization/XiaomiMiMo)\n\n|    **Model**    |                                **Description**                                |                            **Download (HuggingFace)**                             |                                  **Download (ModelScope)**                                  |\n| :-------------: | :---------------------------------------------------------------------------: | :-------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: |\n|  MiMo-7B-Base   |               Base model with extraordinary reasoning potential               |    [\ud83e\udd17 XiaomiMiMo/MiMo-7B-Base](https://huggingface.co/XiaomiMiMo/MiMo-7B-Base)    |    [\ud83e\udd16\ufe0f XiaomiMiMo/MiMo-7B-Base](https://www.modelscope.cn/models/XiaomiMiMo/MiMo-7B-Base)    |\n| MiMo-7B-RL-Zero |                       RL model trained from base model                        | [\ud83e\udd17 XiaomiMiMo/MiMo-7B-RL-Zero](https://huggingface.co/XiaomiMiMo/MiMo-7B-RL-Zero) | [\ud83e\udd16\ufe0f XiaomiMiMo/MiMo-7B-RL-Zero](https://www.modelscope.cn/models/XiaomiMiMo/MiMo-7B-RL-Zero) |\n|   MiMo-7B-SFT   |                       SFT model trained from base model                       |     [\ud83e\udd17 XiaomiMiMo/MiMo-7B-SFT](https://huggingface.co/XiaomiMiMo/MiMo-7B-SFT)     |     [\ud83e\udd16\ufe0f XiaomiMiMo/MiMo-7B-SFT](https://www.modelscope.cn/models/XiaomiMiMo/MiMo-7B-SFT)     |\n|   MiMo-7B-RL    | RL model trained from SFT model, superior performance matching OpenAI o1-mini |      [\ud83e\udd17 XiaomiMiMo/MiMo-7B-RL](https://huggingface.co/XiaomiMiMo/MiMo-7B-RL)      |      [\ud83e\udd16\ufe0f XiaomiMiMo/MiMo-7B-RL](https://www.modelscope.cn/models/XiaomiMiMo/MiMo-7B-RL)      |\n\n## III. Evaluation Results\n\n| Benchmark                     | GPT-4o-0513 | Claude-3.5-Sonnet-1022 | OpenAI o1-mini | QwQ-32B-Preview | R1-Distill-Qwen-14B | R1-Distill-Qwen-7B | MiMo-7B-RL |\n| ----------------------------- | :---------: | :--------------------: | :------------: | :-------------: | :-----------------: | :----------------: | :--------: |\n| **General**                   |             |                        |                |                 |                     |                    |            |\n| GPQA Diamond<br/>(Pass@1)     |    49.9     |          65.0          |      60.0      |      54.5       |        59.1         |        49.1        |    54.4    |\n| SuperGPQA<br/>(Pass@1)        |    42.4     |          48.2          |      45.2      |      43.6       |        40.6         |        28.9        |    40.5    |\n| DROP<br/>(3-shot F1)          |    83.7     |          88.3          |      83.9      |      71.2       |        85.5         |        77.0        |    78.7    |\n| MMLU-Pro<br/>(EM)             |    72.6     |          78.0          |      80.3      |      52.0       |        68.8         |        53.5        |    58.6    |\n| IF-Eval<br/>(Prompt Strict)   |    84.3     |          86.5          |      84.8      |      40.4       |        78.3         |        60.5        |    61.0    |\n| **Mathematics**               |             |                        |                |                 |                     |                    |            |\n| MATH-500<br/>(Pass@1)         |    74.6     |          78.3          |      90.0      |      90.6       |        93.9         |        92.8        |    95.8    |\n| AIME 2024<br/>(Pass@1)        |     9.3     |          16.0          |      63.6      |      50.0       |        69.7         |        55.5        |    68.2    |\n| AIME 2025<br/>(Pass@1)        |    11.6     |          7.4           |      50.7      |      32.4       |        48.2         |        38.8        |    55.4    |\n| **Code**                      |             |                        |                |                 |                     |                    |            |\n| LiveCodeBench v5<br/>(Pass@1) |    32.9     |          38.9          |      53.8      |      41.9       |        53.1         |        37.6        |    57.8    |\n| LiveCodeBench v6<br/>(Pass@1) |    30.9     |          37.2          |      46.8      |      39.1       |        31.9         |        23.9        |    49.3    |\n\nMiMo-7B series\n\n| Benchmark                     | MiMo-7B-Base | MiMo-7B-RL-Zero | MiMo-7B-SFT | MiMo-7B-RL |\n| ----------------------------- | :----------: | :-------------: | :---------: | :--------: |\n| **Mathematics**               |              |                 |             |            |\n| MATH500<br/>(Pass@1)          |     37.4     |      93.6       |    93.0     |    95.8    |\n| AIME 2024<br/>(Pass@1)        |     32.9     |      56.4       |    58.7     |    68.2    |\n| AIME 2025<br/>(Pass@1)        |     24.3     |      46.3       |    44.3     |    55.4    |\n| **Code**                      |              |                 |             |            |\n| LiveCodeBench v5<br/>(Pass@1) |     32.9     |      49.1       |    52.3     |    57.8    |\n| LiveCodeBench v6<br/>(Pass@1) |     29.1     |      42.9       |    45.5     |    49.3    |\n\n> [!IMPORTANT]\n> The evaluations are conducted with `temperature=0.6`.\n> \n> AIME24 and AIME25 are with averaged score of 32 repetitions. LiveCodeBench v5 (20240801-20250201), LiveCodeBench v6 (20250201-20250501), GPQA-Diamond and IF-Eval are with averaged score of 8 repetitions. MATH500 and SuperGPQA are with a single run.\n\n## IV. Deployment\n\n### SGLang Inference\n\nThanks to the [MiMo model support](https://github.com/sgl-project/sglang/pull/5921) and [MTP](https://github.com/sgl-project/sglang/pull/6059) from the SGLang team, we supported MiMo in SGLang mainstream.\n\nExample Script\n\n```bash\n# Install the latest SGlang from main branch\npython3 -m uv pip install \"sglang[all] @ git+https://github.com/sgl-project/sglang.git/@main#egg=sglang&subdirectory=python\"\n\n# Launch SGLang Server\npython3 -m sglang.launch_server --model-path XiaomiMiMo/MiMo-7B-RL --host 0.0.0.0 --trust-remote-code\n\n# Launch MTP Server\npython3 -m sglang.launch_server --model-path XiaomiMiMo/MiMo-7B-RL --trust-remote-code \\\n--speculative-algorithm EAGLE --speculative-num-steps 1 --speculative-eagle-topk 1 \\\n--speculative-num-draft-tokens 2  --mem-fraction 0.5\n```\n\nDetailed usage can be found in [SGLang documents](https://docs.sglang.ai/backend/send_request.html).\n\n### vLLM inference\n\n1. [Recommended] We officially support inference with MiMo-MTP using [our fork of vLLM](https://github.com/XiaomiMiMo/vllm/tree/feat_mimo_mtp_stable_073).\n\nExample script\n\n```py\nfrom vllm import LLM, SamplingParams\n\nmodel_path = \"/path/to/MiMo\"\nllm = LLM(\n    model=model_path,\n    trust_remote_code=True,\n    num_speculative_tokens=1,\n    disable_log_stats=False\n)\nsampling_params = SamplingParams(temperature=0.6)\n\nconversation = [\n    {\n        \"role\": \"system\",\n        \"content\": \"\"\n    },\n    {\n        \"role\": \"user\",\n        \"content\": \"Write an essay about the importance of higher education.\",\n    },\n]\n\noutputs = llm.chat(conversation,\n                   sampling_params=sampling_params,\n                   use_tqdm=False)\n\nfor output in outputs:\n    prompt = output.prompt\n    generated_text = output.outputs[0].text\n    print(f\"Prompt: {prompt!r}, Generated text: {generated_text!r}\")\n\nprint(\"=\" * 80)\n```\n\n2. Or, you can register a vLLM loader for MiMo without loading MTP parameters.\n\nYou can copy the [`registry/register_mimo_in_vllm.py`](https://github.com/XiaomiMiMo/MiMo/blob/main/registry/register_mimo_in_vllm.py) to your directory and import it with\n\n```py\nimport register_mimo_in_vllm\n\nfrom vllm import LLM, SamplingParams\n\nmodel_path = \"/path/to/MiMo\"\nllm = LLM(\n    model=model_path,\n    trust_remote_code=True,\n    # num_speculative_tokens=1,\n    disable_log_stats=False\n)\nsampling_params = SamplingParams(temperature=0.6)\n```\n\n### HuggingFace inference\n\nExample script\n\n```py\nfrom transformers import AutoModel, AutoModelForCausalLM, AutoTokenizer\n\nmodel_id = \"XiaomiMiMo/MiMo-7B-RL\"\nmodel = AutoModelForCausalLM.from_pretrained(model_id, trust_remote_code=True)\ntokenizer = AutoTokenizer.from_pretrained(model_id)\ninputs = tokenizer([\"Today is\"], return_tensors='pt')\noutput = model.generate(**inputs, max_new_tokens = 100)\nprint(tokenizer.decode(output.tolist()[0]))\n```\n\n### Recommended environment and prompts\n\n- We recommend using [our fork of vLLM](https://github.com/XiaomiMiMo/vllm/tree/feat_mimo_mtp_stable_073) which is developed based on vLLM 0.7.3.\n- We recommend using empty system prompt.\n\n> We haven't verified MiMo with other inference engines and welcome contributions based on the model definition in the Huggingface repo \ud83d\udcbb.\n\n## V. Citation\n\n```bibtex\n@misc{coreteam2025mimounlockingreasoningpotential,\n      title={MiMo: Unlocking the Reasoning Potential of Language Model -- From Pretraining to Posttraining}, \n      author={LLM-Core-Team Xiaomi},\n      year={2025},\n      eprint={2505.07608},\n      archivePrefix={arXiv},\n      primaryClass={cs.CL},\n      url={https://arxiv.org/abs/2505.07608}, \n}\n```\n\n\n## VI. Contact\n\nPlease contact us at [mimo@xiaomi.com](mailto:mimo@xiaomi.com) or open an issue if you have any questions.\n",
+  "fetched_at": "2026-09-19T15:02:33.419759+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "XiaomiMiMo",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "mit",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "mimo",
+      "text-generation",
+      "conversational",
+      "custom_code",
+      "arxiv:2505.07608",
+      "license:mit",
+      "eval-results",
+      "region:us"
+    ]
+  },
+  "model_key": "mimo-7b-rl",
+  "ok": true,
+  "popularity": {
+    "downloads": 31180,
+    "downloadsAllTime": 1663363,
+    "likes": 278,
+    "trendingScore": 0
+  },
+  "repo_id": "XiaomiMiMo/MiMo-7B-RL",
+  "resolved_via": "search",
+  "search_candidates": [
+    [
+      "XiaomiMiMo/MiMo-7B-RL",
+      31180
+    ],
+    [
+      "XiaomiMiMo/MiMo-7B-RL-Zero",
+      297
+    ],
+    [
+      "taobao-mnn/MiMo-7B-RL-MNN",
+      26
+    ],
+    [
+      "taobao-mnn/MiMo-7B-RL-Zero-MNN",
+      15
+    ],
+    [
+      "quantflex/MiMo-7B-RL-nomtp-GGUF",
+      193
+    ],
+    [
+      "jedisct1/MiMo-7B-RL-GGUF",
+      3203
+    ],
+    [
+      "mlx-community/MiMo-7B-RL-4bit",
+      129
+    ],
+    [
+      "XiaomiMiMo/MiMo-VL-7B-RL",
+      1228
+    ],
+    [
+      "XiaomiMiMo/MiMo-7B-RL-0530",
+      291
+    ],
+    [
+      "mradermacher/MiMo-VL-7B-RL-GGUF",
+      892
+    ],
+    [
+      "mradermacher/MiMo-VL-7B-RL-i1-GGUF",
+      467
+    ],
+    [
+      "ngxson/MiMo-VL-7B-RL-GGUF",
+      244
+    ],
+    [
+      "mlx-community/MiMo-VL-7B-RL-4bit",
+      44
+    ],
+    [
+      "mlx-community/MiMo-VL-7B-RL-bf16",
+      27
+    ],
+    [
+      "mlx-community/MiMo-VL-7B-RL-8bit",
+      38
+    ],
+    [
+      "mlx-community/MiMo-VL-7B-RL-6bit",
+      0
+    ],
+    [
+      "fernandoruiz/MiMo-VL-7B-RL-Q4_0-GGUF",
+      9
+    ],
+    [
+      "yeahdongcn/MiMo-VL-7B-RL-q4_k_m-gguf",
+      131
+    ],
+    [
+      "unsloth/MiMo-VL-7B-RL-GGUF",
+      3879
+    ],
+    [
+      "Mungert/MiMo-VL-7B-RL-GGUF",
+      2430
+    ],
+    [
+      "adrgu371/MiMo-7B-RL-q4.gguf",
+      0
+    ],
+    [
+      "XiaomiMiMo/MiMo-VL-7B-RL-GGUF",
+      264
+    ],
+    [
+      "qnguyen3/mimo-vl-7b-rl-4bit-mlx",
+      19
+    ],
+    [
+      "aibroapp/MiMo-7B-RL-MNN",
+      3
+    ],
+    [
+      "aibroapp/MiMo-7B-RL-Zero-MNN",
+      3
+    ],
+    [
+      "cybertruck32489/MiMo-7B-RL-0530-gpt-oss-lora",
+      0
+    ],
+    [
+      "cybertruck32489/MiMo-7B-RL-0530-gpt-oss-gguf",
+      0
+    ],
+    [
+      "cybertruck32489/MiMo-7B-RL-0530-gpt-oss",
+      0
+    ],
+    [
+      "XiaomiMiMo/MiMo-VL-7B-RL-2508",
+      1232
+    ],
+    [
+      "benxh/MiMo-VL-7B-RL-2508-Q6_K-GGUF",
+      19
+    ],
+    [
+      "mradermacher/MiMo-VL-7B-RL-2508-GGUF",
+      509
+    ],
+    [
+      "mradermacher/MiMo-VL-7B-RL-2508-i1-GGUF",
+      755
+    ],
+    [
+      "mediainbox/MiMo-VL-7B-RL-2508-gptq-q4",
+      11
+    ],
+    [
+      "ykarout/MiMo-VL-7B-RL-2508-Q8_0-GGUF",
+      28
+    ],
+    [
+      "allura-forge/MiMo-7B-RL-0530-Qwenified",
+      15
+    ],
+    [
+      "mradermacher/MiMo-7B-RL-0530-Qwenified-GGUF",
+      183
+    ],
+    [
+      "mradermacher/MiMo-7B-RL-0530-Qwenified-i1-GGUF",
+      663
+    ],
+    [
+      "bartowski/XiaomiMiMo_MiMo-VL-7B-RL-2508-GGUF",
+      1563
+    ],
+    [
+      "zyzshishui0627/MiMo-7B-RL_torch_dist",
+      0
+    ],
+    [
+      "NangWeiLun/MiMo-VL-7B-RL-2508-bnb-4bit-fp4",
+      52118
+    ],
+    [
+      "qurk41/MiMo-VL-7B-RL-2508-mlx-6Bit",
+      94
+    ],
+    [
+      "qurk41/MiMo-VL-7B-RL-2508-mlx-8Bit",
+      31
+    ],
+    [
+      "HongchengGao/MiMo-VL-7B-RL-2508_lora",
+      0
+    ],
+    [
+      "matrixportalx/MiMo-VL-7B-RL-2508-Q4_K_M-GGUF",
+      68
+    ],
+    [
+      "pankun/MiMo-7B-RL-Zero",
+      0
+    ],
+    [
+      "LorenaYannnnn/general_reward-MiMo-7B-RL-OURS_self-seed_0",
+      0
+    ],
+    [
+      "LorenaYannnnn/general_reward-MiMo-7B-RL-baseline_all_tokens-seed_0",
+      0
+    ],
+    [
+      "ericjingzhang/MiMo-VL-7B-RL-AWQ4",
+      8
+    ],
+    [
+      "hrryu/mimo_vl_7b_rl_several_safety_cpt_self_instruct_dft",
+      0
+    ],
+    [
+      "akpsahan/MiMo-VL-7B-RL-GGUF.my-love-mimo",
+      658
+    ]
+  ],
+  "timestamps": {
+    "createdAt": "2025-04-29T23:48:55.000Z",
+    "lastModified": "2025-06-05T15:55:53.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 2048,
+    "model_type": "llama",
+    "n_parameters": 13015866880,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": null,
+    "parameter_dtypes": {
+      "F16": 13015864320,
+      "F32": 2560
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 473,
+  "card_text": "---\nlicense: other\n---\n\nThis contains the weights for the LLaMA-13b model. This model is under a non-commercial license (see the LICENSE file).\nYou should only use this repository if you have been granted access to the model by filling out [this form](https://docs.google.com/forms/d/e/1FAIpQLSfqNECQnMkycAp2jP4Z9TFX0cGR4uf7b_fBxjY_OjhJILlKGA/viewform?usp=send_form) but either lost your copy of the weights or got some trouble converting them to the Transformers format.\n\n",
+  "fetched_at": "2026-09-22T06:45:57.374994+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "huggyllama",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "other",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "license:other",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "deploy:azure",
+      "region:us"
+    ]
+  },
+  "model_key": "huggyllama__llama-13b",
+  "ok": true,
+  "popularity": {
+    "downloads": 1324,
+    "downloadsAllTime": 1055698,
+    "likes": 145,
+    "trendingScore": 0
+  },
+  "repo_id": "huggyllama/llama-13b",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-04-03T23:37:51.000Z",
+    "lastModified": "2023-04-07T15:50:53.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

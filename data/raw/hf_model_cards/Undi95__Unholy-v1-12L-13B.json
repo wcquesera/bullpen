@@ -1,0 +1,86 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 5120,
+    "intermediate_size": 13824,
+    "max_position_embeddings": 4096,
+    "model_type": "llama",
+    "n_parameters": 13015864320,
+    "num_attention_heads": 40,
+    "num_hidden_layers": 40,
+    "num_key_value_heads": 40,
+    "parameter_dtypes": {
+      "BF16": 12688184320,
+      "F32": 327680000
+    },
+    "torch_dtype": "float16",
+    "vocab_size": 32000
+  },
+  "card_chars": 2316,
+  "card_text": "---\nlicense: cc-by-nc-4.0\ntags:\n- not-for-all-audiences\n- nsfw\n---\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/63ab1241ad514ca8d1430003/ysQGHLh1dd6I40rVK_jk2.png)\n\n[HIGHLY EXPERIMENTAL]\n\n(Sister model: https://huggingface.co/Undi95/Unholy-v1-10L-13B)\n\nUse at your own risk, I'm not responsible for any usage of this model, don't try to do anything this model tell you to do.\n\nUncensored.\n\nIf you are censored, it's maybe because of keyword like \"assistant\", \"Factual answer\", or other \"sweet words\" like I call them that trigger the censoring accross all the layer of the model (since they're all trained on some of them in a way).\n\n12L : This is a test project, uukuguy/speechless-llama2-luban-orca-platypus-13b and jondurbin/spicyboros-13b-2.2 was used for a merge, then, I deleted the first 8 layers to add 8 layers of MLewd at the beginning, and do the same from layers 16 to 20, trying to break all censoring possible, before merging the output with MLewd at 0.33 weight.\n\n<!-- description start -->\n## Description\n\nThis repo contains fp16 files of Unholy v1, an uncensored model.\n\n<!-- description end -->\n<!-- description start -->\n## Models used\n\n- uukuguy/speechless-llama2-luban-orca-platypus-13b\n- jondurbin/spicyboros-13b-2.2\n- Undi95/MLewd-L2-13B-v2-3\n\n<!-- description end -->\n<!-- prompt-template start -->\n## Prompt template: Alpaca\n\n```\nBelow is an instruction that describes a task. Write a response that appropriately completes the request.\n\n### Instruction:\n{prompt}\n\n### Response:\n```\n\nExemple:\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/63ab1241ad514ca8d1430003/jaZzEcPP0IET6_KX7J5Hm.png)\n# [Open LLM Leaderboard Evaluation Results](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard)\nDetailed results can be found [here](https://huggingface.co/datasets/open-llm-leaderboard/details_Undi95__Unholy-v1-12L-13B)\n\n| Metric                | Value                     |\n|-----------------------|---------------------------|\n| Avg.                  | 50.65   |\n| ARC (25-shot)         | 63.57          |\n| HellaSwag (10-shot)   | 83.75    |\n| MMLU (5-shot)         | 58.08         |\n| TruthfulQA (0-shot)   | 51.09   |\n| Winogrande (5-shot)   | 77.27   |\n| GSM8K (5-shot)        | 11.07        |\n| DROP (3-shot)         | 9.73         |\n",
+  "fetched_at": "2026-09-22T06:45:10.951659+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [],
+    "card_base_models": [],
+    "merge_tags": [],
+    "n_base_models": 0,
+    "relations": {}
+  },
+  "metadata": {
+    "author": "Undi95",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "cc-by-nc-4.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "not-for-all-audiences",
+      "nsfw",
+      "license:cc-by-nc-4.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "Undi95__Unholy-v1-12L-13B",
+  "ok": true,
+  "popularity": {
+    "downloads": 85,
+    "downloadsAllTime": 52573,
+    "likes": 41,
+    "trendingScore": 0
+  },
+  "repo_id": "Undi95/Unholy-v1-12L-13B",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-10T18:11:05.000Z",
+    "lastModified": "2023-11-17T21:09:27.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

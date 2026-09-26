@@ -1,0 +1,69 @@
+# Per-task chance levels, which turn a raw metric into the anchored skill
+# s = clip((metric - chance) / (best - chance), +/-1). Each task is in exactly one block:
+#   chance              an analytic level (0 for a rank correlation or R^2, 0.5 for a
+#                       two-class AUROC)
+#   chance_from_metric  the metric key under which the task reports its own measured
+#                       null, usually the same fit on a model-permuted bank; read per arm
+#   unanchored          tasks with no chance level
+# min_external_coverage: held-out models a published board must label before its task is
+# scored. aggregate_seed seeds the pooling and paired bootstraps. divergence_factor flags
+# a raw metric this many chance-to-ceiling spans from chance.
+chance:
+  pairwise: 0.5
+  answer_divergence: 0.0
+  base_vs_chat: 0.5
+chance_from_metric:
+  cross_benchmark: spearman_permuted_null
+  ranking: "ndcg@10_permuted_null"
+  correctness_forecasting: column_auroc_null
+  error_type: column_auroc_permuted_null
+  chatbot_arena_elo: spearman_permuted_null
+  alpacaeval_winrate: spearman_permuted_null
+  open_llm_leaderboard: spearman_permuted_null
+  open_llm_leaderboard_v2: spearman_permuted_null
+  ext_arena_rating: spearman_permuted_null
+  ext_arena_rating_coding: spearman_permuted_null
+  ext_arena_style_delta: spearman_permuted_null
+  ext_arena_style_delta_creative: spearman_permuted_null
+  ext_arena_style_delta_math: spearman_permuted_null
+  ext_ayumi_rp_rank: spearman_permuted_null
+  ext_ayumi_rp_iq: spearman_permuted_null
+  ext_canaicode_junior: spearman_permuted_null
+  ext_canaicode_senior: spearman_permuted_null
+  ext_livebench_language: spearman_permuted_null
+  ext_moral_machine_human_distance: spearman_permuted_null
+  ext_llmmap_refusal: spearman_permuted_null
+  i_math_score: spearman_permuted_null
+  i_gpqa_score: spearman_permuted_null
+  instruction_following: spearman_permuted_null
+  score_regression: r2_permuted_null
+  model_size_regression: r2_permuted_null
+  reasoning_style: r2_permuted_null
+  specialisation: r2_profile_pc2plus_permuted_null
+  length_profile: spearman_permuted_null
+  hedge_style: spearman_permuted_null
+  refusal_rate: spearman_permuted_null
+  rm_mean: spearman_permuted_null
+  rm_style: spearman_permuted_null
+  knapsack: headroom_at_24gb_permuted_null
+  stage5a_routing: gap_closed_permuted_null
+  family_classification: macro_f1_permuted_null
+  model_authorship: top1_chance
+  item_information: spearman_discrimination_permuted_null
+  external_topk: auroc_permuted_null
+  hf_downloads: spearman_permuted_null
+  hf_context_length: spearman_permuted_null
+  hf_release_date: spearman_permuted_null
+  hf_architecture_family: macro_f1_permuted_null
+  hf_license_type: macro_f1_permuted_null
+  serving_providers_live: spearman_permuted_null
+  ollama_quant_menu: spearman_permuted_null
+  ugi_willingness: spearman_permuted_null
+  lb_pt_average: spearman_permuted_null
+unanchored: []
+
+min_external_coverage: 9
+
+aggregate_seed: 0
+
+divergence_factor: 100.0

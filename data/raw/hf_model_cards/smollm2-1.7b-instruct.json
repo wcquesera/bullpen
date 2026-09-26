@@ -1,0 +1,503 @@
+{
+  "architecture": {
+    "architectures": [
+      "LlamaForCausalLM"
+    ],
+    "hidden_size": 2048,
+    "intermediate_size": 8192,
+    "max_position_embeddings": 8192,
+    "model_type": "llama",
+    "n_parameters": 1711376384,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 24,
+    "num_key_value_heads": 32,
+    "parameter_dtypes": {
+      "BF16": 1711376384
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 49152
+  },
+  "card_chars": 14916,
+  "card_text": "---\nlibrary_name: transformers\nlicense: apache-2.0\nlanguage:\n- en\npipeline_tag: text-generation\ntags:\n- safetensors\n- onnx\n- transformers.js\nbase_model:\n- HuggingFaceTB/SmolLM2-1.7B\n---\n\n\n# SmolLM2\n\n![image/png](https://cdn-uploads.huggingface.co/production/uploads/61c141342aac764ce1654e43/y45hIMNREW7w_XpHYB_0q.png)\n\n##  Table of Contents\n\n1. [Model Summary](#model-summary)\n2. [Evaluation](#evaluation)\n3. [Examples](#examples)\n4. [Limitations](#limitations)\n5. [Training](#training)\n6. [License](#license)\n7. [Citation](#citation)\n\n## Model Summary\n\nSmolLM2 is a family of compact language models available in three size: 135M, 360M, and 1.7B parameters. They are capable of solving a wide range of tasks while being lightweight enough to run on-device. More details in our paper: https://arxiv.org/abs/2502.02737v1\n\nThe 1.7B variant demonstrates significant advances over its predecessor SmolLM1-1.7B, particularly in instruction following, knowledge, reasoning, and mathematics. It was trained on 11 trillion tokens using a diverse dataset combination: FineWeb-Edu, DCLM, The Stack, along with new mathematics and coding datasets that we curated and will release soon. We developed the instruct version through supervised fine-tuning (SFT) using a combination of public datasets and our own curated datasets. We then applied Direct Preference Optimization (DPO) using [UltraFeedback](https://huggingface.co/datasets/HuggingFaceH4/ultrafeedback_binarized).\n\nThe instruct model additionally supports tasks such as text rewriting, summarization and function calling thanks to datasets developed by [Argilla](https://huggingface.co/argilla) such as [Synth-APIGen-v0.1](https://huggingface.co/datasets/argilla/Synth-APIGen-v0.1).\nYou can find the SFT dataset here: https://huggingface.co/datasets/HuggingFaceTB/smoltalk.\n\nFor more details refer to: https://github.com/huggingface/smollm. You will find pre-training, post-training, evaluation and local inference code.\n\n### How to use\n\n#### Transformers\n```bash\npip install transformers\n```\n\n```python\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\ncheckpoint = \"HuggingFaceTB/SmolLM2-1.7B-Instruct\"\n\ndevice = \"cuda\" # for GPU usage or \"cpu\" for CPU usage\ntokenizer = AutoTokenizer.from_pretrained(checkpoint)\n# for multiple GPUs install accelerate and do `model = AutoModelForCausalLM.from_pretrained(checkpoint, device_map=\"auto\")`\nmodel = AutoModelForCausalLM.from_pretrained(checkpoint).to(device)\n\nmessages = [{\"role\": \"user\", \"content\": \"What is the capital of France.\"}]\ninput_text=tokenizer.apply_chat_template(messages, tokenize=False)\ninputs = tokenizer.encode(input_text, return_tensors=\"pt\").to(device)\noutputs = model.generate(inputs, max_new_tokens=50, temperature=0.2, top_p=0.9, do_sample=True)\nprint(tokenizer.decode(outputs[0]))\n```\n\n\n#### Chat in TRL\nYou can also use the TRL CLI to chat with the model from the terminal:\n```bash\npip install trl\ntrl chat --model_name_or_path HuggingFaceTB/SmolLM2-1.7B-Instruct --device cpu\n```\n\n#### Transformers.js\n\n```bash\nnpm i @huggingface/transformers\n```\n\n```js\nimport { pipeline } from \"@huggingface/transformers\";\n\n// Create a text generation pipeline\nconst generator = await pipeline(\n  \"text-generation\",\n  \"HuggingFaceTB/SmolLM2-1.7B-Instruct\",\n);\n\n// Define the list of messages\nconst messages = [\n  { role: \"system\", content: \"You are a helpful assistant.\" },\n  { role: \"user\", content: \"Tell me a joke.\" },\n];\n\n// Generate a response\nconst output = await generator(messages, { max_new_tokens: 128 });\nconsole.log(output[0].generated_text.at(-1).content);\n// \"Why don't scientists trust atoms?\\n\\nBecause they make up everything!\"\n```\n\n## Evaluation\n\nIn this section, we report the evaluation results of SmolLM2. All evaluations are zero-shot unless stated otherwise, and we use [lighteval](https://github.com/huggingface/lighteval) to run them.\n\n## Base Pre-Trained Model\n\n| Metric           | SmolLM2-1.7B | Llama-1B    | Qwen2.5-1.5B | SmolLM1-1.7B |\n|------------------|--------------|-------------|---------------|--------------|\n| HellaSwag        | **68.7**     | 61.2        | 66.4          | 62.9         |\n| ARC (Average)    | **60.5**     | 49.2        | 58.5          | 59.9         |\n| PIQA             | **77.6**     | 74.8        | 76.1          | 76.0         |\n| MMLU-Pro (MCF)   | **19.4**     | 11.7        | 13.7          | 10.8         |\n| CommonsenseQA    | **43.6**     | 41.2        | 34.1          | 38.0         |\n| TriviaQA         | **36.7**     | 28.1        | 20.9          | 22.5         |\n| Winogrande       | **59.4**     | 57.8        | 59.3          | 54.7         |\n| OpenBookQA       | 42.2         | 38.4        | 40.0          | **42.4**     |\n| GSM8K (5-shot)   | 31.0         | 7.2         | **61.3**      | 5.5          |\n\n## Instruction Model\n\n| Metric                       | SmolLM2-1.7B-Instruct | Llama-1B-Instruct | Qwen2.5-1.5B-Instruct | SmolLM1-1.7B-Instruct |\n|:-----------------------------|:---------------------:|:-----------------:|:----------------------:|:----------------------:|\n| IFEval (Average prompt/inst) | **56.7**             | 53.5             | 47.4                  | 23.1                  |\n| MT-Bench                     | 6.13                | 5.48             | **6.52**              | 4.33                  |\n| OpenRewrite-Eval (micro_avg RougeL) | 44.9           | 39.2             | **46.9**              | NaN                   |\n| HellaSwag                    | **66.1**            | 56.1             | 60.9                  | 55.5                  |\n| ARC (Average)                | **51.7**            | 41.6             | 46.2                  | 43.7                  |\n| PIQA                         | **74.4**            | 72.3             | 73.2                  | 71.6                  |\n| MMLU-Pro (MCF)               | 19.3               | 12.7             | **24.2**              | 11.7                  |\n| BBH (3-shot)                 | 32.2               | 27.6             | **35.3**              | 25.7                  |\n| GSM8K (5-shot)               | **48.2**           | 26.8             | 42.8                  | 4.62                  |\n\n\n## Examples\nBelow are some system and instruct prompts that work well for special tasks\n\n### Text rewriting\n\n```python\nsystem_prompt_rewrite = \"You are an AI writing assistant. Your task is to rewrite the user's email to make it more professional and approachable while maintaining its main points and key message. Do not return any text other than the rewritten message.\"\nuser_prompt_rewrite = \"Rewrite the message below to make it more friendly and approachable while maintaining its main points and key message. Do not add any new information or return any text other than the rewritten message\\nThe message:\"\nmessages = [{\"role\": \"system\", \"content\": system_prompt_rewrite}, {\"role\": \"user\", \"content\":f\"{user_prompt_rewrite} The CI is failing after your last commit!\"}]\ninput_text=tokenizer.apply_chat_template(messages, tokenize=False)\ninputs = tokenizer.encode(input_text, return_tensors=\"pt\").to(device)\noutputs = model.generate(inputs, max_new_tokens=50, temperature=0.2, top_p=0.9, do_sample=True)\nprint(tokenizer.decode(outputs[0]))\n```\n```\nHey there! I noticed that the CI isn't passing after your latest commit. Could you take a look and let me know what's going on? Thanks so much for your help!\n```\n\n### Summarization\n\n```python\nsystem_prompt_summarize = \"Provide a concise, objective summary of the input text in up to three sentences, focusing on key actions and intentions without using second or third person pronouns.\"\nmessages = [{\"role\": \"system\", \"content\": system_prompt_summarize}, {\"role\": \"user\", \"content\": INSERT_LONG_EMAIL}]\ninput_text=tokenizer.apply_chat_template(messages, tokenize=False)\ninputs = tokenizer.encode(input_text, return_tensors=\"pt\").to(device)\noutputs = model.generate(inputs, max_new_tokens=50, temperature=0.2, top_p=0.9, do_sample=True)\nprint(tokenizer.decode(outputs[0]))\n```\n\n### Function calling\n\nSmolLM2-1.7B-Instruct can handle function calling, it scores 27% on the [BFCL Leaderboard](https://gorilla.cs.berkeley.edu/blogs/8_berkeley_function_calling_leaderboard.html). Here's how you can leverage it:\n\n```python\nimport json\nimport re\nfrom typing import Optional\n\nfrom jinja2 import Template\nimport torch \nfrom transformers import AutoModelForCausalLM, AutoTokenizer\nfrom transformers.utils import get_json_schema\n\n\nsystem_prompt = Template(\"\"\"You are an expert in composing functions. You are given a question and a set of possible functions. \nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \nIf none of the functions can be used, point it out and refuse to answer. \nIf the given question lacks the parameters required by the function, also point it out.\n\nYou have access to the following tools:\n<tools>{{ tools }}</tools>\n\nThe output MUST strictly adhere to the following format, and NO other text MUST be included.\nThe example format is as follows. Please make sure the parameter type is correct. If no function call is needed, please make the tool calls an empty list '[]'.\n<tool_call>[\n{\"name\": \"func_name1\", \"arguments\": {\"argument1\": \"value1\", \"argument2\": \"value2\"}},\n... (more tool calls as required)\n]</tool_call>\"\"\")\n\n\ndef prepare_messages(\n    query: str,\n    tools: Optional[dict[str, any]] = None,\n    history: Optional[list[dict[str, str]]] = None\n) -> list[dict[str, str]]:\n    \"\"\"Prepare the system and user messages for the given query and tools.\n    \n    Args:\n        query: The query to be answered.\n        tools: The tools available to the user. Defaults to None, in which case if a\n            list without content will be passed to the model.\n        history: Exchange of messages, including the system_prompt from\n            the first query. Defaults to None, the first message in a conversation.\n    \"\"\"\n    if tools is None:\n        tools = []\n    if history:\n        messages = history.copy()\n        messages.append({\"role\": \"user\", \"content\": query})\n    else:\n        messages = [\n            {\"role\": \"system\", \"content\": system_prompt.render(tools=json.dumps(tools))},\n            {\"role\": \"user\", \"content\": query}\n        ]\n    return messages\n\n\ndef parse_response(text: str) -> str | dict[str, any]:\n    \"\"\"Parses a response from the model, returning either the\n    parsed list with the tool calls parsed, or the\n    model thought or response if couldn't generate one.\n\n    Args:\n        text: Response from the model.\n    \"\"\"\n    pattern = r\"<tool_call>(.*?)</tool_call>\"\n    matches = re.findall(pattern, text, re.DOTALL)\n    if matches:\n        return json.loads(matches[0])\n    return text\n\n\nmodel_name_smollm = \"HuggingFaceTB/SmolLM2-1.7B-Instruct\"\nmodel = AutoModelForCausalLM.from_pretrained(model_name_smollm, device_map=\"auto\", torch_dtype=\"auto\", trust_remote_code=True)\ntokenizer = AutoTokenizer.from_pretrained(model_name_smollm)\n\nfrom datetime import datetime\nimport random\n\ndef get_current_time() -> str:\n    \"\"\"Returns the current time in 24-hour format.\n\n    Returns:\n        str: Current time in HH:MM:SS format.\n    \"\"\"\n    return datetime.now().strftime(\"%H:%M:%S\")\n\n\ndef get_random_number_between(min: int, max: int) -> int:\n    \"\"\"\n    Gets a random number between min and max.\n\n    Args:\n        min: The minimum number.\n        max: The maximum number.\n\n    Returns:\n        A random number between min and max.\n    \"\"\"\n    return random.randint(min, max)\n\n\ntools = [get_json_schema(get_random_number_between), get_json_schema(get_current_time)]\n\ntoolbox = {\"get_random_number_between\": get_random_number_between, \"get_current_time\": get_current_time}\n\nquery = \"Give me a number between 1 and 300\"\n\nmessages = prepare_messages(query, tools=tools)\n\ninputs = tokenizer.apply_chat_template(messages, add_generation_prompt=True, return_tensors=\"pt\").to(model.device)\noutputs = model.generate(inputs, max_new_tokens=512, do_sample=False, num_return_sequences=1, eos_token_id=tokenizer.eos_token_id)\nresult = tokenizer.decode(outputs[0][len(inputs[0]):], skip_special_tokens=True)\n\ntool_calls = parse_response(result)\n#\u00a0[{'name': 'get_random_number_between', 'arguments': {'min': 1, 'max': 300}}\n\n#\u00a0Get tool responses\ntool_responses = [toolbox.get(tc[\"name\"])(*tc[\"arguments\"].values()) for tc in tool_calls]\n#\u00a0[63]\n\n# For the second turn, rebuild the history of messages:\nhistory = messages.copy()\n# Add the \"parsed response\"\nhistory.append({\"role\": \"assistant\", \"content\": result})\nquery = \"Can you give me the hour?\"\nhistory.append({\"role\": \"user\", \"content\": query})\n\ninputs = tokenizer.apply_chat_template(history, add_generation_prompt=True, return_tensors=\"pt\").to(model.device)\noutputs = model.generate(inputs, max_new_tokens=512, do_sample=False, num_return_sequences=1, eos_token_id=tokenizer.eos_token_id)\nresult = tokenizer.decode(outputs[0][len(inputs[0]):], skip_special_tokens=True)\n\ntool_calls = parse_response(result)\ntool_responses = [toolbox.get(tc[\"name\"])(*tc[\"arguments\"].values()) for tc in tool_calls]\n#\u00a0['07:57:25']\n```\nMore details such as parallel function calls and tools not available can be found [here](https://huggingface.co/HuggingFaceTB/SmolLM2-1.7B-Instruct/blob/main/instructions_function_calling.md)\n\n## Limitations\n\nSmolLM2 models primarily understand and generate content in English. They can produce text on a variety of topics, but the generated content may not always be factually accurate, logically consistent, or free from biases present in the training data. These models should be used as assistive tools rather than definitive sources of information. Users should always verify important information and critically evaluate any generated content.\n\n## Training\n\n### Model\n\n- **Architecture:** Transformer decoder\n- **Pretraining tokens:** 11T\n- **Precision:** bfloat16\n\n### Hardware\n\n- **GPUs:** 256 H100\n\n### Software\n\n- **Training Framework:** [nanotron](https://github.com/huggingface/nanotron/tree/main)\n- **Alignment Handbook** [alignment-handbook](https://github.com/huggingface/alignment-handbook/)\n\n## License\n\n[Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)\n\n## Citation\n```bash\n@misc{allal2025smollm2smolgoesbig,\n      title={SmolLM2: When Smol Goes Big -- Data-Centric Training of a Small Language Model}, \n      author={Loubna Ben Allal and Anton Lozhkov and Elie Bakouch and Gabriel Mart\u00edn Bl\u00e1zquez and Guilherme Penedo and Lewis Tunstall and Andr\u00e9s Marafioti and Hynek Kydl\u00ed\u010dek and Agust\u00edn Piqueres Lajar\u00edn and Vaibhav Srivastav and Joshua Lochner and Caleb Fahlgren and Xuan-Son Nguyen and Cl\u00e9mentine Fourrier and Ben Burtenshaw and Hugo Larcher and Haojun Zhao and Cyril Zakka and Mathieu Morlon and Colin Raffel and Leandro von Werra and Thomas Wolf},\n      year={2025},\n      eprint={2502.02737},\n      archivePrefix={arXiv},\n      primaryClass={cs.CL},\n      url={https://arxiv.org/abs/2502.02737}, \n}\n```",
+  "fetched_at": "2026-09-19T15:02:54.220249+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "HuggingFaceTB/SmolLM2-1.7B"
+    ],
+    "card_base_models": [
+      "HuggingFaceTB/SmolLM2-1.7B"
+    ],
+    "merge_tags": [],
+    "n_base_models": 1,
+    "relations": {
+      "": [
+        "HuggingFaceTB/SmolLM2-1.7B"
+      ],
+      "quantized": [
+        "HuggingFaceTB/SmolLM2-1.7B"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "HuggingFaceTB",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "tensorboard",
+      "onnx",
+      "safetensors",
+      "llama",
+      "text-generation",
+      "transformers.js",
+      "conversational",
+      "en",
+      "arxiv:2502.02737",
+      "base_model:HuggingFaceTB/SmolLM2-1.7B",
+      "base_model:quantized:HuggingFaceTB/SmolLM2-1.7B",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ]
+  },
+  "model_key": "smollm2-1.7b-instruct",
+  "ok": true,
+  "popularity": {
+    "downloads": 252845,
+    "downloadsAllTime": 2921009,
+    "likes": 756,
+    "trendingScore": 0
+  },
+  "repo_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+  "resolved_via": "search",
+  "search_candidates": [
+    [
+      "HuggingFaceTB/SmolLM2-1.7B-Instruct-GGUF",
+      7577
+    ],
+    [
+      "litert-community/SmolLM2-1.7B-Instruct",
+      81
+    ],
+    [
+      "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      252845
+    ],
+    [
+      "andito/SmolLM2-1.7B-Instruct-F16-GGUF",
+      74
+    ],
+    [
+      "Felladrin/gguf-Q5_K_M-SmolLM2-1.7B-Instruct",
+      54
+    ],
+    [
+      "bartowski/SmolLM2-1.7B-Instruct-GGUF",
+      7927
+    ],
+    [
+      "lmstudio-community/SmolLM2-1.7B-Instruct-GGUF",
+      3995
+    ],
+    [
+      "NikolayKozloff/SmolLM2-1.7B-Instruct-Q8_0-GGUF",
+      9
+    ],
+    [
+      "unsloth/SmolLM2-1.7B-Instruct-GGUF",
+      1939
+    ],
+    [
+      "ngxson/SmolLM2-1.7B-Instruct-Q4_K_M-GGUF",
+      220
+    ],
+    [
+      "unsloth/SmolLM2-1.7B-Instruct",
+      6782
+    ],
+    [
+      "unsloth/SmolLM2-1.7B-Instruct-bnb-4bit",
+      1058
+    ],
+    [
+      "mlx-community/SmolLM2-1.7B-Instruct",
+      194
+    ],
+    [
+      "jncraton/SmolLM2-1.7B-Instruct-ct2-int8",
+      15
+    ],
+    [
+      "DevQuasar/HuggingFaceTB.SmolLM2-1.7B-Instruct-GGUF",
+      125
+    ],
+    [
+      "prithivMLmods/SmolLM2-1.7B-Instruct-GGUF",
+      143
+    ],
+    [
+      "QuantFactory/SmolLM2-1.7B-Instruct-GGUF",
+      279
+    ],
+    [
+      "duyntnet/SmolLM2-1.7B-Instruct-imatrix-GGUF",
+      461
+    ],
+    [
+      "MaziyarPanahi/SmolLM2-1.7B-Instruct-GGUF",
+      369
+    ],
+    [
+      "shirman/SmolLM2-1.7B-Instruct-q4f16_1-MLC-WEBGPU",
+      0
+    ],
+    [
+      "bunnycore/SmolLM2-1.7B-Instruct-Exp",
+      12
+    ],
+    [
+      "bunnycore/SmolLM2-1.7B-Instruct-Exp-Q8_0-GGUF",
+      10
+    ],
+    [
+      "bunnycore/SmolLM2-1.7B-Instruct-Exp-Q5_K_M-GGUF",
+      10
+    ],
+    [
+      "mlc-ai/SmolLM2-1.7B-Instruct-q4f32_1-MLC",
+      162
+    ],
+    [
+      "mlc-ai/SmolLM2-1.7B-Instruct-q4f16_1-MLC",
+      735
+    ],
+    [
+      "mlc-ai/SmolLM2-1.7B-Instruct-q0f16-MLC",
+      6
+    ],
+    [
+      "taobao-mnn/SmolLM2-1.7B-Instruct-MNN",
+      36
+    ],
+    [
+      "mradermacher/SmolLM2-1.7B-Instruct-Exp-GGUF",
+      223
+    ],
+    [
+      "RichardErkhov/HuggingFaceTB_-_SmolLM2-1.7B-Instruct-gguf",
+      442
+    ],
+    [
+      "fbaldassarri/HuggingFaceTB_SmolLM2-1.7B-Instruct-auto_round-int4-gs128-sym",
+      19
+    ],
+    [
+      "fbaldassarri/HuggingFaceTB_SmolLM2-1.7B-Instruct-auto_round-int4-gs128-asym",
+      12
+    ],
+    [
+      "chatpdflocal/SmolLM2-1.7B-Instruct-GGUF",
+      40
+    ],
+    [
+      "mawriyo/SmolLM2-1.7b-Instruct-q4f16_0",
+      0
+    ],
+    [
+      "AIFunOver/SmolLM2-1.7B-Instruct-openvino-8bit",
+      26
+    ],
+    [
+      "AIFunOver/SmolLM2-1.7B-Instruct-openvino-fp16",
+      19
+    ],
+    [
+      "AIFunOver/SmolLM2-1.7B-Instruct-openvino-4bit",
+      24
+    ],
+    [
+      "MegaTronX/DragonAI-Python-SmolLM2-1.7B-Instruct",
+      18
+    ],
+    [
+      "thirdeyeai/SmolLM2-1.7B-Instruct-Uncensored",
+      34
+    ],
+    [
+      "mradermacher/SmolLM2-1.7B-Instruct-Uncensored-GGUF",
+      2460
+    ],
+    [
+      "mrs83/Kurtis-SmolLM2-1.7B-Instruct",
+      15
+    ],
+    [
+      "mradermacher/SmolLM2-1.7B-Instruct-abliterated-GGUF",
+      757
+    ],
+    [
+      "mradermacher/SmolLM2-1.7B-Instruct-abliterated-i1-GGUF",
+      856
+    ],
+    [
+      "mukel/SmolLM2-1.7B-Instruct-GGUF",
+      18
+    ],
+    [
+      "RichardErkhov/unsloth_-_SmolLM2-1.7B-Instruct-gguf",
+      433
+    ],
+    [
+      "mradermacher/SmolLM2-1.7B-Instruct-GGUF",
+      588
+    ],
+    [
+      "mradermacher/SmolLM2-1.7B-Instruct-i1-GGUF",
+      847
+    ],
+    [
+      "mradermacher/DragonAI-Python-SmolLM2-1.7B-Instruct-GGUF",
+      507
+    ],
+    [
+      "second-state/SmolLM2-1.7B-Instruct-GGUF",
+      641
+    ],
+    [
+      "gaianet/SmolLM2-1.7B-Instruct-GGUF",
+      154
+    ],
+    [
+      "fbaldassarri/HuggingFaceTB_SmolLM2-1.7B-Instruct-auto_gptq-int4-gs128-asym",
+      13
+    ],
+    [
+      "fbaldassarri/HuggingFaceTB_SmolLM2-1.7B-Instruct-auto_gptq-int4-gs128-sym",
+      14
+    ],
+    [
+      "Maites/SmolLM2-1.7B-Instruct-Q8_0-GGUF",
+      31
+    ],
+    [
+      "Maites/SmolLM2-1.7B-Instruct-Q4_0-GGUF",
+      27
+    ],
+    [
+      "tensorblock/SmolLM2-1.7B-Instruct-GGUF",
+      119
+    ],
+    [
+      "HuggingFaceTB/SmolLM2-1.7B-Instruct-Q8-mlx",
+      330
+    ],
+    [
+      "Qurtana/SmolLM2-1.7B-Instruct-NuminaMath-TIR",
+      117
+    ],
+    [
+      "serena97/SmolLM2-1.7B-Instruct-Q4_K_M-GGUF",
+      31
+    ],
+    [
+      "serena97/SmolLM2-1.7B-Instruct-Q8_0-GGUF",
+      17
+    ],
+    [
+      "Sri-Vigneshwar-DJ/hawky-ai-SmolLM2-1.7B-Instruct",
+      5
+    ],
+    [
+      "RichardErkhov/HuggingFaceTB_-_SmolLM2-1.7B-Instruct-awq",
+      6
+    ],
+    [
+      "RichardErkhov/unsloth_-_SmolLM2-1.7B-Instruct-awq",
+      7
+    ],
+    [
+      "Alcoft/SmolLM2-1.7B-Instruct-GGUF",
+      192
+    ],
+    [
+      "sasan/SmolLM2-1.7B-Instruct-lu",
+      13
+    ],
+    [
+      "prithivMLmods/SmolLM2-Math-IIO-1.7B-Instruct",
+      31
+    ],
+    [
+      "RichardErkhov/huihui-ai_-_SmolLM2-1.7B-Instruct-abliterated-awq",
+      9
+    ],
+    [
+      "mradermacher/SmolLM2-Math-IIO-1.7B-Instruct-GGUF",
+      733
+    ],
+    [
+      "AleksanderObuchowski/SmolLM2-1.7B-Instruct-gguf",
+      9
+    ],
+    [
+      "lucaelin/SmolLM2-1.7B-Instruct-fc-cn-lora",
+      0
+    ],
+    [
+      "lucaelin/SmolLM2-1.7B-Instruct-fc-cn-gguf",
+      31
+    ],
+    [
+      "Deepankaj/SmolLM2-1.7B-Instruct",
+      0
+    ],
+    [
+      "professorf/SmolLM2-1.7B-Instruct-gguf",
+      12
+    ],
+    [
+      "dusty-nv/SmolLM2-1.7B-Instruct-q4f16_ft-MLC",
+      0
+    ],
+    [
+      "Logdablobber/SmolLM2-1.7B-Instruct-Q4_0-GGUF",
+      10
+    ],
+    [
+      "fbaldassarri/HuggingFaceTB_SmolLM2-1.7B-Instruct-auto_awq-int4-gs128-asym",
+      10
+    ],
+    [
+      "fbaldassarri/HuggingFaceTB_SmolLM2-1.7B-Instruct-auto_awq-int4-gs128-sym",
+      19
+    ],
+    [
+      "RichardErkhov/MegaTronX_-_DragonAI-Python-SmolLM2-1.7B-Instruct-awq",
+      6
+    ],
+    [
+      "minskim/SmolLM2-HFT-1.7B-Instruct",
+      18
+    ],
+    [
+      "JulienElkaim/SmolLM2-1.7B-Instruct-Q4_K_M-GGUF",
+      27
+    ],
+    [
+      "JulienElkaim/SmolLM2-1.7B-Instruct-Q8_0-GGUF",
+      19
+    ],
+    [
+      "JulienElkaim/SmolLM2-1.7B-Instruct-Q6_K-GGUF",
+      21
+    ],
+    [
+      "TheBlueObserver/SmolLM2-1.7B-Instruct-MLX",
+      21
+    ],
+    [
+      "TheBlueObserver/SmolLM2-1.7B-Instruct-MLX-0cb1b",
+      15
+    ],
+    [
+      "TheBlueObserver/SmolLM2-1.7B-Instruct-MLX-104ce",
+      13
+    ],
+    [
+      "TheBlueObserver/SmolLM2-1.7B-Instruct-MLX-196c8",
+      14
+    ],
+    [
+      "TheBlueObserver/SmolLM2-1.7B-Instruct-MLX-8777b",
+      10
+    ],
+    [
+      "TheBlueObserver/SmolLM2-1.7B-Instruct-MLX-393a7",
+      11
+    ],
+    [
+      "petkopetkov/SmolLM2-1.7B-Instruct-bg",
+      0
+    ],
+    [
+      "itlwas/SmolLM2-1.7B-Instruct-Q4_K_M-GGUF",
+      31
+    ],
+    [
+      "finnvoorhees/coreml-SmolLM2-1.7B-Instruct-4bit",
+      21
+    ],
+    [
+      "finnvoorhees/coreml-SmolLM2-1.7B-Instruct-8bit",
+      19
+    ],
+    [
+      "RichardErkhov/thirdeyeai_-_SmolLM2-1.7B-Instruct-Uncensored-awq",
+      7
+    ],
+    [
+      "msyukorai/SmolLM2-1.7B-Instruct-Q4_0-GGUF",
+      11
+    ],
+    [
+      "rhth64/SmolLM2-1.7B-Instruct-Q4_K_M-GGUF",
+      14
+    ],
+    [
+      "ysn-rfd/SmolLM2-1.7B-Instruct-Q8_0-GGUF",
+      9
+    ],
+    [
+      "mradermacher/smollm2-1.7b-instruct-hindi-subset-fp16-GGUF",
+      85
+    ],
+    [
+      "mradermacher/smollm2-1.7b-instruct-lrsc-cosine-hindi-subset-fp16-GGUF",
+      92
+    ],
+    [
+      "mitulagr2/gguf-Q5_K_M-SmolLM2-1.7B-Instruct",
+      9
+    ],
+    [
+      "venkycs/SmolLM2-1.7B-Instruct-Abliterated",
+      24
+    ],
+    [
+      "venkycs/SmolLM2-1.7B-instruct-abliterated-fp8",
+      6
+    ],
+    [
+      "mrs83/Kurtis-SmolLM2-1.7B-Instruct-PEFT",
+      9
+    ]
+  ],
+  "timestamps": {
+    "createdAt": "2024-10-31T13:42:06.000Z",
+    "lastModified": "2025-04-21T20:51:14.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}

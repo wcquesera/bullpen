@@ -1,0 +1,101 @@
+{
+  "architecture": {
+    "architectures": [
+      "MistralForCausalLM"
+    ],
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "max_position_embeddings": 32768,
+    "model_type": "mistral",
+    "n_parameters": 7241732096,
+    "num_attention_heads": 32,
+    "num_hidden_layers": 32,
+    "num_key_value_heads": 8,
+    "parameter_dtypes": {
+      "BF16": 7241732096
+    },
+    "torch_dtype": "bfloat16",
+    "vocab_size": 32000
+  },
+  "card_chars": 5642,
+  "card_text": "---\nlibrary_name: transformers\nlicense: apache-2.0\ntags:\n- finetuned\n- mistral-common\nbase_model: mistralai/Mistral-7B-v0.1\ninference: false\nwidget:\n- messages:\n  - role: user\n    content: What is your favorite condiment?\nextra_gated_description: >-\n  If you want to learn more about how we process your personal data, please read\n  our <a href=\"https://mistral.ai/terms/\">Privacy Policy</a>.\n---\n\n# Model Card for Mistral-7B-Instruct-v0.1\n\n\n## Encode and Decode with `mistral_common`\n            \n```py\nfrom mistral_common.tokens.tokenizers.mistral import MistralTokenizer\nfrom mistral_common.protocol.instruct.messages import UserMessage\nfrom mistral_common.protocol.instruct.request import ChatCompletionRequest\n \nmistral_models_path = \"MISTRAL_MODELS_PATH\"\n \ntokenizer = MistralTokenizer.v1()\n \ncompletion_request = ChatCompletionRequest(messages=[UserMessage(content=\"Explain Machine Learning to me in a nutshell.\")])\n \ntokens = tokenizer.encode_chat_completion(completion_request).tokens\n```\n \n## Inference with `mistral_inference`\n \n ```py\nfrom mistral_inference.transformer import Transformer\nfrom mistral_inference.generate import generate\n \nmodel = Transformer.from_folder(mistral_models_path)\nout_tokens, _ = generate([tokens], model, max_tokens=64, temperature=0.0, eos_id=tokenizer.instruct_tokenizer.tokenizer.eos_id)\n\nresult = tokenizer.decode(out_tokens[0])\n\nprint(result)\n```\n\n## Inference with hugging face `transformers`\n \n```py\nfrom transformers import AutoModelForCausalLM\n \nmodel = AutoModelForCausalLM.from_pretrained(\"mistralai/Mistral-7B-Instruct-v0.1\")\nmodel.to(\"cuda\")\n \ngenerated_ids = model.generate(tokens, max_new_tokens=1000, do_sample=True)\n\n# decode with mistral tokenizer\nresult = tokenizer.decode(generated_ids[0].tolist())\nprint(result)\n```\n\n> [!TIP]\n> PRs to correct the `transformers` tokenizer so that it gives 1-to-1 the same results as the `mistral_common` reference implementation are very welcome!\n            \n---\n\nThe Mistral-7B-Instruct-v0.1 Large Language Model (LLM) is a instruct fine-tuned version of the [Mistral-7B-v0.1](https://huggingface.co/mistralai/Mistral-7B-v0.1) generative text model using a variety of publicly available conversation datasets.\n\nFor full details of this model please read our [paper](https://arxiv.org/abs/2310.06825) and [release blog post](https://mistral.ai/news/announcing-mistral-7b/).\n\n## Instruction format\n\nIn order to leverage instruction fine-tuning, your prompt should be surrounded by `[INST]` and `[/INST]` tokens. The very first instruction should begin with a begin of sentence id. The next instructions should not. The assistant generation will be ended by the end-of-sentence token id.\n\nE.g.\n```\ntext = \"<s>[INST] What is your favourite condiment? [/INST]\"\n\"Well, I'm quite partial to a good squeeze of fresh lemon juice. It adds just the right amount of zesty flavour to whatever I'm cooking up in the kitchen!</s> \"\n\"[INST] Do you have mayonnaise recipes? [/INST]\"\n```\n\nThis format is available as a [chat template](https://huggingface.co/docs/transformers/main/chat_templating) via the `apply_chat_template()` method:\n\n```python\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\ndevice = \"cuda\" # the device to load the model onto\n\nmodel = AutoModelForCausalLM.from_pretrained(\"mistralai/Mistral-7B-Instruct-v0.1\")\ntokenizer = AutoTokenizer.from_pretrained(\"mistralai/Mistral-7B-Instruct-v0.1\")\n\nmessages = [\n    {\"role\": \"user\", \"content\": \"What is your favourite condiment?\"},\n    {\"role\": \"assistant\", \"content\": \"Well, I'm quite partial to a good squeeze of fresh lemon juice. It adds just the right amount of zesty flavour to whatever I'm cooking up in the kitchen!\"},\n    {\"role\": \"user\", \"content\": \"Do you have mayonnaise recipes?\"}\n]\n\nencodeds = tokenizer.apply_chat_template(messages, return_tensors=\"pt\")\n\nmodel_inputs = encodeds.to(device)\nmodel.to(device)\n\ngenerated_ids = model.generate(model_inputs, max_new_tokens=1000, do_sample=True)\ndecoded = tokenizer.batch_decode(generated_ids)\nprint(decoded[0])\n```\n\n## Model Architecture\nThis instruction model is based on Mistral-7B-v0.1, a transformer model with the following architecture choices:\n- Grouped-Query Attention\n- Sliding-Window Attention\n- Byte-fallback BPE tokenizer\n\n## Troubleshooting\n- If you see the following error:\n```\nTraceback (most recent call last):\nFile \"\", line 1, in\nFile \"/transformers/models/auto/auto_factory.py\", line 482, in from_pretrained\nconfig, kwargs = AutoConfig.from_pretrained(\nFile \"/transformers/models/auto/configuration_auto.py\", line 1022, in from_pretrained\nconfig_class = CONFIG_MAPPING[config_dict[\"model_type\"]]\nFile \"/transformers/models/auto/configuration_auto.py\", line 723, in getitem\nraise KeyError(key)\nKeyError: 'mistral'\n```\n\nInstalling transformers from source should solve the issue\npip install git+https://github.com/huggingface/transformers\n\nThis should not be required after transformers-v4.33.4.\n\n## Limitations\n\nThe Mistral 7B Instruct model is a quick demonstration that the base model can be easily fine-tuned to achieve compelling performance. \nIt does not have any moderation mechanisms. We're looking forward to engaging with the community on ways to\nmake the model finely respect guardrails, allowing for deployment in environments requiring moderated outputs.\n\n## The Mistral AI Team\n\nAlbert Jiang, Alexandre Sablayrolles, Arthur Mensch, Chris Bamford, Devendra Singh Chaplot, Diego de las Casas, Florian Bressand, Gianna Lengyel, Guillaume Lample, L\u00e9lio Renard Lavaud, Lucile Saulnier, Marie-Anne Lachaux, Pierre Stock, Teven Le Scao, Thibaut Lavril, Thomas Wang, Timoth\u00e9e Lacroix, William El Sayed.",
+  "fetched_at": "2026-09-19T15:01:42.727891+00:00",
+  "http_status": {
+    "api": 200,
+    "config": 200,
+    "readme": 200
+  },
+  "lineage": {
+    "base_model": [
+      "mistralai/Mistral-7B-v0.1"
+    ],
+    "card_base_models": [
+      "mistralai/Mistral-7B-v0.1"
+    ],
+    "merge_tags": [],
+    "n_base_models": 1,
+    "relations": {
+      "": [
+        "mistralai/Mistral-7B-v0.1"
+      ],
+      "finetune": [
+        "mistralai/Mistral-7B-v0.1"
+      ]
+    }
+  },
+  "metadata": {
+    "author": "mistralai",
+    "gated": false,
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "pipeline_tag": "text-generation",
+    "tags": [
+      "transformers",
+      "pytorch",
+      "safetensors",
+      "mistral",
+      "text-generation",
+      "finetuned",
+      "mistral-common",
+      "conversational",
+      "arxiv:2310.06825",
+      "base_model:mistralai/Mistral-7B-v0.1",
+      "base_model:finetune:mistralai/Mistral-7B-v0.1",
+      "license:apache-2.0",
+      "eval-results",
+      "text-generation-inference",
+      "region:us"
+    ]
+  },
+  "model_key": "mistralai__Mistral-7B-Instruct-v0.1",
+  "ok": true,
+  "popularity": {
+    "downloads": 180362,
+    "downloadsAllTime": 18067445,
+    "likes": 1850,
+    "trendingScore": 0
+  },
+  "repo_id": "mistralai/Mistral-7B-Instruct-v0.1",
+  "resolved_via": "slug",
+  "search_candidates": [],
+  "timestamps": {
+    "createdAt": "2023-09-27T14:31:52.000Z",
+    "lastModified": "2025-07-24T16:44:46.000Z"
+  },
+  "training": {
+    "awq": false,
+    "bnb_4bit": false,
+    "dpo": false,
+    "gguf": false,
+    "gptq": false,
+    "instruct": false,
+    "kto": false,
+    "lora": false,
+    "orpo": false,
+    "ppo": false,
+    "qlora": false,
+    "rl": false,
+    "rlhf": false,
+    "sft": false
+  }
+}
