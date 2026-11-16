@@ -16,11 +16,15 @@
   };
   const SPACE_NAME = { fused: "BULLPEN-fused", bitsq: "BULLPEN-bits+q" };
   const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  // Swiss theme (see css/style.css): black on white, one red accent
-  const THEME = {
-    ink: "#111", paper: "#fff", train: "#b3b3b3", held: "#111", accent: "#e30613", rule: "#e2e2e2",
-    muted: "#767676", font: '"Helvetica Neue", Helvetica, Inter, Arial, sans-serif',
-  };
+  // plot colours and font come from the CSS variables in css/style.css (the canvas uses the same palette as the page)
+  let THEME;
+  function readTheme() {
+    const cs = getComputedStyle(document.documentElement), v = (k) => cs.getPropertyValue(k).trim();
+    return {
+      ink: v("--ink"), paper: v("--paper"), train: v("--plot-train"), held: v("--plot-held"), accent: v("--accent"),
+      rule: v("--plot-rule"), muted: v("--muted"), font: v("--font"),
+    };
+  }
   const GROUPS = {
     behavior: {
       title: "Behavior",
@@ -109,7 +113,7 @@
     const lines = [
       `PCA of the 260 ${SPACE_NAME[S.space]} placements. ${k} components keep ${(100 * evr).toFixed(0)}% of the variance.`,
       `Each axis is scaled to its 2nd to 98th percentile range. ${clipped} models fall farther out and are pinned to the frame.`,
-      "Distances in the view are approximate. Red links mark the nearest 10 by cosine in the full 32-d space.",
+      "Distances in the view are approximate. Links mark the nearest 10 by cosine in the full 32-d space.",
       (S.mode === "3d" ? "Drag to rotate" : "Drag to pan") + ". Scroll to zoom. Click a point to inspect it.",
     ];
     $("#caption").replaceChildren(...lines.map((t) => el("li", { text: t })));
@@ -276,7 +280,7 @@
       S.upload = msg;
       msgBox.replaceChildren(el("div", { class: "ok" },
         el("b", { text: `Embedded with ${SPACE_NAME[msg.space]}.` }),
-        ul(["Shown as a red square in the middle pane.", `Nearest: ${name(MODELS[msg.neighbours[0].i].id)} (cosine ${msg.neighbours[0].sim.toFixed(3)}).`])));
+        ul(["Shown as a square in the middle pane.", `Nearest: ${name(MODELS[msg.neighbours[0].i].id)} (cosine ${msg.neighbours[0].sim.toFixed(3)}).`])));
       setSpace(msg.space, false);
       S.tab = "overview";
       select("upload");
@@ -382,6 +386,8 @@
       INDEX = { fused: BP.normRows(fused), bitsq: BP.normRows(bitsq) };
       $("#n-train").textContent = enc.protocol.n_train;
       $("#n-held").textContent = enc.protocol.n_heldout;
+      await document.fonts.ready;  // so canvas labels use the web font from the first draw
+      THEME = readTheme();
       plot = new ScatterPlot($("#plot"), THEME);
       window.BPPlot = plot;  // used by the screenshot script to find points
       setupControls();

@@ -1,10 +1,22 @@
-/* Theme: Swiss / International Typographic Style (grotesque sans, black on white, one red accent,
- * hairline rules, flush-left, no radius, shadows or gradients) with Tufte-style data ink in the plot. */
+@import url("https://fonts.googleapis.com/css?family=Google+Sans:400,500,700|Noto+Sans:400,700");
+/* Theme: academic project page in the Nerfies / Bulma style (https://nerfies.github.io/).
+ * Google Sans headings, Noto Sans body, #4a4a4a text on white, Bulma link blue #3273dc as the one
+ * accent (selection, neighbours, upload, active tab), light grey rules, square corners. */
 :root {
-  --ink: #111; --ink-2: #444; --muted: #767676; --rule: #d9d9d9; --hair: #ececec; --tint: #f4f4f4;
-  --accent: #e30613; --paper: #fff;
-  --bar-h: 44px; --foot-h: 28px;
-  --font: "Helvetica Neue", Helvetica, Inter, Arial, sans-serif;
+  --ink: #363636;
+  --ink-2: #4a4a4a;
+  --muted: #6b6b6b;
+  --rule: #dbdbdb;
+  --hair: #ededed;
+  --tint: #f5f5f5;
+  --accent: #3273dc;
+  --paper: #fff;
+  --plot-train: #c4c4c4;
+  --plot-held: #4a4a4a;
+  --plot-rule: #e6e6e6;
+  --bar-h: 44px;
+  --foot-h: 28px;
+  --font: "Noto Sans", "Helvetica Neue", Arial, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 * { box-sizing: border-box; border-radius: 0; }
@@ -145,3 +157,49 @@ dialog .close:hover { color: var(--accent); }
   .caption { columns: 1; }
   .foot { height: auto; white-space: normal; }
 }
+
+/* project-page type and spacing (layered over the rules above) */
+body { color: var(--ink-2); font-size: 13.5px; line-height: 1.55; }
+.brand b, h2, h3, .insp-head h3, .story h4, .pane-title, .seg button, .tabs button, .primary, .link {
+  font-family: "Google Sans", "Noto Sans", sans-serif;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; color: var(--accent); }
+.brand b { font-size: 22px; font-weight: 500; letter-spacing: 0; color: var(--ink); }
+.bar { height: var(--bar-h); border-bottom: 1px solid var(--rule); }
+.link { font-weight: 500; font-size: 14px; }
+.left, .right { border-color: var(--rule); }
+.left { background: #fafafa; }
+.pane-title, h4, .field-label, .tbl th, .example b, .story .kind, .tag { text-transform: none; letter-spacing: 0; font-size: 12.5px; }
+.pane-title { font-size: 15px; font-weight: 500; color: var(--ink); background: inherit; padding: 14px 0 10px; }
+.left .pane-title { background: #fafafa; }
+.seg { border-color: var(--rule); }
+.seg button { font-size: 13px; }
+.seg button + button { border-left-color: var(--rule); }
+.seg button.on { background: var(--ink); color: #fff; }
+.seg.two-path button { font-weight: 500; font-size: 14px; padding: 9px 6px; }
+.examples { border-top-color: var(--rule); }
+.example { background: transparent; padding: 9px 0 9px 10px; }
+.example b { color: var(--muted); }
+.example.on b { color: var(--accent); }
+#pick, .file { border-color: var(--rule); background: #fff; }
+.primary { background: var(--ink); font-weight: 500; font-size: 14px; }
+.primary:hover { background: #000; }
+#bar { background: var(--accent); }
+.tbl th { border-bottom-color: var(--rule); color: var(--ink); }
+.tabs { border-bottom-color: var(--rule); }
+.tabs button { font-weight: 500; font-size: 14px; }
+.story { border-top: 1px solid var(--rule); }
+.story h4 { font-size: 17px; font-weight: 500; }
+.note { border-left: 3px solid var(--rule); }
+.tag.held { color: var(--ink); }
+.foot { border-top-color: var(--rule); }
+dialog { border: 1px solid var(--rule); }
+
+/* fixes from the pane-by-pane check under this theme */
+.tabs button { font-size: 13px; padding: 6px 7px 5px; }                 /* five tabs fit the 420px pane */
+.tbl { font-size: 12.5px; }
+.tbl td a { word-break: normal; overflow-wrap: anywhere; }             /* break model ids at - or /, not mid-word */
+.tag { font-weight: 500; }
+.errors { border-left-color: #cc0f35; }                                 /* errors in Bulma danger red, not the link blue */
+.errors h4, .pipeline li.error, .pipeline li.error::before { color: #cc0f35; }
