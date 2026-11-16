@@ -16,28 +16,36 @@
   };
   const SPACE_NAME = { fused: "BULLPEN-fused", bitsq: "BULLPEN-bits+q" };
   const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const COLORS = { train: "#aab6be", heldout: "#2ecc71" };
-  const FAMILY_PALETTE = ["#3498db", "#e74c3c", "#9b59b6", "#1abc9c", "#e67e22", "#f1c40f", "#34495e", "#16a085"];
+  // Swiss theme (see css/style.css): black on white, one red accent
+  const THEME = {
+    ink: "#111", paper: "#fff", train: "#b3b3b3", held: "#111", accent: "#e30613", rule: "#e2e2e2",
+    muted: "#767676", font: '"Helvetica Neue", Helvetica, Inter, Arial, sans-serif',
+  };
   const GROUPS = {
     behavior: {
       title: "Behavior",
       tasks: ["log_n_tok", "refusal_rate", "hedge_rate"],
-      note: "Answer length, hedging and refusal: the author responses report that each label's own defining formula, computed directly from the answers, beats the embedding (general response, row 4).",
+      notes: [
+        "Author responses, general response row 4: for answer length, hedging and refusal, each label's own defining formula, computed from the answers, beats the embedding.",
+      ],
     },
     capability: {
       title: "Capability",
       tasks: ["oll_v2"],
-      note: "The Open LLM Leaderboard v2 head is fitted on the training models that have a board score (see 'head fit on').",
+      notes: ["The Open LLM Leaderboard v2 head is fitted on the training models that have a board score. The count is under 'head fit on'."],
     },
     metadata: {
       title: "Metadata",
       tasks: ["log_params", "release_year", "is_chat"],
-      note: "Size, release date and base vs chat are metadata checks rather than use cases, as the author responses put it. The base-vs-chat label comes from the model name.",
+      notes: [
+        "Author responses: size, release date and base vs chat are \"metadata checks rather than use cases\".",
+        "The base-vs-chat label comes from the model name.",
+      ],
     },
   };
 
-  const S = { space: "fused", mode: "3d", colorBy: "split", sel: null, tab: "overview", upload: null };
-  let ENC, MODELS, EMB, PROJ, EXAMPLES, INDEX, plot, topFamilies;
+  const S = { space: "fused", mode: "2d", path: "examples", sel: null, tab: "overview", upload: null };
+  let ENC, MODELS, EMB, PROJ, EXAMPLES, INDEX, plot;
 
   const name = (id) => id.replace("__", "/");
 
@@ -88,47 +96,37 @@
   }
 
   // ------------------------------------------------------------ middle pane
-  function pointColor(m) {
-    if (S.colorBy === "family") {
-      const k = topFamilies.indexOf(m.family);
-      return k >= 0 ? FAMILY_PALETTE[k] : "#d5dbdf";
-    }
-    return COLORS[m.role];
-  }
-
   function renderPlot() {
     const P = PROJ[S.space];
-    plot.setData(MODELS.map((m, i) => ({ p: P.coords[i], color: pointColor(m) })));
+    plot.setData(MODELS.map((m, i) => ({ p: P.coords[i], kind: m.role })));
     const up = S.upload && S.upload.space === S.space ? BP.project(P, S.upload.z, 3) : null;
     plot.setUpload(up);
     plot.setSelection(zOf(S.sel) ? S.sel : null, neighboursOf(S.sel).map((n) => n.i));
     renderLegend();
-    const evr = P.evr.slice(0, S.mode === "3d" ? 3 : 2).reduce((a, b) => a + b, 0);
-    $("#caption").textContent =
-      `PCA of the 260 ${SPACE_NAME[S.space]} placements; the ${S.mode === "3d" ? "three" : "two"} components shown keep ` +
-      `${(100 * evr).toFixed(0)}% of the variance, so distances in the view are approximate. Nearest neighbours ` +
-      `(orange links) are computed by cosine in the full 32-d space. ` +
-      (S.mode === "3d" ? "Drag to rotate" : "Drag to pan") + ", scroll to zoom, click a point to inspect it.";
+    const k = S.mode === "3d" ? 3 : 2;
+    const evr = P.evr.slice(0, k).reduce((a, b) => a + b, 0);
+    const clipped = P.coords.filter((c) => plot.isClipped(c, k)).length;
+    const lines = [
+      `PCA of the 260 ${SPACE_NAME[S.space]} placements. ${k} components keep ${(100 * evr).toFixed(0)}% of the variance.`,
+      `Each axis is scaled to its 2nd to 98th percentile range. ${clipped} models fall farther out and are pinned to the frame.`,
+      "Distances in the view are approximate. Red links mark the nearest 10 by cosine in the full 32-d space.",
+      (S.mode === "3d" ? "Drag to rotate" : "Drag to pan") + ". Scroll to zoom. Click a point to inspect it.",
+    ];
+    $("#caption").replaceChildren(...lines.map((t) => el("li", { text: t })));
   }
 
   function renderLegend() {
     const item = (color, label, shape = "dot") => el("span", { class: "lg" }, el("i", { class: shape, style: `background:${color}` }), label);
-    const items = [];
-    if (S.colorBy === "split") items.push(item(COLORS.train, "training"), item(COLORS.heldout, "held out"));
-    else {
-      topFamilies.forEach((f, k) => items.push(item(FAMILY_PALETTE[k], f)));
-      items.push(item("#d5dbdf", "other"));
-    }
-    items.push(item("#3498db", "selected"), item("#e67e22", "nearest 10"));
-    if (S.upload) items.push(item("#9b59b6", S.upload.space === S.space ? "your model" : `your model (in ${SPACE_NAME[S.upload.space]})`, "diamond"));
+    const items = [item(THEME.train, "training"), item(THEME.held, "held out"), item(THEME.accent, "selected"), item(THEME.accent, "nearest 10", "ring")];
+    if (S.upload) items.push(item(THEME.accent, S.upload.space === S.space ? "your model" : `your model (in ${SPACE_NAME[S.upload.space]})`, "square"));
     $("#legend").replaceChildren(...items);
   }
 
   // ------------------------------------------------------------ right pane
   function roleBadge(role) {
-    if (role === "heldout") return el("span", { class: "badge held", text: "held out" });
-    if (role === "train") return el("span", { class: "badge train", text: "training" });
-    return el("span", { class: "badge up", text: "your upload" });
+    if (role === "heldout") return el("span", { class: "tag held", text: "held out" });
+    if (role === "train") return el("span", { class: "tag", text: "training" });
+    return el("span", { class: "tag up", text: "your upload" });
   }
 
   function predictionTable(tasks, preds, truth) {
@@ -150,7 +148,7 @@
     const wrap = el("div", {}, el("table", { class: "tbl" },
       el("thead", {}, el("tr", {}, ...["task", "predicted", truth ? "true" : "true (held-out only)", "head fit on"].map((x) => el("th", { text: x })))),
       tb));
-    if (clamped) wrap.append(el("p", { class: "sub", text: "* a ridge prediction outside [0, 1], shown clamped." }));
+    if (clamped) wrap.append(el("p", { class: "sub", text: "* A ridge prediction outside [0, 1], shown clamped." }));
     return wrap;
   }
 
@@ -170,12 +168,17 @@
       tb);
   }
 
+  const ul = (items, cls = "plain") => el("ul", { class: cls }, ...items.map((t) => el("li", { text: t })));
+
   function uploadNotes() {
     const u = S.upload;
     return [
       `Placed with ${SPACE_NAME[u.space]} from ${u.nObserved} pool-question bits` +
-        (u.nAnswers ? ` and ${u.nAnswers} answer embeddings.` : " (no answers CSV, so the bits-only encoder)."),
-      "Predictions are validated in distribution only. The submission scores the heads on held-out models from the 260 open-weight models. The author responses add nine closed Claude and GPT models placed without refitting, for which heads trained only on open models rank hedging and answer length almost perfectly (Spearman .97). Other settings are untested; a model unlike the 260 can be misplaced (see the SmolLM2 example).",
+        (u.nAnswers ? ` and ${u.nAnswers} answer embeddings.` : ". No answers CSV, so the bits-only encoder."),
+      "Predictions are validated in distribution only.",
+      "The submission scores the heads on held-out models from the 260 open-weight models.",
+      "The author responses add nine closed Claude and GPT models placed without refitting. Heads trained only on open models rank their hedging and answer length almost perfectly (Spearman .97).",
+      "Other settings are untested. A model unlike the 260 can be misplaced; see the SmolLM2 example.",
     ];
   }
 
@@ -184,7 +187,7 @@
     $$("#tabs button").forEach((b) => b.classList.toggle("on", b.dataset.tab === S.tab));
     if (S.sel == null) {
       head.replaceChildren();
-      body.replaceChildren(el("p", { class: "sub", text: "Click a point, pick an example, or embed a model." }));
+      body.replaceChildren(el("p", { class: "sub", text: "Click a point or pick an example." }));
       return;
     }
     const up = isUpload(S.sel);
@@ -193,7 +196,7 @@
       el("span", { class: "sub", text: SPACE_NAME[S.space] }));
     const z = zOf(S.sel);
     if (!z) {
-      body.replaceChildren(el("p", { class: "note", text: `Your model was placed with ${SPACE_NAME[S.upload.space]}; switch the space in the middle pane to see it.` }));
+      body.replaceChildren(el("div", { class: "note" }, ul([`Your model was placed with ${SPACE_NAME[S.upload.space]}.`, "Switch the space in the middle pane to see it."])));
       return;
     }
     const preds = predsOf(S.sel);
@@ -201,19 +204,19 @@
     const out = [];
     if (S.tab === "overview") {
       const story = up ? null : EXAMPLES.find((e) => e.id === m.id);
-      if (story) out.push(el("div", { class: "story" }, el("div", { class: "kind", text: story.kind }), el("h4", { text: story.title }), el("p", { text: story.text })));
+      if (story) out.push(el("div", { class: "story" }, el("div", { class: "kind", text: story.kind }), el("h4", { text: story.title }), ul(story.points)));
       if (up) {
-        uploadNotes().forEach((n) => out.push(el("p", { class: "note", text: n })));
-        if (S.upload.warnings.length) out.push(el("ul", { class: "warn" }, ...S.upload.warnings.map((w) => el("li", { text: w }))));
-      } else if (m.role === "train") out.push(el("p", { class: "note", text: "A training model in this fold: the encoder and heads were fitted with it, so true values are withheld and its predictions are in-sample." }));
-      else out.push(el("p", { class: "note", text: "Held out in this fold: neither the encoder nor the heads saw this model. It is placed from its own answers by the fold-in, as an upload is." }));
+        out.push(el("div", { class: "note" }, ul(uploadNotes())));
+        if (S.upload.warnings.length) out.push(ul(S.upload.warnings, "plain warn"));
+      } else if (m.role === "train") out.push(el("div", { class: "note" }, ul(["Training model in this fold. The encoder and heads were fitted with it.", "True values are withheld. Predictions are in-sample."])));
+      else out.push(el("div", { class: "note" }, ul(["Held out in this fold. The encoder and heads never saw it.", "Placed from its own answers by the fold-in, the same way an upload is."])));
       out.push(el("h4", { text: "Predicted properties" }), predictionTable(Object.keys(ENC.tasks), preds, truth));
       if (story && S.space !== "fused") out.push(el("p", { class: "sub", text: "The example text describes the BULLPEN-fused view." }));
     } else if (S.tab === "neighbours") {
       out.push(el("h4", { text: `Nearest 10 of the 260 paper models (${SPACE_NAME[S.space]}, cosine)` }), neighbourTable(neighboursOf(S.sel)));
     } else {
       const g = GROUPS[S.tab];
-      out.push(el("h4", { text: g.title }), predictionTable(g.tasks, preds, truth), el("p", { class: "sub", text: g.note }));
+      out.push(el("h4", { text: g.title }), predictionTable(g.tasks, preds, truth), el("div", { class: "note" }, ul(g.notes)));
     }
     body.replaceChildren(...out);
   }
@@ -273,7 +276,7 @@
       S.upload = msg;
       msgBox.replaceChildren(el("div", { class: "ok" },
         el("b", { text: `Embedded with ${SPACE_NAME[msg.space]}.` }),
-        ` Shown as a purple diamond in the middle pane; nearest: ${name(MODELS[msg.neighbours[0].i].id)} (${msg.neighbours[0].sim.toFixed(3)}).`));
+        ul(["Shown as a red square in the middle pane.", `Nearest: ${name(MODELS[msg.neighbours[0].i].id)} (cosine ${msg.neighbours[0].sim.toFixed(3)}).`])));
       setSpace(msg.space, false);
       S.tab = "overview";
       select("upload");
@@ -281,7 +284,7 @@
     go.onclick = async () => {
       const fb = $("#bits-file").files[0], fa = $("#ans-file").files[0];
       if (!fb) {
-        msgBox.replaceChildren(el("div", { class: "errors" }, el("p", { text: "A bits CSV is required; the answers CSV is optional." })));
+        msgBox.replaceChildren(el("div", { class: "errors" }, el("p", { text: "A bits CSV is required. The answers CSV is optional." })));
         return;
       }
       hasAnswers = !!fa;
@@ -303,6 +306,17 @@
     if (redraw) { renderPlot(); renderInspector(); }
   }
 
+  function setPath(path) {
+    S.path = path;
+    $$("#seg-path button").forEach((b) => {
+      const on = b.dataset.path === path;
+      b.classList.toggle("on", on);
+      b.setAttribute("aria-selected", String(on));
+    });
+    $("#path-examples").hidden = path !== "examples";
+    $("#path-upload").hidden = path !== "upload";
+  }
+
   function setupControls() {
     $$("#seg-space button").forEach((b) => (b.onclick = () => setSpace(b.dataset.space)));
     $$("#seg-mode button").forEach((b) => (b.onclick = () => {
@@ -311,7 +325,7 @@
       plot.setMode(S.mode);
       renderPlot();
     }));
-    $("#color-by").onchange = (e) => { S.colorBy = e.target.value; renderPlot(); };
+    $$("#seg-path button").forEach((b) => (b.onclick = () => setPath(b.dataset.path)));
     $("#reset-view").onclick = () => plot.resetView();
     $$("#tabs button").forEach((b) => (b.onclick = () => { S.tab = b.dataset.tab; renderInspector(); }));
     $$("[data-open]").forEach((b) => (b.onclick = () => document.getElementById(b.dataset.open).showModal()));
@@ -366,15 +380,13 @@
       ENC = enc; MODELS = models.models; EXAMPLES = ex.examples; PROJ = proj;
       EMB = { fused, bitsq };
       INDEX = { fused: BP.normRows(fused), bitsq: BP.normRows(bitsq) };
-      const counts = {};
-      MODELS.forEach((m) => { if (m.family) counts[m.family] = (counts[m.family] || 0) + 1; });
-      topFamilies = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([f]) => f);
       $("#n-train").textContent = enc.protocol.n_train;
       $("#n-held").textContent = enc.protocol.n_heldout;
-      plot = new ScatterPlot($("#plot"));
+      plot = new ScatterPlot($("#plot"), THEME);
       window.BPPlot = plot;  // used by the screenshot script to find points
       setupControls();
       setupUpload();
+      if (location.hash === "#upload") setPath("upload");
       const mm = /m=([^&]+)/.exec(location.hash);
       const start = mm ? byId(decodeURIComponent(mm[1])) : byId(EXAMPLES[0].id);
       select(start >= 0 ? start : byId(EXAMPLES[0].id), { fromHash: true });
