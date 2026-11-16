@@ -9,7 +9,7 @@
 </head>
 <body>
 <header class="bar">
-  <div class="brand"><b>BULLPEN</b><span>Model embeddings in the browser. Demo for an anonymous ICLR 2027 submission.</span></div>
+  <div class="brand"><b>BULLPEN</b><span>This demo runs BULLPEN model embeddings in the browser for an anonymous ICLR 2027 submission.</span></div>
   <nav class="bar-actions">
     <button type="button" class="link" data-open="about">How it works</button>
     <button type="button" class="link" data-open="reported-dlg">Reported results</button>
@@ -28,8 +28,8 @@
 
     <section class="path" id="path-examples">
       <ul class="plain">
-        <li>Five paper models, chosen to show typical cases and one miss.</li>
-        <li>Or search all 260 by name.</li>
+        <li>These five paper models show four typical cases and one miss.</li>
+        <li>You can also search all 260 paper models by name.</li>
       </ul>
       <div id="chips" class="examples"></div>
       <label class="field-label" for="pick">Search the 260 paper models</label>
@@ -39,29 +39,30 @@
 
     <section class="path" id="path-upload" hidden>
       <ul class="plain">
-        <li>Run your model on the 1,181 core questions and grade it.</li>
-        <li>Upload the CSVs below. The page computes everything locally; files stay on your machine.</li>
+        <li>Run your model on the 1,181 core questions and grade its answers.</li>
+        <li>Upload the CSV files below. This page computes everything locally, and your files stay on your machine.</li>
       </ul>
       <label class="file"><span>Bits CSV <em>required</em></span>
         <input id="bits-file" type="file" accept=".csv,text/csv"></label>
-      <div class="links"><code>question_id,correct</code>. Values 0 or 1; blank means unanswered.
-        <a href="data/bits_template.csv" download>Template</a>.
-        <a href="data/sample_bits.csv" download>Sample from a held-out paper model</a>.</div>
+      <div class="links">The file has the columns <code>question_id,correct</code>. Each value is 0 or 1, and a blank
+        value means the model gave no answer. You can download the <a href="data/bits_template.csv" download>template</a>
+        or a <a href="data/sample_bits.csv" download>sample from a held-out paper model</a>.</div>
       <label class="file"><span>Answers CSV <em>optional</em></span>
         <input id="ans-file" type="file" accept=".csv,text/csv"></label>
-      <div class="links"><code>question_id,e0,…,e767</code>. <code>BAAI/bge-base-en-v1.5</code>, attention-mask
-        mean pooling over the last 512 tokens, L2-normalised. <a href="data/answers_template.csv" download>Template</a> (about 1 MB).</div>
+      <div class="links">The file has the columns <code>question_id,e0,…,e767</code>. Each row holds the
+        <code>BAAI/bge-base-en-v1.5</code> embedding of one answer, with attention-mask mean pooling over the last
+        512 tokens and L2 normalisation. You can download the <a href="data/answers_template.csv" download>template</a> (about 1 MB).</div>
       <details class="how">
         <summary>How to collect answers</summary>
         <ul class="plain">
-          <li>One answer per question, with the prompt as given.</li>
-          <li>Greedy decoding with up to 3,072 new tokens.</li>
-          <li>Reasoning models: temperature 0.6, top-p 0.95 and top-k 20, with up to 12,288 tokens.</li>
-          <li>Author responses: a system prompt moves a model's position. Reference and query answers must therefore share a system prompt.</li>
-          <li>Temperature does not move a model's position.</li>
-          <li>Question ids, benchmarks and pool membership: <a href="data/questions.csv" download>questions.csv</a>.</li>
-          <li>Prompts, gold answers and graders: the code release, <code>data/core/probe.jsonl</code>.</li>
-          <li>The encoder reads the 900 pool questions and ignores the rest. At least 50 must be answered.</li>
+          <li>Collect one answer per question with the prompt as given.</li>
+          <li>Use greedy decoding with up to 3,072 new tokens.</li>
+          <li>For reasoning models, use temperature 0.6, top-p 0.95 and top-k 20 with up to 12,288 tokens.</li>
+          <li>The author responses found that a system prompt moves a model's position. Reference and query answers must therefore share a system prompt.</li>
+          <li>The author responses also found that temperature does not move a model's position.</li>
+          <li>The file <a href="data/questions.csv" download>questions.csv</a> lists the question ids, their benchmarks and their pool membership.</li>
+          <li>The code release holds the prompts, gold answers and graders in <code>data/core/probe.jsonl</code>.</li>
+          <li>The encoder reads the 900 pool questions and ignores the rest. Your model must answer at least 50 of them.</li>
         </ul>
       </details>
       <button id="run" type="button" class="primary">Embed</button>
@@ -92,7 +93,7 @@
       <button type="button" class="link" id="reset-view">Reset view</button>
     </div>
     <div class="canvas-wrap">
-      <canvas id="plot" aria-label="embedding scatter"></canvas>
+      <canvas id="plot" aria-label="Scatter plot of the 260 paper models in the selected embedding space"></canvas>
       <div id="tooltip" class="tooltip" hidden></div>
     </div>
     <div class="legend" id="legend"></div>
@@ -110,7 +111,7 @@
       <button type="button" data-tab="metadata">Metadata</button>
       <button type="button" data-tab="neighbours">Neighbours</button>
     </nav>
-    <div id="insp-body" class="insp-body"><p class="sub">Loading…</p></div>
+    <div id="insp-body" class="insp-body"><p class="sub">The page is loading the model data.</p></div>
   </aside>
 </div>
 
@@ -119,31 +120,34 @@
   <h2>How it works</h2>
   <ul class="plain">
     <li>BULLPEN embeds a model from its answers to a fixed probe.</li>
-    <li>Channels: its correctness bits; the questions it got right (correctness-weighted mean question
-      embedding); its own answers (mean BGE answer embedding).</li>
-    <li>Closed-form multi-block PLS-SVD fits loadings per channel. Each channel's scores are z-scored and concatenated.</li>
-    <li>BULLPEN-fused: 12 + 10 + 10 dimensions. BULLPEN-bits+q: 16 + 16 (bits and question text only).</li>
+    <li>The embedding reads the model's correctness bits, the mean embedding of the questions it got right
+      (weighted by correctness) and the mean BGE embedding of its own answers.</li>
+    <li>A closed-form multi-block PLS-SVD fits loadings for each of these channels. The method z-scores each
+      channel's scores and concatenates them.</li>
+    <li>BULLPEN-fused has 12 + 10 + 10 dimensions. BULLPEN-bits+q has 16 + 16 dimensions and uses only the bits
+      and the question text.</li>
   </ul>
   <h3>This demo</h3>
   <ul class="plain">
-    <li>Fitted with the released code on fold 0, seed 0 of the paper's strict protocol: publisher-grouped folds
-      over models, 900 pool questions.</li>
-    <li><span id="n-train">208</span> training models, <span id="n-held">52</span> held out.</li>
-    <li>A new model is placed by the paper's fold-in: a ridge solve of its observed bits on the frozen bit
-      loadings, its question block from those bits, and a projection of its mean answer embedding.</li>
-    <li>Every map is linear. The page evaluates them from exported weights; no language model runs here.</li>
-    <li>Heads: the paper's battery readouts (standardised ridge; logistic for base vs chat), refitted once on
-      the training models.</li>
-    <li>Middle view: a PCA of the 260 placements in the selected space. It is linear, so an uploaded model is
-      projected exactly.</li>
-    <li>For density, each axis is scaled to its 2nd to 98th percentile range. Points beyond sit on the edge.</li>
-    <li>Nearest neighbours use cosine similarity in the full 32-d space.</li>
+    <li>This demo fits the released code on fold 0, seed 0 of the paper's strict protocol. The protocol groups
+      models into folds by publisher and uses 900 pool questions.</li>
+    <li>The fold has <span id="n-train">208</span> training models and <span id="n-held">52</span> held-out models.</li>
+    <li>The paper's fold-in places a new model. It solves a ridge regression of the model's observed bits on the
+      frozen bit loadings, builds the question block from those bits and projects the mean answer embedding.</li>
+    <li>Every map is linear, so the page evaluates the maps from exported weights and runs no language model.</li>
+    <li>The heads are the paper's battery readouts. They use standardised ridge regression, with logistic
+      regression for base vs chat, and this demo refits them once on the training models.</li>
+    <li>The middle view shows a PCA of the 260 placements in the selected space. The PCA is linear, so the page
+      projects an uploaded model exactly.</li>
+    <li>The view scales each axis to its 2nd to 98th percentile range to fill the pane. Points outside that range
+      sit on the edge of the frame.</li>
+    <li>The page finds nearest neighbours by cosine similarity in the full 32-d space.</li>
   </ul>
   <h3>Limits</h3>
   <ul class="plain">
     <li>The submission scores the heads on held-out models from the 260 open-weight models.</li>
-    <li>The author responses add nine closed models placed without refitting (see Reported results).</li>
-    <li>One split and one seed are shown. Per-model values here are single draws; the paper averages over 15 runs.</li>
+    <li>The author responses add nine closed models that were placed without refitting (see Reported results).</li>
+    <li>This demo shows one split and one seed, so each per-model value is a single draw. The paper averages over 15 runs.</li>
     <li>The base-vs-chat label comes from the model name, as in the paper.</li>
   </ul>
 </dialog>
@@ -153,10 +157,10 @@
   <section id="reported">
     <h2>Reported results</h2>
     <ul class="plain">
-      <li>Rows of the key-numbers table in the authors' general response on OpenReview, quoted as posted.</li>
-      <li>Only rows about what this demo shows are included.</li>
-      <li>Scores run from 0 (chance) to 1 (perfect). Brackets are 95% intervals.</li>
-      <li>Style tasks: the 11 behavior, style and safety tasks.</li>
+      <li>These rows come from the key-numbers table in the authors' general response on OpenReview, quoted as posted.</li>
+      <li>This table keeps only the rows that concern what this demo shows.</li>
+      <li>Scores run from 0 (chance) to 1 (perfect), and the brackets give 95% intervals.</li>
+      <li>The term "style tasks" refers to the 11 behavior, style and safety tasks.</li>
       <li>The demo does not recompute these numbers.</li>
     </ul>
     <table class="tbl quoted">
@@ -174,8 +178,8 @@
 </dialog>
 
 <footer class="foot">This demo reproduces results from the submission and the author responses on OpenReview.
-  Per-model outputs come from one refit of the released code on the paper's data.
-  <span class="code">Code: <a href="https://github.com/wcquesera/bullpen">github.com/wcquesera/bullpen</a></span></footer>
+  The per-model outputs come from one refit of the released code on the paper's data.
+  <span class="code">The code is at <a href="https://github.com/wcquesera/bullpen">github.com/wcquesera/bullpen</a>.</span></footer>
 <script src="js/core.js"></script>
 <script src="js/plot.js"></script>
 <script src="js/app.js"></script>

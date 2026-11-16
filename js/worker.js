@@ -27,10 +27,10 @@ onmessage = (ev) => {
       );
     }
     const errors = [];
-    bits.errors.forEach((e) => errors.push(`bits CSV, ${e}`));
-    if (answers) answers.errors.forEach((e) => errors.push(`answers CSV, ${e}`));
-    const warnings = bits.warnings.map((w) => `bits CSV: ${w}`);
-    if (answers) answers.warnings.forEach((w) => warnings.push(`answers CSV: ${w}`));
+    bits.errors.forEach((e) => errors.push(`Bits CSV: ${e}`));
+    if (answers) answers.errors.forEach((e) => errors.push(`Answers CSV: ${e}`));
+    const warnings = bits.warnings.map((w) => `Bits CSV: ${w}`);
+    if (answers) answers.warnings.forEach((w) => warnings.push(`Answers CSV: ${w}`));
     if (errors.length) {
       postMessage({ type: "invalid", errors, warnings });
       return;
@@ -56,6 +56,6 @@ onmessage = (ev) => {
       nAnswers: answers ? answers.nPool : 0,
     });
   } catch (err) {
-    postMessage({ type: "invalid", errors: [`unexpected error: ${err.message}`], warnings: [] });
+    postMessage({ type: "invalid", errors: [`The page hit an unexpected error: ${err.message}`], warnings: [] });
   }
 };

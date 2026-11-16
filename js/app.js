@@ -30,19 +30,19 @@
       title: "Behavior",
       tasks: ["log_n_tok", "refusal_rate", "hedge_rate"],
       notes: [
-        "Author responses, general response row 4: for answer length, hedging and refusal, each label's own defining formula, computed from the answers, beats the embedding.",
+        "The author responses (general response, row 4) report that each label's own defining formula, computed from the answers, beats the embedding for answer length, hedging and refusal.",
       ],
     },
     capability: {
       title: "Capability",
       tasks: ["oll_v2"],
-      notes: ["The Open LLM Leaderboard v2 head is fitted on the training models that have a board score. The count is under 'head fit on'."],
+      notes: ["The Open LLM Leaderboard v2 head was fitted on the training models that have a board score. The 'head fit on' column gives their count."],
     },
     metadata: {
       title: "Metadata",
       tasks: ["log_params", "release_year", "is_chat"],
       notes: [
-        "Author responses: size, release date and base vs chat are \"metadata checks rather than use cases\".",
+        "The author responses call size, release date and base vs chat \"metadata checks rather than use cases\".",
         "The base-vs-chat label comes from the model name.",
       ],
     },
@@ -111,10 +111,10 @@
     const evr = P.evr.slice(0, k).reduce((a, b) => a + b, 0);
     const clipped = P.coords.filter((c) => plot.isClipped(c, k)).length;
     const lines = [
-      `PCA of the 260 ${SPACE_NAME[S.space]} placements. ${k} components keep ${(100 * evr).toFixed(0)}% of the variance.`,
-      `Each axis is scaled to its 2nd to 98th percentile range. ${clipped} models fall farther out and are pinned to the frame.`,
-      "Distances in the view are approximate. Links mark the nearest 10 by cosine in the full 32-d space.",
-      (S.mode === "3d" ? "Drag to rotate" : "Drag to pan") + ". Scroll to zoom. Click a point to inspect it.",
+      `This view shows a PCA of the 260 ${SPACE_NAME[S.space]} placements, and its ${k} components keep ${(100 * evr).toFixed(0)}% of the variance.`,
+      `Each axis covers its 2nd to 98th percentile range, and the ${clipped} models outside that range sit on the frame.`,
+      "Distances in the view are approximate. The links join the selected model to its 10 nearest neighbours by cosine in the full 32-d space.",
+      (S.mode === "3d" ? "Drag the view to rotate it" : "Drag the view to move it") + " and scroll to zoom. Click a point to inspect that model.",
     ];
     $("#caption").replaceChildren(...lines.map((t) => el("li", { text: t })));
   }
@@ -152,7 +152,7 @@
     const wrap = el("div", {}, el("table", { class: "tbl" },
       el("thead", {}, el("tr", {}, ...["task", "predicted", truth ? "true" : "true (held-out only)", "head fit on"].map((x) => el("th", { text: x })))),
       tb));
-    if (clamped) wrap.append(el("p", { class: "sub", text: "* A ridge prediction outside [0, 1], shown clamped." }));
+    if (clamped) wrap.append(el("p", { class: "sub", text: "* The ridge prediction falls outside [0, 1], and the table shows the clamped value." }));
     return wrap;
   }
 
@@ -177,12 +177,12 @@
   function uploadNotes() {
     const u = S.upload;
     return [
-      `Placed with ${SPACE_NAME[u.space]} from ${u.nObserved} pool-question bits` +
-        (u.nAnswers ? ` and ${u.nAnswers} answer embeddings.` : ". No answers CSV, so the bits-only encoder."),
-      "Predictions are validated in distribution only.",
+      `The page placed your model with ${SPACE_NAME[u.space]} from ${u.nObserved} pool-question bits` +
+        (u.nAnswers ? ` and ${u.nAnswers} answer embeddings.` : ". It used the bits-only encoder because you gave no answers CSV."),
+      "The paper validates these predictions in distribution only.",
       "The submission scores the heads on held-out models from the 260 open-weight models.",
       "The author responses add nine closed Claude and GPT models placed without refitting. Heads trained only on open models rank their hedging and answer length almost perfectly (Spearman .97).",
-      "Other settings are untested. A model unlike the 260 can be misplaced; see the SmolLM2 example.",
+      "The paper and the author responses do not test other settings. A model unlike the 260 can land in the wrong place, as the SmolLM2 example shows.",
     ];
   }
 
@@ -191,7 +191,7 @@
     $$("#tabs button").forEach((b) => b.classList.toggle("on", b.dataset.tab === S.tab));
     if (S.sel == null) {
       head.replaceChildren();
-      body.replaceChildren(el("p", { class: "sub", text: "Click a point or pick an example." }));
+      body.replaceChildren(el("p", { class: "sub", text: "Click a point or pick an example to inspect a model." }));
       return;
     }
     const up = isUpload(S.sel);
@@ -200,7 +200,7 @@
       el("span", { class: "sub", text: SPACE_NAME[S.space] }));
     const z = zOf(S.sel);
     if (!z) {
-      body.replaceChildren(el("div", { class: "note" }, ul([`Your model was placed with ${SPACE_NAME[S.upload.space]}.`, "Switch the space in the middle pane to see it."])));
+      body.replaceChildren(el("div", { class: "note" }, ul([`The page placed your model with ${SPACE_NAME[S.upload.space]}.`, "Switch the space in the middle pane to see your model."])));
       return;
     }
     const preds = predsOf(S.sel);
@@ -212,8 +212,8 @@
       if (up) {
         out.push(el("div", { class: "note" }, ul(uploadNotes())));
         if (S.upload.warnings.length) out.push(ul(S.upload.warnings, "plain warn"));
-      } else if (m.role === "train") out.push(el("div", { class: "note" }, ul(["Training model in this fold. The encoder and heads were fitted with it.", "True values are withheld. Predictions are in-sample."])));
-      else out.push(el("div", { class: "note" }, ul(["Held out in this fold. The encoder and heads never saw it.", "Placed from its own answers by the fold-in, the same way an upload is."])));
+      } else if (m.role === "train") out.push(el("div", { class: "note" }, ul(["This model is in the training set for this fold, so the encoder and heads were fitted with it.", "The page withholds its true values because its predictions are in-sample."])));
+      else out.push(el("div", { class: "note" }, ul(["This model is held out in this fold, so the encoder and heads never saw it.", "The fold-in placed this model from its own answers, the same way it places an upload."])));
       out.push(el("h4", { text: "Predicted properties" }), predictionTable(Object.keys(ENC.tasks), preds, truth));
       if (story && S.space !== "fused") out.push(el("p", { class: "sub", text: "The example text describes the BULLPEN-fused view." }));
     } else if (S.tab === "neighbours") {
@@ -267,11 +267,11 @@
       }
       go.disabled = false;
       if (msg.type === "invalid") {
-        stage.textContent = "The upload did not pass validation";
+        stage.textContent = "The upload did not pass validation.";
         bar.style.width = "0%";
         setSteps("validate", { error: true });
         msgBox.replaceChildren(el("div", { class: "errors" },
-          el("h4", { text: "Fix these and upload again" }),
+          el("h4", { text: "Fix these problems and upload the files again." }),
           el("ul", {}, ...msg.errors.map((e) => el("li", { text: e }))),
           msg.warnings.length ? el("ul", { class: "warn" }, ...msg.warnings.map((w) => el("li", { text: w }))) : null));
         return;
@@ -279,8 +279,8 @@
       setSteps("search", { done: true, skipPool: !hasAnswers });
       S.upload = msg;
       msgBox.replaceChildren(el("div", { class: "ok" },
-        el("b", { text: `Embedded with ${SPACE_NAME[msg.space]}.` }),
-        ul(["Shown as a square in the middle pane.", `Nearest: ${name(MODELS[msg.neighbours[0].i].id)} (cosine ${msg.neighbours[0].sim.toFixed(3)}).`])));
+        el("b", { text: `The page embedded your model with ${SPACE_NAME[msg.space]}.` }),
+        ul(["The middle pane shows your model as a square.", `Its nearest paper model is ${name(MODELS[msg.neighbours[0].i].id)} (cosine ${msg.neighbours[0].sim.toFixed(3)}).`])));
       setSpace(msg.space, false);
       S.tab = "overview";
       select("upload");
@@ -288,7 +288,7 @@
     go.onclick = async () => {
       const fb = $("#bits-file").files[0], fa = $("#ans-file").files[0];
       if (!fb) {
-        msgBox.replaceChildren(el("div", { class: "errors" }, el("p", { text: "A bits CSV is required. The answers CSV is optional." })));
+        msgBox.replaceChildren(el("div", { class: "errors" }, el("p", { text: "The upload needs a bits CSV. The answers CSV is optional." })));
         return;
       }
       hasAnswers = !!fa;
@@ -398,7 +398,7 @@
       select(start >= 0 ? start : byId(EXAMPLES[0].id), { fromHash: true });
       document.body.classList.add("ready");
     } catch (err) {
-      $("#insp-body").replaceChildren(el("div", { class: "errors", text: `Could not load the site data: ${err.message}` }));
+      $("#insp-body").replaceChildren(el("div", { class: "errors", text: `The page could not load the site data: ${err.message}` }));
       throw err;
     }
   }

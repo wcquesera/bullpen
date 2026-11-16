@@ -195,18 +195,18 @@
     const lines = splitLines(text);
     const h = header(lines[0] || "");
     if (h[0] !== "question_id" || h[1] !== "correct" || h.length !== 2) {
-      return finish([`line 1: header must be exactly "question_id,correct" (got "${(lines[0] || "").slice(0, 60)}")`], [], {});
+      return finish([`Line 1 reads "${(lines[0] || "").slice(0, 60)}", and the header must be exactly "question_id,correct".`], [], {});
     }
     const core = new Set(coreQids), seen = new Map();
     for (let n = 1; n < lines.length; n++) {
       const line = lines[n].trim();
       if (!line) continue;
       const f = line.split(",");
-      if (f.length !== 2) { errors.push(`line ${n + 1}: expected 2 fields, got ${f.length}`); continue; }
+      if (f.length !== 2) { errors.push(`Line ${n + 1} has ${f.length} fields, and each row needs exactly 2.`); continue; }
       const q = f[0].trim(), v = f[1].trim();
-      if (!core.has(q)) { errors.push(`line ${n + 1}: unknown question_id "${q}" (not one of the 1,181 core questions)`); continue; }
-      if (seen.has(q)) { errors.push(`line ${n + 1}: question_id "${q}" repeated (first on line ${seen.get(q).line})`); continue; }
-      if (v !== "" && v !== "0" && v !== "1") { errors.push(`line ${n + 1}: correct must be 0, 1 or blank, got "${v}"`); continue; }
+      if (!core.has(q)) { errors.push(`Line ${n + 1} has an unknown question_id "${q}" that is not one of the 1,181 core questions.`); continue; }
+      if (seen.has(q)) { errors.push(`Line ${n + 1} has question_id "${q}", which is repeated from line ${seen.get(q).line}.`); continue; }
+      if (v !== "" && v !== "0" && v !== "1") { errors.push(`Line ${n + 1} has the value "${v}", and correct must be 0, 1 or blank.`); continue; }
       seen.set(q, { line: n + 1, v });
     }
     const bits = new Array(poolQids.length).fill(0), observed = new Array(poolQids.length).fill(false);
@@ -215,10 +215,10 @@
       const r = seen.get(q);
       if (r && r.v !== "") { bits[i] = Number(r.v); observed[i] = true; nObs++; }
     });
-    if (!errors.length && nObs < MIN_POOL) errors.push(`only ${nObs} of the ${poolQids.length} pool questions have a 0/1 answer; at least ${MIN_POOL} are needed`);
-    if (!errors.length && nObs < poolQids.length) warnings.push(`${poolQids.length - nObs} of ${poolQids.length} pool questions are blank or absent; the bits are placed from the ${nObs} observed ones (ridge fold-in)`);
+    if (!errors.length && nObs < MIN_POOL) errors.push(`Only ${nObs} of the ${poolQids.length} pool questions have a 0/1 answer, and at least ${MIN_POOL} are needed.`);
+    if (!errors.length && nObs < poolQids.length) warnings.push(`${poolQids.length - nObs} of the ${poolQids.length} pool questions are blank or absent, so the ridge fold-in places the bits from the ${nObs} observed ones.`);
     const nonPool = [...seen.keys()].filter((q) => !poolQids.includes(q)).length;
-    if (nonPool) warnings.push(`${nonPool} rows are core questions outside the 900-question pool the encoder reads; they are ignored`);
+    if (nonPool) warnings.push(`${nonPool} rows are core questions outside the 900-question pool, and the encoder ignores them.`);
     return finish(errors, warnings, { bits, observed, nObserved: nObs });
   }
 
@@ -229,7 +229,7 @@
     const h = header(lines[0] || "");
     const want = ["question_id"].concat(Array.from({ length: dim }, (_, i) => `e${i}`));
     if (h.length !== want.length || h.some((x, i) => x !== want[i])) {
-      return finish([`line 1: header must be "question_id,e0,...,e${dim - 1}" (${dim + 1} columns; got ${h.length})`], [], {});
+      return finish([`Line 1 has ${h.length} columns, and the header must be "question_id,e0,...,e${dim - 1}" with ${dim + 1} columns.`], [], {});
     }
     const core = new Set(coreQids), vectors = new Map();
     let offNorm = 0;
@@ -239,9 +239,9 @@
       if (!line) continue;
       const f = line.split(",");
       const q = f[0].trim();
-      if (f.length !== dim + 1) { errors.push(`line ${n + 1}: expected ${dim + 1} fields, got ${f.length}`); continue; }
-      if (!core.has(q)) { errors.push(`line ${n + 1}: unknown question_id "${q}"`); continue; }
-      if (vectors.has(q)) { errors.push(`line ${n + 1}: question_id "${q}" repeated`); continue; }
+      if (f.length !== dim + 1) { errors.push(`Line ${n + 1} has ${f.length} fields, and each row needs exactly ${dim + 1}.`); continue; }
+      if (!core.has(q)) { errors.push(`Line ${n + 1} has an unknown question_id "${q}".`); continue; }
+      if (vectors.has(q)) { errors.push(`Line ${n + 1} has question_id "${q}", which is repeated.`); continue; }
       const v = new Float64Array(dim);
       let bad = -1, s = 0;
       for (let i = 0; i < dim; i++) {
@@ -249,14 +249,14 @@
         if (f[i + 1].trim() === "" || !Number.isFinite(x)) { bad = i; break; }
         v[i] = x; s += x * x;
       }
-      if (bad >= 0) { errors.push(`line ${n + 1}: e${bad} is not a number ("${f[bad + 1]}")`); continue; }
+      if (bad >= 0) { errors.push(`On line ${n + 1}, e${bad} is not a number ("${f[bad + 1]}").`); continue; }
       if (Math.abs(Math.sqrt(s) - 1) > 0.05) offNorm++;
       vectors.set(q, v);
     }
     const nPool = poolQids.filter((q) => vectors.has(q)).length;
-    if (!errors.length && nPool < MIN_POOL) errors.push(`only ${nPool} of the ${poolQids.length} pool questions have an answer embedding; at least ${MIN_POOL} are needed`);
-    if (offNorm) warnings.push(`${offNorm} rows are not unit length; BGE answer embeddings are L2-normalised, so check the pooling (mean pooling, then L2 norm)`);
-    if (!errors.length && nPool < poolQids.length) warnings.push(`${poolQids.length - nPool} pool questions have no answer embedding; the mean is taken over the ${nPool} present`);
+    if (!errors.length && nPool < MIN_POOL) errors.push(`Only ${nPool} of the ${poolQids.length} pool questions have an answer embedding, and at least ${MIN_POOL} are needed.`);
+    if (offNorm) warnings.push(`${offNorm} rows do not have unit length. BGE answer embeddings are L2-normalised, so check that you applied mean pooling and then the L2 norm.`);
+    if (!errors.length && nPool < poolQids.length) warnings.push(`${poolQids.length - nPool} pool questions have no answer embedding, so the page takes the mean over the ${nPool} present ones.`);
     return finish(errors, warnings, { vectors, nPool });
   }
 
