@@ -13,9 +13,10 @@
     <h1>BULLPEN <span class="light">model embeddings, in the browser</span></h1>
     <p class="lede">A demo of the released code for the anonymous submission <em>From the Zoo to the
       BULLPEN: Sample-Efficient LLM Profiling via Multi-Channel Model Embeddings</em>. It shows no new
-      results: every model here is one of the paper's 260 open-weight models, and every encoder and
-      prediction head is refitted with the released code on one split of the paper's protocol.</p>
-    <nav><a href="#explorer">Explorer</a><a href="#upload">Embed your model</a><a href="#method">How it works</a><a href="https://github.com/wcquesera/bullpen">Code</a></nav>
+      results: every model here is one of the paper's 260 open-weight models, every encoder and
+      prediction head is refitted with the released code on one split of the paper's protocol, and the
+      reported numbers quoted below come from the submission and the authors' OpenReview responses.</p>
+    <nav><a href="#explorer">Explorer</a><a href="#upload">Embed your model</a><a href="#method">How it works</a><a href="#reported">Reported results</a><a href="https://github.com/wcquesera/bullpen">Code</a></nav>
   </div>
 </header>
 
@@ -47,6 +48,10 @@
         <code>BAAI/bge-base-en-v1.5</code> embedding of each answer (attention-mask mean pooling over the last
         512 tokens, L2-normalised). With both files the model is placed by BULLPEN-fused.
         <a href="data/answers_template.csv" download>answers template</a> (~1 MB)</li>
+      <li><b>Collect answers as the paper did</b>: one answer per question with the prompt as given; greedy
+        decoding with up to 3,072 new tokens, or, for reasoning models, temperature 0.6, top-p 0.95 and
+        top-k 20 with up to 12,288 tokens. The author responses found that temperature does not move a
+        model's position but a system prompt does, so reference and query answers must share a system prompt.</li>
       <li>Question ids, benchmarks and pool membership: <a href="data/questions.csv" download>questions.csv</a>.
         Prompts, gold answers and graders are in the code release (<code>data/core/probe.jsonl</code>).</li>
     </ol>
@@ -73,13 +78,33 @@
       from those bits, and a projection of its mean answer embedding. Every map is linear, so the page
       evaluates them directly from exported weights; no model runs here. The heads are the paper's battery
       readouts (standardised ridge, or logistic for base vs chat) refitted once on the 208 training models.</p>
-    <p class="note">Limits. The heads are validated only in distribution: the paper scores them on held-out
-      models from the same 260-model population of open-weight models. One split and one seed are shown, so
-      numbers here are single draws, not the paper's averages over 15 runs. The base-vs-chat label comes from
-      the model name, as in the paper.</p>
+    <p class="note">Limits. The submission scores the heads on held-out models from the 260 open-weight
+      models; the author responses add nine closed models placed without refitting (below). One split and one
+      seed are shown, so per-model values here are single draws, not the paper's averages over 15 runs. The
+      base-vs-chat label comes from the model name, as in the paper.</p>
+  </section>
+
+  <section id="reported">
+    <h2>Reported results</h2>
+    <p>Rows of the key-numbers table in the authors' general response on OpenReview that concern what
+      this demo shows, quoted as posted. Scores run from 0 (chance) to 1 (perfect), with 95% intervals.
+      "Style tasks" are the 11 behavior, style and safety tasks. The demo does not recompute them.</p>
+    <table class="tbl quoted">
+      <thead><tr><th>#</th><th>What we found</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td class="num">2</td><td>Text (768-d) minus bits (32-d), style tasks</td><td class="num">+.34 [.25, .44]</td></tr>
+        <tr><td class="num">4</td><td>Text minus each label's own defining formula (length, hedging, refusal)</td><td class="num">−.11, −.12, −.15</td></tr>
+        <tr><td class="num">7</td><td>Fused code minus bits and minus text, 32 dims, all tasks</td><td class="num">+.102, +.125; 3 of 3 seeds</td></tr>
+        <tr><td class="num">8</td><td>Text (768-d) minus fused code, style tasks; refusal</td><td class="num">+.09 [.03, .15]; .45 vs .27–.28</td></tr>
+        <tr><td class="num">12</td><td>Unseen models, text at 25 minus bits at 900 questions, style tasks (all tasks)</td><td class="num">+.27 [.15, .39] (.41 vs .37)</td></tr>
+        <tr><td class="num">17</td><td>Closed models: accuracy vs best open; rank of hedging and length</td><td class="num">.86–.93 vs .81; Spearman .97</td></tr>
+      </tbody>
+    </table>
   </section>
 </main>
-<footer class="wrap sub">Anonymous ICLR 2027 submission · demo of the released code · data: the paper's 260-model core cut</footer>
+<footer class="wrap sub">This demo reproduces results from the submission and the author responses on OpenReview; per-model
+  outputs come from one refit of the released code on the paper's data, not from new experiments.
+  Anonymous ICLR 2027 submission · data: the paper's 260-model core cut</footer>
 <script src="js/core.js"></script>
 <script src="js/app.js"></script>
 </body>

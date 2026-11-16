@@ -99,6 +99,7 @@
       tb);
     const wrap = el("div", {}, tbl);
     if (clamped) wrap.append(el("p", { class: "sub", text: "* a ridge prediction outside [0, 1], shown clamped." }));
+    wrap.append(el("p", { class: "sub", text: "Answer length, hedging and refusal: the author responses report that each label's own defining formula, computed directly from the answers, beats the embedding (general response, row 4). Size, release date and base vs chat are metadata checks rather than use cases." }));
     return wrap;
   }
 
@@ -190,7 +191,7 @@
       const notes = [
         `Placed with ${SPACE_NAME[msg.space]} from ${msg.nObserved} pool-question bits` +
           (msg.nAnswers ? ` and ${msg.nAnswers} answer embeddings.` : " (no answers CSV, so the bits-only encoder)."),
-        "Predictions are validated only in distribution: the paper scores the heads on held-out models drawn from the same 260-model population. For a model unlike those, neighbours and predictions can be wrong without any sign of it (see the SmolLM2 example).",
+        "Predictions are validated in distribution only. The submission scores the heads on held-out models from the 260 open-weight models. The author responses add nine closed Claude and GPT models placed without refitting, for which heads trained only on open models rank hedging and answer length almost perfectly (Spearman .97). Other settings are untested; a model unlike the 260 can be misplaced (see the SmolLM2 example).",
       ];
       const card = resultBlock({ title: "Your model", badge: roleBadge("upload"), space: msg.space, neigh: msg.neighbours, preds: msg.preds, truth: null, notes });
       if (warn.length) card.insertBefore(el("ul", { class: "warn" }, ...warn), card.children[1]);
