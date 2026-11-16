@@ -26,7 +26,6 @@ ul.plain li::marker { content: "–  "; color: var(--muted); }
 /* top bar */
 .bar { height: var(--bar-h); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; border-bottom: 2px solid var(--ink); }
 .brand b { font-size: 17px; font-weight: 800; letter-spacing: 0.5px; margin-right: 14px; }
-.brand b::before { content: ""; display: inline-block; width: 9px; height: 9px; background: var(--accent); margin-right: 8px; vertical-align: 1px; }
 .brand span { color: var(--muted); font-size: 12px; }
 .bar-actions { display: flex; gap: 18px; }
 button { font: inherit; color: inherit; }
@@ -137,7 +136,7 @@ dialog::backdrop { background: rgba(255, 255, 255, 0.82); }
 dialog .close { position: absolute; right: 12px; top: 6px; border: 0; background: none; font-size: 22px; cursor: pointer; }
 dialog .close:hover { color: var(--accent); }
 .foot { height: var(--foot-h); border-top: 1px solid var(--ink); font-size: 11px; color: var(--muted); padding: 6px 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.foot .sep { margin-left: 14px; }
+.foot .code { margin-left: 14px; color: var(--ink); }
 
 @media (max-width: 1100px) {
   body { overflow: auto; }
