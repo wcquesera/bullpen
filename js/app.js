@@ -17,6 +17,8 @@
   const SPACE_NAME = { fused: "BULLPEN-fused", bitsq: "BULLPEN-bits+q" };
   const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   // plot colours and font come from the CSS variables in css/style.css (the canvas uses the same palette as the page)
+  // touch screens: vertical swipes scroll the page (css touch-action: pan-y), so the caption says so
+  const TOUCH = matchMedia("(pointer: coarse)").matches;
   let THEME;
   function readTheme() {
     const cs = getComputedStyle(document.documentElement), v = (k) => cs.getPropertyValue(k).trim();
@@ -114,7 +116,9 @@
       `This view shows a PCA of the 260 ${SPACE_NAME[S.space]} placements, and its ${k} components keep ${(100 * evr).toFixed(0)}% of the variance.`,
       `Each axis covers its 2nd to 98th percentile range, and the ${clipped} models outside that range sit on the frame.`,
       "Distances in the view are approximate. The links join the selected model to its 10 nearest neighbours by cosine in the full 32-d space.",
-      (S.mode === "3d" ? "Drag the view to rotate it" : "Drag the view to move it") + " and scroll to zoom. Click a point to inspect that model.",
+      TOUCH
+        ? (S.mode === "3d" ? "Drag sideways on the view to rotate it." : "Drag sideways on the view to move it.") + " Tap a point to inspect that model."
+        : (S.mode === "3d" ? "Drag the view to rotate it" : "Drag the view to move it") + " and scroll to zoom. Click a point to inspect that model.",
     ];
     $("#caption").replaceChildren(...lines.map((t) => el("li", { text: t })));
   }
@@ -149,9 +153,9 @@
         el("td", { class: "num", text: t ?? "—" }),
         el("td", { class: "num sub", text: String(h.n_train) })));
     }
-    const wrap = el("div", {}, el("table", { class: "tbl" },
+    const wrap = el("div", {}, el("div", { class: "scroll-x" }, el("table", { class: "tbl" },
       el("thead", {}, el("tr", {}, ...["task", "predicted", truth ? "true" : "true (held-out only)", "head fit on"].map((x) => el("th", { text: x })))),
-      tb));
+      tb)));
     if (clamped) wrap.append(el("p", { class: "sub", text: "* The ridge prediction falls outside [0, 1], and the table shows the clamped value." }));
     return wrap;
   }
@@ -167,9 +171,9 @@
         el("td", {}, roleBadge(m.role)),
         el("td", { class: "num", text: sim.toFixed(3) })));
     });
-    return el("table", { class: "tbl" },
+    return el("div", { class: "scroll-x" }, el("table", { class: "tbl" },
       el("thead", {}, el("tr", {}, ...["#", "model", "publisher family", "split", "cosine"].map((x) => el("th", { text: x })))),
-      tb);
+      tb));
   }
 
   const ul = (items, cls = "plain") => el("ul", { class: cls }, ...items.map((t) => el("li", { text: t })));

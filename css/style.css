@@ -203,3 +203,60 @@ dialog { border: 1px solid var(--rule); }
 .tag { font-weight: 500; }
 .errors { border-left-color: #cc0f35; }                                 /* errors in Bulma danger red, not the link blue */
 .errors h4, .pipeline li.error, .pipeline li.error::before { color: #cc0f35; }
+
+/* tables scroll inside their own box when a screen is too narrow (no page-level horizontal scroll) */
+.scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+
+/* ---------------------------------------------------------------- tablets and phones (<= 1100px)
+ * The three panes stack at full width (input, embedding space, inspector) and the page scrolls as one.
+ * Desktop (> 1100px) is unchanged. */
+@media (max-width: 1100px) {
+  html, body { height: auto; }
+  body { overflow-x: hidden; overflow-y: auto; font-size: 15px; line-height: 1.55; }
+  .bar { height: auto; flex-wrap: wrap; gap: 4px 16px; padding: 10px 16px; align-items: baseline; }
+  .brand span { display: block; font-size: 13.5px; margin-top: 2px; }
+  .bar-actions { gap: 4px 18px; flex-wrap: wrap; }
+  .link { font-size: 15px; min-height: 40px; display: inline-flex; align-items: center; }
+  .ide { grid-template-columns: minmax(0, 1fr); height: auto; }
+  .pane { overflow: visible; }
+  .left, .right { border: 0; border-bottom: 1px solid var(--rule); padding: 0 16px 20px; }
+  .left .pane-title, .left { background: #fafafa; }
+  .middle { height: auto; overflow: visible; border-bottom: 1px solid var(--rule); }
+  .canvas-wrap { flex: none; height: clamp(340px, 92vw, 600px); }
+  #plot { touch-action: pan-y; }  /* vertical swipes scroll the page; horizontal drags move the view */
+  .toolbar { gap: 8px 10px; padding: 10px 16px; }
+  .pane-title.inline { width: 100%; }
+
+  /* touch targets >= 40px */
+  .seg button { min-height: 40px; padding: 6px 14px; font-size: 14px; }
+  .seg.two-path button { min-height: 44px; font-size: 15px; }
+  #reset-view { min-height: 40px; }
+  #pick { min-height: 44px; font-size: 16px; }
+  .file input { min-height: 40px; font-size: 14px; }
+  details.how { font-size: 14px; }
+  details.how summary { padding: 10px 0; font-size: 15px; }
+  .primary { min-height: 44px; font-size: 16px; }
+  .example { padding: 10px 0 10px 12px; }
+  .example span { font-size: 15px; }
+  .tabs { flex-wrap: wrap; top: 0; }  /* all five tabs stay visible; they wrap to a second row on phones */
+  .tabs button { min-height: 44px; font-size: 15px; padding: 8px 10px; white-space: nowrap; flex: none; }
+  .tabs button:first-child { padding-left: 10px; }
+  .pipeline li { font-size: 14px; padding: 7px 0; }
+  .tbl tr.clickable td { padding-top: 10px; padding-bottom: 10px; }
+
+  /* readable sizes */
+  .sub, .links, .caption, .legend, .foot, ul.warn, .errors, .ok { font-size: 13.5px; }
+  .tbl { font-size: 14px; }
+  .tbl th, .tag, .field-label, .example b, .story .kind { font-size: 13px; }
+  .tbl .sub { font-size: 13px; }
+  .caption { columns: 1; margin: 6px 16px 12px; }
+  .legend { padding: 8px 16px 0; }
+  .insp-head h3 { font-size: 18px; overflow-wrap: anywhere; }
+  .story h4 { font-size: 18px; }
+  code { font-size: 13px; overflow-wrap: anywhere; }
+  .links, .example span { overflow-wrap: anywhere; word-break: normal; }
+  .foot { height: auto; white-space: normal; padding: 14px 16px 24px; line-height: 1.6; }
+  .foot .code { display: block; margin: 6px 0 0; }
+  dialog { width: calc(100vw - 20px); max-width: 720px; padding: 18px 16px; font-size: 15px; }
+  .tbl.quoted td.num:last-child { white-space: normal; width: 38%; }
+}
