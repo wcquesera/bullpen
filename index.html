@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>BULLPEN: model embeddings demo</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <h1>BULLPEN <span class="light">model embeddings, in the browser</span></h1>
+    <p class="lede">A demo of the released code for the anonymous submission <em>From the Zoo to the
+      BULLPEN: Sample-Efficient LLM Profiling via Multi-Channel Model Embeddings</em>. It shows no new
+      results: every model here is one of the paper's 260 open-weight models, and every encoder and
+      prediction head is refitted with the released code on one split of the paper's protocol.</p>
+    <nav><a href="#explorer">Explorer</a><a href="#upload">Embed your model</a><a href="#method">How it works</a><a href="https://github.com/wcquesera/bullpen">Code</a></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="explorer">
+    <h2>Explorer</h2>
+    <p>Pick one of the 260 paper models to see its 10 nearest neighbours in the BULLPEN-fused embedding
+      and what the prediction heads read off it. Of the 260, <span id="n-held">52</span> are held out in this split
+      (true values shown) and <span id="n-train">208</span> trained the encoder and heads (true values withheld).</p>
+    <div class="picker">
+      <label for="pick">Model</label>
+      <input id="pick" list="model-list" placeholder="type to search the 260 models" autocomplete="off">
+      <datalist id="model-list"></datalist>
+    </div>
+    <div id="chips" class="chips" aria-label="examples"></div>
+    <div id="explorer-out"><p class="sub">Loading…</p></div>
+  </section>
+
+  <section id="upload">
+    <h2>Embed your model</h2>
+    <p>Run your model on the 1,181 core questions, grade it, and upload the result. Everything runs in
+      this page; nothing is sent anywhere. The encoder reads the 900 pool questions and ignores the rest.</p>
+    <ol class="steps">
+      <li><b>Bits CSV (required)</b>: <code>question_id,correct</code>, one row per question, <code>correct</code> 0 or 1
+        (blank if unanswered; at least 50 pool questions needed). With bits alone the model is placed by
+        BULLPEN-bits+q. <a href="data/bits_template.csv" download>bits template</a> ·
+        <a href="data/sample_bits.csv" download>sample: a held-out paper model</a></li>
+      <li><b>Answers CSV (optional)</b>: <code>question_id,e0,…,e767</code>, the
+        <code>BAAI/bge-base-en-v1.5</code> embedding of each answer (attention-mask mean pooling over the last
+        512 tokens, L2-normalised). With both files the model is placed by BULLPEN-fused.
+        <a href="data/answers_template.csv" download>answers template</a> (~1 MB)</li>
+      <li>Question ids, benchmarks and pool membership: <a href="data/questions.csv" download>questions.csv</a>.
+        Prompts, gold answers and graders are in the code release (<code>data/core/probe.jsonl</code>).</li>
+    </ol>
+    <div class="uploader">
+      <label class="file">Bits CSV <input id="bits-file" type="file" accept=".csv,text/csv"></label>
+      <label class="file">Answers CSV (optional) <input id="ans-file" type="file" accept=".csv,text/csv"></label>
+      <button id="run" type="button">Embed</button>
+    </div>
+    <div class="progress"><div id="bar"></div></div>
+    <div id="stage" class="sub"></div>
+    <div id="upload-out"></div>
+  </section>
+
+  <section id="method">
+    <h2>How it works</h2>
+    <p>BULLPEN embeds a model from three channels of its answers to a fixed probe: its correctness bits,
+      the text of the questions it got right (a correctness-weighted mean question embedding), and the
+      text of its own answers (mean BGE answer embedding). Closed-form multi-block PLS-SVD fits per-channel
+      loadings, and the code concatenates each channel's z-scored scores: 12 + 10 + 10 dimensions for
+      BULLPEN-fused, 16 + 16 for BULLPEN-bits+q (bits and question text only).</p>
+    <p>Everything shown is fitted with the released code on fold 0, seed 0 of the paper's strict protocol
+      (publisher-grouped folds over models; the 900 pool questions). A new model is placed by the
+      paper's fold-in: a ridge solve of its observed bits on the frozen bit loadings, its question block
+      from those bits, and a projection of its mean answer embedding. Every map is linear, so the page
+      evaluates them directly from exported weights; no model runs here. The heads are the paper's battery
+      readouts (standardised ridge, or logistic for base vs chat) refitted once on the 208 training models.</p>
+    <p class="note">Limits. The heads are validated only in distribution: the paper scores them on held-out
+      models from the same 260-model population of open-weight models. One split and one seed are shown, so
+      numbers here are single draws, not the paper's averages over 15 runs. The base-vs-chat label comes from
+      the model name, as in the paper.</p>
+  </section>
+</main>
+<footer class="wrap sub">Anonymous ICLR 2027 submission · demo of the released code · data: the paper's 260-model core cut</footer>
+<script src="js/core.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
