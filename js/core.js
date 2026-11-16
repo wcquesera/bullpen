@@ -158,6 +158,19 @@
     return { vec: Array.from(sum, (v) => v / s), n };
   }
 
+  // PCA view: (z - mean) @ components^T, first k components (site/export.py:pca_projection)
+  function project(proj, z, k) {
+    const n = k || proj.components.length;
+    const out = new Array(n).fill(0);
+    for (let c = 0; c < n; c++) {
+      const w = proj.components[c];
+      let s = 0;
+      for (let i = 0; i < z.length; i++) s += (z[i] - proj.mean[i]) * w[i];
+      out[c] = s;
+    }
+    return out;
+  }
+
   // ---------------------------------------------------------------- CSV checks
   const MIN_POOL = 50; // fewest pool questions an upload must cover
   const MAX_ERRORS = 8;
@@ -247,7 +260,7 @@
     return finish(errors, warnings, { vectors, nPool });
   }
 
-  const api = { solve, ridge, embed, predict, predictAll, normRows, knn, poolText, parseBits, parseAnswers, MIN_POOL };
+  const api = { project, solve, ridge, embed, predict, predictAll, normRows, knn, poolText, parseBits, parseAnswers, MIN_POOL };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.BP = api;
 })(typeof self !== "undefined" ? self : this);
