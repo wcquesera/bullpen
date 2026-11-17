@@ -110,10 +110,9 @@
     plot.setSelection(zOf(S.sel) ? S.sel : null, neighboursOf(S.sel).map((n) => n.i));
     renderLegend();
     const k = S.mode === "3d" ? 3 : 2;
-    const evr = P.evr.slice(0, k).reduce((a, b) => a + b, 0);
     const clipped = P.coords.filter((c) => plot.isClipped(c, k)).length;
     const lines = [
-      `This view shows a PCA of the 260 ${SPACE_NAME[S.space]} placements, and its ${k} components keep ${(100 * evr).toFixed(0)}% of the variance.`,
+      `This view projects the 260 ${SPACE_NAME[S.space]} placements onto their first ${k} principal components for display; neighbours and all predictions use the full 32-d embedding.`,
       `Each axis covers its 2nd to 98th percentile range, and the ${clipped} models outside that range sit on the frame.`,
       "Distances in the view are approximate. The links join the selected model to its 10 nearest neighbours by cosine in the full 32-d space.",
       TOUCH

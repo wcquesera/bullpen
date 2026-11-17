@@ -206,7 +206,7 @@
   <ul class="plain">
     <li>For each pool question, a least-squares fit of the training models' answer embeddings on θ gives
       <span class="tex" data-tex="\htmlClass{v-mu}{\mu(q)}"></span> and <span class="tex" data-tex="\htmlClass{v-theta}{\Lambda(q)}"></span>.</li>
-    <li>The residual <span class="tex" data-tex="e(m,q) - \htmlClass{v-mu}{\mu(q)} - \htmlClass{v-theta}{\Lambda(q)\theta(m)}"></span> holds style and noise.
+    <li>The residual <span class="tex" data-tex="e(m,q) - \htmlClass{v-mu}{\mu(q)} - \htmlClass{v-theta}{\Lambda(q)\theta(m)}"></span> holds style and the per-answer residual ε.
       A PCA of the training models' residuals over all pool questions gives the style axes, and the held-out models are projected onto the same axes.</li>
     <li>The card shows the first <span class="m-nstyle">3</span> axes in SD units of the training models. Each axis is named after the measured text traits it correlates with most.</li>
     <li>Style has no better direction, so the card never ranks a model on an <span class="tex" data-tex="\htmlClass{v-style}{s}"></span> axis.</li>
