@@ -23,12 +23,16 @@
   function readTheme() {
     const cs = getComputedStyle(document.documentElement), v = (k) => cs.getPropertyValue(k).trim();
     return {
-      ink: v("--ink"), paper: v("--paper"), train: v("--plot-train"), held: v("--plot-held"), accent: v("--accent"),
+      ink: v("--ink"), paper: v("--paper"), train: v("--plot-train"), held: v("--plot-held"), api: v("--plot-api"), accent: v("--accent"),
       rule: v("--plot-rule"), muted: v("--muted"), font: v("--font"),
     };
   }
   const S = { space: "fused", mode: "2d", path: "examples", sel: null, tab: "overview", upload: null };
-  let ENC, MODELS, EMB, PROJ, EXAMPLES, INDEX, PROPS, REL, plot;
+  let EMB260, ENC, MODELS, EMB, PROJ, EXAMPLES, INDEX, PROPS, REL, plot;
+  // the closed API models (data/api.json) ride after the 260: placed by fold-in, never fitted on
+  const API_LABEL = "closed API (held out)";
+  const isApi = (i) => i != null && !isUpload(i) && MODELS[i].role === "api";
+  const roleText = (role) => (role === "heldout" ? "held out" : role === "api" ? API_LABEL : "training");
 
   const name = (id) => id.replace("__", "/");
 
@@ -87,9 +91,10 @@
     plot.setSelection(zOf(S.sel) ? S.sel : null, neighboursOf(S.sel).map((n) => n.i));
     renderLegend();
     const k = S.mode === "3d" ? 3 : 2;
-    const clipped = P.coords.filter((c) => plot.isClipped(c, k)).length;
+    const clipped = P.coords.filter((c) => plot.isClipped(c, k)).length;  // all 269 rows
     const lines = [
       `This view projects the 260 ${SPACE_NAME[S.space]} placements onto their first ${k} principal components for display; neighbours and all predictions use the full 32-d embedding.`,
+      "The diamonds are the nine closed API models, placed by fold-in and projected onto the same components.",
       `Each axis covers its 2nd to 98th percentile range, and the ${clipped} models outside that range sit on the frame.`,
       "Distances in the view are approximate. The links join the selected model to its 10 nearest neighbours by cosine in the full 32-d space.",
       TOUCH
@@ -101,7 +106,7 @@
 
   function renderLegend() {
     const item = (color, label, shape = "dot") => el("span", { class: "lg" }, el("i", { class: shape, style: `background:${color}` }), label);
-    const items = [item(THEME.train, "training"), item(THEME.held, "held out"), item(THEME.accent, "selected"), item(THEME.accent, "nearest 10", "ring")];
+    const items = [item(THEME.train, "training"), item(THEME.held, "held out"), item(THEME.api, API_LABEL, "diamond"), item(THEME.accent, "selected"), item(THEME.accent, "nearest 10", "ring")];
     if (S.upload) items.push(item(THEME.accent, S.upload.space === S.space ? "your model" : `your model (in ${SPACE_NAME[S.upload.space]})`, "square"));
     $("#legend").replaceChildren(...items);
   }
@@ -110,6 +115,7 @@
   function roleBadge(role) {
     if (role === "heldout") return el("span", { class: "tag held", text: "held out" });
     if (role === "train") return el("span", { class: "tag", text: "training" });
+    if (role === "api") return el("span", { class: "tag api", text: API_LABEL });
     return el("span", { class: "tag up", text: "your upload" });
   }
 
@@ -194,7 +200,8 @@
       if (up) {
         out.push(el("div", { class: "note" }, ul(uploadNotes())));
         if (S.upload.warnings.length) out.push(ul(S.upload.warnings, "plain warn"));
-      } else if (m.role === "train") out.push(el("div", { class: "note" }, ul(["This model is in the training set for this fold, so the encoder and heads were fitted with it.", "The page withholds its true values because its predictions are in-sample."])));
+      } else if (m.role === "api") out.push(el("div", { class: "note" }, ul(["Closed API model — held out, not used for training.", "The fold-in placed this model from its own answers, the same way it places an upload. Its neighbours are the nearest of the 260 paper models.", "The page shows predictions only, because the paper's labels do not cover the closed models."])));
+      else if (m.role === "train") out.push(el("div", { class: "note" }, ul(["This model is in the training set for this fold, so the encoder and heads were fitted with it.", "The page withholds its true values because its predictions are in-sample."])));
       else out.push(el("div", { class: "note" }, ul(["This model is held out in this fold, so the encoder and heads never saw it.", "The fold-in placed this model from its own answers, the same way it places an upload."])));
       out.push(profileSummary(S.sel));
       out.push(el("h4", { text: "Predicted properties" }), predictionTable(Object.keys(ENC.tasks), preds, truth));
@@ -335,7 +342,7 @@
       if (out.length) missing.push(out.length === keys.length && keys.length === 1 ? g : `${g} (${out.join(", ")})`);
     }
     const notes = [
-      up ? "A probe fitted on all labelled paper models reads each trait from your model's BULLPEN-fused embedding."
+      up || isApi(S.sel) ? `A probe fitted on all labelled paper models reads each trait from ${up ? "your" : "this"} model's BULLPEN-fused embedding.`
         : "Each value read from the embedding comes from a probe fitted with this model's publisher family held out. The measured value comes from the model's own answers.",
       "The last column gives the held-out R² over the paper models.",
     ];
@@ -352,7 +359,7 @@
     sec.append(propertyTable(inc, cm, up, () => SYM.e));
     const nDrop = PROPS.screen.filter((r) => r.category === "external" && !r.include).length + PROPS.small_tables.length;
     const notes = [
-      up ? "A probe fitted on all labelled paper models reads each signal from your model's BULLPEN-fused embedding."
+      up || isApi(S.sel) ? `A probe fitted on all labelled paper models reads each signal from ${up ? "your" : "this"} model's BULLPEN-fused embedding.`
         : "Each prediction comes from a probe fitted with this model's publisher family held out. The measured column is blank where no public score matches the model.",
       `The card leaves out ${nDrop} other external signals and metadata labels. Some have too few labelled models, and the others do not pass the selection rule in the Method dialog.`,
     ];
@@ -489,7 +496,7 @@
 
   function setupUpload() {
     const worker = new Worker("js/worker.js");
-    worker.postMessage({ type: "init", data: { enc: ENC, emb: EMB, theta: { irt: PROPS.theta.irt, sorted_theta: PROPS.theta.sorted_theta }, heads: PROPS.heads } });
+    worker.postMessage({ type: "init", data: { enc: ENC, emb: EMB260, theta: { irt: PROPS.theta.irt, sorted_theta: PROPS.theta.sorted_theta }, heads: PROPS.heads } });
     const bar = $("#bar"), stage = $("#stage"), msgBox = $("#upload-msg"), go = $("#run");
     let hasAnswers = false;
     worker.onmessage = (ev) => {
@@ -601,7 +608,7 @@
       if (isUpload(hit)) tip.replaceChildren(el("b", { text: "Your model" }));
       else {
         const m = MODELS[hit];
-        tip.replaceChildren(el("b", { text: name(m.id) }), el("div", { text: `${m.family || "—"} · ${m.role === "heldout" ? "held out" : "training"}` }),
+        tip.replaceChildren(el("b", { text: name(m.id) }), el("div", { text: `${m.family || "—"} · ${roleText(m.role)}` }),
           sims.has(hit) ? el("div", { text: `cosine to selection ${sims.get(hit).toFixed(3)}` }) : null);
       }
       tip.style.left = `${x + 14}px`; tip.style.top = `${y + 10}px`;
@@ -621,15 +628,22 @@
       return r.json();
     });
     try {
-      const [enc, models, fused, bitsq, proj, ex, props, rel] = await Promise.all(
-        ["encoders.json", "models.json", "emb_fused.json", "emb_bitsq.json", "projections.json", "examples.json", "properties.json", "reliability.json"].map(get));
+      const [enc, models, fused, bitsq, proj, ex, props, rel, api, apiCard] = await Promise.all(
+        ["encoders.json", "models.json", "emb_fused.json", "emb_bitsq.json", "projections.json", "examples.json", "properties.json", "reliability.json", "api.json", "api_card.json"].map(get));
       ENC = enc; MODELS = models.models; EXAMPLES = ex.examples; PROJ = proj; PROPS = props; REL = rel;
       $("#fw-headline").replaceChildren(headlineEl());
       if (PROPS.models.some((m, i) => m.id !== MODELS[i].id)) throw new Error("properties.json and models.json list the models in different orders");
       renderStaticTex();
       fillMethod();
-      EMB = { fused, bitsq };
+      // neighbours (and the upload worker) search the 260 only; the API rows are appended after them
       INDEX = { fused: BP.normRows(fused), bitsq: BP.normRows(bitsq) };
+      EMB260 = { fused, bitsq };
+      if (apiCard.models.some((c, k) => c.id !== api.models[k].id)) throw new Error("api.json and api_card.json list the API models in different orders");
+      MODELS = MODELS.concat(api.models);
+      EMB = { fused: fused.concat(api.emb.fused), bitsq: bitsq.concat(api.emb.bitsq) };
+      for (const k of Object.keys(PROJ)) PROJ[k].coords = PROJ[k].coords.concat(api.coords[k]);
+      PROPS.models = PROPS.models.concat(apiCard.models);
+      apiCard.models.forEach((c) => (REL.models[c.id] = c.reliable_theta_share));
       $("#n-train").textContent = enc.protocol.n_train;
       $("#n-held").textContent = enc.protocol.n_heldout;
       await document.fonts.ready;  // so canvas labels use the web font from the first draw

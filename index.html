@@ -38,9 +38,9 @@
     </div>
 
     <section class="path" id="path-examples">
-      <p class="sub">Four paper models and their nearest neighbours. You can also search all 260 by name.</p>
+      <p class="sub">Four paper models, one closed API model and their nearest neighbours. You can also search all 260 paper models and the nine closed API models by name.</p>
       <div id="chips" class="examples"></div>
-      <label class="field-label" for="pick">Search the 260 paper models</label>
+      <label class="field-label" for="pick">Search the 260 paper models and 9 closed API models</label>
       <input id="pick" list="model-list" placeholder="model name" autocomplete="off">
       <datalist id="model-list"></datalist>
     </section>
@@ -101,7 +101,7 @@
       <button type="button" class="link" id="reset-view">Reset view</button>
     </div>
     <div class="canvas-wrap">
-      <canvas id="plot" aria-label="Scatter plot of the 260 paper models in the selected embedding space"></canvas>
+      <canvas id="plot" aria-label="Scatter plot of the 260 paper models and 9 closed API models in the selected embedding space"></canvas>
       <div id="tooltip" class="tooltip" hidden></div>
     </div>
     <div class="legend" id="legend"></div>
@@ -164,6 +164,8 @@
     <li>The view scales each axis to its 2nd to 98th percentile range to fill the pane. Points outside that range
       sit on the edge of the frame.</li>
     <li>The page finds nearest neighbours by cosine similarity in the full 32-d space.</li>
+    <li>The diamonds are the nine closed Claude and GPT models from the author responses. The same fold-in places them
+      after every fit, so no encoder, head, PCA or card axis was fitted with them. Their neighbours are the nearest of the 260 paper models.</li>
   </ul>
   <h3>Limits</h3>
   <ul class="plain">
@@ -193,7 +195,7 @@
     <li>The demo fits a one-dimensional two-parameter IRT model (the release's <code>IRTEncoder</code> with <code>dim = 1</code>)
       to the correctness bits of the <span class="m-ntrain">208</span> training models on the <span class="m-npool">900</span> pool questions.
       Each question gets a discrimination and an easiness, so <span class="tex" data-tex="P(\text{correct}) = \sigma(a_q\,\htmlClass{v-theta}{\theta(m)} + b_q)"></span>.</li>
-    <li>The release's fold-in places every one of the 260 models with the items frozen. The page repeats that fold-in for an uploaded bits file.</li>
+    <li>The release's fold-in places every one of the 260 models with the items frozen, and the nine closed API models the same way. The page repeats that fold-in for an uploaded bits file.</li>
     <li>The card reports θ as a percentile of the 260 models. Refitting the IRT model with five seeds changes no percentile
       (largest change <span id="m-seed-sd"></span> points), so the card shows the SD over <span id="m-nboot"></span> resamples of the pool questions instead.</li>
   </ul>
@@ -202,7 +204,7 @@
     <li>For each pool question, a least-squares fit of the training models' answer embeddings on θ gives
       <span class="tex" data-tex="\htmlClass{v-mu}{\mu(q)}"></span> and <span class="tex" data-tex="\htmlClass{v-theta}{\Lambda(q)}"></span>.</li>
     <li>The residual <span class="tex" data-tex="e(m,q) - \htmlClass{v-mu}{\mu(q)} - \htmlClass{v-theta}{\Lambda(q)\theta(m)}"></span> holds style and the per-answer residual ε.
-      A PCA of the training models' residuals over all pool questions gives the style axes, and the held-out models are projected onto the same axes.</li>
+      A PCA of the training models' residuals over all pool questions gives the style axes, and the held-out models and the closed API models are projected onto the same axes.</li>
     <li>The card shows the first <span class="m-nstyle">2</span> axes in SD units of the training models. Each axis is named after the measured text traits it correlates with most.</li>
     <li>Style has no better direction, so the card never ranks a model on an <span class="tex" data-tex="\htmlClass{v-style}{s}"></span> axis.</li>
   </ul>

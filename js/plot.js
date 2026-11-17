@@ -2,7 +2,8 @@
  * click picking, a selected point linked to its neighbours, and one extra "upload" point.
  *
  * Display scaling: each axis is mapped to [-1, 1] by its 2nd and 98th percentiles over the 260
- * models, and values outside are clipped to the edge. The view trades exact geometry for
+ * models (the "api" points do not move the scale), and values outside are clipped to the edge.
+ * "api" points (the closed API models) are drawn as diamonds on top of the 260. The view trades exact geometry for
  * density; neighbours are computed elsewhere, in the full embedding. No dependencies. */
 (function (root) {
   "use strict";
@@ -34,11 +35,12 @@
       new ResizeObserver(() => this.draw()).observe(canvas);
     }
 
-    // points: [{p: [x, y, z], kind: "train" | "heldout"}]
+    // points: [{p: [x, y, z], kind: "train" | "heldout" | "api"}]
     setData(points) {
       this.pts = points;
+      const open = points.filter((q) => q.kind !== "api");
       this.scale = [0, 1, 2].map((k) => {
-        const v = points.map((q) => q.p[k]).sort((a, b) => a - b);
+        const v = open.map((q) => q.p[k]).sort((a, b) => a - b);
         const lo = quantile(v, LO_Q), hi = quantile(v, HI_Q);
         return { mid: (lo + hi) / 2, half: (hi - lo) / 2 || 1 };
       });
@@ -111,9 +113,11 @@
       if (this.mode === "3d") order.sort((a, b) => this.screen[a][2] - this.screen[b][2]);
       const nset = new Set(this.neigh);
       const base = this.mode === "3d" ? 4.6 : 4.6;
+      const apis = [];
       for (const i of order) {
         const [x, y, d] = this.screen[i];
         if (i === this.sel || nset.has(i)) continue; // drawn on top below
+        if (this.pts[i].kind === "api") { apis.push(i); continue; }
         const r = this.mode === "3d" ? base * (0.8 + 0.35 * (d + 1) / 2) : base;
         ctx.globalAlpha = this.mode === "3d" ? 0.55 + 0.45 * (d + 1) / 2 : 1;
         ctx.beginPath(); ctx.arc(x, y, r, 0, 2 * Math.PI);
@@ -122,6 +126,12 @@
         if (i === this.hover) { ctx.globalAlpha = 1; ctx.lineWidth = 1.5; ctx.strokeStyle = t.ink; ctx.stroke(); }
       }
       ctx.globalAlpha = 1;
+      for (const i of apis) {
+        const [x, y] = this.screen[i], s = base + 1.6;
+        ctx.beginPath(); ctx.moveTo(x, y - s); ctx.lineTo(x + s, y); ctx.lineTo(x, y + s); ctx.lineTo(x - s, y); ctx.closePath();
+        ctx.fillStyle = t.api; ctx.fill();
+        ctx.lineWidth = i === this.hover ? 1.5 : 0.8; ctx.strokeStyle = t.ink; ctx.stroke();
+      }
       for (const j of this.neigh) {
         const [x, y] = this.screen[j];
         ctx.beginPath(); ctx.arc(x, y, base + 1.4, 0, 2 * Math.PI);

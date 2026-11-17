@@ -13,6 +13,8 @@
   --paper: #fff;
   --plot-train: #c4c4c4;
   --plot-held: #4a4a4a;
+  --plot-api: #e07b00;
+  --api-ink: #9a5200;
   --plot-rule: #e6e6e6;
   --bar-h: 44px;
   --foot-h: 28px;
@@ -113,6 +115,7 @@ ul.warn { color: var(--ink-2); font-size: 12px; padding-left: 16px; }
 .lg i { width: 9px; height: 9px; display: inline-block; border-radius: 50%; }
 .lg i.ring { background: var(--paper) !important; border: 2px solid var(--accent); width: 10px; height: 10px; }
 .lg i.square { border-radius: 0; outline: 1px solid var(--ink); }
+.lg i.diamond { border-radius: 0; width: 8px; height: 8px; transform: rotate(45deg); outline: 1px solid var(--ink); margin: 0 1px; }
 .caption { margin: 4px 12px 8px; padding-left: 14px; font-size: 11px; color: var(--muted); columns: 2; column-gap: 24px; }
 .caption li::marker { content: "–  "; }
 
@@ -141,6 +144,7 @@ ul.warn { color: var(--ink-2); font-size: 12px; padding-left: 16px; }
 .tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; white-space: nowrap; color: var(--muted); }
 .tag.held { color: var(--ink); }
 .tag.up { color: var(--accent); }
+.tag.api { color: var(--api-ink); }
 
 /* dialogs and footer */
 dialog { border: 2px solid var(--ink); padding: 22px 28px; max-width: 720px; color: var(--ink); font-size: 13px; }
