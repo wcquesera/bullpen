@@ -568,7 +568,13 @@
     $$("#seg-path button").forEach((b) => (b.onclick = () => setPath(b.dataset.path)));
     $("#reset-view").onclick = () => plot.resetView();
     $$("#tabs button").forEach((b) => (b.onclick = () => { S.tab = b.dataset.tab; renderInspector(); }));
-    $$("[data-open]").forEach((b) => (b.onclick = () => document.getElementById(b.dataset.open).showModal()));
+    $$("[data-open]").forEach((b) => (b.onclick = () => {
+      b.closest("dialog")?.close();
+      const d = document.getElementById(b.dataset.open);
+      d.showModal();
+      const t = b.dataset.scroll && document.getElementById(b.dataset.scroll);
+      if (t) t.scrollIntoView({ block: "start" }); else d.scrollTop = 0;
+    }));
     $$("dialog [data-close]").forEach((b) => (b.onclick = () => b.closest("dialog").close()));
     $$("dialog").forEach((d) => d.addEventListener("click", (e) => { if (e.target === d) d.close(); }));
 

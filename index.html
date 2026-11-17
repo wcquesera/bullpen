@@ -134,7 +134,7 @@
     <li><span class="tex" data-tex="\htmlClass{v-style}{s(m)}"></span> is the model's response style, and <span class="tex" data-tex="\htmlClass{v-style}{\Gamma(q)}"></span> sets how style shifts the answer.</li>
     <li>A bit depends on ability alone: <span class="tex" data-tex="w(q)"></span> is the ability <i>q</i> tests, and <span class="tex" data-tex="c(q)"></span> is its difficulty.</li>
   </ul>
-  <p><button type="button" class="link" data-open="method">How this demo estimates θ and s</button></p>
+  <p><button type="button" class="link dlg-link" data-open="method" data-scroll="m-est-theta">How this demo estimates θ and s →</button></p>
 </dialog>
 
 <dialog id="about">
@@ -188,7 +188,7 @@
       <span class="tex" data-tex="e(m,q) = \htmlClass{v-mu}{\mu(q)} + \htmlClass{v-theta}{\Lambda(q)\,\theta(m)} + \htmlClass{v-style}{\Gamma(q)\,s(m)} + \htmlClass{v-eps}{\varepsilon}"></span>.</li>
     <li>The response states that correctness bits therefore see style only where it correlates with ability.</li>
   </ul>
-  <h3>How this demo estimates θ</h3>
+  <h3 id="m-est-theta">How this demo estimates θ</h3>
   <ul class="plain">
     <li>The demo fits a one-dimensional two-parameter IRT model (the release's <code>IRTEncoder</code> with <code>dim = 1</code>)
       to the correctness bits of the <span class="m-ntrain">208</span> training models on the <span class="m-npool">900</span> pool questions.

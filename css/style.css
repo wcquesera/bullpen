@@ -345,3 +345,7 @@ dialog { border: 1px solid var(--rule); }
   .insp-sticky .tabs { position: sticky; top: 0; z-index: 3; }
 }
 .fw-headline { font-size: 13px; line-height: 1.4; color: var(--ink); max-width: 46em; }
+
+/* in-dialog cross-links: make clickability obvious */
+.dlg-link { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+.dlg-link:hover { color: var(--accent); text-decoration-thickness: 2px; }
