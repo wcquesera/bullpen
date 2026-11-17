@@ -213,7 +213,6 @@
     if (S.tab === "card") {
       out.push(...cardView(S.sel));
     } else if (S.tab === "overview") {
-      out.push(profileSummary(S.sel));
       const story = up ? null : EXAMPLES.find((e) => e.id === m.id);
       if (story) out.push(el("div", { class: "story" }, el("div", { class: "kind", text: story.kind }), el("h4", { text: story.title }), ul(story.points)));
       if (up) {
@@ -221,6 +220,7 @@
         if (S.upload.warnings.length) out.push(ul(S.upload.warnings, "plain warn"));
       } else if (m.role === "train") out.push(el("div", { class: "note" }, ul(["This model is in the training set for this fold, so the encoder and heads were fitted with it.", "The page withholds its true values because its predictions are in-sample."])));
       else out.push(el("div", { class: "note" }, ul(["This model is held out in this fold, so the encoder and heads never saw it.", "The fold-in placed this model from its own answers, the same way it places an upload."])));
+      out.push(profileSummary(S.sel));
       out.push(el("h4", { text: "Predicted properties" }), predictionTable(Object.keys(ENC.tasks), preds, truth));
       if (story && S.space !== "fused") out.push(el("p", { class: "sub", text: "The example text describes the BULLPEN-fused view." }));
     } else if (S.tab === "neighbours") {
