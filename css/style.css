@@ -294,6 +294,8 @@ dialog { border: 1px solid var(--rule); }
 
 /* card */
 .desc-tag { font-size: 11.5px; color: var(--muted); border: 1px solid var(--rule); padding: 3px 8px; display: inline-block; margin: 8px 0 2px; }
+.profile { margin-bottom: 10px; }
+.profile .param { margin: 6px 0; }
 .card-sec { border-top: 1px solid var(--rule); margin-top: 12px; padding-top: 2px; }
 .card-sec > h4 { margin-top: 8px; }
 .param { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 2px 10px; align-items: start; margin: 10px 0; }
@@ -331,4 +333,15 @@ dialog { border: 1px solid var(--rule); }
   .param { grid-template-columns: 64px minmax(0, 1fr); }
   .param .val, .param .sym { font-size: 14.5px; }
   .tbl.small { font-size: 13.5px; }
+}
+
+/* symbols dialog and fixed inspector header */
+.fw-links { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; grid-column: 2 / 4; justify-self: end; }
+.fw-vars-dlg li { margin: 6px 0; }
+.insp-sticky { position: sticky; top: 0; z-index: 3; background: var(--paper); padding-bottom: 2px; }
+.insp-sticky .pane-title, .insp-sticky .tabs { position: static; }
+@media (max-width: 1100px) {
+  .fw-links { grid-column: auto; justify-self: start; }
+  .insp-sticky { display: contents; }  /* phones: only the tabs stick, as before */
+  .insp-sticky .tabs { position: sticky; top: 0; z-index: 3; }
 }

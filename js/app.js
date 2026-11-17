@@ -50,7 +50,7 @@
     },
   };
 
-  const S = { space: "fused", mode: "2d", path: "examples", sel: null, tab: "card", upload: null };
+  const S = { space: "fused", mode: "2d", path: "examples", sel: null, tab: "overview", upload: null };
   let ENC, MODELS, EMB, PROJ, EXAMPLES, INDEX, PROPS, plot;
 
   const name = (id) => id.replace("__", "/");
@@ -213,6 +213,7 @@
     if (S.tab === "card") {
       out.push(...cardView(S.sel));
     } else if (S.tab === "overview") {
+      out.push(profileSummary(S.sel));
       const story = up ? null : EXAMPLES.find((e) => e.id === m.id);
       if (story) out.push(el("div", { class: "story" }, el("div", { class: "kind", text: story.kind }), el("h4", { text: story.title }), ul(story.points)));
       if (up) {
@@ -379,6 +380,34 @@
     return sec;
   }
 
+  // Compact profile at the top of Overview; the Card tab has the full explanations.
+  function profileSummary(sel) {
+    const up = isUpload(sel);
+    const cm = up ? null : PROPS.models[sel];
+    const sec = el("div", { class: "profile" }, el("h4", { text: "Profile" }));
+    const th = up ? S.upload.theta : { pct: cm.theta_pct, sd: cm.theta_pct_sd };
+    const meter = el("div", { class: "meter" }, el("i", { style: `width:${th.pct.toFixed(1)}%` }));
+    if (th.sd != null) meter.append(el("u", { style: `left:${Math.max(0, th.pct - th.sd).toFixed(1)}%;width:${Math.min(100, 2 * th.sd).toFixed(1)}%` }));
+    sec.append(el("div", { class: "param" }, el("div", { class: "sym" }, tex(SYM.theta)),
+      el("div", { class: "val" }, el("div", {}, "ability ", el("b", { text: `${ordinal(th.pct)} pct` }), th.sd != null ? ` ± ${th.sd.toFixed(1)}` : ""), meter)));
+    if (!up) {
+      PROPS.style.axes.forEach((ax, k) => {
+        const v = cm.s[k];
+        const x = 50 + (50 * Math.max(-3, Math.min(3, v))) / 3;
+        sec.append(el("div", { class: "param" }, el("div", { class: "sym" }, tex(SYM.s(k + 1))),
+          el("div", { class: "val" }, el("div", { text: `${signed(v, 1)} SD` }),
+            el("div", { class: "bipolar" }, el("i", { style: `left:${x.toFixed(1)}%` })),
+            el("div", { class: "poles" }, el("span", { text: ax.low }), el("span", { text: ax.high })))));
+      });
+      const [a, b, c] = cm.share;
+      sec.append(el("div", { class: "param" }, el("div", { class: "sym" }, tex("\\htmlClass{v-theta}{\\theta}\\,/\\,\\htmlClass{v-style}{s}\\,/\\,\\htmlClass{v-eps}{\\varepsilon}")),
+        el("div", { class: "val" }, el("div", { text: `${(100 * a).toFixed(0)}% / ${(100 * b).toFixed(0)}% / ${(100 * c).toFixed(0)}% of answer variation` }),
+          el("div", { class: "stack" }, el("i", { class: "p-theta", style: `width:${(100 * a).toFixed(1)}%` }), el("i", { class: "p-style", style: `width:${(100 * b).toFixed(1)}%` }), el("i", { class: "p-eps", style: `width:${(100 * c).toFixed(1)}%` })))));
+    }
+    sec.append(el("p", { class: "sub", text: `${DESC}. Style axes do not rank models. The Card tab explains each value.` }));
+    return sec;
+  }
+
   function cardView(sel) {
     const up = isUpload(sel);
     const cm = up ? null : PROPS.models[sel];
@@ -501,7 +530,7 @@
         el("b", { text: `The page embedded your model with ${SPACE_NAME[msg.space]}.` }),
         ul(["The middle pane shows your model as a square.", `Its nearest paper model is ${name(MODELS[msg.neighbours[0].i].id)} (cosine ${msg.neighbours[0].sim.toFixed(3)}).`])));
       setSpace(msg.space, false);
-      S.tab = "card";
+      S.tab = "overview";
       select("upload");
     };
     go.onclick = async () => {
