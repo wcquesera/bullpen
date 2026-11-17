@@ -27,31 +27,8 @@
       rule: v("--plot-rule"), muted: v("--muted"), font: v("--font"),
     };
   }
-  const GROUPS = {
-    behavior: {
-      title: "Behavior",
-      tasks: ["log_n_tok", "refusal_rate", "hedge_rate"],
-      notes: [
-        "The author responses (general response, row 4) report that each label's own defining formula, computed from the answers, beats the embedding for answer length, hedging and refusal.",
-      ],
-    },
-    capability: {
-      title: "Capability",
-      tasks: ["oll_v2"],
-      notes: ["The Open LLM Leaderboard v2 head was fitted on the training models that have a board score. The 'head fit on' column gives their count."],
-    },
-    metadata: {
-      title: "Metadata",
-      tasks: ["log_params", "release_year", "is_chat"],
-      notes: [
-        "The author responses call size, release date and base vs chat \"metadata checks rather than use cases\".",
-        "The base-vs-chat label comes from the model name.",
-      ],
-    },
-  };
-
   const S = { space: "fused", mode: "2d", path: "examples", sel: null, tab: "overview", upload: null };
-  let ENC, MODELS, EMB, PROJ, EXAMPLES, INDEX, PROPS, plot;
+  let ENC, MODELS, EMB, PROJ, EXAMPLES, INDEX, PROPS, REL, plot;
 
   const name = (id) => id.replace("__", "/");
 
@@ -185,7 +162,7 @@
       "The paper validates these predictions in distribution only.",
       "The submission scores the heads on held-out models from the 260 open-weight models.",
       "The author responses add nine closed Claude and GPT models placed without refitting. Heads trained only on open models rank their hedging and answer length almost perfectly (Spearman .97).",
-      "The paper and the author responses do not test other settings. A model unlike the 260 can land in the wrong place, as the SmolLM2 example shows.",
+      "The paper and the author responses do not test other settings. A model unlike the 260 can land in the wrong place.",
     ];
   }
 
@@ -224,9 +201,6 @@
       if (story && S.space !== "fused") out.push(el("p", { class: "sub", text: "The example text describes the BULLPEN-fused view." }));
     } else if (S.tab === "neighbours") {
       out.push(el("h4", { text: `Nearest 10 of the 260 paper models (${SPACE_NAME[S.space]}, cosine)` }), neighbourTable(neighboursOf(S.sel)));
-    } else {
-      const g = GROUPS[S.tab];
-      out.push(el("h4", { text: g.title }), predictionTable(g.tasks, preds, truth), el("div", { class: "note" }, ul(g.notes)));
     }
     body.replaceChildren(...out);
   }
@@ -283,6 +257,15 @@
     return `Axis ${ax.key} correlates most with ${parts.join(" and ")}.`;
   }
 
+  // θ : s split of the reliable (cross-half) part of a model's answer profile (reliability.json)
+  const relSplit = (id) => { const t = REL.models[id]; return [t, 1 - t]; };
+  const relPct = (x) => `${(100 * x).toFixed(0)}%`;
+  function headlineEl() {
+    return el("span", {}, el("b", { text: relPct(REL.summary.r_half.mean) }),
+      ` of the differences between models' answers replicate across two random halves of the ${REL.n_pool} questions. Of that reliable part, ability `,
+      el("b", { class: "v-theta", text: `θ carries ${relPct(REL.theta_share)}` }), " and ", el("b", { class: "v-style", text: `style s ${relPct(REL.style_share)}` }), ".");
+  }
+
   function parameterSection(cm, up) {
     const sec = el("div", { class: "card-sec" }, el("h4", { text: "Parameters" }));
     // θ
@@ -312,14 +295,13 @@
           el("div", { class: "sub", text: axisSentence(ax) }))));
     });
     sec.append(el("p", { class: "sub", text: "Style has no better direction. The bars show where the model sits on each axis and do not rank it." }));
-    // shares
-    const [a, b] = cm.share, ab = a + b, pa = a / ab, pb = b / ab;
-    const g = PROPS.shares, gs = g.style_axes.reduce((x, y) => x + y, 0), gt = g.theta / (g.theta + gs);
+    // shares of the reliable part
+    const [pa, pb] = relSplit(cm.id);
     sec.append(el("div", { class: "param" }, el("div", { class: "sym" }, tex("\\htmlClass{v-theta}{\\theta}\\,:\\,\\htmlClass{v-style}{s}")),
       el("div", { class: "val" },
-        el("div", { text: `Of the part of this model's answers that the model explains, ability θ carries ${(100 * pa).toFixed(0)}% and the ${PROPS.style.axes.length} style axes carry ${(100 * pb).toFixed(0)}%.` }),
+        el("div", { text: `Of the part of this model's answer profile that replicates across question halves, ability θ carries ${relPct(pa)} and style carries ${relPct(pb)}.` }),
         el("div", { class: "stack" }, el("i", { class: "p-theta", style: `width:${(100 * pa).toFixed(1)}%` }), el("i", { class: "p-style", style: `width:${(100 * pb).toFixed(1)}%` })),
-        el("div", { class: "sub", text: `Across the ${PROPS.protocol.n_train} training models the split is ${(100 * gt).toFixed(0)}% θ to ${(100 * (1 - gt)).toFixed(0)}% style. Answer-to-answer variation that averages out over questions is left out; the method box gives the full breakdown.` }))));
+        el("div", { class: "sub", text: `Across all 260 models: ${relPct(REL.theta_share)} θ : ${relPct(REL.style_share)} style. Only differences that replicate across question halves count, so the per-answer residual ε is left out; the Method dialog explains it.` }))));
     return sec;
   }
 
@@ -398,9 +380,9 @@
             el("div", { class: "bipolar" }, el("i", { style: `left:${x.toFixed(1)}%` })),
             el("div", { class: "poles" }, el("span", { text: ax.low }), el("span", { text: ax.high })))));
       });
-      const [a, b] = cm.share, pa = a / (a + b), pb = b / (a + b);
+      const [pa, pb] = relSplit(cm.id);
       sec.append(el("div", { class: "param" }, el("div", { class: "sym" }, tex("\\htmlClass{v-theta}{\\theta}\\,:\\,\\htmlClass{v-style}{s}")),
-        el("div", { class: "val" }, el("div", { text: `${(100 * pa).toFixed(0)}% θ : ${(100 * pb).toFixed(0)}% style (explained part)` }),
+        el("div", { class: "val" }, el("div", { text: `${relPct(pa)} θ : ${relPct(pb)} style (reliable part)` }),
           el("div", { class: "stack" }, el("i", { class: "p-theta", style: `width:${(100 * pa).toFixed(1)}%` }), el("i", { class: "p-style", style: `width:${(100 * pb).toFixed(1)}%` })))));
     }
     sec.append(el("p", { class: "sub", text: `${DESC}. Style axes do not rank models. The Card tab explains each value.` }));
@@ -432,7 +414,13 @@
       el("div", { class: "scroll-x" }, el("table", { class: "tbl small" },
         el("thead", {}, el("tr", {}, ...["term", "", "share"].map((x) => el("th", { text: x })))),
         el("tbody", {}, ...shareRows.map(([t, n, v]) => el("tr", {}, el("td", {}, tex(t)), el("td", { text: n }), el("td", { class: "num", text: `${(100 * v).toFixed(1)}%` })))))),
-      el("p", { class: "sub", text: `These are sums of squares over every single answer about the training mean answer to that question, so ε holds everything specific to one answer. That part is not a property of the model: averaging a model's answers over the ${P.protocol.n_pool} questions shrinks it, which is why the card reports only the θ : s split of the explained part (${(100 * g.theta / (g.theta + g.style_axes.reduce((x, y) => x + y, 0))).toFixed(0)}% : ${(100 * g.style_axes.reduce((x, y) => x + y, 0) / (g.theta + g.style_axes.reduce((x, y) => x + y, 0))).toFixed(0)}% across training models). Row 1 of the posted key numbers counts only differences between models that replicate across questions.` }));
+      el("p", { class: "sub", text: `These are sums of squares over every single answer about the training mean answer to that question, so ε holds everything specific to one answer. ε is not a property of the model: averaging a model's answers over the ${P.protocol.n_pool} questions shrinks it.` }),
+      el("h4", { text: "Reliable part of the model-level profile" }),
+      ul([
+        `A model's profile is the mean over questions of its answer minus the training mean answer (the profile of posted row 1). The page splits the ${REL.n_pool} pool questions into two random halves ${REL.n_splits} times and correlates the 260 profiles across halves.`,
+        `Half-to-half r is ${REL.summary.r_half.mean.toFixed(3)} [${REL.summary.r_half.lo.toFixed(3)}, ${REL.summary.r_half.hi.toFixed(3)} over splits]; the Spearman-Brown reliability of the full pool is ${REL.summary.sb.mean.toFixed(3)}.`,
+        `The cross-half covariance splits into a θ term and a style term; ε is independent across halves and drops out. θ carries ${relPct(REL.theta_share)} and s ${relPct(REL.style_share)} (cross terms ${signed(100 * REL.summary.cross.mean, 1)}%). The card shows the same split per model.`,
+      ], "plain"));
     const traits = Object.keys(P.style.axes[0].corr);
     const tLabel = (t) => (screenRow(t) ? screenRow(t).label : t);
     $("#m-axes").replaceChildren(el("h4", { text: "Style axes against the measured traits (Pearson r)" }),
@@ -448,15 +436,16 @@
       "The rule was fixed before the screen ran.",
     ].map((t) => el("li", { text: t })));
     const cols = ["property", "n", "metric", "fused", "mean", "metadata", "bits only", "θ only", "decision"];
-    const body = P.screen.map((r) => el("tr", { class: r.include ? "" : "dropped" },
-      el("td", {}, el("div", { text: r.label }), el("div", { class: "sub", text: r.include ? "" : r.reason })),
+    const body = P.screen.filter((r) => r.include).map((r) => el("tr", {},
+      el("td", { text: r.label }),
       el("td", { class: "num", text: String(r.n) }),
       el("td", { text: r.metric === "AUROC" ? "AUROC" : "R²" }),
       ...["fused", "mean", "metadata", "bits", "theta"].map((k) => el("td", { class: "num" + (k === "fused" ? " strong" : ""), text: r2txt(r.scores[k]) })),
-      el("td", { text: r.include ? "shown" : "left out" })));
+      el("td", { text: "shown" })));
     const small = P.small_tables;
     $("#m-screen").replaceChildren(el("div", { class: "scroll-x" }, el("table", { class: "tbl small" },
       el("thead", {}, el("tr", {}, ...cols.map((x) => el("th", { text: x })))), el("tbody", {}, ...body))),
+      el("p", { class: "sub", text: `${P.screen.filter((r) => !r.include).length} of ${P.screen.length} candidates missed the pre-set rule and are left out.` }),
       el("p", { class: "sub", text: `${small.length} further external columns have fewer than ${P.rule.min_n} labelled models among the 260, so the screen skips them. They include Chatbot Arena Elo, AlpacaEval, LiveBench, HarmBench and TrustLLM.` }));
     const names = Object.keys(P.pc_corr);
     const lab = (k) => (k === "theta" ? null : P.style.axes.find((a) => a.key === k) ? null : tLabel(k));
@@ -626,9 +615,10 @@
       return r.json();
     });
     try {
-      const [enc, models, fused, bitsq, proj, ex, props] = await Promise.all(
-        ["encoders.json", "models.json", "emb_fused.json", "emb_bitsq.json", "projections.json", "examples.json", "properties.json"].map(get));
-      ENC = enc; MODELS = models.models; EXAMPLES = ex.examples; PROJ = proj; PROPS = props;
+      const [enc, models, fused, bitsq, proj, ex, props, rel] = await Promise.all(
+        ["encoders.json", "models.json", "emb_fused.json", "emb_bitsq.json", "projections.json", "examples.json", "properties.json", "reliability.json"].map(get));
+      ENC = enc; MODELS = models.models; EXAMPLES = ex.examples; PROJ = proj; PROPS = props; REL = rel;
+      $("#fw-headline").replaceChildren(headlineEl());
       if (PROPS.models.some((m, i) => m.id !== MODELS[i].id)) throw new Error("properties.json and models.json list the models in different orders");
       renderStaticTex();
       fillMethod();

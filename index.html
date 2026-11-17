@@ -25,6 +25,7 @@
     <div class="fw-eq tex" data-tex="e(m,q) = \htmlClass{v-mu}{\mu(q)} + \htmlClass{v-theta}{\Lambda(q)\,\theta(m)} + \htmlClass{v-style}{\Gamma(q)\,s(m)} + \htmlClass{v-eps}{\varepsilon}"></div>
     <div class="fw-bitrow"><span class="fw-eq fw-bit tex" data-tex="\mathbf{1}\big[\htmlClass{v-theta}{\theta(m)}^{\top} w(q) > c(q)\big]"></span><button type="button" class="link fw-more" data-open="vars-dlg">more info</button></div>
   </div>
+  <div class="fw-headline" id="fw-headline"></div>
 </section>
 
 <div class="ide">
@@ -37,10 +38,7 @@
     </div>
 
     <section class="path" id="path-examples">
-      <ul class="plain">
-        <li>These five paper models show four typical cases and one miss.</li>
-        <li>You can also search all 260 paper models by name.</li>
-      </ul>
+      <p class="sub">Four paper models and their nearest neighbours. You can also search all 260 by name.</p>
       <div id="chips" class="examples"></div>
       <label class="field-label" for="pick">Search the 260 paper models</label>
       <input id="pick" list="model-list" placeholder="model name" autocomplete="off">
@@ -118,9 +116,6 @@
     <nav class="tabs" id="tabs">
       <button type="button" data-tab="overview" class="on">Overview</button>
       <button type="button" data-tab="card">Card</button>
-      <button type="button" data-tab="behavior">Behavior</button>
-      <button type="button" data-tab="capability">Capability</button>
-      <button type="button" data-tab="metadata">Metadata</button>
       <button type="button" data-tab="neighbours">Neighbours</button>
     </nav>
     </div>
@@ -208,7 +203,7 @@
       <span class="tex" data-tex="\htmlClass{v-mu}{\mu(q)}"></span> and <span class="tex" data-tex="\htmlClass{v-theta}{\Lambda(q)}"></span>.</li>
     <li>The residual <span class="tex" data-tex="e(m,q) - \htmlClass{v-mu}{\mu(q)} - \htmlClass{v-theta}{\Lambda(q)\theta(m)}"></span> holds style and the per-answer residual ε.
       A PCA of the training models' residuals over all pool questions gives the style axes, and the held-out models are projected onto the same axes.</li>
-    <li>The card shows the first <span class="m-nstyle">3</span> axes in SD units of the training models. Each axis is named after the measured text traits it correlates with most.</li>
+    <li>The card shows the first <span class="m-nstyle">2</span> axes in SD units of the training models. Each axis is named after the measured text traits it correlates with most.</li>
     <li>Style has no better direction, so the card never ranks a model on an <span class="tex" data-tex="\htmlClass{v-style}{s}"></span> axis.</li>
   </ul>
   <div id="m-shares"></div>
@@ -228,17 +223,15 @@
   <section id="reported">
     <h2>Reported results</h2>
     <ul class="plain">
-      <li>These rows come from the key-numbers table in the authors' general response on OpenReview, quoted as posted.</li>
-      <li>This table keeps only the rows that concern what this demo shows.</li>
-      <li>Scores run from 0 (chance) to 1 (perfect), and the brackets give 95% intervals.</li>
-      <li>The term "style tasks" refers to the 11 behavior, style and safety tasks.</li>
-      <li>The demo does not recompute these numbers.</li>
+      <li>Rows quoted as posted from the key-numbers table of the authors' general response on OpenReview; the demo does not recompute them.</li>
+      <li>Scores run from 0 (chance) to 1 (perfect); brackets are 95% intervals. "Style tasks" are the 11 behavior, style and safety tasks.</li>
     </ul>
     <div class="scroll-x"><table class="tbl quoted">
       <thead><tr><th>#</th><th>What we found</th><th>Value</th></tr></thead>
       <tbody>
         <tr><td class="num">2</td><td>Text (768-d) minus bits (32-d), style tasks</td><td class="num">+.34 [.25, .44]</td></tr>
         <tr><td class="num">4</td><td>Text minus each label's own defining formula (length, hedging, refusal)</td><td class="num">−.11, −.12, −.15</td></tr>
+        <tr><td class="num">5</td><td>Text minus statistics, six other targets</td><td class="num">+.20 [.10, .30]; +.08 without Arena</td></tr>
         <tr><td class="num">7</td><td>Fused code minus bits and minus text, 32 dims, all tasks</td><td class="num">+.102, +.125; 3 of 3 seeds</td></tr>
         <tr><td class="num">8</td><td>Text (768-d) minus fused code, style tasks; refusal</td><td class="num">+.09 [.03, .15]; .45 vs .27–.28</td></tr>
         <tr><td class="num">12</td><td>Unseen models, text at 25 minus bits at 900 questions, style tasks (all tasks)</td><td class="num">+.27 [.15, .39] (.41 vs .37)</td></tr>

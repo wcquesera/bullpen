@@ -344,3 +344,4 @@ dialog { border: 1px solid var(--rule); }
   .insp-sticky { display: contents; }  /* phones: only the tabs stick, as before */
   .insp-sticky .tabs { position: sticky; top: 0; z-index: 3; }
 }
+.fw-headline { font-size: 13px; line-height: 1.4; color: var(--ink); max-width: 46em; }
