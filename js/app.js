@@ -314,13 +314,13 @@
     });
     sec.append(el("p", { class: "sub", text: "Style has no better direction. The bars show where the model sits on each axis and do not rank it." }));
     // shares
-    const [a, b, c] = cm.share;
-    const g = PROPS.shares, gs = g.style_axes.reduce((x, y) => x + y, 0);
-    sec.append(el("div", { class: "param" }, el("div", { class: "sym" }, tex("\\htmlClass{v-theta}{\\theta}\\,/\\,\\htmlClass{v-style}{s}\\,/\\,\\htmlClass{v-eps}{\\varepsilon}")),
+    const [a, b] = cm.share, ab = a + b, pa = a / ab, pb = b / ab;
+    const g = PROPS.shares, gs = g.style_axes.reduce((x, y) => x + y, 0), gt = g.theta / (g.theta + gs);
+    sec.append(el("div", { class: "param" }, el("div", { class: "sym" }, tex("\\htmlClass{v-theta}{\\theta}\\,:\\,\\htmlClass{v-style}{s}")),
       el("div", { class: "val" },
-        el("div", { text: `The θ part carries ${(100 * a).toFixed(0)}% of this model's answer variation, the ${PROPS.style.axes.length} style axes carry ${(100 * b).toFixed(0)}%, and noise and smaller axes carry ${(100 * c).toFixed(0)}%.` }),
-        el("div", { class: "stack" }, el("i", { class: "p-theta", style: `width:${(100 * a).toFixed(1)}%` }), el("i", { class: "p-style", style: `width:${(100 * b).toFixed(1)}%` }), el("i", { class: "p-eps", style: `width:${(100 * c).toFixed(1)}%` })),
-        el("div", { class: "sub", text: `Across the ${PROPS.protocol.n_train} training models, θ explains ${(100 * g.theta).toFixed(1)}% of the answer variation, the style axes explain ${(100 * gs).toFixed(1)}%, and the rest explains ${(100 * g.rest).toFixed(1)}%. The rest includes the per-question noise ε.` }))));
+        el("div", { text: `Of the part of this model's answers that the model explains, ability θ carries ${(100 * pa).toFixed(0)}% and the ${PROPS.style.axes.length} style axes carry ${(100 * pb).toFixed(0)}%.` }),
+        el("div", { class: "stack" }, el("i", { class: "p-theta", style: `width:${(100 * pa).toFixed(1)}%` }), el("i", { class: "p-style", style: `width:${(100 * pb).toFixed(1)}%` })),
+        el("div", { class: "sub", text: `Across the ${PROPS.protocol.n_train} training models the split is ${(100 * gt).toFixed(0)}% θ to ${(100 * (1 - gt)).toFixed(0)}% style. Answer-to-answer variation that averages out over questions is left out; the method box gives the full breakdown.` }))));
     return sec;
   }
 
@@ -399,10 +399,10 @@
             el("div", { class: "bipolar" }, el("i", { style: `left:${x.toFixed(1)}%` })),
             el("div", { class: "poles" }, el("span", { text: ax.low }), el("span", { text: ax.high })))));
       });
-      const [a, b, c] = cm.share;
-      sec.append(el("div", { class: "param" }, el("div", { class: "sym" }, tex("\\htmlClass{v-theta}{\\theta}\\,/\\,\\htmlClass{v-style}{s}\\,/\\,\\htmlClass{v-eps}{\\varepsilon}")),
-        el("div", { class: "val" }, el("div", { text: `${(100 * a).toFixed(0)}% / ${(100 * b).toFixed(0)}% / ${(100 * c).toFixed(0)}% of answer variation` }),
-          el("div", { class: "stack" }, el("i", { class: "p-theta", style: `width:${(100 * a).toFixed(1)}%` }), el("i", { class: "p-style", style: `width:${(100 * b).toFixed(1)}%` }), el("i", { class: "p-eps", style: `width:${(100 * c).toFixed(1)}%` })))));
+      const [a, b] = cm.share, pa = a / (a + b), pb = b / (a + b);
+      sec.append(el("div", { class: "param" }, el("div", { class: "sym" }, tex("\\htmlClass{v-theta}{\\theta}\\,:\\,\\htmlClass{v-style}{s}")),
+        el("div", { class: "val" }, el("div", { text: `${(100 * pa).toFixed(0)}% θ : ${(100 * pb).toFixed(0)}% style (explained part)` }),
+          el("div", { class: "stack" }, el("i", { class: "p-theta", style: `width:${(100 * pa).toFixed(1)}%` }), el("i", { class: "p-style", style: `width:${(100 * pb).toFixed(1)}%` })))));
     }
     sec.append(el("p", { class: "sub", text: `${DESC}. Style axes do not rank models. The Card tab explains each value.` }));
     return sec;
@@ -428,12 +428,12 @@
     const g = P.shares;
     const shareRows = [["\\htmlClass{v-theta}{\\Lambda(q)\\theta(m)}", "ability part", g.theta]]
       .concat(P.style.axes.map((ax, k) => [`\\htmlClass{v-style}{s_{${k + 1}}}`, `style axis ${ax.key}`, g.style_axes[k]]))
-      .concat([["\\htmlClass{v-eps}{\\varepsilon}", "noise and smaller axes", g.rest]]);
-    $("#m-shares").replaceChildren(el("h4", { text: "Share of answer variation, training models" }),
+      .concat([["\\htmlClass{v-eps}{\\varepsilon}", "per-answer residual: wording, sampling, question-specific effects, smaller axes", g.rest]]);
+    $("#m-shares").replaceChildren(el("h4", { text: "Breakdown of single-answer variation, training models" }),
       el("div", { class: "scroll-x" }, el("table", { class: "tbl small" },
         el("thead", {}, el("tr", {}, ...["term", "", "share"].map((x) => el("th", { text: x })))),
         el("tbody", {}, ...shareRows.map(([t, n, v]) => el("tr", {}, el("td", {}, tex(t)), el("td", { text: n }), el("td", { class: "num", text: `${(100 * v).toFixed(1)}%` })))))),
-      el("p", { class: "sub", text: "The shares are sums of squares over all pool answers about the training mean answer. They include the per-question noise ε, so they are not comparable to row 1 of the posted key numbers, which counts only reliable differences." }));
+      el("p", { class: "sub", text: `These are sums of squares over every single answer about the training mean answer to that question, so ε holds everything specific to one answer. That part is not a property of the model: averaging a model's answers over the ${P.protocol.n_pool} questions shrinks it, which is why the card reports only the θ : s split of the explained part (${(100 * g.theta / (g.theta + g.style_axes.reduce((x, y) => x + y, 0))).toFixed(0)}% : ${(100 * g.style_axes.reduce((x, y) => x + y, 0) / (g.theta + g.style_axes.reduce((x, y) => x + y, 0))).toFixed(0)}% across training models). Row 1 of the posted key numbers counts only differences between models that replicate across questions.` }));
     const traits = Object.keys(P.style.axes[0].corr);
     const tLabel = (t) => (screenRow(t) ? screenRow(t).label : t);
     $("#m-axes").replaceChildren(el("h4", { text: "Style axes against the measured traits (Pearson r)" }),
