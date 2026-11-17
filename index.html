@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>BULLPEN: model embeddings demo</title>
+<link rel="stylesheet" href="vendor/katex/katex.min.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -12,10 +13,28 @@
   <div class="brand"><b>BULLPEN</b><span>This demo runs BULLPEN model embeddings in the browser for an anonymous ICLR 2027 submission.</span></div>
   <nav class="bar-actions">
     <button type="button" class="link" data-open="about">How it works</button>
+    <button type="button" class="link" data-open="method">Method</button>
     <button type="button" class="link" data-open="reported-dlg">Reported results</button>
     <a class="link" href="https://github.com/wcquesera/bullpen">Code</a>
   </nav>
 </header>
+
+<!-- FRAMEWORK: the latent-factor model of the posted general response, colour-coded -->
+<section class="framework" id="framework" aria-label="Framework">
+  <div class="fw-eqs">
+    <div class="fw-eq tex" data-tex="e(m,q) = \htmlClass{v-mu}{\mu(q)} + \htmlClass{v-theta}{\Lambda(q)\,\theta(m)} + \htmlClass{v-style}{\Gamma(q)\,s(m)} + \htmlClass{v-eps}{\varepsilon}"></div>
+    <div class="fw-eq fw-bit tex" data-tex="\mathbf{1}\big[\htmlClass{v-theta}{\theta(m)}^{\top} w(q) > c(q)\big]"></div>
+  </div>
+  <ul class="fw-vars">
+    <li><span class="tex" data-tex="e(m,q)"></span> is the embedding of model <i>m</i>'s answer to question <i>q</i>.</li>
+    <li><span class="tex" data-tex="\htmlClass{v-mu}{\mu(q)}"></span> is the answer all models share.</li>
+    <li><span class="tex" data-tex="\htmlClass{v-eps}{\varepsilon}"></span> is noise.</li>
+    <li><span class="tex" data-tex="\htmlClass{v-theta}{\theta(m)}"></span> is the model's ability, and <span class="tex" data-tex="\htmlClass{v-theta}{\Lambda(q)}"></span> sets how ability shifts the answer.</li>
+    <li><span class="tex" data-tex="\htmlClass{v-style}{s(m)}"></span> is the model's response style, and <span class="tex" data-tex="\htmlClass{v-style}{\Gamma(q)}"></span> sets how style shifts the answer.</li>
+    <li>A bit depends on ability alone: <span class="tex" data-tex="w(q)"></span> is the ability <i>q</i> tests, and <span class="tex" data-tex="c(q)"></span> is its difficulty.</li>
+  </ul>
+  <button type="button" class="link fw-more" data-open="method">How this demo estimates θ and s</button>
+</section>
 
 <div class="ide">
   <!-- LEFT: input ------------------------------------------------------- -->
@@ -105,7 +124,8 @@
     <div class="pane-title">03 Inspector</div>
     <div class="insp-head" id="insp-head"></div>
     <nav class="tabs" id="tabs">
-      <button type="button" data-tab="overview" class="on">Overview</button>
+      <button type="button" data-tab="card" class="on">Card</button>
+      <button type="button" data-tab="overview">Overview</button>
       <button type="button" data-tab="behavior">Behavior</button>
       <button type="button" data-tab="capability">Capability</button>
       <button type="button" data-tab="metadata">Metadata</button>
@@ -152,6 +172,50 @@
   </ul>
 </dialog>
 
+<dialog id="method">
+  <button type="button" class="close" data-close>×</button>
+  <h2>Method: ability, style and the model card</h2>
+  <p class="desc-tag">Descriptive statistics from the embeddings; not reported paper results</p>
+  <h3>The model</h3>
+  <ul class="plain">
+    <li>The authors' general response on OpenReview describes each model <i>m</i> by two hidden quantities: its ability
+      <span class="tex" data-tex="\htmlClass{v-theta}{\theta(m)}"></span> and its response style
+      <span class="tex" data-tex="\htmlClass{v-style}{s(m)}"></span>, such as length, hedging, refusal, formatting and lineage.</li>
+    <li>Following item response theory, a correctness bit <span class="tex" data-tex="\mathbf{1}[\htmlClass{v-theta}{\theta(m)}^{\top} w(q) > c(q)]"></span> depends on ability alone.</li>
+    <li>The embedding of <i>m</i>'s answer to question <i>q</i> reflects both:
+      <span class="tex" data-tex="e(m,q) = \htmlClass{v-mu}{\mu(q)} + \htmlClass{v-theta}{\Lambda(q)\,\theta(m)} + \htmlClass{v-style}{\Gamma(q)\,s(m)} + \htmlClass{v-eps}{\varepsilon}"></span>.</li>
+    <li>The response states that correctness bits therefore see style only where it correlates with ability.</li>
+  </ul>
+  <h3>How this demo estimates θ</h3>
+  <ul class="plain">
+    <li>The demo fits a one-dimensional two-parameter IRT model (the release's <code>IRTEncoder</code> with <code>dim = 1</code>)
+      to the correctness bits of the <span class="m-ntrain">208</span> training models on the <span class="m-npool">900</span> pool questions.
+      Each question gets a discrimination and an easiness, so <span class="tex" data-tex="P(\text{correct}) = \sigma(a_q\,\htmlClass{v-theta}{\theta(m)} + b_q)"></span>.</li>
+    <li>The release's fold-in places every one of the 260 models with the items frozen. The page repeats that fold-in for an uploaded bits file.</li>
+    <li>The card reports θ as a percentile of the 260 models. Refitting the IRT model with five seeds changes no percentile
+      (largest change <span id="m-seed-sd"></span> points), so the card shows the SD over <span id="m-nboot"></span> resamples of the pool questions instead.</li>
+  </ul>
+  <h3>How this demo estimates s</h3>
+  <ul class="plain">
+    <li>For each pool question, a least-squares fit of the training models' answer embeddings on θ gives
+      <span class="tex" data-tex="\htmlClass{v-mu}{\mu(q)}"></span> and <span class="tex" data-tex="\htmlClass{v-theta}{\Lambda(q)}"></span>.</li>
+    <li>The residual <span class="tex" data-tex="e(m,q) - \htmlClass{v-mu}{\mu(q)} - \htmlClass{v-theta}{\Lambda(q)\theta(m)}"></span> holds style and noise.
+      A PCA of the training models' residuals over all pool questions gives the style axes, and the held-out models are projected onto the same axes.</li>
+    <li>The card shows the first <span class="m-nstyle">3</span> axes in SD units of the training models. Each axis is named after the measured text traits it correlates with most.</li>
+    <li>Style has no better direction, so the card never ranks a model on an <span class="tex" data-tex="\htmlClass{v-style}{s}"></span> axis.</li>
+  </ul>
+  <div id="m-shares"></div>
+  <div id="m-axes"></div>
+  <h3>How the card selects properties</h3>
+  <ul class="plain" id="m-rule"></ul>
+  <div id="m-screen"></div>
+  <h3>What the plotted axes track</h3>
+  <ul class="plain">
+    <li>This table gives the correlation of each principal component of the BULLPEN-fused view (the middle pane) with θ, the style axes, the measured traits and the selected external signals.</li>
+  </ul>
+  <div id="m-pc"></div>
+</dialog>
+
 <dialog id="reported-dlg">
   <button type="button" class="close" data-close>×</button>
   <section id="reported">
@@ -180,6 +244,7 @@
 <footer class="foot">This demo reproduces results from the submission and the author responses on OpenReview.
   The per-model outputs come from one refit of the released code on the paper's data.
   <span class="code">The code is at <a href="https://github.com/wcquesera/bullpen">github.com/wcquesera/bullpen</a>.</span></footer>
+<script src="vendor/katex/katex.min.js"></script>
 <script src="js/core.js"></script>
 <script src="js/plot.js"></script>
 <script src="js/app.js"></script>

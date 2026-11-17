@@ -1,7 +1,7 @@
 /* Upload pipeline off the main thread: validate CSVs -> pool answers -> embed -> neighbours -> heads. */
 importScripts("core.js");
 
-let D = null; // {enc, emb: {fused, bitsq}}
+let D = null; // {enc, emb: {fused, bitsq}, theta: properties.json theta block, heads: property heads}
 let index = null;
 
 function progress(stage, frac) {
@@ -44,6 +44,10 @@ onmessage = (ev) => {
     progress("Searching the 260 paper models", 0.94);
     const neighbours = BP.knn(index[space], z, 10, -1);
     const preds = BP.predictAll(enc.heads[space], z);
+    // θ(m) from the bits alone; the property heads read the fused embedding, so they need answers
+    const th = BP.thetaFoldIn(D.theta.irt, bits.bits, bits.observed);
+    const theta = { z: (th - D.theta.irt.mu) / D.theta.irt.sd, pct: BP.percentileOf(D.theta.sorted_theta, th) };
+    const props = space === "fused" ? BP.predictAll(D.heads, z) : null;
     progress("Done", 1);
     postMessage({
       type: "result",
@@ -51,6 +55,8 @@ onmessage = (ev) => {
       z,
       neighbours,
       preds,
+      theta,
+      props,
       warnings,
       nObserved: bits.nObserved,
       nAnswers: answers ? answers.nPool : 0,

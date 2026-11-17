@@ -260,7 +260,36 @@
     return finish(errors, warnings, { vectors, nPool });
   }
 
-  const api = { project, solve, ridge, embed, predict, predictAll, normRows, knn, poolText, parseBits, parseAnswers, MIN_POOL };
+  // 1-D 2PL ability of one bits row with the items frozen: the penalised Newton fold-in of
+  // IRTEncoder.fold_in (site/properties.py:foldin_1d). bits/observed are in pool order.
+  function thetaFoldIn(irt, bits, observed) {
+    const { a, b, l2, max_steps, tol, damping } = irt;
+    let th = 0;
+    for (let it = 0; it < max_steps; it++) {
+      let g = -l2 * th, h = -l2 - damping;
+      for (let q = 0; q < a.length; q++) {
+        if (observed && !observed[q]) continue;
+        let z = a[q] * th + b[q];
+        z = Math.max(-60, Math.min(60, z));
+        const p = 1 / (1 + Math.exp(-z));
+        g += a[q] * (bits[q] - p);
+        h -= a[q] * a[q] * p * (1 - p);
+      }
+      const step = g / h;
+      th -= step;
+      if (Math.abs(step) < tol) break;
+    }
+    return th;
+  }
+
+  // Mid-rank percentile of v among the sorted reference values (site/properties.py:percentile_of).
+  function percentileOf(sorted, v) {
+    let lo = 0, hi = 0;
+    for (const x of sorted) { if (x < v) lo++; if (x <= v) hi++; }
+    return (100 * (lo + 0.5 * (hi - lo))) / sorted.length;
+  }
+
+  const api = { thetaFoldIn, percentileOf, project, solve, ridge, embed, predict, predictAll, normRows, knn, poolText, parseBits, parseAnswers, MIN_POOL };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.BP = api;
 })(typeof self !== "undefined" ? self : this);

@@ -50,8 +50,8 @@
     },
   };
 
-  const S = { space: "fused", mode: "2d", path: "examples", sel: null, tab: "overview", upload: null };
-  let ENC, MODELS, EMB, PROJ, EXAMPLES, INDEX, plot;
+  const S = { space: "fused", mode: "2d", path: "examples", sel: null, tab: "card", upload: null };
+  let ENC, MODELS, EMB, PROJ, EXAMPLES, INDEX, PROPS, plot;
 
   const name = (id) => id.replace("__", "/");
 
@@ -210,7 +210,9 @@
     const preds = predsOf(S.sel);
     const truth = !up && m.role === "heldout" ? m.truth : null;
     const out = [];
-    if (S.tab === "overview") {
+    if (S.tab === "card") {
+      out.push(...cardView(S.sel));
+    } else if (S.tab === "overview") {
       const story = up ? null : EXAMPLES.find((e) => e.id === m.id);
       if (story) out.push(el("div", { class: "story" }, el("div", { class: "kind", text: story.kind }), el("h4", { text: story.title }), ul(story.points)));
       if (up) {
@@ -227,6 +229,219 @@
       out.push(el("h4", { text: g.title }), predictionTable(g.tasks, preds, truth), el("div", { class: "note" }, ul(g.notes)));
     }
     body.replaceChildren(...out);
+  }
+
+
+  // ------------------------------------------------------------ KaTeX (vendored in vendor/katex)
+  // \htmlClass{v-theta}{...} carries the term colour from css/style.css; it is the only trusted command.
+  const KATEX_OPTS = { throwOnError: true, trust: (ctx) => ctx.command === "\\htmlClass", strict: "ignore" };
+  const tex = (src) => {
+    const span = el("span", { class: "tex" });
+    katex.render(src, span, KATEX_OPTS);
+    return span;
+  };
+  function renderStaticTex() {
+    $$(".tex[data-tex]").forEach((n) => katex.render(n.dataset.tex, n, KATEX_OPTS));
+  }
+  const SYM = {
+    theta: "\\htmlClass{v-theta}{\\theta(m)}",
+    s: (k) => `\\htmlClass{v-style}{s_{${k}}(m)}`,
+    style: "\\htmlClass{v-style}{s(m)}",
+    e: "e(m,\\cdot)",
+  };
+
+  // ------------------------------------------------------------ model card (properties.json)
+  const DESC = "Descriptive statistics from the embeddings; not reported paper results";
+  const ordinal = (n) => {
+    const r = Math.round(n), t = r % 100;
+    const suf = t >= 11 && t <= 13 ? "th" : ({ 1: "st", 2: "nd", 3: "rd" })[r % 10] || "th";
+    return `${r}${suf}`;
+  };
+  const signed = (v, d = 1) => (v >= 0 ? "+" : "−") + Math.abs(v).toFixed(d);
+  const r2txt = (v) => (v < 0 ? "−" : "") + Math.abs(v).toFixed(2).replace(/^0/, "");
+  const rtxt = (v) => (v < 0 ? "−" : "") + Math.abs(v).toFixed(2).replace(/^0/, "");
+  const PROP_FMT = {
+    log_n_tok: (v) => `${v.toFixed(2)} log tokens`,
+    release_year: fmtYear,
+    is_chat: (v) => `P(chat) ${v.toFixed(2)}`,
+    log_params: (v) => `${sig(10 ** v)}B`,
+  };
+  function propFmt(key, v) {
+    if (v == null) return "—";
+    if (PROP_FMT[key]) return PROP_FMT[key](v);
+    const row = screenRow(key);
+    if (row && row.unit === "rate") return pct(v);
+    return v.toFixed(1);
+  }
+  const screenRow = (key) => PROPS.screen.find((r) => r.key === key);
+  const included = (cat) => PROPS.screen.filter((r) => r.include && r.category === cat);
+  const scoreTxt = (r) => `${r.metric === "AUROC" ? "AUROC" : "R²"} ${r2txt(r.scores.fused)}`;
+
+  function axisSentence(ax) {
+    if (!ax.traits.length) return `Axis ${ax.key} correlates with no measured text trait above .30.`;
+    const parts = ax.traits.map((t) => `${t.label.toLowerCase()} (r = ${rtxt(t.r)})`);
+    return `Axis ${ax.key} correlates most with ${parts.join(" and ")}.`;
+  }
+
+  function parameterSection(cm, up) {
+    const sec = el("div", { class: "card-sec" }, el("h4", { text: "Parameters" }));
+    // θ
+    const th = up ? S.upload.theta : { pct: cm.theta_pct, z: cm.theta_z, sd: cm.theta_pct_sd };
+    const meter = el("div", { class: "meter" }, el("i", { style: `width:${th.pct.toFixed(1)}%` }));
+    if (th.sd != null) meter.append(el("u", { style: `left:${Math.max(0, th.pct - th.sd).toFixed(1)}%;width:${Math.min(100, 2 * th.sd).toFixed(1)}%` }));
+    sec.append(el("div", { class: "param" }, el("div", { class: "sym" }, tex(SYM.theta)),
+      el("div", { class: "val" },
+        el("div", {}, "Ability is at the ", el("b", { text: `${ordinal(th.pct)} percentile` }), " of the 260 paper models" +
+          (th.sd != null ? ` (± ${th.sd.toFixed(1)} points over question resamples).` : ".")),
+        meter,
+        el("div", { class: "sub", text: `The 2PL IRT model reads only the correctness bits and places θ at ${signed(th.z, 2)} SD from the training mean.` }))));
+    // s
+    if (up) {
+      sec.append(el("div", { class: "param" }, el("div", { class: "sym" }, tex(SYM.style)),
+        el("div", { class: "val sub", text: "The page does not place uploads on the style axes, because the axes need every per-question residual of the 208 training models, which the page does not ship." })));
+      return sec;
+    }
+    PROPS.style.axes.forEach((ax, k) => {
+      const v = cm.s[k];
+      const x = 50 + (50 * Math.max(-3, Math.min(3, v))) / 3;
+      sec.append(el("div", { class: "param" }, el("div", { class: "sym" }, tex(SYM.s(k + 1))),
+        el("div", { class: "val" },
+          el("div", { text: `The model sits at ${signed(v, 1)} SD on style axis ${ax.key}.` }),
+          el("div", { class: "bipolar" }, el("i", { style: `left:${x.toFixed(1)}%` })),
+          el("div", { class: "poles" }, el("span", { text: ax.low }), el("span", { text: ax.high })),
+          el("div", { class: "sub", text: axisSentence(ax) }))));
+    });
+    sec.append(el("p", { class: "sub", text: "Style has no better direction. The bars show where the model sits on each axis and do not rank it." }));
+    // shares
+    const [a, b, c] = cm.share;
+    const g = PROPS.shares, gs = g.style_axes.reduce((x, y) => x + y, 0);
+    sec.append(el("div", { class: "param" }, el("div", { class: "sym" }, tex("\\htmlClass{v-theta}{\\theta}\\,/\\,\\htmlClass{v-style}{s}\\,/\\,\\htmlClass{v-eps}{\\varepsilon}")),
+      el("div", { class: "val" },
+        el("div", { text: `The θ part carries ${(100 * a).toFixed(0)}% of this model's answer variation, the ${PROPS.style.axes.length} style axes carry ${(100 * b).toFixed(0)}%, and noise and smaller axes carry ${(100 * c).toFixed(0)}%.` }),
+        el("div", { class: "stack" }, el("i", { class: "p-theta", style: `width:${(100 * a).toFixed(1)}%` }), el("i", { class: "p-style", style: `width:${(100 * b).toFixed(1)}%` }), el("i", { class: "p-eps", style: `width:${(100 * c).toFixed(1)}%` })),
+        el("div", { class: "sub", text: `Across the ${PROPS.protocol.n_train} training models, θ explains ${(100 * g.theta).toFixed(1)}% of the answer variation, the style axes explain ${(100 * gs).toFixed(1)}%, and the rest explains ${(100 * g.rest).toFixed(1)}%. The rest includes the per-question noise ε.` }))));
+    return sec;
+  }
+
+  function propertyTable(rows, cm, up, symFor) {
+    const tb = el("tbody");
+    for (const r of rows) {
+      const p = up ? (S.upload.props ? S.upload.props[r.key] : null) : cm.props[r.key].pred;
+      const act = up ? null : cm.props[r.key].actual;
+      tb.append(el("tr", {},
+        el("td", {}, tex(symFor(r))),
+        el("td", {}, el("div", { text: r.label })),
+        el("td", { class: "num", text: up ? "—" : propFmt(r.key, act) }),
+        el("td", { class: "num strong", text: p == null ? "—" : propFmt(r.key, p) }),
+        el("td", { class: "num r2", text: scoreTxt(r) })));
+    }
+    const wrap = el("div", {}, el("div", { class: "scroll-x" }, el("table", { class: "tbl" },
+      el("thead", {}, el("tr", {}, ...["", "property", "measured", "read from embedding", "held out"].map((x) => el("th", { text: x })))), tb)));
+    if (tb.textContent.includes("*")) wrap.append(el("p", { class: "sub", text: "* The ridge prediction falls outside [0, 1], and the table shows the clamped value." }));
+    return wrap;
+  }
+
+  function traitSection(cm, up) {
+    const sec = el("div", { class: "card-sec" }, el("h4", { text: "Style traits" }));
+    const inc = included("style");
+    const order = Object.values(PROPS.trait_groups).flat();
+    const rows = [...inc].sort((x, y) => (order.indexOf(x.key) + 99 * (order.indexOf(x.key) < 0)) - (order.indexOf(y.key) + 99 * (order.indexOf(y.key) < 0)));
+    sec.append(propertyTable(rows, cm, up, () => SYM.style));
+    const missing = [];
+    for (const [g, keys] of Object.entries(PROPS.trait_groups)) {
+      const out = keys.filter((k) => !screenRow(k).include).map((k) => screenRow(k).label.toLowerCase());
+      if (out.length) missing.push(out.length === keys.length && keys.length === 1 ? g : `${g} (${out.join(", ")})`);
+    }
+    const notes = [
+      up ? "A probe fitted on all labelled paper models reads each trait from your model's BULLPEN-fused embedding."
+        : "Each value read from the embedding comes from a probe fitted with this model's publisher family held out. The measured value comes from the model's own answers.",
+      "The last column gives the held-out R² over the paper models.",
+    ];
+    if (missing.length) notes.push(`The card leaves out ${missing.join(" and ")}, because the embedding does not read them well enough to pass the selection rule in the Method dialog.`);
+    if (!up && cm.props[rows[0].key].actual == null) notes.push("The answer traits were not measured for this model.");
+    if (up && !S.upload.props) notes.push("The traits need the answers CSV, because the bits-only embedding cannot read them.");
+    sec.append(el("div", { class: "note" }, ul(notes)));
+    return sec;
+  }
+
+  function externalSection(cm, up) {
+    const sec = el("div", { class: "card-sec" }, el("h4", { text: "External signals" }));
+    const inc = included("external");
+    sec.append(propertyTable(inc, cm, up, () => SYM.e));
+    const nDrop = PROPS.screen.filter((r) => r.category === "external" && !r.include).length + PROPS.small_tables.length;
+    const notes = [
+      up ? "A probe fitted on all labelled paper models reads each signal from your model's BULLPEN-fused embedding."
+        : "Each prediction comes from a probe fitted with this model's publisher family held out. The measured column is blank where no public score matches the model.",
+      `The card leaves out ${nDrop} other external signals and metadata labels. Some have too few labelled models, and the others do not pass the selection rule in the Method dialog.`,
+    ];
+    if (up && !S.upload.props) notes.push("The signals need the answers CSV, because these probes read the BULLPEN-fused embedding.");
+    sec.append(el("div", { class: "note" }, ul(notes)));
+    return sec;
+  }
+
+  function cardView(sel) {
+    const up = isUpload(sel);
+    const cm = up ? null : PROPS.models[sel];
+    const out = [el("p", { class: "desc-tag", text: DESC })];
+    out.push(parameterSection(cm, up), traitSection(cm, up), externalSection(cm, up));
+    out.push(el("p", { class: "sub", text: "The card does not depend on the space toggle. It uses the BULLPEN-fused embedding and the IRT fit of fold 0." }));
+    return out;
+  }
+
+  // ------------------------------------------------------------ Method dialog (properties.json)
+  function fillMethod() {
+    const P = PROPS;
+    $$(".m-ntrain").forEach((n) => (n.textContent = P.protocol.n_train));
+    $$(".m-npool").forEach((n) => (n.textContent = P.protocol.n_pool));
+    $$(".m-nstyle").forEach((n) => (n.textContent = P.style.axes.length));
+    $("#m-seed-sd").textContent = P.theta.pct_sd_seed_max < 0.005 ? "below 0.01" : P.theta.pct_sd_seed_max.toFixed(2);
+    $("#m-nboot").textContent = P.theta.n_boot;
+    const g = P.shares;
+    const shareRows = [["\\htmlClass{v-theta}{\\Lambda(q)\\theta(m)}", "ability part", g.theta]]
+      .concat(P.style.axes.map((ax, k) => [`\\htmlClass{v-style}{s_{${k + 1}}}`, `style axis ${ax.key}`, g.style_axes[k]]))
+      .concat([["\\htmlClass{v-eps}{\\varepsilon}", "noise and smaller axes", g.rest]]);
+    $("#m-shares").replaceChildren(el("h4", { text: "Share of answer variation, training models" }),
+      el("div", { class: "scroll-x" }, el("table", { class: "tbl small" },
+        el("thead", {}, el("tr", {}, ...["term", "", "share"].map((x) => el("th", { text: x })))),
+        el("tbody", {}, ...shareRows.map(([t, n, v]) => el("tr", {}, el("td", {}, tex(t)), el("td", { text: n }), el("td", { class: "num", text: `${(100 * v).toFixed(1)}%` })))))),
+      el("p", { class: "sub", text: "The shares are sums of squares over all pool answers about the training mean answer. They include the per-question noise ε, so they are not comparable to row 1 of the posted key numbers, which counts only reliable differences." }));
+    const traits = Object.keys(P.style.axes[0].corr);
+    const tLabel = (t) => (screenRow(t) ? screenRow(t).label : t);
+    $("#m-axes").replaceChildren(el("h4", { text: "Style axes against the measured traits (Pearson r)" }),
+      el("div", { class: "scroll-x" }, el("table", { class: "tbl small" },
+        el("thead", {}, el("tr", {}, el("th", { text: "trait" }), ...P.style.axes.map((ax, k) => el("th", { class: "num" }, tex(`\\htmlClass{v-style}{s_{${k + 1}}}`))), el("th", { class: "num" }, tex(SYM.theta)))),
+        el("tbody", {}, ...traits.map((t) => el("tr", {}, el("td", { text: tLabel(t) }),
+          ...P.style.axes.map((ax) => el("td", { class: "num" + (Math.abs(ax.corr[t]) >= 0.3 ? " strong" : ""), text: rtxt(ax.corr[t]) })),
+          el("td", { class: "num", text: rtxt(P.theta_corr[t]) })))))),
+      el("p", { class: "sub", text: "The strongest correlations are moderate, so each axis mixes several traits." }));
+    $("#m-rule").replaceChildren(...[
+      "The screen scores every candidate with the paper's five publisher-grouped folds. For each fold it refits the encoders, the IRT model and a standardised ridge probe (logistic regression for a binary label) on the other four folds.",
+      P.rule.text,
+      "The rule was fixed before the screen ran.",
+    ].map((t) => el("li", { text: t })));
+    const cols = ["property", "n", "metric", "fused", "mean", "metadata", "bits only", "θ only", "decision"];
+    const body = P.screen.map((r) => el("tr", { class: r.include ? "" : "dropped" },
+      el("td", {}, el("div", { text: r.label }), el("div", { class: "sub", text: r.include ? "" : r.reason })),
+      el("td", { class: "num", text: String(r.n) }),
+      el("td", { text: r.metric === "AUROC" ? "AUROC" : "R²" }),
+      ...["fused", "mean", "metadata", "bits", "theta"].map((k) => el("td", { class: "num" + (k === "fused" ? " strong" : ""), text: r2txt(r.scores[k]) })),
+      el("td", { text: r.include ? "shown" : "left out" })));
+    const small = P.small_tables;
+    $("#m-screen").replaceChildren(el("div", { class: "scroll-x" }, el("table", { class: "tbl small" },
+      el("thead", {}, el("tr", {}, ...cols.map((x) => el("th", { text: x })))), el("tbody", {}, ...body))),
+      el("p", { class: "sub", text: `${small.length} further external columns have fewer than ${P.rule.min_n} labelled models among the 260, so the screen skips them. They include Chatbot Arena Elo, AlpacaEval, LiveBench, HarmBench and TrustLLM.` }));
+    const names = Object.keys(P.pc_corr);
+    const lab = (k) => (k === "theta" ? null : P.style.axes.find((a) => a.key === k) ? null : tLabel(k));
+    $("#m-pc").replaceChildren(el("div", { class: "scroll-x" }, el("table", { class: "tbl small" },
+      el("thead", {}, el("tr", {}, el("th", { text: "variable" }), el("th", { class: "num", text: "n" }),
+        ...P.pc_evr.map((v, j) => el("th", { class: "num", text: `PC${j + 1} (${(100 * v).toFixed(0)}%)` })))),
+      el("tbody", {}, ...names.map((k) => {
+        const c = P.pc_corr[k];
+        const first = k === "theta" ? el("td", {}, tex(SYM.theta)) : lab(k) == null ? el("td", {}, tex(`\\htmlClass{v-style}{s_{${k.slice(1)}}(m)}`)) : el("td", { text: lab(k) });
+        return el("tr", {}, first, el("td", { class: "num", text: String(c.n) }),
+          ...c.r.map((v) => el("td", { class: "num" + (Math.abs(v) >= 0.5 ? " strong" : ""), text: rtxt(v) })));
+      })))),
+      el("p", { class: "sub", text: "Bold marks |r| of .50 or more. The PCA is the one the middle pane draws for BULLPEN-fused." }));
   }
 
   // ------------------------------------------------------------ selection
@@ -257,7 +472,7 @@
 
   function setupUpload() {
     const worker = new Worker("js/worker.js");
-    worker.postMessage({ type: "init", data: { enc: ENC, emb: EMB } });
+    worker.postMessage({ type: "init", data: { enc: ENC, emb: EMB, theta: { irt: PROPS.theta.irt, sorted_theta: PROPS.theta.sorted_theta }, heads: PROPS.heads } });
     const bar = $("#bar"), stage = $("#stage"), msgBox = $("#upload-msg"), go = $("#run");
     let hasAnswers = false;
     worker.onmessage = (ev) => {
@@ -286,7 +501,7 @@
         el("b", { text: `The page embedded your model with ${SPACE_NAME[msg.space]}.` }),
         ul(["The middle pane shows your model as a square.", `Its nearest paper model is ${name(MODELS[msg.neighbours[0].i].id)} (cosine ${msg.neighbours[0].sim.toFixed(3)}).`])));
       setSpace(msg.space, false);
-      S.tab = "overview";
+      S.tab = "card";
       select("upload");
     };
     go.onclick = async () => {
@@ -383,9 +598,12 @@
       return r.json();
     });
     try {
-      const [enc, models, fused, bitsq, proj, ex] = await Promise.all(
-        ["encoders.json", "models.json", "emb_fused.json", "emb_bitsq.json", "projections.json", "examples.json"].map(get));
-      ENC = enc; MODELS = models.models; EXAMPLES = ex.examples; PROJ = proj;
+      const [enc, models, fused, bitsq, proj, ex, props] = await Promise.all(
+        ["encoders.json", "models.json", "emb_fused.json", "emb_bitsq.json", "projections.json", "examples.json", "properties.json"].map(get));
+      ENC = enc; MODELS = models.models; EXAMPLES = ex.examples; PROJ = proj; PROPS = props;
+      if (PROPS.models.some((m, i) => m.id !== MODELS[i].id)) throw new Error("properties.json and models.json list the models in different orders");
+      renderStaticTex();
+      fillMethod();
       EMB = { fused, bitsq };
       INDEX = { fused: BP.normRows(fused), bitsq: BP.normRows(bitsq) };
       $("#n-train").textContent = enc.protocol.n_train;

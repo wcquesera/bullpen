@@ -260,3 +260,75 @@ dialog { border: 1px solid var(--rule); }
   dialog { width: calc(100vw - 20px); max-width: 720px; padding: 18px 16px; font-size: 15px; }
   .tbl.quoted td.num:last-child { white-space: normal; width: 38%; }
 }
+
+/* ---------------------------------------------------------------- framework strip and model card
+ * One colour per term of e(m,q) = μ(q) + Λ(q)θ(m) + Γ(q)s(m) + ε, used by the strip, the card and the
+ * Method dialog (KaTeX \htmlClass{v-*}). All four pass 4.5:1 on white; the link blue stays the selection colour. */
+:root {
+  --c-theta: #b5530c;
+  --c-style: #8e3fa8;
+  --c-mu: #2b7a4b;
+  --c-eps: #6b6b6b;
+}
+.v-theta { color: var(--c-theta); }
+.v-style { color: var(--c-style); }
+.v-mu { color: var(--c-mu); }
+.v-eps { color: var(--c-eps); }
+.katex { font-size: 1.08em; }
+
+@media (min-width: 1101px) {
+  body { display: flex; flex-direction: column; height: 100vh; }
+  .ide { flex: 1 1 auto; height: auto; min-height: 0; }
+  .bar, .framework, .foot { flex: none; }
+}
+.framework { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 4px 22px; align-items: center;
+  padding: 6px 16px; border-bottom: 1px solid var(--rule); background: #fcfcfc; }
+.fw-eqs { display: flex; flex-direction: column; gap: 0; white-space: nowrap; }
+.fw-eq .katex { font-size: 1.22em; }
+.fw-eq.fw-bit .katex { font-size: 1.0em; }
+.fw-vars { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  grid-template-rows: repeat(3, auto); grid-auto-flow: column; gap: 0 24px; font-size: 12px; line-height: 1.45; color: var(--ink-2); }
+.fw-vars li { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fw-vars li { margin: 0; }
+.fw-more { font-size: 12.5px; white-space: nowrap; color: var(--accent); }
+
+/* card */
+.desc-tag { font-size: 11.5px; color: var(--muted); border: 1px solid var(--rule); padding: 3px 8px; display: inline-block; margin: 8px 0 2px; }
+.card-sec { border-top: 1px solid var(--rule); margin-top: 12px; padding-top: 2px; }
+.card-sec > h4 { margin-top: 8px; }
+.param { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 2px 10px; align-items: start; margin: 10px 0; }
+.param .sym { font-size: 13px; padding-top: 1px; }
+.param .val { font-size: 13px; }
+.param .val b { font-weight: 700; }
+.meter { position: relative; height: 8px; background: var(--hair); margin: 3px 0 1px; }
+.meter > i { position: absolute; top: 0; bottom: 0; left: 0; background: var(--c-theta); }
+.meter > u { position: absolute; top: -2px; bottom: -2px; background: rgba(181, 83, 12, 0.25); }
+.bipolar { position: relative; height: 12px; margin: 4px 0 0; border-bottom: 1px solid var(--rule); }
+.bipolar::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; border-left: 1px solid var(--muted); }
+.bipolar > i { position: absolute; top: 2px; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: var(--c-style); }
+.poles { display: flex; justify-content: space-between; gap: 10px; font-size: 11.5px; color: var(--muted); }
+.poles span:last-child { text-align: right; }
+.stack { display: flex; height: 10px; margin: 4px 0 2px; }
+.stack > i { display: block; height: 100%; }
+.stack .p-theta { background: var(--c-theta); }
+.stack .p-style { background: var(--c-style); }
+.stack .p-eps { background: #d6d6d6; }
+.tbl .r2 { color: var(--muted); }
+.tbl td .tex { white-space: nowrap; }
+.tbl.small { font-size: 12px; }
+.tbl tr.dropped td { color: var(--muted); }
+#method { max-width: 860px; }
+#method .tbl { margin: 6px 0 10px; }
+
+.tabs button { padding: 6px 5px 5px; }                                /* six tabs fit the 420px pane */
+@media (max-width: 1100px) {
+  .fw-vars li { white-space: normal; }
+  .framework { grid-template-columns: minmax(0, 1fr); padding: 10px 16px; }
+  .fw-eqs { white-space: normal; overflow-x: auto; }
+  .fw-vars { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; grid-auto-flow: row; font-size: 14px; }
+  .fw-more { min-height: 40px; display: inline-flex; align-items: center; font-size: 15px; }
+  .poles, .desc-tag { font-size: 13px; }
+  .param { grid-template-columns: 64px minmax(0, 1fr); }
+  .param .val, .param .sym { font-size: 14.5px; }
+  .tbl.small { font-size: 13.5px; }
+}
