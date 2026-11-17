@@ -336,12 +336,11 @@ dialog { border: 1px solid var(--rule); }
 }
 
 /* symbols dialog and fixed inspector header */
-.fw-links { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; grid-column: 2 / 4; justify-self: end; }
+.fw-bitrow { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
 .fw-vars-dlg li { margin: 6px 0; }
 .insp-sticky { position: sticky; top: 0; z-index: 3; background: var(--paper); padding-bottom: 2px; }
 .insp-sticky .pane-title, .insp-sticky .tabs { position: static; }
 @media (max-width: 1100px) {
-  .fw-links { grid-column: auto; justify-self: start; }
   .insp-sticky { display: contents; }  /* phones: only the tabs stick, as before */
   .insp-sticky .tabs { position: sticky; top: 0; z-index: 3; }
 }

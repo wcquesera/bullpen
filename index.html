@@ -23,11 +23,7 @@
 <section class="framework" id="framework" aria-label="Framework">
   <div class="fw-eqs">
     <div class="fw-eq tex" data-tex="e(m,q) = \htmlClass{v-mu}{\mu(q)} + \htmlClass{v-theta}{\Lambda(q)\,\theta(m)} + \htmlClass{v-style}{\Gamma(q)\,s(m)} + \htmlClass{v-eps}{\varepsilon}"></div>
-    <div class="fw-eq fw-bit tex" data-tex="\mathbf{1}\big[\htmlClass{v-theta}{\theta(m)}^{\top} w(q) > c(q)\big]"></div>
-  </div>
-  <div class="fw-links">
-    <button type="button" class="link fw-more" data-open="vars-dlg">What the symbols mean</button>
-    <button type="button" class="link fw-more" data-open="method">How this demo estimates θ and s</button>
+    <div class="fw-bitrow"><span class="fw-eq fw-bit tex" data-tex="\mathbf{1}\big[\htmlClass{v-theta}{\theta(m)}^{\top} w(q) > c(q)\big]"></span><button type="button" class="link fw-more" data-open="vars-dlg">more info</button></div>
   </div>
 </section>
 
@@ -121,7 +117,6 @@
     <div class="insp-head" id="insp-head"></div>
     <nav class="tabs" id="tabs">
       <button type="button" data-tab="overview" class="on">Overview</button>
-      <button type="button" data-tab="card">Card</button>
       <button type="button" data-tab="behavior">Behavior</button>
       <button type="button" data-tab="capability">Capability</button>
       <button type="button" data-tab="metadata">Metadata</button>
@@ -143,6 +138,7 @@
     <li><span class="tex" data-tex="\htmlClass{v-style}{s(m)}"></span> is the model's response style, and <span class="tex" data-tex="\htmlClass{v-style}{\Gamma(q)}"></span> sets how style shifts the answer.</li>
     <li>A bit depends on ability alone: <span class="tex" data-tex="w(q)"></span> is the ability <i>q</i> tests, and <span class="tex" data-tex="c(q)"></span> is its difficulty.</li>
   </ul>
+  <p><button type="button" class="link" data-open="method">How this demo estimates θ and s</button></p>
 </dialog>
 
 <dialog id="about">
