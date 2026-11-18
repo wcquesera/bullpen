@@ -267,12 +267,6 @@
   // θ : s split of the reliable (cross-half) part of a model's answer profile (reliability.json)
   const relSplit = (id) => { const t = REL.models[id]; return [t, 1 - t]; };
   const relPct = (x) => `${(100 * x).toFixed(0)}%`;
-  function headlineEl() {
-    return el("span", {}, el("b", { text: relPct(REL.summary.r_half.mean) }),
-      ` of the differences between models' answers replicate across two random halves of the ${REL.n_pool} questions. Of that reliable part, ability `,
-      el("b", { class: "v-theta", text: `θ carries ${relPct(REL.theta_share)}` }), " and ", el("b", { class: "v-style", text: `style s ${relPct(REL.style_share)}` }), ".");
-  }
-
   function parameterSection(cm, up) {
     const sec = el("div", { class: "card-sec" }, el("h4", { text: "Parameters" }));
     // θ
@@ -631,7 +625,6 @@
       const [enc, models, fused, bitsq, proj, ex, props, rel, api, apiCard] = await Promise.all(
         ["encoders.json", "models.json", "emb_fused.json", "emb_bitsq.json", "projections.json", "examples.json", "properties.json", "reliability.json", "api.json", "api_card.json"].map(get));
       ENC = enc; MODELS = models.models; EXAMPLES = ex.examples; PROJ = proj; PROPS = props; REL = rel;
-      $("#fw-headline").replaceChildren(headlineEl());
       if (PROPS.models.some((m, i) => m.id !== MODELS[i].id)) throw new Error("properties.json and models.json list the models in different orders");
       renderStaticTex();
       fillMethod();
